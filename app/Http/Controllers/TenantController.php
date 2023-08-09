@@ -20,7 +20,7 @@ class TenantController extends Controller
      */
     public function create()
     {
-        return view('SuperAdmin.createTenant');
+        return view('admin.tenants.create');
     }
 
     /**
@@ -28,6 +28,7 @@ class TenantController extends Controller
      */
     public function store(Request $request)
     {
+        return $request->name;
         $tenant = Tenant::create([
             'name' => $request->name,
             'id'=> (Tenant::count())+1,
