@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
-
+use App\Models\User;
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
@@ -17,7 +17,10 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 | Feel free to customize them however you want. Good luck!
 |
 */
-
+Route::get('logout', function(){
+    session()->flush();
+    return redirect()->route('welcome');
+});
 Route::middleware([
     'web',
     InitializeTenancyByDomain::class,
@@ -28,7 +31,8 @@ Route::middleware([
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::get('/', function () {
-        return view('welcome');
-    });
+        $users=User::all();
+        return view('welcome',compact('users'));
+    })->name('welcome');
 });
 
