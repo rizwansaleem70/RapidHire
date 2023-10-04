@@ -103,6 +103,14 @@ class TenancyServiceProvider extends ServiceProvider
         $this->mapRoutes();
 
         $this->makeTenancyMiddlewareHighestPriority();
+
+        \Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain::$onFail =
+            function () {
+                return response()->json([
+                    'status' => false,
+                    'message' => "Domain / Subdomain not configured"
+                ]);
+            };
     }
 
     protected function bootEvents()

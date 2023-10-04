@@ -1,0 +1,10 @@
+<?php
+
+namespace $NAMESPACE$;
+
+/**
+* @var $INTERFACE_NAME$Contract
+*/
+interface $INTERFACE_NAME$Contract
+{
+}
