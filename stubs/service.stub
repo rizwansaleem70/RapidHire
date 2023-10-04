@@ -1,0 +1,13 @@
+<?php
+
+namespace $NAMESPACE$;
+
+/**
+* @var $CLASS_NAME$Service
+*/
+class $CLASS_NAME$Service
+{
+    public function __construct(){
+
+    }
+}

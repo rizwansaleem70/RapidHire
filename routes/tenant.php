@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Tenants\AuthController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
-use App\Models\User;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomainOrSubdomain;
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
@@ -17,22 +20,8 @@ use App\Models\User;
 | Feel free to customize them however you want. Good luck!
 |
 */
-Route::get('logout', function(){
-    session()->flush();
-    return redirect()->route('welcome');
+
+Route::prefix('api')->middleware(['api', 'initialize.tenant'])->group(function () {
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('login', [AuthController::class, 'login']);
 });
-Route::middleware([
-    'web',
-    InitializeTenancyByDomain::class,
-    PreventAccessFromCentralDomains::class,
-])->group(function () {
-    Auth::routes();
-
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-    Route::get('/', function () {
-        $users=User::all();
-        return view('welcome',compact('users'));
-    })->name('welcome');
-});
-
