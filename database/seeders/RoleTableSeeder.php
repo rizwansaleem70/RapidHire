@@ -18,10 +18,10 @@ class RoleTableSeeder extends Seeder
     {
         Role::create(['name' => 'SuperAdmin']);
         Role::create(['name' => 'Admin']);
-        Role::create(['name' => 'Employee']);
+        Role::create(['name' => 'Tenant']);
         Role::create(['name' => 'SubAdmin']);
         $admin1 = User::create([
-            'name' => 'Admin',
+            'name' => 'Super Admin',
             'email' => 'admin@test.com',
             'password' => '12345678',
         ]);
@@ -29,26 +29,26 @@ class RoleTableSeeder extends Seeder
         $admin1->assignRole('SuperAdmin');
 
         $module1 = Module::create([
-            'name' => 'Employee',
+            'name' => 'Tenant',
         ]);
 
         $module2 =Module::create([
             'name' => 'Candidate',
         ]);
 
-//      Employee Permissions
+//      Tenant Permissions
         Permission::create([
-            'name' => 'employee.view',
+            'name' => 'tenant.view',
             'module_id' => $module1->id
         ]);
 
         Permission::create([
-            'name' => 'employee.edit',
+            'name' => 'tenant.edit',
             'module_id' => $module1->id
         ]);
 
         Permission::create([
-            'name' => 'employee.delete',
+            'name' => 'tenant.delete',
             'module_id' => $module1->id
         ]);
 

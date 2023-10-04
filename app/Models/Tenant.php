@@ -13,11 +13,12 @@ class Tenant extends BaseTenant implements TenantWithDatabase
 {
     use HasDatabase, HasDomains, HasRoles, HasPermissions;
 
-//    New Code
-    protected $guard_name = 'web';
-
-    protected $fillable= [
-        'id',
-        'name'
-    ];
+//    protected $guard_name = 'web';
+    public static function getCustomColumns(): array
+    {
+        return [
+            'id','package_id','name','email','phone','password','bank_name','account_number','latitude','longitude','address','logo','about','website','industry','company_size','headquarter','is_verified','is_actively_recruiting','data'
+        ];
+    }
+//    protected $fillable= ['package_id','name','email','phone','bank_name','account_number','latitude','longitude','address','logo','about','website','industry','company_size','headquarter','is_verified','is_actively_recruiting','data'];
 }
