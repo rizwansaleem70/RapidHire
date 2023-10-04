@@ -24,16 +24,16 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         try {
-            // DB::beginTransaction();
+            DB::beginTransaction();
             $user = $this->_auth->register($request->prepareData());
             $data = [
-                // 'token' => $user->createToken(Str::random(10))->plainTextToken,
+                'token' => $user->createToken(Str::random(10))->plainTextToken,
                 'user' => new LoginUserResponse($user),
             ];
-            // DB::commit();
+            DB::commit();
             return $this->successResponse("User Registered Successfully", $data);
         } catch (\Throwable $th) {
-            // DB::rollBack();
+            DB::rollBack();
             Helper::logMessage("register", $request->input(), $th->getMessage());
             return $this->failedResponse("Something went wrong!");
         }
