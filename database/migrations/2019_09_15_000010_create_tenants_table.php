@@ -18,24 +18,25 @@ class CreateTenantsTable extends Migration
     {
         Schema::create('tenants', function (Blueprint $table) {
             $table->id()->bigIncrements();
-            $table->unsignedBigInteger('package_id');
+            $table->unsignedBigInteger('package_id')->nullable();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone')->unique();
+            $table->string('password');
             $table->string('bank_name');
             $table->string('account_number')->unique();
             $table->double('latitude');
             $table->double('longitude');
             $table->text('address');
-            $table->json('data')->nullable();
             $table->text('logo')->nullable();
-            $table->text('about');
+            $table->text('about')->nullable();
             $table->string('website');
             $table->string('industry');
             $table->string('company_size');
             $table->string('headquarter');
             $table->boolean('is_verified')->default(false);
             $table->boolean('is_actively_recruiting')->default(false);
+            $table->json('data')->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('package_id')->references('id')->on('packages')->onUpdate('cascade')->onDelete('cascade');

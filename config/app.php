@@ -1,5 +1,6 @@
 <?php
 
+use App\Providers\TenantServiceProvider;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -59,6 +60,7 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
+    'domain' => env('APP_DOMAIN', 'localhost'),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -70,7 +72,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Karachi',
 
     /*
     |--------------------------------------------------------------------------
@@ -159,6 +161,7 @@ return [
         /*
          * Package Service Providers...
          */
+        TenantServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -170,6 +173,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\TenancyServiceProvider::class,
+        App\Providers\SuperAdminServiceProvider::class,
     ])->toArray(),
 
     /*
