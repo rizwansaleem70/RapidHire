@@ -24,7 +24,7 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'parent_id' => 'required|exists:categories,id',
+            'parent_id' => 'nullable|exists:categories,id',
         ];
     }
 
