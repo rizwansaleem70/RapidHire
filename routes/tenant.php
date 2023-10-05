@@ -27,4 +27,6 @@ Route::middleware(['web',InitializeTenancyByDomain::class, PreventAccessFromCent
 Route::prefix('api')->middleware(['api', 'initialize.tenant'])->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
+    Route::post('forgot', [AuthController::class, 'forgot']);
+
 });
