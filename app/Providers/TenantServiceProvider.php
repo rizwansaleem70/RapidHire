@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Contracts\AuthContract;
+use App\Contracts\CategoryContract;
 use App\Http\Services\AuthService;
+use App\Http\Services\Tenants\CategoryService;
 use Illuminate\Support\ServiceProvider;
 
 class TenantServiceProvider extends ServiceProvider
@@ -17,6 +19,12 @@ class TenantServiceProvider extends ServiceProvider
             AuthContract::class,
             function ($app) {
                 return $app->make(AuthService::class);
+            }
+        );
+        $this->app->bind(
+            CategoryContract::class,
+            function ($app) {
+                return $app->make(CategoryService::class);
             }
         );
     }

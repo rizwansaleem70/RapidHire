@@ -7,7 +7,7 @@ use App\Exceptions\CustomException;
 use App\Helpers\helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ForgotPasswordRequest;
-use App\Http\Requests\Tenant\LoginRequest;
+use App\Http\Requests\Tenants\LoginRequest;
 use App\Http\Requests\Tenants\RegisterRequest;
 use App\Http\Resources\Tenants\LoginUserResponse;
 use Illuminate\Support\Facades\DB;

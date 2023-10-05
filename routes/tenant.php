@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\Tenants\CategoriesController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -29,4 +30,7 @@ Route::prefix('api')->middleware(['api', 'initialize.tenant'])->group(function (
     Route::post('login', [AuthController::class, 'login']);
     Route::post('forgot', [AuthController::class, 'forgot']);
 
+    Route::group(['middleware' => 'auth:sanctum'], function () {
+        Route::apiResources(['category' => CategoriesController::class]);
+    });
 });
