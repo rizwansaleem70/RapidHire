@@ -3,6 +3,10 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\Tenants\CategoriesController;
+use App\Http\Controllers\Api\Tenants\DepartmentsController;
+use App\Http\Controllers\Api\Tenants\JobsController;
+use App\Http\Controllers\Api\Tenants\LocationsController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -24,7 +28,15 @@ Route::middleware(['web',InitializeTenancyByDomain::class, PreventAccessFromCent
     });
 });
 
-Route::prefix('api')->middleware(['api', 'initialize.tenant'])->group(function () {
+Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
+//    Route::post('forgot', [AuthController::class, 'forgot']);
+
+    Route::group(['middleware' => 'auth:sanctum'], function () {
+        Route::apiResources(['category' => CategoriesController::class]);
+        Route::apiResources(['location' => LocationsController::class]);
+        Route::apiResources(['job' => JobsController::class]);
+        Route::apiResources(['department' => DepartmentsController::class]);
+    });
 });

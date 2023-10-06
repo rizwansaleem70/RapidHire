@@ -6,7 +6,8 @@ use App\Contracts\AuthContract;
 use App\Exceptions\CustomException;
 use App\Helpers\helper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Tenant\LoginRequest;
+use App\Http\Requests\ForgotPasswordRequest;
+use App\Http\Requests\Tenants\LoginRequest;
 use App\Http\Requests\Tenants\RegisterRequest;
 use App\Http\Resources\Tenants\LoginUserResponse;
 use Illuminate\Support\Facades\DB;
@@ -48,6 +49,21 @@ class AuthController extends Controller
                 'user' => new LoginUserResponse($user),
             ];
             return $this->successResponse("User Login Successfully", $data);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            helper::logMessage("login", $request->input(), $th->getMessage());
+            return $this->failedResponse("Something went wrong!");
+        }
+    }
+    public function forgot(ForgotPasswordRequest $request){
+        try {
+            $user = $this->_auth->forgot($request->prepareRequest());
+            $data = [
+//                'token' => $user->createToken('API TOKEN')->plainTextToken,
+                'user'=> $user,
+            ];
+            return $this->successResponse(true, "User Found Successfully", $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Tenant;
+namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+use App\Abstracts\FormRequest;
+
+class ForgotPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,17 +23,14 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|exists:users',
-            'password' => 'required'
+            'email' => 'required|email|exists:users,email',
         ];
     }
-
-    public function prepareData()
+    public function prepareRequest(): array
     {
         $data = $this;
         return [
             'email' => $data['email'],
-            'password' => $data['password']
         ];
     }
 }
