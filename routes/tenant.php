@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Tenants\DepartmentsController;
 use App\Http\Controllers\Api\Tenants\JobQualificationsController;
 use App\Http\Controllers\Api\Tenants\JobsController;
 use App\Http\Controllers\Api\Tenants\LocationsController;
+use App\Http\Controllers\Api\Tenants\SettingsController;
 use App\Http\Controllers\Api\Tenants\SocialMediasController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -42,5 +43,6 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['department' => DepartmentsController::class]);
         Route::apiResources(['job-qualification' => JobQualificationsController::class]);
         Route::apiResources(['social-media' => SocialMediasController::class]);
+        Route::apiResources(['setting' => SettingsController::class]);
     });
 });
