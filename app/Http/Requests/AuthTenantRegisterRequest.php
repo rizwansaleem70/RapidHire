@@ -22,7 +22,8 @@ class AuthTenantRegisterRequest extends FormRequest
     {
         return [
             'package_id' => 'nullable',
-            'name' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'email' => 'required|email|unique:tenants,email',
             'phone' => 'required|unique:tenants,phone',
             'bank_name' => 'required',
@@ -47,7 +48,8 @@ class AuthTenantRegisterRequest extends FormRequest
         $data = $this;
         return [
             'package_id' => $data['package_id'],
-            'name' => $data['name'],
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
             'bank_name' => $data['bank_name'],

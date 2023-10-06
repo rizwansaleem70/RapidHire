@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('locations', function (Blueprint $table) {
+        Schema::create('job_ats_points', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('latitude');
-            $table->string('longitude');
+            $table->unsignedBigInteger('job_ats_id');
+            $table->string('value');
+            $table->integer('points');
+            $table->softDeletes();
             $table->timestamps();
+            $table->foreign('job_ats_id')->references('id')->on('job_ats')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('locations');
+        Schema::dropIfExists('job_ats_points');
     }
 };

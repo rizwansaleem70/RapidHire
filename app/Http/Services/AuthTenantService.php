@@ -31,8 +31,11 @@ class AuthTenantService implements AuthTenantContract
         if (isset($input['package_id']) && $input['package_id'] != '') {
             $model->package_id = $input['package_id'];
         }
-        if (isset($input['name']) && $input['name'] != '') {
-            $model->name = $input['name'];
+        if (isset($input['first_name']) && $input['first_name'] != '') {
+            $model->first_name = $input['first_name'];
+        }
+        if (isset($input['last_name']) && $input['last_name'] != '') {
+            $model->last_name = $input['last_name'];
         }
         if (isset($input['email']) && $input['email'] != '') {
             $model->email = $input['email'];
