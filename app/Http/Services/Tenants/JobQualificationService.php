@@ -11,7 +11,7 @@ use App\Models\Tenants\JobQualification;
 */
 class JobQualificationService implements JobQualificationContract
 {
-    public $model;
+    public JobQualification $model;
     public function __construct()
     {
         $this->model = new JobQualification();

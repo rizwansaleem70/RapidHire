@@ -4,7 +4,7 @@ namespace App\Http\Requests\Tenants;
 
 use App\Abstracts\FormRequest;
 
-class StoreLocationRequest extends FormRequest
+class StoreSocialMediaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,19 +22,21 @@ class StoreLocationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required',
+            'name' => 'required|string',
+            'icon' => 'required|image',
+            'url' => 'required',
+            'priority' => 'required',
         ];
     }
 
-    public function prepareRequest():array
+    public function prepareRequest(): array
     {
         $request = $this;
         return [
             'name' => $request['name'],
-            'latitude' => $request['latitude'],
-            'longitude' => $request['longitude'],
+            'icon' => $request['icon'],
+            'url' => $request['url'],
+            'priority' => $request['priority'],
         ];
     }
 }

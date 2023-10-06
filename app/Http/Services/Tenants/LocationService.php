@@ -11,15 +11,14 @@ use App\Models\Tenants\Location;
 */
 class LocationService implements LocationContract
 {
-    public $model;
+    public Location $model;
     public function __construct()
     {
         $this->model = new Location();
     }
     public function index()
     {
-        $location = $this->model->latest()->get();
-        return $location;
+        return $this->model->latest()->get();
     }
     public function show($id)
     {
@@ -33,8 +32,7 @@ class LocationService implements LocationContract
     public function store($data)
     {
         $model = new $this->model;
-        $location = $this->prepareData($model, $data, true);
-        return $location;
+        return $this->prepareData($model, $data, true);
     }
 
     public function update($data, $id)
@@ -43,8 +41,7 @@ class LocationService implements LocationContract
         if (empty($model)) {
             throw new CustomException("Location Record Not Found!");
         }
-        $location = $this->prepareData($model, $data, false);
-        return $location;
+        return $this->prepareData($model, $data, false);
     }
 
     public function delete($id)

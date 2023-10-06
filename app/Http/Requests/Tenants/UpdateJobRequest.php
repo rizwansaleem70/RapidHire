@@ -38,10 +38,10 @@ class UpdateJobRequest extends FormRequest
         ];
     }
 
-    public function prepareRequest()
+    public function prepareRequest():array
     {
         $request = $this;
-        $data = [
+        return [
             'location_id' => $request['location_id'],
             'category_id' => $request['category_id'],
             'name' => $request['name'],
@@ -56,6 +56,5 @@ class UpdateJobRequest extends FormRequest
             'salary_deliver' => $request['salary_deliver'],
             'image' => $request['image'],
         ];
-        return $data;
     }
 }
