@@ -2,10 +2,9 @@
 
 namespace App\Http\Services\Tenants;
 
-use App\Contracts\CategoryContract;
+use App\Contracts\Tenants\CategoryContract;
 use App\Exceptions\CustomException;
 use App\Models\Category;
-use Exception;
 
 /**
 * @var CategoryService
@@ -25,8 +24,11 @@ class CategoryService implements CategoryContract
     }
     public function show($id)
     {
-        $category = $this->model->find($id);
-        return $category;
+        $model = $this->model->find($id);
+        if (empty($model)) {
+            throw new CustomException("Category Not Found!");
+        }
+        return $model;
     }
 
     public function store($data)

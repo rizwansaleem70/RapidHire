@@ -23,8 +23,11 @@ class LocationService implements LocationContract
     }
     public function show($id)
     {
-        $location = $this->model->find($id);
-        return $location;
+        $model = $this->model->find($id);
+        if (empty($model)) {
+            throw new CustomException("Category Not Found!");
+        }
+        return $model;
     }
 
     public function store($data)

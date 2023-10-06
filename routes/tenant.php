@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\Tenants\CategoriesController;
+use App\Http\Controllers\Api\Tenants\DepartmentsController;
 use App\Http\Controllers\Api\Tenants\JobsController;
 use App\Http\Controllers\Api\Tenants\LocationsController;
 use Illuminate\Support\Facades\Route;
@@ -36,5 +37,6 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['category' => CategoriesController::class]);
         Route::apiResources(['location' => LocationsController::class]);
         Route::apiResources(['job' => JobsController::class]);
+        Route::apiResources(['department' => DepartmentsController::class]);
     });
 });

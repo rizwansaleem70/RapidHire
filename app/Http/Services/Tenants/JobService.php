@@ -27,8 +27,11 @@ class JobService implements JobContract
     }
     public function show($id)
     {
-        $job = $this->model->find($id);
-        return $job;
+        $model = $this->model->find($id);
+        if (empty($model)) {
+            throw new CustomException("Category Not Found!");
+        }
+        return $model;
     }
 
     public function store($data)

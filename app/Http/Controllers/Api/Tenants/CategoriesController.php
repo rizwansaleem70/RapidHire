@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Tenants;
 
-use App\Contracts\CategoryContract;
+use App\Contracts\Tenants\CategoryContract;
 use App\Exceptions\CustomException;
 use App\Helpers\helper;
 use App\Http\Controllers\Controller;
@@ -10,7 +10,6 @@ use App\Http\Requests\Tenants\StoreCategoryRequest;
 use App\Http\Requests\Tenants\UpdateCategoryRequest;
 use App\Http\Resources\Tenants\Category;
 use App\Http\Resources\Tenants\CategoryCollection;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CategoriesController extends Controller
