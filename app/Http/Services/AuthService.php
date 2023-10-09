@@ -6,6 +6,7 @@ use App\Contracts\AuthContract;
 use App\Exceptions\CustomException;
 use App\Mail\OtpSendMail;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -51,7 +52,7 @@ class AuthService implements AuthContract
         return $user;
     }
 
-    public function prepareData($model, $input)
+    public function prepareData($model, $input,$new_record = false)
     {
 
         if (isset($input['name']) && $input['name'] != '') {
@@ -65,8 +66,19 @@ class AuthService implements AuthContract
         if (isset($input['password']) && $input['password'] != '') {
             $model->password = $input['password'];
         }
+        if (isset($input['new_password']) && $input['new_password'] != '') {
+            $model->password = bcrypt($input['new_password']);
+        }
 
         $user = $model->save();
         return $model;
+    }
+
+    public function changePassword($data)
+    {
+        $model = $this->model->find(Auth::user()->id);
+        if (!($this->model)->checkPassword($data['old_password'], $model->password))
+            throw new CustomException("Invalid Credentials");
+        return $this->prepareData($model, $data, false);
     }
 }
