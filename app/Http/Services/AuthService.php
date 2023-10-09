@@ -81,4 +81,8 @@ class AuthService implements AuthContract
             throw new CustomException("Invalid Credentials");
         return $this->prepareData($model, $data, false);
     }
+    public function deleteProfile($data)
+    {
+        return $this->model->destroy(Auth::user()->id);
+    }
 }

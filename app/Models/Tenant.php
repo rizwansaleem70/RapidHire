@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Traits\SoftDeleteColumnValuesUpdate;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
@@ -11,9 +13,10 @@ use Stancl\Tenancy\Database\Concerns\HasDomains;
 
 class Tenant extends BaseTenant implements TenantWithDatabase
 {
-    use HasDatabase, HasDomains, HasRoles, HasPermissions;
+    use HasDatabase, HasDomains, HasRoles, HasPermissions,SoftDeletes,SoftDeleteColumnValuesUpdate;
 
 //    protected $guard_name = 'web';
+
     public static function getCustomColumns(): array
     {
         return [

@@ -100,4 +100,16 @@ class AuthController extends Controller
             return $this->failedResponse("Something went wrong!");
         }
     }
+    public function deleteProfile()
+    {
+        try {
+            $this->_auth->deleteProfile(auth()->user()->id);
+            return $this->okResponse("User Delete Successfully");
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            helper::logMessage("delete Profile user id = ".auth()->user()->id, "Delete Profile", $th->getMessage());
+            return $this->failedResponse("Something went wrong!");
+        }
+    }
 }

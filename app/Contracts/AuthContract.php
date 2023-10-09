@@ -11,4 +11,5 @@ interface AuthContract
     public function login($input);
     public function forgot($input);
     public function changePassword($input);
+    public function deleteProfile($input);
 }
