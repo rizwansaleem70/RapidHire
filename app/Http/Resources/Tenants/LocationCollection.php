@@ -10,10 +10,11 @@ class LocationCollection extends ResourceCollection
     /**
      * Transform the resource collection into an array.
      *
-     * @return array<int|string, mixed>
+     * @return \Illuminate\Support\Collection
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $request): \Illuminate\Support\Collection
     {
-        return parent::toArray($request);
+//        return parent::toArray($request);
+        return $this->collection;
     }
 }

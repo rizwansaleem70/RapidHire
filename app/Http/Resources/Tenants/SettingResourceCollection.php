@@ -3,9 +3,9 @@
 namespace App\Http\Resources\Tenants;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class Category extends JsonResource
+class SettingResourceCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -14,10 +14,6 @@ class Category extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'parent_id' => $this->parent_id
-        ];
+        return parent::toArray($request);
     }
 }

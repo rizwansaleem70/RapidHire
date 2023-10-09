@@ -22,14 +22,13 @@ class JobService implements JobContract
     }
     public function index()
     {
-        $job = $this->model->latest()->get();
-        return $job;
+        return $this->model->latest()->get();
     }
     public function show($id)
     {
         $model = $this->model->find($id);
         if (empty($model)) {
-            throw new CustomException("Category Not Found!");
+            throw new CustomException("Job Record Not Found!");
         }
         return $model;
     }
@@ -37,8 +36,7 @@ class JobService implements JobContract
     public function store($data)
     {
         $model = new $this->model;
-        $job = $this->prepareData($model, $data, true);
-        return $job;
+        return $this->prepareData($model, $data, true);
     }
 
     public function update($data, $id)
@@ -47,8 +45,7 @@ class JobService implements JobContract
         if (empty($model)) {
             throw new CustomException("Job Record Not Found!");
         }
-        $job = $this->prepareData($model, $data, false);
-        return $job;
+        return $this->prepareData($model, $data, false);
     }
 
     public function delete($id)

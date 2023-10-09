@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,16 +14,14 @@ return new class extends Migration
     {
         Schema::create('social_media', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('tenant_id');
-            $table->text('facebook')->nullable();
-            $table->text('linkedin')->nullable();
-            $table->text('twitter')->nullable();
-            $table->text('pinterest')->nullable();
-            $table->text('instagram')->nullable();
-            $table->text('youtube')->nullable();
+            $table->foreignIdFor(User::class,'user_id');
+            $table->string('name');
+            $table->text('icon');
+            $table->text('url');
+            $table->integer('priority')->default(1);
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -2,19 +2,21 @@
 
 namespace App\Http\Services\Tenants;
 
-use App\Contracts\Tenants\LocationContract;
+use App\Contracts\Tenants\SettingContract;
 use App\Exceptions\CustomException;
-use App\Models\Tenants\Location;
+use App\Traits\ImageUpload;
+use QCod\Settings\Setting\Setting;
 
 /**
-* @var LocationService
+* @var SettingService
 */
-class LocationService implements LocationContract
+class SettingService implements SettingContract
 {
-    public Location $model;
+    use ImageUpload;
+    public Setting $model;
     public function __construct()
     {
-        $this->model = new Location();
+        $this->model = new Setting();
     }
     public function index()
     {
@@ -24,7 +26,7 @@ class LocationService implements LocationContract
     {
         $model = $this->model->find($id);
         if (empty($model)) {
-            throw new CustomException("Category Not Found!");
+            throw new CustomException("Setting Record Not Found!");
         }
         return $model;
     }
@@ -39,18 +41,18 @@ class LocationService implements LocationContract
     {
         $model = $this->model->find($id);
         if (empty($model)) {
-            throw new CustomException("Location Record Not Found!");
+            throw new CustomException("Job Record Not Found!");
         }
         return $this->prepareData($model, $data, false);
     }
 
     public function delete($id)
     {
-        $location = $this->model->find($id);
-        if (empty($location)) {
-            throw new CustomException("Location Record Not Found!");
+        $setting = $this->model->find($id);
+        if (empty($setting)) {
+            throw new CustomException("Job Record Not Found!");
         }
-        $location->delete();
+        $setting->delete();
         return true;
     }
     private function prepareData($model, $data, $new_record = false)
@@ -58,11 +60,11 @@ class LocationService implements LocationContract
         if (isset($data['name']) && $data['name']) {
             $model->name = $data['name'];
         }
-        if (isset($data['latitude']) && $data['latitude']) {
-            $model->latitude = $data['latitude'];
+        if (isset($data['val']) && $data['val']) {
+            $model->val = $data['val'];
         }
-        if (isset($data['longitude']) && $data['longitude']) {
-            $model->longitude = $data['longitude'];
+        if (isset($data['group']) && $data['group']) {
+            $model->group = $data['group'];
         }
         $model->save();
         return $model;
