@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Tenants;
 
 use App\Contracts\Tenants\JobContract;
 use App\Exceptions\CustomException;
-use App\Helpers\helper;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\StoreJobRequest;
 use App\Http\Requests\Tenants\UpdateJobRequest;
@@ -20,7 +20,6 @@ class JobsController extends Controller
     public function __construct(JobContract $job)
     {
         $this->job = $job;
-
     }
     /**
      * Display a listing of the resource.
@@ -30,11 +29,11 @@ class JobsController extends Controller
         try {
             $job = $this->job->index();
             $job = new JobCollection($job);
-            return $this->successResponse( "Successfully", $job);
+            return $this->successResponse("Successfully", $job);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("job index", 'none', $th->getMessage());
+            Helper::logMessage("job index", 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -49,11 +48,11 @@ class JobsController extends Controller
             $job = $this->job->store($request->prepareRequest());
             $job = new Job($job);
             DB::commit();
-            return $this->successResponse("Job Added Successfully",$job);
+            return $this->successResponse("Job Added Successfully", $job);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("job index", $request->input(), $th->getMessage());
+            Helper::logMessage("job index", $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -66,11 +65,11 @@ class JobsController extends Controller
         try {
             $job = $this->job->show($id);
             $job = new Job($job);
-            return $this->successResponse( "Job Found Successfully", $job);
+            return $this->successResponse("Job Found Successfully", $job);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("job show", 'id ='.$id, $th->getMessage());
+            Helper::logMessage("job show", 'id =' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -85,11 +84,11 @@ class JobsController extends Controller
             $job = $this->job->update($request->prepareRequest(), $id);
             $job = new Job($job);
             DB::commit();
-            return $this->successResponse("Job Updated Successfully",$job);
+            return $this->successResponse("Job Updated Successfully", $job);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("job update (id = )".$id, $request->input(), $th->getMessage());
+            Helper::logMessage("job update (id = )" . $id, $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -107,7 +106,7 @@ class JobsController extends Controller
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("job destroy", 'id = '.$id , $th->getMessage());
+            Helper::logMessage("job destroy", 'id = ' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }

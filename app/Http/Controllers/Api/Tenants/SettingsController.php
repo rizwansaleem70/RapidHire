@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Tenants;
 
 use App\Contracts\Tenants\SettingContract;
 use App\Exceptions\CustomException;
-use App\Helpers\helper;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\StoreSettingRequest;
 use App\Http\Requests\Tenants\UpdateSettingRequest;
@@ -19,7 +19,6 @@ class SettingsController extends Controller
     public function __construct(SettingContract $setting)
     {
         $this->setting = $setting;
-
     }
     /**
      * Display a listing of the resource.
@@ -29,11 +28,11 @@ class SettingsController extends Controller
         try {
             $setting = $this->setting->index();
             $setting = new SettingResource($setting);
-            return $this->successResponse( "Successfully Fetch Record", $setting);
+            return $this->successResponse("Successfully Fetch Record", $setting);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("setting index", 'none', $th->getMessage());
+            Helper::logMessage("setting index", 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -48,11 +47,11 @@ class SettingsController extends Controller
             $setting = $this->setting->store($request->prepareRequest());
             $setting = new SettingResource($setting);
             DB::commit();
-            return $this->successResponse("Setting Added Successfully",$setting);
+            return $this->successResponse("Setting Added Successfully", $setting);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("setting index", $request->input(), $th->getMessage());
+            Helper::logMessage("setting index", $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -62,16 +61,16 @@ class SettingsController extends Controller
      */
     public function show(string $id)
     {
-//        try {
-//            $setting = $this->setting->show($id);
-//            $setting = new SettingResource($setting);
-//            return $this->successResponse( "Setting Found Successfully", $setting);
-//        } catch (CustomException $th) {
-//            return $this->failedResponse($th->getMessage());
-//        } catch (\Throwable $th) {
-//            helper::logMessage("setting show", 'id ='.$id, $th->getMessage());
-//            return $this->failedResponse($th->getMessage());
-//        }
+        //        try {
+        //            $setting = $this->setting->show($id);
+        //            $setting = new SettingResource($setting);
+        //            return $this->successResponse( "Setting Found Successfully", $setting);
+        //        } catch (CustomException $th) {
+        //            return $this->failedResponse($th->getMessage());
+        //        } catch (\Throwable $th) {
+        //            Helper::logMessage("setting show", 'id ='.$id, $th->getMessage());
+        //            return $this->failedResponse($th->getMessage());
+        //        }
     }
 
     /**
@@ -84,11 +83,11 @@ class SettingsController extends Controller
             $setting = $this->setting->update($request->prepareRequest(), $id);
             $setting = new SettingResource($setting);
             DB::commit();
-            return $this->successResponse("Setting Updated Successfully",$setting);
+            return $this->successResponse("Setting Updated Successfully", $setting);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("setting update (id = )".$id, $request->input(), $th->getMessage());
+            Helper::logMessage("setting update (id = )" . $id, $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -106,7 +105,7 @@ class SettingsController extends Controller
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("setting destroy", 'id = '.$id , $th->getMessage());
+            Helper::logMessage("setting destroy", 'id = ' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }

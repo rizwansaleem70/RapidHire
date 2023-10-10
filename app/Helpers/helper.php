@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use Illuminate\Support\Facades\Log;
 
-class helper
+class Helper
 {
     public static function logMessage($endpoint, $input, $exception)
     {

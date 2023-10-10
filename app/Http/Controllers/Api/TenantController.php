@@ -8,7 +8,7 @@ use App\Http\Resources\TenantRegisterResource;
 use App\Models\Tenant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Helpers\helper;
+use App\Helpers\Helper;
 
 class TenantController extends Controller
 {
@@ -35,31 +35,31 @@ class TenantController extends Controller
     {
         $tenant = Tenant::create([
             'name' => $request->name,
-            'id'=> (Tenant::count())+1,
+            'id' => (Tenant::count()) + 1,
         ]);
         $tenant->domains()->create(['domain' => $request->domain . '.localhost']);
 
         $tenant->givePermissionTo('employee.view');
-//        foreach ($request->assign_child as $per) {
-//            if ($per == 1) {
-//                $tenant->givePermissionTo('employee.view');
-//            }
-//            if ($per == 2) {
-//                $tenant->givePermissionTo('employee.edit');
-//            }
-//            if ($per == 3) {
-//                $tenant->givePermissionTo('employee.delete');
-//            }
-//            if ($per == 4) {
-//                $tenant->givePermissionTo('candidate.view');
-//            }
-//            if ($per == 5) {
-//                $tenant->givePermissionTo('candidate.edit');
-//            }
-//            if ($per == 6) {
-//                $tenant->givePermissionTo('candidate.delete');
-//            }
-//        }
+        //        foreach ($request->assign_child as $per) {
+        //            if ($per == 1) {
+        //                $tenant->givePermissionTo('employee.view');
+        //            }
+        //            if ($per == 2) {
+        //                $tenant->givePermissionTo('employee.edit');
+        //            }
+        //            if ($per == 3) {
+        //                $tenant->givePermissionTo('employee.delete');
+        //            }
+        //            if ($per == 4) {
+        //                $tenant->givePermissionTo('candidate.view');
+        //            }
+        //            if ($per == 5) {
+        //                $tenant->givePermissionTo('candidate.edit');
+        //            }
+        //            if ($per == 6) {
+        //                $tenant->givePermissionTo('candidate.delete');
+        //            }
+        //        }
         return redirect()->route('tenant.index');
     }
 

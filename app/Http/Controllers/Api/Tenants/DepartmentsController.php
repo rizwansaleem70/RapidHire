@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Tenants;
 
 use App\Contracts\Tenants\DepartmentContract;
 use App\Exceptions\CustomException;
-use App\Helpers\helper;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\StoreDepartmentRequest;
 use App\Http\Requests\Tenants\UpdateDepartmentRequest;
@@ -20,7 +20,6 @@ class DepartmentsController extends Controller
     public function __construct(DepartmentContract $department)
     {
         $this->department = $department;
-
     }
     /**
      * Display a listing of the resource.
@@ -30,11 +29,11 @@ class DepartmentsController extends Controller
         try {
             $department = $this->department->index();
             $department = new DepartmentCollection($department);
-            return $this->successResponse( "Successfully", $department);
+            return $this->successResponse("Successfully", $department);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("department index", 'none', $th->getMessage());
+            Helper::logMessage("department index", 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -49,11 +48,11 @@ class DepartmentsController extends Controller
             $department = $this->department->store($request->prepareRequest());
             $department = new Department($department);
             DB::commit();
-            return $this->successResponse("Department Added Successfully",$department);
+            return $this->successResponse("Department Added Successfully", $department);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("department index", $request->input(), $th->getMessage());
+            Helper::logMessage("department index", $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -66,11 +65,11 @@ class DepartmentsController extends Controller
         try {
             $department = $this->department->show($id);
             $department = new Department($department);
-            return $this->successResponse( "Department Found Successfully", $department);
+            return $this->successResponse("Department Found Successfully", $department);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("department show", 'id ='.$id, $th->getMessage());
+            Helper::logMessage("department show", 'id =' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -85,11 +84,11 @@ class DepartmentsController extends Controller
             $department = $this->department->update($request->prepareRequest(), $id);
             $department = new Department($department);
             DB::commit();
-            return $this->successResponse("Department Updated Successfully",$department);
+            return $this->successResponse("Department Updated Successfully", $department);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("department update (id = )".$id, $request->input(), $th->getMessage());
+            Helper::logMessage("department update (id = )" . $id, $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -107,7 +106,7 @@ class DepartmentsController extends Controller
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("department destroy", 'id = '.$id , $th->getMessage());
+            Helper::logMessage("department destroy", 'id = ' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }

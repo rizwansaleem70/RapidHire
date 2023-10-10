@@ -16,6 +16,7 @@ use App\Http\Services\Tenants\DepartmentService;
 use App\Http\Services\Tenants\JobQualificationService;
 use App\Http\Services\Tenants\JobService;
 use App\Http\Services\Tenants\LocationService;
+use App\Http\Services\Tenants\MemberService;
 use App\Http\Services\Tenants\SettingService;
 use App\Http\Services\Tenants\SocialMediaService;
 use Illuminate\Support\ServiceProvider;
@@ -73,6 +74,12 @@ class TenantServiceProvider extends ServiceProvider
             SettingContract::class,
             function ($app) {
                 return $app->make(SettingService::class);
+            }
+        );
+        $this->app->bind(
+            MemberContract::class,
+            function ($app) {
+                return $app->make(MemberService::class);
             }
         );
     }
