@@ -1,9 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
+use App\Contracts\TenantAuthContract;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\TenantRegisterResource;
 use App\Models\Tenant;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Helpers\helper;
 
 class TenantController extends Controller
 {

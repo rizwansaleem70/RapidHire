@@ -26,4 +26,11 @@ class Controller extends BaseController
             'message' => $message,
         ]);
     }
+    protected function okResponse($message)
+    {
+        return response()->json([
+            'status' => true,
+            'message' => $message,
+        ]);
+    }
 }

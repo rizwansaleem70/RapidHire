@@ -60,6 +60,7 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
+    'domain' => env('APP_DOMAIN', 'localhost'),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -71,7 +72,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Karachi',
 
     /*
     |--------------------------------------------------------------------------
@@ -172,6 +173,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\TenancyServiceProvider::class,
+        App\Providers\SuperAdminServiceProvider::class,
+        QCod\Settings\SettingsServiceProvider::class
     ])->toArray(),
 
     /*
@@ -187,6 +190,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        "Settings" => QCod\Settings\Facade::class
     ])->toArray(),
 
 ];

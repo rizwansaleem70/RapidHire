@@ -4,7 +4,10 @@ namespace App\Http\Services;
 
 use App\Contracts\AuthContract;
 use App\Exceptions\CustomException;
+use App\Mail\OtpSendMail;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 /**
  * @var AuthService
@@ -30,6 +33,20 @@ class AuthService implements AuthContract
 
         if (!($this->model)->checkPassword($data['password'], $user->password))
             throw new CustomException("Invalid Credentials");
+
+        return $user;
+    }
+    public function forgot($data)
+    {
+        dd($data);
+        $user = User::where('email', $data['email'])->first();
+        if ($user){
+            $otp = Str::random(7);
+            $mail = Mail::to($user->email)->send(new OtpSendMail($otp));
+            dd($mail);
+        }
+        $model = new $this->model;
+        $user = $this->prepareData($model, $data, false);
 
         return $user;
     }
