@@ -37,6 +37,9 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
 //    Route::post('forgot', [AuthController::class, 'forgot']);
 
     Route::group(['middleware' => 'auth:sanctum'], function () {
+        Route::post('change-password', [AuthController::class, 'changePassword']);
+        Route::get('delete-profile', [AuthController::class, 'deleteProfile']);
+        Route::get('logout', [AuthController::class, 'logout']);
         Route::apiResources(['category' => CategoriesController::class]);
         Route::apiResources(['location' => LocationsController::class]);
         Route::apiResources(['job' => JobsController::class]);
