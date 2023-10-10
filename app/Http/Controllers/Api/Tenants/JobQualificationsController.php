@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Tenants;
 use App\Contracts\Tenants\CategoryContract;
 use App\Contracts\Tenants\JobQualificationContract;
 use App\Exceptions\CustomException;
-use App\Helpers\helper;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\StoreJobQualificationRequest;
 use App\Http\Requests\Tenants\UpdateJobQualificationRequest;
@@ -17,10 +17,9 @@ use Illuminate\Support\Facades\DB;
 class JobQualificationsController extends Controller
 {
     public JobQualificationContract $jobQualification;
-    public function __construct( JobQualificationContract $jobQualification)
+    public function __construct(JobQualificationContract $jobQualification)
     {
         $this->jobQualification = $jobQualification;
-
     }
     /**
      * Display a listing of the resource.
@@ -30,11 +29,11 @@ class JobQualificationsController extends Controller
         try {
             $jobQualification = $this->jobQualification->index();
             $jobQualification = new JobQualificationCollection($jobQualification);
-            return $this->successResponse( "Successfully", $jobQualification);
+            return $this->successResponse("Successfully", $jobQualification);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("jobQualification index", 'none', $th->getMessage());
+            Helper::logMessage("jobQualification index", 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -49,11 +48,11 @@ class JobQualificationsController extends Controller
             $jobQualification = $this->jobQualification->store($request->prepareRequest());
             $jobQualification = new JobQualification($jobQualification);
             DB::commit();
-            return $this->successResponse("Job Qualification Added Successfully",$jobQualification);
+            return $this->successResponse("Job Qualification Added Successfully", $jobQualification);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("jobQualification index", $request->input(), $th->getMessage());
+            Helper::logMessage("jobQualification index", $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -66,11 +65,11 @@ class JobQualificationsController extends Controller
         try {
             $jobQualification = $this->jobQualification->show($id);
             $jobQualification = new JobQualification($jobQualification);
-            return $this->successResponse( "Job Qualification Found Successfully", $jobQualification);
+            return $this->successResponse("Job Qualification Found Successfully", $jobQualification);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("jobQualification show", 'id ='.$id, $th->getMessage());
+            Helper::logMessage("jobQualification show", 'id =' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -85,11 +84,11 @@ class JobQualificationsController extends Controller
             $jobQualification = $this->jobQualification->update($request->prepareRequest(), $id);
             $jobQualification = new JobQualification($jobQualification);
             DB::commit();
-            return $this->successResponse("Job Qualification Updated Successfully",$jobQualification);
+            return $this->successResponse("Job Qualification Updated Successfully", $jobQualification);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("jobQualification update (id = )".$id, $request->input(), $th->getMessage());
+            Helper::logMessage("jobQualification update (id = )" . $id, $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -107,7 +106,7 @@ class JobQualificationsController extends Controller
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("jobQualification destroy", 'id = '.$id , $th->getMessage());
+            Helper::logMessage("jobQualification destroy", 'id = ' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }

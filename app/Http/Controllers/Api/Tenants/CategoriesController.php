@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Tenants;
 
 use App\Contracts\Tenants\CategoryContract;
 use App\Exceptions\CustomException;
-use App\Helpers\helper;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\StoreCategoryRequest;
 use App\Http\Requests\Tenants\UpdateCategoryRequest;
@@ -19,21 +19,20 @@ class CategoriesController extends Controller
      */
     public $category;
 
-    public function __construct( CategoryContract $category)
+    public function __construct(CategoryContract $category)
     {
         $this->category = $category;
-
     }
     public function index()
     {
         try {
             $category = $this->category->index();
             $category = new CategoryCollection($category);
-            return $this->successResponse( "Successfully", $category);
+            return $this->successResponse("Successfully", $category);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("category index", 'none', $th->getMessage());
+            Helper::logMessage("category index", 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -56,11 +55,11 @@ class CategoriesController extends Controller
             $category = $this->category->store($request->prepareRequest());
             $category = new Category($category);
             DB::commit();
-            return $this->successResponse("Category Added Successfully",$category);
+            return $this->successResponse("Category Added Successfully", $category);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("category index", $request->input(), $th->getMessage());
+            Helper::logMessage("category index", $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -73,11 +72,11 @@ class CategoriesController extends Controller
         try {
             $category = $this->category->show($id);
             $category = new Category($category);
-            return $this->successResponse( "Category Found Successfully", $category);
+            return $this->successResponse("Category Found Successfully", $category);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("category show", 'id ='.$id, $th->getMessage());
+            Helper::logMessage("category show", 'id =' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -100,11 +99,11 @@ class CategoriesController extends Controller
             $category = $this->category->update($request->prepareRequest(), $id);
             $category = new Category($category);
             DB::commit();
-            return $this->successResponse("Category Updated Successfully",$category);
+            return $this->successResponse("Category Updated Successfully", $category);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("category update (id = )".$id, $request->input(), $th->getMessage());
+            Helper::logMessage("category update (id = )" . $id, $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -122,7 +121,7 @@ class CategoriesController extends Controller
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("category destroy", 'id = '.$id , $th->getMessage());
+            Helper::logMessage("category destroy", 'id = ' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }

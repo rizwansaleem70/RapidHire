@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Tenants;
 
 use App\Contracts\Tenants\SocialMediaContract;
 use App\Exceptions\CustomException;
-use App\Helpers\helper;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\StoreSocialMediaRequest;
 use App\Http\Requests\Tenants\UpdateSocialMediaRequest;
@@ -16,10 +16,9 @@ use Illuminate\Support\Facades\DB;
 class SocialMediasController extends Controller
 {
     public SocialMediaContract $socialMedia;
-    public function __construct( SocialMediaContract $socialMedia)
+    public function __construct(SocialMediaContract $socialMedia)
     {
         $this->socialMedia = $socialMedia;
-
     }
     /**
      * Display a listing of the resource.
@@ -29,11 +28,11 @@ class SocialMediasController extends Controller
         try {
             $socialMedia = $this->socialMedia->index();
             $socialMedia = new SocialMediaCollection($socialMedia);
-            return $this->successResponse( "Successfully", $socialMedia);
+            return $this->successResponse("Successfully", $socialMedia);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("socialMedia index", 'none', $th->getMessage());
+            Helper::logMessage("socialMedia index", 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -48,11 +47,11 @@ class SocialMediasController extends Controller
             $socialMedia = $this->socialMedia->store($request->prepareRequest());
             $socialMedia = new SocialMedia($socialMedia);
             DB::commit();
-            return $this->successResponse("Social Media Added Successfully",$socialMedia);
+            return $this->successResponse("Social Media Added Successfully", $socialMedia);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("socialMedia index", $request->input(), $th->getMessage());
+            Helper::logMessage("socialMedia index", $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -65,11 +64,11 @@ class SocialMediasController extends Controller
         try {
             $socialMedia = $this->socialMedia->show($id);
             $socialMedia = new SocialMedia($socialMedia);
-            return $this->successResponse( "Social Media Found Successfully", $socialMedia);
+            return $this->successResponse("Social Media Found Successfully", $socialMedia);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("socialMedia show", 'id ='.$id, $th->getMessage());
+            Helper::logMessage("socialMedia show", 'id =' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -84,11 +83,11 @@ class SocialMediasController extends Controller
             $socialMedia = $this->socialMedia->update($request->prepareRequest(), $id);
             $socialMedia = new SocialMedia($socialMedia);
             DB::commit();
-            return $this->successResponse("Social Media Updated Successfully",$socialMedia);
+            return $this->successResponse("Social Media Updated Successfully", $socialMedia);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("socialMedia update (id = )".$id, $request->input(), $th->getMessage());
+            Helper::logMessage("socialMedia update (id = )" . $id, $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -106,7 +105,7 @@ class SocialMediasController extends Controller
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("socialMedia destroy", 'id = '.$id , $th->getMessage());
+            Helper::logMessage("socialMedia destroy", 'id = ' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Tenants;
 
 use App\Contracts\Tenants\LocationContract;
 use App\Exceptions\CustomException;
-use App\Helpers\helper;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\StoreLocationRequest;
 use App\Http\Requests\Tenants\UpdateLocationRequest;
@@ -20,7 +20,6 @@ class LocationsController extends Controller
     public function __construct(LocationContract $location)
     {
         $this->location = $location;
-
     }
     /**
      * Display a listing of the resource.
@@ -30,11 +29,11 @@ class LocationsController extends Controller
         try {
             $location = $this->location->index();
             $location = new LocationCollection($location);
-            return $this->successResponse( "Successfully Fetch", $location);
+            return $this->successResponse("Successfully Fetch", $location);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("location index", 'none', $th->getMessage());
+            Helper::logMessage("location index", 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -49,11 +48,11 @@ class LocationsController extends Controller
             $location = $this->location->store($request->prepareRequest());
             $location = new Location($location);
             DB::commit();
-            return $this->successResponse("Location Added Successfully",$location);
+            return $this->successResponse("Location Added Successfully", $location);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("location index", $request->input(), $th->getMessage());
+            Helper::logMessage("location index", $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -66,11 +65,11 @@ class LocationsController extends Controller
         try {
             $location = $this->location->show($id);
             $location = new Location($location);
-            return $this->successResponse( "Location Found Successfully", $location);
+            return $this->successResponse("Location Found Successfully", $location);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("location show", 'id ='.$id, $th->getMessage());
+            Helper::logMessage("location show", 'id =' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -85,11 +84,11 @@ class LocationsController extends Controller
             $location = $this->location->update($request->prepareRequest(), $id);
             $location = new Location($location);
             DB::commit();
-            return $this->successResponse("Location Updated Successfully",$location);
+            return $this->successResponse("Location Updated Successfully", $location);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("location update (id = )".$id, $request->input(), $th->getMessage());
+            Helper::logMessage("location update (id = )" . $id, $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -107,7 +106,7 @@ class LocationsController extends Controller
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("location destroy", 'id = '.$id , $th->getMessage());
+            Helper::logMessage("location destroy", 'id = ' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }

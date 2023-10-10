@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Tenants\DepartmentsController;
 use App\Http\Controllers\Api\Tenants\JobQualificationsController;
 use App\Http\Controllers\Api\Tenants\JobsController;
 use App\Http\Controllers\Api\Tenants\LocationsController;
+use App\Http\Controllers\Api\Tenants\MemberController;
 use App\Http\Controllers\Api\Tenants\SettingsController;
 use App\Http\Controllers\Api\Tenants\SocialMediasController;
 use Illuminate\Support\Facades\Route;
@@ -25,16 +26,17 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 | Feel free to customize them however you want. Good luck!
 |
 */
-Route::middleware(['web',InitializeTenancyByDomain::class, PreventAccessFromCentralDomains::class,])->group(function () {
-    Route::get('/',function (){
-        return 'tenant application'.tenant('id');
+
+Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCentralDomains::class,])->group(function () {
+    Route::get('/', function () {
+        return 'tenant application' . tenant('id');
     });
 });
 
 Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
-//    Route::post('forgot', [AuthController::class, 'forgot']);
+    //    Route::post('forgot', [AuthController::class, 'forgot']);
 
     Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::apiResources(['category' => CategoriesController::class]);
@@ -44,5 +46,6 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['job-qualification' => JobQualificationsController::class]);
         Route::apiResources(['social-media' => SocialMediasController::class]);
         Route::apiResources(['setting' => SettingsController::class]);
+        Route::apiResources(['members' => MemberController::class]);
     });
 });
