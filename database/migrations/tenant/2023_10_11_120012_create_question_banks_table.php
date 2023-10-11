@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('input_type');
             $table->text('question');
             $table->boolean('is_active')->default(true);
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign('department_id')->references('id')->on('departments')->onUpdate('cascade')->onDelete('cascade');
 

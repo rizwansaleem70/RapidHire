@@ -5,7 +5,7 @@ namespace App\Http\Requests\Tenants;
 
 use App\Abstracts\FormRequest;
 
-class StoreJobQualificationRequest extends FormRequest
+class StoreJobRequirementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,8 @@ class StoreJobQualificationRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'type' => 'required',
+            'input_type' => 'required',
+            'option' => 'required',
         ];
     }
 
@@ -33,7 +34,8 @@ class StoreJobQualificationRequest extends FormRequest
         $request = $this;
         return [
             'name' => $request['name'],
-            'type' => $request['type'],
+            'input_type' => $request['input_type'],
+            'option' => $request['option'],
         ];
     }
 }

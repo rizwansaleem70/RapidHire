@@ -3,9 +3,9 @@
 namespace App\Contracts\Tenants;
 
 /**
-* @var JobQualificationContract
+* @var JobRequirementContract
 */
-interface JobQualificationContract
+interface JobRequirementContract
 {
     public function index();
     public function show($id);

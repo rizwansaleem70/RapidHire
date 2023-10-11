@@ -6,7 +6,7 @@ use App\Contracts\AuthContract;
 use App\Contracts\Tenants\CategoryContract;
 use App\Contracts\Tenants\DepartmentContract;
 use App\Contracts\Tenants\JobContract;
-use App\Contracts\Tenants\JobQualificationContract;
+use App\Contracts\Tenants\JobRequirementContract;
 use App\Contracts\Tenants\LocationContract;
 use App\Contracts\Tenants\MemberContract;
 use App\Contracts\Tenants\QuestionBankContract;
@@ -15,7 +15,7 @@ use App\Contracts\Tenants\SocialMediaContract;
 use App\Http\Services\AuthService;
 use App\Http\Services\Tenants\CategoryService;
 use App\Http\Services\Tenants\DepartmentService;
-use App\Http\Services\Tenants\JobQualificationService;
+use App\Http\Services\Tenants\JobRequirementService;
 use App\Http\Services\Tenants\JobService;
 use App\Http\Services\Tenants\LocationService;
 use App\Http\Services\Tenants\MemberService;
@@ -62,9 +62,9 @@ class TenantServiceProvider extends ServiceProvider
             }
         );
         $this->app->bind(
-            JobQualificationContract::class,
+            JobRequirementContract::class,
             function ($app) {
-                return $app->make(JobQualificationService::class);
+                return $app->make(JobRequirementService::class);
             }
         );
         $this->app->bind(

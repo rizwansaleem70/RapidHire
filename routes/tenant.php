@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\Tenants\CategoriesController;
 use App\Http\Controllers\Api\Tenants\DepartmentsController;
-use App\Http\Controllers\Api\Tenants\JobQualificationsController;
+use App\Http\Controllers\Api\Tenants\JobRequirementController;
 use App\Http\Controllers\Api\Tenants\JobsController;
 use App\Http\Controllers\Api\Tenants\LocationsController;
 use App\Http\Controllers\Api\Tenants\MemberController;
@@ -47,7 +47,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['location' => LocationsController::class]);
         Route::apiResources(['job' => JobsController::class]);
         Route::apiResources(['department' => DepartmentsController::class]);
-        Route::apiResources(['job-qualification' => JobQualificationsController::class]);
+        Route::apiResources(['job-requirement' => JobRequirementController::class]);
         Route::apiResources(['social-media' => SocialMediasController::class]);
         Route::apiResources(['setting' => SettingsController::class]);
         Route::apiResources(['members' => MemberController::class]);
