@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Tenants\JobQualificationsController;
 use App\Http\Controllers\Api\Tenants\JobsController;
 use App\Http\Controllers\Api\Tenants\LocationsController;
 use App\Http\Controllers\Api\Tenants\MemberController;
+use App\Http\Controllers\Api\Tenants\QuestionBanksController;
 use App\Http\Controllers\Api\Tenants\SettingsController;
 use App\Http\Controllers\Api\Tenants\SocialMediasController;
 use Illuminate\Support\Facades\Route;
@@ -50,5 +51,6 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['social-media' => SocialMediasController::class]);
         Route::apiResources(['setting' => SettingsController::class]);
         Route::apiResources(['members' => MemberController::class]);
+        Route::apiResources(['question-bank' => QuestionBanksController::class]);
     });
 });
