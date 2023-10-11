@@ -16,7 +16,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Department::class,'department_id');
             $table->string('input_type');
-            $table->boolean('is_active')->default(false);
+            $table->text('question');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
             $table->foreign('department_id')->references('id')->on('departments')->onUpdate('cascade')->onDelete('cascade');
 

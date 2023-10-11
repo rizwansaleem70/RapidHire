@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\Tenants\Category;
+use App\Models\Tenants\Department;
+use App\Models\Tenants\Location;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,10 +17,12 @@ return new class extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('location_id');
-            $table->unsignedBigInteger('category_id');
+            $table->foreignIdFor(User::class,'user_id');
+            $table->foreignIdFor(Location::class,'location_id');
+            $table->foreignIdFor(Category::class,'category_id');
+            $table->foreignIdFor(Department::class,'department_id');
             $table->string('name');
+            $table->text('job_description');
             $table->enum('type', ['contract', 'full-time', 'temporary', 'part-time'])->default('contract');
             $table->enum('job_type', ['onSite', 'remote', 'hybrid'])->default('onSite');
             $table->decimal('min_salary', 10, 2)->default(0);
@@ -33,6 +39,7 @@ return new class extends Migration
             $table->foreign('location_id')->references('id')->on('locations')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('department_id')->references('id')->on('departments')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

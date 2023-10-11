@@ -62,6 +62,9 @@ class QuestionBankService implements QuestionBankContract
         if (isset($data['input_type']) && $data['input_type']) {
             $model->input_type = $data['input_type'];
         }
+        if (isset($data['question']) && $data['question']) {
+            $model->question = $data['question'];
+        }
         if (isset($data['is_active']) && $data['is_active']) {
             $model->is_active = $data['is_active'];
         }
