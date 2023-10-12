@@ -6,11 +6,13 @@ use App\Contracts\Tenants\JobContract;
 use App\Exceptions\CustomException;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tenants\GetQuestionListRequest;
 use App\Http\Requests\Tenants\StoreJobRequest;
 use App\Http\Requests\Tenants\UpdateJobRequest;
+use App\Http\Resources\Tenants\Department;
+use App\Http\Resources\Tenants\DepartmentCollection;
 use App\Http\Resources\Tenants\Job;
 use App\Http\Resources\Tenants\JobCollection;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class JobsController extends Controller
@@ -60,12 +62,12 @@ class JobsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function questionList(GetQuestionListRequest $request)
     {
         try {
-            $job = $this->job->show($id);
-            $job = new Job($job);
-            return $this->successResponse("Job Found Successfully", $job);
+            $job = $this->job->questionList($request->department_id);
+            $job = new DepartmentCollection($job);
+            return $this->successResponse("Department Records Found Successfully", $job);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {

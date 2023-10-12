@@ -46,6 +46,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['category' => CategoriesController::class]);
         Route::apiResources(['location' => LocationsController::class]);
         Route::apiResources(['job' => JobsController::class]);
+        Route::post('question-list/{id?}' , [JobsController::class,'questionList']);
         Route::apiResources(['department' => DepartmentsController::class]);
         Route::apiResources(['job-requirement' => JobRequirementController::class]);
         Route::apiResources(['social-media' => SocialMediasController::class]);

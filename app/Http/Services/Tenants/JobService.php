@@ -6,6 +6,7 @@ use App\Contracts\Tenants\JobContract;
 use App\Exceptions\CustomException;
 use App\Models\JobHiringManager;
 use App\Models\JobQuestion;
+use App\Models\Tenants\Department;
 use App\Models\Tenants\Job;
 use App\Models\Tenants\QuestionBank;
 use App\Traits\ImageUpload;
@@ -22,11 +23,12 @@ class JobService implements JobContract
     public Job $model;
     private JobHiringManager $jobHiringManagerModel;
     private JobQuestion $jobQuestionModel;
+    private Department $departmentModel;
 
     public function __construct()
     {
         $this->model = new Job();
-        $this->questionBankModel = new QuestionBank();
+        $this->departmentModel = new Department();
         $this->jobQuestionModel = new JobQuestion();
         $this->jobHiringManagerModel = new JobHiringManager();
     }
@@ -34,13 +36,9 @@ class JobService implements JobContract
     {
         return $this->model->latest()->get();
     }
-    public function show($id)
+    public function questionList($id)
     {
-        $model = $this->model->find($id);
-        if (empty($model)) {
-            throw new CustomException("Job Record Not Found!");
-        }
-        return $model;
+        return $this->departmentModel->whereId($id)->get();
     }
 
     public function store($data)
