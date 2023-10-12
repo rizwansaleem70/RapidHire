@@ -12,6 +12,7 @@ use App\Contracts\Tenants\MemberContract;
 use App\Contracts\Tenants\QuestionBankContract;
 use App\Contracts\Tenants\SettingContract;
 use App\Contracts\Tenants\SocialMediaContract;
+use App\Contracts\Tenants\TestContract;
 use App\Contracts\Tenants\TestServiceContract;
 use App\Http\Services\AuthService;
 use App\Http\Services\Tenants\CategoryService;
@@ -23,6 +24,7 @@ use App\Http\Services\Tenants\MemberService;
 use App\Http\Services\Tenants\QuestionBankService;
 use App\Http\Services\Tenants\SettingService;
 use App\Http\Services\Tenants\SocialMediaService;
+use App\Http\Services\Tenants\TestService;
 use App\Http\Services\Tenants\TestServiceService;
 use Illuminate\Support\ServiceProvider;
 
@@ -97,6 +99,12 @@ class TenantServiceProvider extends ServiceProvider
             TestServiceContract::class,
             function ($app) {
                 return $app->make(TestServiceService::class);
+            }
+        );
+        $this->app->bind(
+            TestContract::class,
+            function ($app) {
+                return $app->make(TestService::class);
             }
         );
     }

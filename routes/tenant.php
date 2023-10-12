@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\Tenants\MemberController;
 use App\Http\Controllers\Api\Tenants\QuestionBanksController;
 use App\Http\Controllers\Api\Tenants\SettingsController;
 use App\Http\Controllers\Api\Tenants\SocialMediasController;
+use App\Http\Controllers\Api\Tenants\TestsController;
 use App\Http\Controllers\Api\Tenants\TestServicesController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -55,5 +56,6 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['members' => MemberController::class]);
         Route::apiResources(['question-bank' => QuestionBanksController::class]);
         Route::apiResources(['test-service' => TestServicesController::class]);
+        Route::apiResources(['test' => TestsController::class]);
     });
 });
