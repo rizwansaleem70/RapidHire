@@ -39,3 +39,11 @@ Route::group(['prefix' => 'tenants','middleware' => 'auth:sanctum'], function ()
 // ], function () {
 //     Route::post('register', [AuthController::class, 'register']);
 // });
+//php artisan make:model Tenants/Test -m
+//php artisan make:controller Api/Tenants/TestsController --api
+//php artisan make:contract Test
+//php artisan make:service Test
+//php artisan make:resource Tenants/Test
+//php artisan make:resource Tenants/TestCollection
+//php artisan make:request Tenants/StoreTestRequest
+//php artisan make:request Tenants/UpdateTestRequest

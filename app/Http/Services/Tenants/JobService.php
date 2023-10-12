@@ -121,6 +121,7 @@ class JobService implements JobContract
         $model->save();
         $model->jobQuestion()->sync($data['question_bank_id']);
         $model->jobHiringManager()->sync($data['job_hiring_manager_id']);
+        $model->jobTestService()->sync($data['test_service_id']);
         return $model;
     }
 }
