@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Tenants\Job;
 use App\Traits\SoftDeleteColumnValuesUpdate;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
@@ -46,38 +47,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    protected static function boot()
-    {
-        parent::boot();
-        if (auth()->check()){
-            // updating created_by and updated_by when model is created
-            static::creating(function ($model) {
-                if (!$model->isDirty('created_by')) {
-                    $model->created_by = auth()->user()->id;
-                }
-                if (!$model->isDirty('updated_by')) {
-                    $model->updated_by = auth()->user()->id;
-                }
-            });
-
-            // updating updated_by when model is updated
-            static::updating(function ($model) {
-                if (!$model->isDirty('updated_by')) {
-                    $model->updated_by = auth()->user()->id;
-                }
-            });
-
-            // deleting deleting_by when model is updated
-            static::deleted(function ($model) {
-                if (!$model->isDirty('deleted_by')) {
-                    $model->deleted_by = auth()->user()->id;
-                    $model->save();
-                }
-            });
-        }
-    }
     public static function checkPassword($current_password, $hash_password)
     {
         return Hash::check($current_password, $hash_password);
+    }
+    public function jobHiringManager(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Job::class,'job_hiring_managers','user_id','job_id');
     }
 }

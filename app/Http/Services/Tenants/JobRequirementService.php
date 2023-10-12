@@ -2,19 +2,19 @@
 
 namespace App\Http\Services\Tenants;
 
-use App\Contracts\Tenants\JobQualificationContract;
+use App\Contracts\Tenants\JobRequirementContract;
 use App\Exceptions\CustomException;
-use App\Models\Tenants\JobQualification;
+use App\Models\Tenants\JobRequirement;
 
 /**
-* @var JobQualificationService
+* @var JobRequirementService
 */
-class JobQualificationService implements JobQualificationContract
+class JobRequirementService implements JobRequirementContract
 {
-    public JobQualification $model;
+    public JobRequirement $model;
     public function __construct()
     {
-        $this->model = new JobQualification();
+        $this->model = new JobRequirement();
     }
 
     public function index()
@@ -28,7 +28,7 @@ class JobQualificationService implements JobQualificationContract
     public function show($id)
     {
         $model = $this->model->find($id);
-        return empty($model) ? throw new CustomException("Job Qualification Not Found!") : $model;
+        return empty($model) ? throw new CustomException("Job Requirement Not Found!") : $model;
     }
 
     /**
@@ -36,9 +36,9 @@ class JobQualificationService implements JobQualificationContract
      */
     public function store($data)
     {
-        $jobQualification = $this->model->where('name', $data['name'])->first();
-        if ($jobQualification) {
-            throw new CustomException("Job Qualification is already exist!");
+        $jobRequirement = $this->model->where('name', $data['name'])->first();
+        if ($jobRequirement) {
+            throw new CustomException("Job Requirement is already exist!");
         }
         $model = new $this->model;
         return $this->prepareData($model, $data, true);
@@ -49,7 +49,7 @@ class JobQualificationService implements JobQualificationContract
     public function update($data, $id)
     {
         $model = $this->model->find($id);
-        if (empty($model)) throw new CustomException("Job Qualification Not Found!");
+        if (empty($model)) throw new CustomException("Job Requirement Not Found!");
         return $this->prepareData($model, $data, false);
     }
 
@@ -58,11 +58,11 @@ class JobQualificationService implements JobQualificationContract
      */
     public function delete($id)
     {
-        $jobQualification = $this->model->find($id);
-        if (empty($jobQualification)) {
-            throw new CustomException("Job Qualification Not Found!");
+        $jobRequirement = $this->model->find($id);
+        if (empty($jobRequirement)) {
+            throw new CustomException("Job Requirement Not Found!");
         }
-        $jobQualification->delete();
+        $jobRequirement->delete();
         return true;
     }
     private function prepareData($model, $data, $new_record = false)
@@ -70,8 +70,11 @@ class JobQualificationService implements JobQualificationContract
         if (isset($data['name']) && $data['name']) {
             $model->name = $data['name'];
         }
-        if (isset($data['type']) && $data['type']) {
-            $model->type = $data['type'];
+        if (isset($data['input_type']) && $data['input_type']) {
+            $model->input_type = $data['input_type'];
+        }
+        if (isset($data['option']) && $data['option']) {
+            $model->option = $data['option'];
         }
         $model->save();
         return $model;

@@ -2,19 +2,19 @@
 
 namespace App\Http\Services\Tenants;
 
-use App\Contracts\Tenants\LocationContract;
+use App\Contracts\Tenants\QuestionBankContract;
 use App\Exceptions\CustomException;
-use App\Models\Tenants\Location;
+use App\Models\Tenants\QuestionBank;
 
 /**
-* @var LocationService
+* @var QuestionBankService
 */
-class LocationService implements LocationContract
+class QuestionBankService implements QuestionBankContract
 {
-    public Location $model;
+    public QuestionBank $model;
     public function __construct()
     {
-        $this->model = new Location();
+        $this->model = new QuestionBank();
     }
     public function index()
     {
@@ -24,7 +24,7 @@ class LocationService implements LocationContract
     {
         $model = $this->model->find($id);
         if (empty($model)) {
-            throw new CustomException("Location Not Found!");
+            throw new CustomException("Category Not Found!");
         }
         return $model;
     }
@@ -32,6 +32,7 @@ class LocationService implements LocationContract
     public function store($data)
     {
         $model = new $this->model;
+        $data['is_active'] = true;
         return $this->prepareData($model, $data, true);
     }
 
@@ -39,7 +40,7 @@ class LocationService implements LocationContract
     {
         $model = $this->model->find($id);
         if (empty($model)) {
-            throw new CustomException("Location Record Not Found!");
+            throw new CustomException("Question Record Not Found!");
         }
         return $this->prepareData($model, $data, false);
     }
@@ -48,21 +49,24 @@ class LocationService implements LocationContract
     {
         $location = $this->model->find($id);
         if (empty($location)) {
-            throw new CustomException("Location Record Not Found!");
+            throw new CustomException("Question Record Not Found!");
         }
         $location->delete();
         return true;
     }
     private function prepareData($model, $data, $new_record = false)
     {
-        if (isset($data['name']) && $data['name']) {
-            $model->name = $data['name'];
+        if (isset($data['department_id']) && $data['department_id']) {
+            $model->department_id = $data['department_id'];
         }
-        if (isset($data['latitude']) && $data['latitude']) {
-            $model->latitude = $data['latitude'];
+        if (isset($data['input_type']) && $data['input_type']) {
+            $model->input_type = $data['input_type'];
         }
-        if (isset($data['longitude']) && $data['longitude']) {
-            $model->longitude = $data['longitude'];
+        if (isset($data['question']) && $data['question']) {
+            $model->question = $data['question'];
+        }
+        if (isset($data['is_active']) && $data['is_active']) {
+            $model->is_active = $data['is_active'];
         }
         $model->save();
         return $model;

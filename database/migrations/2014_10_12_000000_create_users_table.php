@@ -19,14 +19,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->foreignIdFor(User::class,'created_by')->nullable();
-            $table->foreignIdFor(User::class,'updated_by')->nullable();
-            $table->foreignIdFor(User::class,'deleted_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('created_by')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('updated_by')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('deleted_by')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
