@@ -1,4 +1,4 @@
-@include('users.login.layouts.header')
+@include('users.auth.layouts.header')
 
 <style>
   @media (max-width: 767px) {
@@ -48,7 +48,7 @@
   <!-- Boxed -->
   <div class="boxed">
 
-  <section class="account-section" style="background-image: url(./images/used/Signin.png);
+  <section class="account-section" style="background-image: url(./app-assets/users/images/used/Signin.png);
   background-size: cover; /* Adjust the background size property */
   background-repeat: no-repeat; /* Prevent the background image from repeating */
   width: 100%;
@@ -79,7 +79,7 @@
         <div class="col-lg-6 wd-form-login "style="float:right">
           <div class="container card" style="padding: 4%;background-color: fbfcfc;">
           <strong><h6 style="text-align: initial; margin-top: 2%;">Sign in</h6></strong>
-          <div class="sign-up" style="text-align: initial;"><strong>New User?</strong><a href="signup.html" style="color: #0A66C2;">Create an Account</a></div>
+          <div class="sign-up" style="text-align: initial;"><strong>New User?</strong><a href="{{route('tenant-user-signup')}}" style="color: #0A66C2;">Create an Account</a></div>
           <form action="home.html" style="margin-top: 5%;">
             <div class="ip">
 
@@ -95,7 +95,7 @@
             </div>
             <div class="group-ant-choice">
               <!-- <div class="sub-ip"><input type="checkbox">Remember me</div> -->
-              <a href="reset-pasword.html" class="forgot"><strong>Forgot password?</strong></a>
+              <a href="{{route('tenant-user-reset-password')}}" class="forgot"><strong>Forgot password?</strong></a>
               <button type="submit">Sign in</button>
             </div>
             <p class="line-ip"><span>or</span></p>
@@ -123,4 +123,4 @@
   </div>
   <!-- /.boxed -->
 
-@include('users.login.layouts.footer')
+@include('users.auth.layouts.footer')

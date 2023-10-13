@@ -16,7 +16,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
   <!-- Font -->
-  <link rel="stylesheet" href="fonts/fonts.css" />
+  <link rel="stylesheet" href="{{asset('app-assets/users/fonts/fonts.css')}}" />
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="{{asset('app-assets/users/stylesheets/bootstrap.min.css')}}"/>
@@ -31,6 +31,7 @@
   <!-- Theme Style -->
   <link rel="stylesheet" type="text/css" href="{{asset('app-assets/users/stylesheets/shortcodes.css')}}" />
   <link rel="stylesheet" type="text/css" href="{{asset('app-assets/users/stylesheets/style.css')}}" />
+  <link rel="stylesheet" type="text/css" href="{{asset('app-assets/users/stylesheets/jquery.fancybox.min.css')}}"/>
 
   <!-- Favicon and Touch Icons  -->
   <link rel="shortcut icon" href="{{asset('app-assets/users/images/used/d.png')}}">
@@ -40,6 +41,17 @@
 
   <!-- Responsive -->
   <link rel="stylesheet" type="text/css" href="{{asset('app-assets/users/stylesheets/responsive.css')}}" />
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-....">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
 
 </head>

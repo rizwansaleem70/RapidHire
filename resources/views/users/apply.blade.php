@@ -1,9 +1,9 @@
 @extends('users.layouts.main')
 @section('main-section')
 
-  <section class="single-job-thumb">
-          <img src="images/used/Hero.png" alt="images"  style="width:100%">
-  </section>
+    <section class="single-job-thumb">
+        <img src="{{asset('app-assets/users/images/used/Hero.png')}}" alt="images"  style="width:100%">
+    </section>
 
   <section class="form-sticky fixed-space">
     <div class="tf-container">
@@ -12,7 +12,7 @@
           <div class="wd-job-author2">
             <div class="content-left">
               <div class="thumb">
-                <img src="images/logo-company/cty4.png" alt="logo">
+                <img src="{{asset('app-assets/users/images/logo-company/cty4.png')}}" alt="logo">
               </div>
               <div class="content">
                 <a href="#" class="category">Rockstar Games New York</a>
@@ -33,7 +33,7 @@
               <div class="top">
                 <a href="#" class="share"><i class="icon-share2"></i></a>
                 <a href="#" class="wishlist"><i class="icon-heart"></i></a>
-                <a href="login.html" class="btn btn-popup"><i class="icon-send"></i>Apply Now</a>
+                <a href="{{route('tenant-user-submit')}}" class="btn btn-popup"><i class="icon-send"></i>Apply Now</a>
               </div>
               <div class="bottom">
 
@@ -164,7 +164,7 @@
                   <div class="content-tab2">
                     <div class="inner">
                       <div class="thumb">
-                        <img src="images/review/thumbv3.jpg" alt="images">
+                        <img src="{{asset('app-assets/users/images/review/thumbv3.jpg')}}" alt="images">
                         <a href="https://www.youtube.com/watch?v=MLpWrANjFbI" class="lightbox-image">
                           <svg width="56" height="56" viewBox="0 0 56 56" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -180,9 +180,9 @@
                     </div>
                   </div>
                   <ul class="thumb-menu menu-tab2">
-                    <li class="ct-tab2"> <a class="lightbox-gallery" href="images/review/thumbv4.jpg"><img src="images/review/thumbv4.jpg" alt="images"></a> </li>
-                    <li class="ct-tab2"> <a class="lightbox-gallery" href="images/review/thumbv1.jpg"><img src="images/review/thumbv1.jpg" alt="images"></a></li>
-                    <li class="ct-tab2"><a class="lightbox-gallery" href="images/review/thumbv2.jpg"><img src="images/review/thumbv2.jpg" alt="images"></a></li>
+                    <li class="ct-tab2"> <a class="lightbox-gallery" href="images/review/thumbv4.jpg"><img src="{{asset('app-assets/users/images/review/thumbv4.jpg')}}" alt="images"></a> </li>
+                    <li class="ct-tab2"> <a class="lightbox-gallery" href="images/review/thumbv1.jpg"><img src="{{asset('app-assets/users/images/review/thumbv1.jpg')}}" alt="images"></a></li>
+                    <li class="ct-tab2"><a class="lightbox-gallery" href="images/review/thumbv2.jpg"><img src="{{asset('app-assets/users/images/review/thumbv2.jpg')}}" alt="images"></a></li>
                   </ul>
                 </div>
 
@@ -256,7 +256,7 @@
                         <div class="top-content">
                           <div class="avatar">
                             <div class="avt">
-                              <img src="images/review/avt.jpg" alt="images">
+                              <img src="{{asset('app-assets/users/images/review/avt.jpg')}}" alt="images">
                             </div>
                             <div class="infor">
                               <h5><a href="#">Dianne Russell</a><svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
@@ -286,7 +286,7 @@
                         <div class="top-content">
                           <div class="avatar">
                             <div class="avt">
-                              <img src="images/review/avt.jpg" alt="images">
+                              <img src="{{asset('app-assets/users/images/review/avt.jpg')}}" alt="images">
                             </div>
                             <div class="infor">
                               <h5><a href="#">Dianne Russell</a><svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
@@ -316,7 +316,7 @@
                         <div class="top-content">
                           <div class="avatar">
                             <div class="avt">
-                              <img src="images/review/avt.jpg" alt="images">
+                              <img src="{{asset('app-assets/users/images/review/avt.jpg')}}" alt="images">
                             </div>
                             <div class="infor">
                               <h5><a href="#">Dianne Russell</a><svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
@@ -350,7 +350,7 @@
                     <div class="job-archive-header">
                       <div class="inner-box">
                         <div class="logo-company">
-                          <img src="images/logo-company/cty2.png"
+                          <img src="{{asset('app-assets/users/images/logo-company/cty2.png')}}"
                             alt="images/logo-company/cty2.png" />
                         </div>
                         <div class="box-content">
@@ -402,7 +402,7 @@
                     <div class="job-archive-header">
                       <div class="inner-box">
                         <div class="logo-company">
-                          <img src="images/logo-company/cty7.png"
+                          <img src="{{asset('app-assets/users/images/logo-company/cty7.png')}}"
                             alt="images/logo-company/cty7.png" />
                         </div>
                         <div class="box-content">
@@ -454,7 +454,7 @@
                     <div class="job-archive-header">
                       <div class="inner-box">
                         <div class="logo-company">
-                          <img src="images/logo-company/cty8.png"
+                          <img src="{{asset('app-assets/users/images/logo-company/cty8.png')}}"
                             alt="images/logo-company/cty8.png" />
                         </div>
                         <div class="box-content">

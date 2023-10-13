@@ -31,10 +31,10 @@
                 Quick Links
               </h6>
               <ul class="navigation-menu-footer">
-                <li> <a href="about-us.html">About</a> </li>
-                <li> <a href="jobs.html">Jobs</a> </li>
+                <li> <a href="{{route('tenant-user-about')}}">About</a> </li>
+                <li> <a href="{{route('tenant-user-jobs')}}">Jobs</a> </li>
 
-                <li> <a href="contact-us.html">Contact Us</a> </li>
+                <li> <a href="{{route('tenant-user-contact-us')}}">Contact Us</a> </li>
 
               </ul>
             </div>
