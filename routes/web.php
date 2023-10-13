@@ -31,3 +31,16 @@ Route::get('/', function () {
 
 // Route::get('Create-User', [App\Http\Controllers\TenantUserController::class, 'create'])->name('user.create');
 // Route::post('Create-User', [App\Http\Controllers\TenantUserController::class, 'store'])->name('user.store');
+
+/*View Routes*/
+Route::view('user-home', 'users/home')->name('tenant-user-home');
+
+Route::view('user-about', 'users/about')->name('tenant-user-about');
+
+Route::view('user-jobs', 'users/jobs')->name('tenant-user-jobs');
+
+Route::view('user-contact-us', 'users/contact-us')->name('tenant-user-contact-us');
+
+Route::view('user-login', 'users/login/login')->name('tenant-user-login');
+
+Route::view('user-apply', 'users/apply')->name('tenant-user-apply');
