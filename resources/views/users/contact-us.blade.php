@@ -1,12 +1,12 @@
 @extends('users.layouts.main')
 @section('main-section')
-
    <!-- wd-slider-map- -->
    <section class="wd-feature-map">
     <div class="tf-slider style-1">
       <div id="map" data-map-zoom="16" data-map-scroll="true"></div>
     </div>
   </section>
+   <div class="container">
 
     <section>
         <div class="tf-container">
@@ -94,5 +94,5 @@
             </div>
         </div>
     </section>
-
+</div>
 @endsection

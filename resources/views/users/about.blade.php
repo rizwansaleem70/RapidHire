@@ -1,6 +1,6 @@
 @extends('users.layouts.main')
 @section('main-section')
-
+<div class="container">
    <!-- WD-review job -->
    <section class="inner-review-section">
     <div class="tf-container">
@@ -797,4 +797,5 @@
     </div>
 
   </section>
+</div>
 @endsection

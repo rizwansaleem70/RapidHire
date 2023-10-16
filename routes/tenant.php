@@ -23,9 +23,19 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 |
 */
 Route::middleware(['web',InitializeTenancyByDomain::class, PreventAccessFromCentralDomains::class,])->group(function () {
-    Route::get('/',function (){
-        return 'tenant application'.tenant('id');
-    });
+//    Route::get('/',function (){
+//        return 'tenant application'.tenant('id');
+//    });
+    Route::view('/', 'users/home')->name('tenant-user-home');
+    Route::view('user-about', 'users/about')->name('tenant-user-about');
+    Route::view('user-jobs', 'users/jobs')->name('tenant-user-jobs');
+    Route::view('user-submit', 'users/submit')->name('tenant-user-submit');
+    Route::view('user-contact-us', 'users/contact-us')->name('tenant-user-contact-us');
+    Route::view('user-login', 'users/auth/login')->name('tenant-user-login');
+    Route::view('user-signup', 'users/auth/signup')->name('tenant-user-signup');
+    Route::view('user-reset-password', 'users/auth/reset-password')->name('tenant-user-reset-password');
+    Route::view('user-reset-password-message', 'users/auth/reset-password-message')->name('tenant-user-reset-password-message');
+    Route::view('user-apply', 'users/apply')->name('tenant-user-apply');
 });
 
 Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
