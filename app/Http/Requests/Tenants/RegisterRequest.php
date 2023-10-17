@@ -44,7 +44,7 @@ class RegisterRequest extends FormRequest
         ];
     }
 
-    public function prepareData()
+    public function prepareData():array
     {
         $data = $this;
         return [

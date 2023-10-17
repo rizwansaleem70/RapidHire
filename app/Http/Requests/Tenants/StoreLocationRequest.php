@@ -28,14 +28,13 @@ class StoreLocationRequest extends FormRequest
         ];
     }
 
-    public function prepareRequest()
+    public function prepareRequest():array
     {
         $request = $this;
-        $data = [
+        return [
             'name' => $request['name'],
             'latitude' => $request['latitude'],
             'longitude' => $request['longitude'],
         ];
-        return $data;
     }
 }

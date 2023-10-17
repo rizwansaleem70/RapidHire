@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    // dd('1696403197', \Carbon\Carbon::createFromTimestamp('1696403197')->toDateTimeString());
     return view('admin.dashboard.index');
 })->name('admin.dashboard.index');
 

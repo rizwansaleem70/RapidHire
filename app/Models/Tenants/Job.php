@@ -2,10 +2,25 @@
 
 namespace App\Models\Tenants;
 
+use App\Models\JobQuestion;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Job extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
+    public function getImageAttribute($value){
+        return url(Storage::url($value));
+    }
+    public function jobQuestion(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(QuestionBank::class,'job_questions','job_id','question_bank_id');
+    }
+    public function jobHiringManager(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(User::class,'job_hiring_managers','job_id','user_id');
+    }
 }

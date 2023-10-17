@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Contracts\AuthContract;
 use App\Exceptions\CustomException;
-use App\Helpers\helper;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ForgotPasswordRequest;
+use App\Http\Requests\Tenants\ChangePasswordRequest;
 use App\Http\Requests\Tenants\LoginRequest;
 use App\Http\Requests\Tenants\RegisterRequest;
 use App\Http\Resources\Tenants\LoginUserResponse;
@@ -34,7 +35,7 @@ class AuthController extends Controller
             return $this->successResponse("User Registered Successfully", $data);
         } catch (\Throwable $th) {
             DB::rollBack();
-            helper::logMessage("register", $request->input(), $th->getMessage());
+            Helper::logMessage("register", $request->input(), $th->getMessage());
             return $this->failedResponse("Something went wrong!");
         }
     }
@@ -52,22 +53,63 @@ class AuthController extends Controller
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("login", $request->input(), $th->getMessage());
+            Helper::logMessage("login", $request->input(), $th->getMessage());
             return $this->failedResponse("Something went wrong!");
         }
     }
-    public function forgot(ForgotPasswordRequest $request){
+    public function forgot(ForgotPasswordRequest $request)
+    {
         try {
             $user = $this->_auth->forgot($request->prepareRequest());
             $data = [
-//                'token' => $user->createToken('API TOKEN')->plainTextToken,
-                'user'=> $user,
+                //                'token' => $user->createToken('API TOKEN')->plainTextToken,
+                'user' => $user,
             ];
             return $this->successResponse(true, "User Found Successfully", $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("login", $request->input(), $th->getMessage());
+            Helper::logMessage("login", $request->input(), $th->getMessage());
+            return $this->failedResponse("Something went wrong!");
+        }
+    }
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        try {
+            $user = $this->_auth->changePassword($request->prepareData());
+            $data = [
+                'token' => $user->createToken(Str::random(10))->plainTextToken,
+                'user' => new LoginUserResponse($user),
+            ];
+            return $this->successResponse("Password change Successfully", $data);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            helper::logMessage("Change password", $request->input(), $th->getMessage());
+            return $this->failedResponse("Something went wrong!");
+        }
+    }
+    public function logout()
+    {
+        try {
+            auth()->user()->tokens()->delete();
+            return $this->okResponse("User Logout Successfully");
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            helper::logMessage("Logout", "Logout", $th->getMessage());
+            return $this->failedResponse("Something went wrong!");
+        }
+    }
+    public function deleteProfile()
+    {
+        try {
+            $this->_auth->deleteProfile(auth()->user()->id);
+            return $this->okResponse("User Delete Successfully");
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            helper::logMessage("delete Profile user id = ".auth()->user()->id, "Delete Profile", $th->getMessage());
             return $this->failedResponse("Something went wrong!");
         }
     }

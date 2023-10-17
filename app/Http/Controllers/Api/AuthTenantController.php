@@ -9,7 +9,8 @@ use App\Http\Resources\AuthTenantRegisterResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use App\Helpers\helper;
+use App\Helpers\Helper;
+
 class AuthTenantController extends Controller
 {
     public $_auth;
@@ -20,13 +21,13 @@ class AuthTenantController extends Controller
     public function register(AuthTenantRegisterRequest $request)
     {
         try {
-//            DB::beginTransaction();
+            //            DB::beginTransaction();
             $this->_auth->register($request->prepareData());
-//            DB::commit();
+            //            DB::commit();
             return $this->okResponse("Tenant Registered Successfully");
         } catch (\Throwable $th) {
             DB::rollBack();
-            helper::logMessage("register", $request->input(), $th->getMessage());
+            Helper::logMessage("register", $request->input(), $th->getMessage());
             return $this->failedResponse("Something went wrong!");
         }
     }

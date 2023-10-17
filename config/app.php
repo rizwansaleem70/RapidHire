@@ -174,6 +174,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\TenancyServiceProvider::class,
         App\Providers\SuperAdminServiceProvider::class,
+        QCod\Settings\SettingsServiceProvider::class
     ])->toArray(),
 
     /*
@@ -189,6 +190,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        "Settings" => QCod\Settings\Facade::class
     ])->toArray(),
 
 ];

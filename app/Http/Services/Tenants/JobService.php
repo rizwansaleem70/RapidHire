@@ -4,10 +4,14 @@ namespace App\Http\Services\Tenants;
 
 use App\Contracts\Tenants\JobContract;
 use App\Exceptions\CustomException;
+use App\Models\JobHiringManager;
+use App\Models\JobQuestion;
 use App\Models\Tenants\Job;
+use App\Models\Tenants\QuestionBank;
 use App\Traits\ImageUpload;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 /**
 * @var JobService
@@ -15,21 +19,26 @@ use Illuminate\Support\Facades\Auth;
 class JobService implements JobContract
 {
     use ImageUpload;
-    public $model;
+    public Job $model;
+    private JobHiringManager $jobHiringManagerModel;
+    private JobQuestion $jobQuestionModel;
+
     public function __construct()
     {
         $this->model = new Job();
+        $this->questionBankModel = new QuestionBank();
+        $this->jobQuestionModel = new JobQuestion();
+        $this->jobHiringManagerModel = new JobHiringManager();
     }
     public function index()
     {
-        $job = $this->model->latest()->get();
-        return $job;
+        return $this->model->latest()->get();
     }
     public function show($id)
     {
         $model = $this->model->find($id);
         if (empty($model)) {
-            throw new CustomException("Category Not Found!");
+            throw new CustomException("Job Record Not Found!");
         }
         return $model;
     }
@@ -37,8 +46,7 @@ class JobService implements JobContract
     public function store($data)
     {
         $model = new $this->model;
-        $job = $this->prepareData($model, $data, true);
-        return $job;
+        return $this->prepareData($model, $data, true);
     }
 
     public function update($data, $id)
@@ -47,8 +55,7 @@ class JobService implements JobContract
         if (empty($model)) {
             throw new CustomException("Job Record Not Found!");
         }
-        $job = $this->prepareData($model, $data, false);
-        return $job;
+        return $this->prepareData($model, $data, false);
     }
 
     public function delete($id)
@@ -69,8 +76,14 @@ class JobService implements JobContract
         if (isset($data['category_id']) && $data['category_id']) {
             $model->category_id = $data['category_id'];
         }
+        if (isset($data['department_id']) && $data['department_id']) {
+            $model->department_id = $data['department_id'];
+        }
         if (isset($data['name']) && $data['name']) {
             $model->name = $data['name'];
+        }
+        if (isset($data['job_description']) && $data['job_description']) {
+            $model->job_description = $data['job_description'];
         }
         if (isset($data['type']) && $data['type']) {
             $model->type = $data['type'];
@@ -106,7 +119,10 @@ class JobService implements JobContract
             $image_path = $this->upload($data['image']);
             $model->image = $image_path;
         }
+
         $model->save();
+        $model->jobQuestion()->sync($data['question_bank_id']);
+        $model->jobHiringManager()->sync($data['job_hiring_manager_id']);
         return $model;
     }
 }

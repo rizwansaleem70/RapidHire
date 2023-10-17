@@ -28,13 +28,12 @@ class UpdateCategoryRequest extends FormRequest
         ];
     }
 
-    public function prepareRequest()
+    public function prepareRequest():array
     {
         $request = $this;
-        $data = [
+        return [
             'name' => $request['name'],
             'parent_id' => $request['parent_id'],
         ];
-        return $data;
     }
 }
