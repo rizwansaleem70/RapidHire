@@ -779,7 +779,7 @@
     </div>
   </section>
   <!--End wd-partner -->
-
+</div>
   <section class="wd-banner-CTA">
     <div class="tf-container">
       <div class="row">
@@ -797,5 +797,4 @@
     </div>
 
   </section>
-</div>
 @endsection

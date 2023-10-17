@@ -1,25 +1,6 @@
 @extends('users.layouts.main')
 @section('main-section')
 
-<style>
-   .button-container {
-            text-align: right; /* Align the button to the right within the container */
-            width: 116%; /* Optional: Add margin for spacing */
-        }
-
-        .button-container button {
-            background-color: #0c3438;
-            color: #ffffff;
-            border-radius: 4px;
-            padding: 8px 24px;
-            border: none;
-            font-weight: 700;
-            font-size: 16px;
-            line-height: 26px;
-            text-transform: none;
-        }
-</style>
-
 <section class="inner-employer-section-two" style="margin-top: 3rem;">
     <div class="tf-container">
       <div class="row">

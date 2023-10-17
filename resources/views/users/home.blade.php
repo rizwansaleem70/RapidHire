@@ -1,51 +1,6 @@
 @extends('users.layouts.main')
 @section('main-section')
-<style>
-  .group-category-job .job-category-box2 {
-    width: calc(32% - 16px);
-    margin-left: 20px;
-    margin-bottom: 20px;
-    box-shadow: 2px 2px 2px rgba(28, 36, 51, 0.1);
-    border-radius: 8px;
-    padding: 66px;
-    background: #fff;
-    text-align: center;
-}
-@media screen and (max-width: 768px) {
-  .group-category-job .job-category-box2 {
-    width: calc(100% - 20px);
-    margin-left: 20px;
-    margin-bottom: 20px;
 
-    border-radius: 8px;
-    padding: 28px;
-
-}
-}
-.circle-img {
-    width: 58px;
-    /* height: 150px; */
-    border: 2px solid #1db5bf;
-    padding: 12px;
-    border-radius: 50%;
-}
-.connect-line {
-            margin-left: 14rem;
-            margin-top: -10rem;
-        }
-
-        .heading-4{
-          margin-top: 1.5rem;
-        }
-        @media (max-width: 1200px) {
-            .connect-line {
-                display: none;
-            }
-            .heading-4{
-          margin-top: 0;
-        }
-        }
-</style>
   <!-- SLIDER-->
   <section class="tf-slider sl4 over-flow-hidden" style="background-color: #0c3438; width: 100% !important;">
     <div class="tf-container">
@@ -326,6 +281,7 @@
     </div>
   </section>
   <!--END WD-JOB -->
+</div>
   <!-- WD-Location -->
   <section class="wd-iconbox flat-row background3 style-2">
     <div class="tf-container">
@@ -484,6 +440,7 @@
     </div>
   </section>
   <!-- END WD-Location -->
+  <div class="container">
   <!-- WD-Review-job -->
   <section class="employer-section-four">
     <div class="tf-container">
