@@ -47,7 +47,7 @@
         }
 </style>
   <!-- SLIDER-->
-  <section class="tf-slider sl4 over-flow-hidden" style="background-color: #0c3438;">
+  <section class="tf-slider sl4 over-flow-hidden" style="background-color: #0c3438; width: 100% !important;">
     <div class="tf-container">
       <div class="row">
         <div class="col-lg-8 col-md-12">
@@ -102,10 +102,8 @@
     </div>
   </section>
   <!-- END SILDER -->
-  <!-- wd-partner -->
-
-  <!--End wd-partner -->
-  <!-- Job-category -->
+<div class="container">
+<!-- Job-category -->
   <section class="job-category-section-three" >
     <div class="tf-container">
       <div class="row">
@@ -550,7 +548,7 @@
               <div class="sl-icon-box box mb-2">
                 <img class="circle-img " src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAADB0lEQVR4nO2YSWgUQRSGP02IxoUEAiLoIaIBjaAnExRc8ODBRG8eTJy4xoMQl4CICqImh4ggRHNKvIgHT4oHBQniRUERwQ13UNGjxuACAbeRBy/QDD3d1TVV047OB3WY7ldvqXnV1f1Dmf+HCmANcBQ4DcykBKkHHgHZwLgKbAAmUEL/xIOcIoLjPCXCyogixscqSoBOg0IOUgJsNijkMCXAaoNC2vnLNnUGeA5cD1zfkbC1uoCt6q/oLAGeBBK7Ebi3EPgVU0ir2k4Ffuq1+8DSYhUgZ8Ah4LsGfwV0hKzmQEQR13LOkhbgtd77AXT7Pmsk2UENKCt+EpiUx3YOMBpShCTaHGI/GegDfqvdWWCir0LOaZBvwFoD+30hhfTHzFkHfFXbQR//zH51/gVYZjhnT0ghPQbzlgeKkcVwRrNuSGmn9Qb2VcCuPK01onsqrm1atc1kLza52hf3NAnp4Ti2AO8NHr8v9AUyihNqe9dFi2XU2VtgSoztcYMCcofMyUc18E7t2got5I46kgMrigaDsyNsyJzFEX63qd3tQopYFOhrWZ0o2i2KyBps6Grgk9rJQWtFtzoYMrCdAey0HPNjfA9pHpKPFZfVwSbSJaN5XLR18EwdLCBdGjUPeTm14qM6qCNd6jQPyceK8RfDStKlUvOQfKwYUQc1pEtN4OlpxSXgpb5ypEmV5mG92f9ZtbC/SGphheuY8nH0OOcUvuJZLax3HVNW5WGR1UIvCmUaaqGXmGmohV5ipqEWeomZhlroJeb2FForqUJpRBK10BXeYp5JoBa6YsBHTFO1UD58DgCzEvqfrfM6LGImZq+BWvhBr4v2dRM4okrkXKBWbWr1d4vevxVoI/kmL1ShjGV3iNPeHBsR0C4AYwabNTjGdF6TgULZiyVRauFnYGOIWjhdlchTwDDwJjB/VH8P633ReKc5iOlELXyqCbnAecxjCdvDVJh2rVD2RDmcZ6kWiti8wrKIBh8x2ywcZhMI3K4Vyr4otbDTUi0U7cmGQhTKRsuYZcqQgD8OBkR7NyLfMQAAAABJRU5ErkJggg==">
               </div>
-              <p class="lead" style="color: #1db5bf; text-align: center;"> COLLABORATION OVER COMPETITION </h6>
+              <p class="lead" style="color: #1db5bf; text-align: center;"> COLLABORATION OVER COMPETITION </p>
             </div>
             <div class="wd-testimonials mt-2">
               <p class="description">
