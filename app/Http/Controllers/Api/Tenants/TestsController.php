@@ -2,26 +2,23 @@
 
 namespace App\Http\Controllers\Api\Tenants;
 
-use App\Contracts\Tenants\JobContract;
+use App\Contracts\Tenants\TestContract;
 use App\Exceptions\CustomException;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Tenants\GetQuestionListRequest;
-use App\Http\Requests\Tenants\StoreJobRequest;
-use App\Http\Requests\Tenants\UpdateJobRequest;
-use App\Http\Resources\Tenants\Department;
-use App\Http\Resources\Tenants\DepartmentCollection;
-use App\Http\Resources\Tenants\Job;
-use App\Http\Resources\Tenants\JobCollection;
+use App\Http\Requests\Tenants\StoreTestRequest;
+use App\Http\Requests\Tenants\UpdateTestRequest;
+use App\Http\Resources\Tenants\TestResource;
+use App\Http\Resources\Tenants\TestResourceCollection;
 use Illuminate\Support\Facades\DB;
 
-class JobsController extends Controller
+class TestsController extends Controller
 {
-    public $job;
+    public TestContract $test;
 
-    public function __construct(JobContract $job)
+    public function __construct(TestContract $test)
     {
-        $this->job = $job;
+        $this->test = $test;
     }
     /**
      * Display a listing of the resource.
@@ -29,13 +26,13 @@ class JobsController extends Controller
     public function index()
     {
         try {
-            $job = $this->job->index();
-            $job = new JobCollection($job);
-            return $this->successResponse("Successfully", $job);
+            $test = $this->test->index();
+            $test = new TestResourceCollection($test);
+            return $this->successResponse("Successfully Fetch", $test);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("job index", 'none', $th->getMessage());
+            Helper::logMessage("test index", 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -43,18 +40,18 @@ class JobsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreJobRequest $request)
+    public function store(StoreTestRequest $request)
     {
         try {
             DB::beginTransaction();
-            $job = $this->job->store($request->prepareRequest());
-            $job = new Job($job);
+            $test = $this->test->store($request->prepareRequest());
+            $test = new TestResource($test);
             DB::commit();
-            return $this->successResponse("Job Added Successfully", $job);
+            return $this->successResponse("Test Added Successfully", $test);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("job index", $request->input(), $th->getMessage());
+            Helper::logMessage("test index", $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -62,16 +59,16 @@ class JobsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function questionList(GetQuestionListRequest $request)
+    public function show(string $id)
     {
         try {
-            $job = $this->job->questionList($request->department_id);
-            $job = new DepartmentCollection($job);
-            return $this->successResponse("Department Records Found Successfully", $job);
+            $test = $this->test->show($id);
+            $test = new TestResource($test);
+            return $this->successResponse("Test Found Successfully", $test);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("job show", 'id =' . $id, $th->getMessage());
+            Helper::logMessage("test show", 'id =' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -79,18 +76,18 @@ class JobsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateJobRequest $request, string $id)
+    public function update(UpdateTestRequest $request, string $id)
     {
         try {
             DB::beginTransaction();
-            $job = $this->job->update($request->prepareRequest(), $id);
-            $job = new Job($job);
+            $test = $this->test->update($request->prepareRequest(), $id);
+            $test = new TestResource($test);
             DB::commit();
-            return $this->successResponse("Job Updated Successfully", $job);
+            return $this->successResponse("Test Updated Successfully", $test);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("job update (id = )" . $id, $request->input(), $th->getMessage());
+            Helper::logMessage("test update (id = )" . $id, $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -102,13 +99,13 @@ class JobsController extends Controller
     {
         try {
             DB::beginTransaction();
-            $this->job->delete($id);
+            $this->test->delete($id);
             DB::commit();
-            return $this->okResponse("Job Deleted Successfully");
+            return $this->okResponse("Test Deleted Successfully");
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("job destroy", 'id = ' . $id, $th->getMessage());
+            Helper::logMessage("test destroy", 'id = ' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }

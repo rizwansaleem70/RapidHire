@@ -7,21 +7,27 @@ use App\Contracts\Tenants\CategoryContract;
 use App\Contracts\Tenants\DepartmentContract;
 use App\Contracts\Tenants\JobContract;
 use App\Contracts\Tenants\JobRequirementContract;
+use App\Contracts\Tenants\JobShortlistingContract;
 use App\Contracts\Tenants\LocationContract;
 use App\Contracts\Tenants\MemberContract;
 use App\Contracts\Tenants\QuestionBankContract;
 use App\Contracts\Tenants\SettingContract;
 use App\Contracts\Tenants\SocialMediaContract;
+use App\Contracts\Tenants\TestContract;
+use App\Contracts\Tenants\TestServiceContract;
 use App\Http\Services\AuthService;
 use App\Http\Services\Tenants\CategoryService;
 use App\Http\Services\Tenants\DepartmentService;
 use App\Http\Services\Tenants\JobRequirementService;
 use App\Http\Services\Tenants\JobService;
+use App\Http\Services\Tenants\JobShortlistingService;
 use App\Http\Services\Tenants\LocationService;
 use App\Http\Services\Tenants\MemberService;
 use App\Http\Services\Tenants\QuestionBankService;
 use App\Http\Services\Tenants\SettingService;
 use App\Http\Services\Tenants\SocialMediaService;
+use App\Http\Services\Tenants\TestService;
+use App\Http\Services\Tenants\TestServiceService;
 use Illuminate\Support\ServiceProvider;
 
 class TenantServiceProvider extends ServiceProvider
@@ -89,6 +95,24 @@ class TenantServiceProvider extends ServiceProvider
             QuestionBankContract::class,
             function ($app) {
                 return $app->make(QuestionBankService::class);
+            }
+        );
+        $this->app->bind(
+            TestServiceContract::class,
+            function ($app) {
+                return $app->make(TestServiceService::class);
+            }
+        );
+        $this->app->bind(
+            TestContract::class,
+            function ($app) {
+                return $app->make(TestService::class);
+            }
+        );
+        $this->app->bind(
+            JobShortlistingContract::class,
+            function ($app) {
+                return $app->make(JobShortlistingService::class);
             }
         );
     }

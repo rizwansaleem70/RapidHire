@@ -3,13 +3,11 @@
 namespace App\Contracts\Tenants;
 
 /**
-* @var JobContract
+* @var JobShortlistingContract
 */
-interface JobContract
+interface JobShortlistingContract
 {
     public function index();
-    public function questionList($id);
     public function store($data);
     public function update($data,$id);
-    public function delete($id);
 }

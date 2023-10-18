@@ -23,4 +23,8 @@ class Job extends Model
     {
         return $this->belongsToMany(User::class,'job_hiring_managers','job_id','user_id');
     }
+    public function jobTestService(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(TestService::class,'job_test_services','job_id','test_service_id');
+    }
 }
