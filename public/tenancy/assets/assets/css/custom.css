@@ -1,0 +1,260 @@
+.group-category-job .job-category-box2 {
+    width: calc(32% - 16px);
+    margin-left: 20px;
+    margin-bottom: 20px;
+    box-shadow: 2px 2px 2px rgba(28, 36, 51, 0.1);
+    border-radius: 8px;
+    padding: 66px;
+    background: #fff;
+    text-align: center;
+}
+
+.job-category-box {
+    background-color: #333; /* Set the background color */
+    color: #000; /* Set the default text color */
+    padding: 10px;
+    transition: color 0.3s; /* Add a transition effect for smooth color change */
+  }
+
+  .job-category-box:hover {
+    color: #fff; /* Change the text color to white on hover */
+  }
+
+@media screen and (max-width: 768px) {
+    .group-category-job .job-category-box2 {
+        width: calc(100% - 20px);
+        margin-left: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        padding: 28px;
+    }
+}
+
+.circle-img {
+    width: 58px;
+    /* height: 150px; */
+    border: 2px solid #1db5bf;
+    padding: 12px;
+    border-radius: 50%;
+}
+
+.connect-line {
+    margin-left: 14rem;
+    margin-top: -11rem;
+}
+
+.heading-4{
+    margin-top: 1.5rem;
+}
+
+@media (max-width: 1200px) {
+    .connect-line {
+        display: none;
+        }
+    .heading-4{
+        margin-top: 0;
+        }
+}
+
+.button-container {
+    text-align: right; /* Align the button to the right within the container */
+    width: 116%; /* Optional: Add margin for spacing */
+}
+
+.button-container button {
+    background-color: #0c3438;
+    color: #ffffff;
+    border-radius: 4px;
+    padding: 8px 24px;
+    border: none;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 26px;
+    text-transform: none;
+}
+
+.files input {
+    outline: 2px dashed #92b0b3;
+    outline-offset: -10px;
+    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    padding: 120px 0px 85px 35%;
+    text-align: center !important;
+    margin: 0;
+    width: 100% !important;
+}
+
+.files input:focus{     outline: 2px dashed #92b0b3;  outline-offset: -10px;
+    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    transition: outline-offset .15s ease-in-out, background-color .15s linear; border:1px solid #92b0b3;
+ }
+
+.files{ position:relative}
+
+.files:after {  pointer-events: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 50px;
+    right: 0;
+    height: 56px;
+    content: "";
+    background-image: url(https://image.flaticon.com/icons/png/128/109/109612.png);
+    display: block;
+    margin: 0 auto;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.files:before {
+    position: absolute;
+    bottom: 10px;
+    left: 0;  pointer-events: none;
+    width: 100%;
+    right: 0;
+    height: 57px;
+    content: " or drag it here. ";
+    display: block;
+    margin: 0 auto;
+    font-weight: 600;
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.button-container {
+    text-align: right;
+}
+
+.button-container button {
+    margin-left: 10px; /* Adjust this value to control the space between buttons */
+}
+
+.save-button {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 26px;
+    padding: 12px 32px;
+    background-color: black;
+    color: #ffffff;
+    border-radius: 4px;
+    text-transform: none;
+}
+
+.cancel-button {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 26px;
+    padding: 12px 32px;
+    background-color: #dee1e6;
+    color: black;
+    border-radius: 4px;
+    text-transform: none;
+}
+
+.thank-you-pop{
+	width:100%;
+ 	padding:20px;
+	text-align:center;
+}
+
+.thank-you-pop img{
+	width:76px;
+	height:auto;
+	margin:0 auto;
+	display:block;
+	margin-bottom:25px;
+}
+
+.thank-you-pop h1{
+	font-size: 42px;
+    margin-bottom: 25px;
+	color:#5C5C5C;
+}
+
+.thank-you-pop p{
+	font-size: 20px;
+    margin-bottom: 27px;
+ 	color:#5C5C5C;
+}
+
+.thank-you-pop h3.cupon-pop{
+	font-size: 25px;
+    margin-bottom: 40px;
+	color:#222;
+	display:inline-block;
+	text-align:center;
+	padding:10px 20px;
+	border:2px dashed #222;
+	clear:both;
+	font-weight:normal;
+}
+
+.thank-you-pop h3.cupon-pop span{
+	color:#03A9F4;
+}
+
+.thank-you-pop a{
+	display: inline-block;
+    margin: 0 auto;
+    padding: 9px 20px;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 14px;
+    background-color: #8BC34A;
+    border-radius: 17px;
+}
+
+.thank-you-pop a i{
+	margin-right:5px;
+	color:#fff;
+}
+
+#ignismyModal .modal-header{
+    border:0px;
+}
+
+/*--thank you pop ends here--*/
+ /* Style for the custom file upload container */
+.custom-file-upload {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.custom-file-upload {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.file-label {
+    font-size: 16px;
+}
+
+.upload-button {
+    background-color: #f5f5f5;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.linkedin-button {
+    background-color:#f5f5f5;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.drag-over {
+    border-color: #007bff;
+}
+
+a:hover {
+    text-decoration: none;
+}

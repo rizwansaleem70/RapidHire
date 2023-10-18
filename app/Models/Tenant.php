@@ -20,7 +20,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     public static function getCustomColumns(): array
     {
         return [
-            'id','package_id','name','email','phone','password','bank_name','account_number','latitude','longitude','address','logo','about','website','industry','company_size','headquarter','is_verified','is_actively_recruiting','data'
+            'id','package_id','first_name','last_name','email','phone','password','bank_name','account_number','latitude','longitude','address','logo','about','website','industry','company_size','headquarter','is_verified','is_actively_recruiting','data'
         ];
     }
 //    protected $fillable= ['package_id','name','email','phone','bank_name','account_number','latitude','longitude','address','logo','about','website','industry','company_size','headquarter','is_verified','is_actively_recruiting','data'];
