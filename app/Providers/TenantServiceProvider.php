@@ -10,6 +10,7 @@ use App\Contracts\Tenants\JobRequirementContract;
 use App\Contracts\Tenants\JobShortlistingContract;
 use App\Contracts\Tenants\LocationContract;
 use App\Contracts\Tenants\MemberContract;
+use App\Contracts\Tenants\OrganizationContract;
 use App\Contracts\Tenants\QuestionBankContract;
 use App\Contracts\Tenants\SettingContract;
 use App\Contracts\Tenants\SocialMediaContract;
@@ -23,6 +24,7 @@ use App\Http\Services\Tenants\JobService;
 use App\Http\Services\Tenants\JobShortlistingService;
 use App\Http\Services\Tenants\LocationService;
 use App\Http\Services\Tenants\MemberService;
+use App\Http\Services\Tenants\OrganizationService;
 use App\Http\Services\Tenants\QuestionBankService;
 use App\Http\Services\Tenants\SettingService;
 use App\Http\Services\Tenants\SocialMediaService;
@@ -113,6 +115,12 @@ class TenantServiceProvider extends ServiceProvider
             JobShortlistingContract::class,
             function ($app) {
                 return $app->make(JobShortlistingService::class);
+            }
+        );
+        $this->app->bind(
+            OrganizationContract::class,
+            function ($app) {
+                return $app->make(OrganizationService::class);
             }
         );
     }
