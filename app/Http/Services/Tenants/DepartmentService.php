@@ -40,12 +40,7 @@ class DepartmentService implements DepartmentContract
      */
     public function store($data)
     {
-        $department = $this->model->where('name', $data['name'])->count();
-        if ($department > 0) {
-            throw new CustomException("Department is already exist!");
-        }
-        $model = new $this->model;
-        return $this->prepareData($model, $data, true);
+        return $this->prepareData(null,$data, true);
     }
 
     /**
@@ -74,10 +69,12 @@ class DepartmentService implements DepartmentContract
     }
     private function prepareData($model, $data, $new_record = false)
     {
-        if (isset($data['name']) && $data['name']) {
-            $model->name = $data['name'];
+        foreach ($data['name'] as $value)
+        {
+            $model = $new_record ? new $this->model : $model;
+            $model->name = $value;
+            $model->save();
         }
-        $model->save();
         return $model;
     }
 }
