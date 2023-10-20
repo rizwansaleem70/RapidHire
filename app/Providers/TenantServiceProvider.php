@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Contracts\AuthContract;
 use App\Contracts\Tenants\CategoryContract;
 use App\Contracts\Tenants\DepartmentContract;
+use App\Contracts\Tenants\ImageUploadContract;
 use App\Contracts\Tenants\InterviewFeedbackContract;
 use App\Contracts\Tenants\JobContract;
 use App\Contracts\Tenants\JobRequirementContract;
@@ -19,6 +20,7 @@ use App\Contracts\Tenants\TestServiceContract;
 use App\Http\Services\AuthService;
 use App\Http\Services\Tenants\CategoryService;
 use App\Http\Services\Tenants\DepartmentService;
+use App\Http\Services\Tenants\ImageUploadService;
 use App\Http\Services\Tenants\InterviewFeedbackService;
 use App\Http\Services\Tenants\JobRequirementService;
 use App\Http\Services\Tenants\JobService;
@@ -121,6 +123,12 @@ class TenantServiceProvider extends ServiceProvider
             InterviewFeedbackContract::class,
             function ($app) {
                 return $app->make(InterviewFeedbackService::class);
+            }
+        );
+        $this->app->bind(
+            ImageUploadContract::class,
+            function ($app) {
+                return $app->make(ImageUploadService::class);
             }
         );
     }

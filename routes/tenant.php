@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\Tenants\CategoriesController;
 use App\Http\Controllers\Api\Tenants\ColorSchemesController;
 use App\Http\Controllers\Api\Tenants\DepartmentsController;
+use App\Http\Controllers\Api\Tenants\HomesController;
+use App\Http\Controllers\Api\Tenants\ImageUploadsController;
 use App\Http\Controllers\Api\Tenants\InterviewFeedbacksController;
 use App\Http\Controllers\Api\Tenants\JobRequirementController;
 use App\Http\Controllers\Api\Tenants\JobsController;
@@ -74,5 +76,6 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::get('settings/{type}', [SettingsController::class,'index']);
         Route::post('settings/{type}', [SettingsController::class,'store']);
         Route::apiResources(['interview-feedback' => InterviewFeedbacksController::class]);
+        Route::post('image-upload' ,[ImageUploadsController::class,'store']);
     });
 });
