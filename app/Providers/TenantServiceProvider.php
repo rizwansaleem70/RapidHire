@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Contracts\AuthContract;
 use App\Contracts\Tenants\CategoryContract;
 use App\Contracts\Tenants\DepartmentContract;
+use App\Contracts\Tenants\InterviewFeedbackContract;
 use App\Contracts\Tenants\JobContract;
 use App\Contracts\Tenants\JobRequirementContract;
 use App\Contracts\Tenants\JobShortlistingContract;
@@ -18,6 +19,7 @@ use App\Contracts\Tenants\TestServiceContract;
 use App\Http\Services\AuthService;
 use App\Http\Services\Tenants\CategoryService;
 use App\Http\Services\Tenants\DepartmentService;
+use App\Http\Services\Tenants\InterviewFeedbackService;
 use App\Http\Services\Tenants\JobRequirementService;
 use App\Http\Services\Tenants\JobService;
 use App\Http\Services\Tenants\JobShortlistingService;
@@ -113,6 +115,12 @@ class TenantServiceProvider extends ServiceProvider
             JobShortlistingContract::class,
             function ($app) {
                 return $app->make(JobShortlistingService::class);
+            }
+        );
+        $this->app->bind(
+            InterviewFeedbackContract::class,
+            function ($app) {
+                return $app->make(InterviewFeedbackService::class);
             }
         );
     }
