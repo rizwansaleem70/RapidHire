@@ -10,12 +10,11 @@ use App\Http\Requests\Tenants\StoreSettingRequest;
 use App\Http\Requests\Tenants\UpdateSettingRequest;
 use App\Http\Resources\Tenants\SettingResource;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Request;
 
 class SettingsController extends Controller
 
 {
-    public $setting;
+    public SettingContract $setting;
 
     public function __construct(SettingContract $setting)
     {
@@ -24,16 +23,16 @@ class SettingsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($type)
     {
         try {
-            $setting = $this->setting->index();
-            $setting = new SettingResource($setting);
+            $setting = $this->setting->index($type);
+//            $setting = new SettingResource($setting);
             return $this->successResponse("Successfully Fetch Record", $setting);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("setting index", 'none', $th->getMessage());
+            Helper::logMessage("setting index ", $type, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -41,18 +40,19 @@ class SettingsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSettingRequest $request)
+    public function store(StoreSettingRequest $request,$type)
     {
         try {
             DB::beginTransaction();
-            $setting = $this->setting->store($request->prepareRequest());
-            $setting = new SettingResource($setting);
+            $setting = $this->setting->store($request->prepareRequest(),$type);
+            if ($setting)
+                $setting = $this->setting->index($type);
             DB::commit();
-            return $this->successResponse("Setting Added Successfully", $setting);
+            return $this->successResponse(ucfirst($type) ." Added Successfully", $setting);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("setting index", $request->input(), $th->getMessage());
+            Helper::logMessage("setting index", $request->input(). " " .$type, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }

@@ -22,20 +22,56 @@ class StoreSettingRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required|string',
-            'val' => 'required|image',
-            'group' => 'required',
-        ];
+        $type = $this->route()->parameters['type'];
+        switch($type) {
+            case('logo'):
+                $request = [
+                    'logo' => 'required',
+                ];
+                break;
+            case('color-scheme'):
+                $request = [
+                    'primary' => 'required',
+                    'secondary' => 'required',
+                ];
+                break;
+            case('organization'):
+                $request = [
+                    'name' => 'required',
+                    'phone' => 'required',
+                    'website' => 'required',
+                ];
+                break;
+            default:
+        }
+        return $request;
     }
 
     public function prepareRequest(): array
     {
         $request = $this;
-        return [
-            'name' => $request['name'],
-            'val' => $request['value'],
-            'group' => $request['group'],
-        ];
+        $type = $this->route()->parameters['type'];
+        switch($type) {
+            case('logo'):
+                $prepareRequest = [
+                    'logo' => $request['logo'],
+                ];
+                break;
+            case('color-scheme'):
+                $prepareRequest = [
+                    'primary' => $request['primary'],
+                    'secondary' => $request['secondary'],
+                ];
+                break;
+            case('organization'):
+                $prepareRequest = [
+                    'name' => $request['name'],
+                    'phone' => $request['phone'],
+                    'website' => $request['website'],
+                ];
+                break;
+            default:
+        }
+        return $prepareRequest;
     }
 }
