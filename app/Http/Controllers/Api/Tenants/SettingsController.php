@@ -27,7 +27,6 @@ class SettingsController extends Controller
     {
         try {
             $setting = $this->setting->index($type);
-//            $setting = new SettingResource($setting);
             return $this->successResponse("Successfully Fetch Record", $setting);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());

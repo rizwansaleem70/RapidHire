@@ -45,6 +45,22 @@ class SettingService implements SettingContract
                     'website' => $data['website'],
                 ]);
                 break;
+            case('configuration'):
+                $model = $model->group('configuration')->set([
+                    'candidate_reapply_days' => $data['candidate_reapply_days'],
+                    'company_contract_email' => $data['company_contract_email'],
+                    'default_email_signature' => $data['default_email_signature'],
+                    'company_title_about' => $data['company_title_about'],
+                    'job_description_about' => $data['job_description_about'],
+                ]);
+                break;
+            case('core-value'):
+                $model = $model->group('core-value')->set([
+                    'title' => $data['title'],
+                    'icon' => $data['icon'],
+                    'description' => $data['description'],
+                ]);
+                break;
             default:
         }
         return $model;

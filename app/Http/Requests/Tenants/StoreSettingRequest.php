@@ -42,6 +42,22 @@ class StoreSettingRequest extends FormRequest
                     'website' => 'required',
                 ];
                 break;
+            case('configuration'):
+                $request = [
+                    'candidate_reapply_days' => 'required',
+                    'company_contract_email' => 'required',
+                    'default_email_signature' => 'required',
+                    'company_title_about' => 'required',
+                    'job_description_about' => 'required',
+                ];
+                break;
+            case('core-value'):
+                $request = [
+                    'title' => 'required',
+                    'icon' => 'required',
+                    'description' => 'required'
+                ];
+                break;
             default:
         }
         return $request;
@@ -68,6 +84,22 @@ class StoreSettingRequest extends FormRequest
                     'name' => $request['name'],
                     'phone' => $request['phone'],
                     'website' => $request['website'],
+                ];
+                break;
+            case('configuration'):
+                $prepareRequest = [
+                    'candidate_reapply_days' => $request['candidate_reapply_days'],
+                    'company_contract_email' => $request['company_contract_email'],
+                    'default_email_signature' => $request['default_email_signature'],
+                    'company_title_about' => $request['company_title_about'],
+                    'job_description_about' => $request['job_description_about'],
+                ];
+                break;
+            case('core-value'):
+                $prepareRequest = [
+                    'title' => $request['title'],
+                    'icon' => $request['icon'],
+                    'description' => $request['description'],
                 ];
                 break;
             default:
