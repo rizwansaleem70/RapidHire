@@ -33,7 +33,7 @@ class SettingService implements SettingContract
                 $model = $model->group('logo')->set('logo', $data['logo']);
                 break;
             case('color-scheme'):
-                $model = $model->group('color_scheme')->set([
+                $model = $model->group('color-scheme')->set([
                     'primary' => $data['primary'],
                     'secondary' => $data['secondary'],
                 ]);

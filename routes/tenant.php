@@ -65,22 +65,12 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['department' => DepartmentsController::class]);
         Route::apiResources(['job-requirement' => JobRequirementController::class]);
         Route::apiResources(['social-media' => SocialMediasController::class]);
-//        Route::apiResources(['setting' => SettingsController::class]);
         Route::apiResources(['members' => MemberController::class]);
         Route::apiResources(['question-bank' => QuestionBanksController::class]);
         Route::apiResources(['test-service' => TestServicesController::class]);
         Route::apiResources(['test' => TestsController::class]);
         Route::apiResources(['job-shortlisting' => JobShortlistingController::class]);
-        //setting routes start
         Route::get('settings/{type}', [SettingsController::class,'index']);
         Route::post('settings/{type}', [SettingsController::class,'store']);
-//        Route::apiResources(['logo' => LogosController::class]);
-        Route::apiResources(['color-scheme' => ColorSchemesController::class]);
-        Route::apiResources(['organization' => OrganizationsController::class]);
-        // setting routes end
     });
 });
-//php artisan make:controller Api/Tenants/ConfigurationsController --api
-//php artisan make:contract Configuration
-//php artisan make:service Configuration
-//php artisan make:request Tenants/StoreConfigurationRequest
