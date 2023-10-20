@@ -3,9 +3,9 @@
 namespace App\Contracts\Tenants;
 
 /**
-* @var OrganizationContract
+* @var LogoContract
 */
-interface OrganizationContract
+interface LogoContract
 {
     public function index();
     public function store($data);

@@ -10,6 +10,7 @@ use App\Http\Requests\Tenants\StoreSettingRequest;
 use App\Http\Requests\Tenants\UpdateSettingRequest;
 use App\Http\Resources\Tenants\SettingResource;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request;
 
 class SettingsController extends Controller
 

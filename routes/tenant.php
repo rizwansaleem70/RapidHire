@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Tenants\JobRequirementController;
 use App\Http\Controllers\Api\Tenants\JobsController;
 use App\Http\Controllers\Api\Tenants\JobShortlistingController;
 use App\Http\Controllers\Api\Tenants\LocationsController;
+use App\Http\Controllers\Api\Tenants\LogosController;
 use App\Http\Controllers\Api\Tenants\MemberController;
 use App\Http\Controllers\Api\Tenants\OrganizationsController;
 use App\Http\Controllers\Api\Tenants\QuestionBanksController;
@@ -69,6 +70,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['test-service' => TestServicesController::class]);
         Route::apiResources(['test' => TestsController::class]);
         Route::apiResources(['job-shortlisting' => JobShortlistingController::class]);
+        Route::apiResources(['logo' => LogosController::class]);
         Route::apiResources(['organization' => OrganizationsController::class]);
     });
 });
