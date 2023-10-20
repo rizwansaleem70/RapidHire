@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\Tenants\CategoriesController;
+use App\Http\Controllers\Api\Tenants\ColorSchemesController;
 use App\Http\Controllers\Api\Tenants\DepartmentsController;
 use App\Http\Controllers\Api\Tenants\JobRequirementController;
 use App\Http\Controllers\Api\Tenants\JobsController;
@@ -70,7 +71,10 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['test-service' => TestServicesController::class]);
         Route::apiResources(['test' => TestsController::class]);
         Route::apiResources(['job-shortlisting' => JobShortlistingController::class]);
+        //setting routes start
         Route::apiResources(['logo' => LogosController::class]);
+        Route::apiResources(['color-scheme' => ColorSchemesController::class]);
         Route::apiResources(['organization' => OrganizationsController::class]);
+        // setting routes end
     });
 });

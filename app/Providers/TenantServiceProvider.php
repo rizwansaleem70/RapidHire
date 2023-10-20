@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Contracts\AuthContract;
 use App\Contracts\Tenants\CategoryContract;
+use App\Contracts\Tenants\ColorSchemeContract;
 use App\Contracts\Tenants\DepartmentContract;
 use App\Contracts\Tenants\JobContract;
 use App\Contracts\Tenants\JobRequirementContract;
@@ -19,6 +20,7 @@ use App\Contracts\Tenants\TestContract;
 use App\Contracts\Tenants\TestServiceContract;
 use App\Http\Services\AuthService;
 use App\Http\Services\Tenants\CategoryService;
+use App\Http\Services\Tenants\ColorSchemeService;
 use App\Http\Services\Tenants\DepartmentService;
 use App\Http\Services\Tenants\JobRequirementService;
 use App\Http\Services\Tenants\JobService;
@@ -129,6 +131,12 @@ class TenantServiceProvider extends ServiceProvider
             OrganizationContract::class,
             function ($app) {
                 return $app->make(OrganizationService::class);
+            }
+        );
+        $this->app->bind(
+            ColorSchemeContract::class,
+            function ($app) {
+                return $app->make(ColorSchemeService::class);
             }
         );
     }
