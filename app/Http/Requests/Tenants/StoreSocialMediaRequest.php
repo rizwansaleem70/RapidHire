@@ -22,21 +22,16 @@ class StoreSocialMediaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'icon' => 'required|image',
-            'url' => 'required',
-            'priority' => 'required',
+            'data.*.name' => 'required|string',
+            'data.*.icon' => 'required',
+            'data.*.url' => 'required',
+            'data.*.priority' => 'required',
         ];
     }
 
     public function prepareRequest(): array
     {
         $request = $this;
-        return [
-            'name' => $request['name'],
-            'icon' => $request['icon'],
-            'url' => $request['url'],
-            'priority' => $request['priority'],
-        ];
+        return $request['data'];
     }
 }

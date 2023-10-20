@@ -8,8 +8,8 @@ use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\StoreSocialMediaRequest;
 use App\Http\Requests\Tenants\UpdateSocialMediaRequest;
-use App\Http\Resources\Tenants\SocialMedia;
-use App\Http\Resources\Tenants\SocialMediaCollection;
+use App\Http\Resources\Tenants\SocialMediaResource;
+use App\Http\Resources\Tenants\SocialMediaResourceCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -27,7 +27,7 @@ class SocialMediasController extends Controller
     {
         try {
             $socialMedia = $this->socialMedia->index();
-            $socialMedia = new SocialMediaCollection($socialMedia);
+            $socialMedia = new SocialMediaResourceCollection($socialMedia);
             return $this->successResponse("Successfully", $socialMedia);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
@@ -45,7 +45,8 @@ class SocialMediasController extends Controller
         try {
             DB::beginTransaction();
             $socialMedia = $this->socialMedia->store($request->prepareRequest());
-            $socialMedia = new SocialMedia($socialMedia);
+            if ($socialMedia)
+                $socialMedia = new SocialMediaResourceCollection($this->socialMedia->index());
             DB::commit();
             return $this->successResponse("Social Media Added Successfully", $socialMedia);
         } catch (CustomException $th) {
@@ -63,7 +64,7 @@ class SocialMediasController extends Controller
     {
         try {
             $socialMedia = $this->socialMedia->show($id);
-            $socialMedia = new SocialMedia($socialMedia);
+            $socialMedia = new SocialMediaResource($socialMedia);
             return $this->successResponse("Social Media Found Successfully", $socialMedia);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
@@ -81,7 +82,8 @@ class SocialMediasController extends Controller
         try {
             DB::beginTransaction();
             $socialMedia = $this->socialMedia->update($request->prepareRequest(), $id);
-            $socialMedia = new SocialMedia($socialMedia);
+            if ($socialMedia)
+                $socialMedia = new SocialMediaResourceCollection($this->socialMedia->index());
             DB::commit();
             return $this->successResponse("Social Media Updated Successfully", $socialMedia);
         } catch (CustomException $th) {

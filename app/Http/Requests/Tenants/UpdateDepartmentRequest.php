@@ -23,15 +23,13 @@ class UpdateDepartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'data.*.name' => 'required',
         ];
     }
 
     public function prepareRequest(): array
     {
         $request = $this;
-        return [
-            'name' => $request['name'],
-        ];
+        return $request['data'];
     }
 }

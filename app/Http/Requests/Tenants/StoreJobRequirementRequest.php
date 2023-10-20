@@ -23,19 +23,15 @@ class StoreJobRequirementRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'input_type' => 'required',
-            'option' => 'required',
+            'data.*.name' => 'required',
+            'data.*.input_type' => 'required',
+            'data.*.option' => 'required',
         ];
     }
 
     public function prepareRequest(): array
     {
         $request = $this;
-        return [
-            'name' => $request['name'],
-            'input_type' => $request['input_type'],
-            'option' => $request['option'],
-        ];
+        return $request['data'];
     }
 }

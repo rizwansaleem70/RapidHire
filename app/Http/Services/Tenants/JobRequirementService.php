@@ -36,10 +36,10 @@ class JobRequirementService implements JobRequirementContract
      */
     public function store($data)
     {
-        $jobRequirement = $this->model->where('name', $data['name'])->first();
-        if ($jobRequirement) {
-            throw new CustomException("Job Requirement is already exist!");
-        }
+//        $jobRequirement = $this->model->where('name', $data['name'])->first();
+//        if ($jobRequirement) {
+//            throw new CustomException("Job Requirement is already exist!");
+//        }
         $model = new $this->model;
         return $this->prepareData($model, $data, true);
     }
@@ -67,16 +67,17 @@ class JobRequirementService implements JobRequirementContract
     }
     private function prepareData($model, $data, $new_record = false)
     {
-        if (isset($data['name']) && $data['name']) {
-            $model->name = $data['name'];
-        }
-        if (isset($data['input_type']) && $data['input_type']) {
-            $model->input_type = $data['input_type'];
-        }
-        if (isset($data['option']) && $data['option']) {
-            $model->option = $data['option'];
-        }
-        $model->save();
+        $model->insert($data);
+//        if (isset($data['name']) && $data['name']) {
+//            $model->name = $data['name'];
+//        }
+//        if (isset($data['input_type']) && $data['input_type']) {
+//            $model->input_type = $data['input_type'];
+//        }
+//        if (isset($data['option']) && $data['option']) {
+//            $model->option = $data['option'];
+//        }
+//        $model->save();
         return $model;
     }
 }

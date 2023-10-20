@@ -46,7 +46,8 @@ class JobRequirementController extends Controller
         try {
             DB::beginTransaction();
             $jobRequirement = $this->jobRequirement->store($request->prepareRequest());
-            $jobRequirement = new JobRequirementResource($jobRequirement);
+            if ($jobRequirement)
+                $jobRequirement = new JobRequirementResourceCollection($this->jobRequirement->index());
             DB::commit();
             return $this->successResponse("Job Requirement Added Successfully", $jobRequirement);
         } catch (CustomException $th) {
@@ -82,7 +83,8 @@ class JobRequirementController extends Controller
         try {
             DB::beginTransaction();
             $jobRequirement = $this->jobRequirement->update($request->prepareRequest(), $id);
-            $jobRequirement = new JobRequirementResource($jobRequirement);
+            if ($jobRequirement)
+                $jobRequirement = new JobRequirementResourceCollection($this->jobRequirement->index());
             DB::commit();
             return $this->successResponse("Job Requirement Updated Successfully", $jobRequirement);
         } catch (CustomException $th) {

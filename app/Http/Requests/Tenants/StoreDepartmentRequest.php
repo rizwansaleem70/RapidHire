@@ -23,15 +23,13 @@ class StoreDepartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'names.*' => 'required',
+            'data.*.name' => 'required',
         ];
     }
 
     public function prepareRequest(): array
     {
         $request = $this;
-        return [
-            'name' => $request['name'],
-        ];
+        return $request['data'];
     }
 }
