@@ -5,7 +5,7 @@ namespace App\Http\Resources\Tenants;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SocialMedia extends JsonResource
+class OrganizationResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +17,8 @@ class SocialMedia extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'icon' => $this->icon,
-            'url' => $this->url,
-            'priority' => $this->priority,
+            'phone' => $this->phone,
+            'website' => $this->website
         ];
     }
 }
