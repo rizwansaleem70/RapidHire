@@ -80,15 +80,40 @@
           <div class="container card" style="padding: 4%;background-color: fbfcfc;">
           <strong><h6 style="text-align: initial; margin-top: 2%;">Sign in</h6></strong>
           <div class="sign-up" style="text-align: initial;"><strong>New User?</strong><a href="{{route('tenant-user-signup')}}" style="color: #0A66C2;">Create an Account</a></div>
-          <form action="home.html" style="margin-top: 5%;">
+
+
+          @if($errors->any())
+          <div class="alert alert-danger">
+              <ul>
+              @foreach($errors->all() as $error)
+                  <li>{{$error}}</li>
+              @endforeach
+          </ul>
+          </div>
+          @endif
+
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{session('success')}}
+            </div>
+        @endif
+
+        @if(session('message'))
+            <div class="alert alert-danger">
+                {{session('message')}}
+            </div>
+        @endif
+
+        <form action="{{route('tenant-user-login')}}" style="margin-top: 5%;" method="POST">
+            @csrf
             <div class="ip">
 
-              <input type="text"  placeholder="Email" style="border-radius: 20px;">
+              <input type="text"  placeholder="Email" name="email" style="border-radius: 20px;">
             </div>
             <div class="ip" >
               <label >Password<span>*</span></label>
               <div class="inputs-group auth-pass-inputgroup">
-                <input type="password" class="input-form password-input" placeholder="Password" id="password-input"
+                <input type="password" class="input-form password-input" name="password" placeholder="Password" id="password-input"
                   required="" style="border-radius: 20px;">
                 <a class="icon-eye-off password-addon" id="password-addon"></a>
               </div>
@@ -118,6 +143,14 @@
       </div>
     </div>
   </section>
+
+  <script>
+    window.setTimeout(function () {
+        $(".alert").fadeTo(500, 0).slideUp(500, function () {
+            $(this).remove();
+        });
+    },5000);
+</script>
 
 
   </div>

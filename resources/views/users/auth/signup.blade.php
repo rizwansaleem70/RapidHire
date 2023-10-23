@@ -51,7 +51,6 @@
 
 
 
-
   <section class="account-section" style="background-image: url(./app-assets/users/images/used/Signin.png);
   background-size: cover; /* Adjust the background size property */
   background-repeat: no-repeat; /* Prevent the background image from repeating */
@@ -75,15 +74,33 @@
         </div>
 
         <p class="line-ip"><span>or with email</span></p>
-          <form action="home.html" style="margin-top: 2%;">
+
+        @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+            @foreach($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>
+        </div>
+        @endif
+
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{session('success')}}
+            </div>
+        @endif
+
+          <form action="{{route('register-user')}}" style="margin-top: 2%;" method="POST">
+            @csrf
             <div class="ip">
 
-              <input type="text"  placeholder="Email" style="border-radius: 20px;">
+              <input type="text"  placeholder="Email" name="email" style="border-radius: 20px;">
             </div>
             <div class="ip" >
 
               <div class="inputs-group auth-pass-inputgroup">
-                <input type="password" class="input-form password-input" placeholder="Password" id="password-input"
+                <input type="password" class="input-form password-input" name="password" placeholder="Password" id="password-input"
                   required="" style="border-radius: 20px;">
                 <a class="icon-eye-off password-addon" id="password-addon"></a>
               </div>
@@ -92,7 +109,7 @@
             <div class="ip" >
 
               <div class="inputs-group auth-pass-inputgroup">
-                <input type="password" class="input-form password-input" placeholder="Repeat Password" id="repeat-password-input"
+                <input type="password" class="input-form password-input" name="password_confirmation" placeholder="Repeat Password" id="repeat-password-input"
                   required="" style="border-radius: 20px;">
                 <a class="icon-eye-off password-addon" id="password-addon"></a>
               </div>
@@ -111,6 +128,13 @@
 
     </div>
   </section>
+    <script>
+        window.setTimeout(function () {
+            $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+            });
+        },5000);
+    </script>
 
 
   </div><!-- /.boxed -->

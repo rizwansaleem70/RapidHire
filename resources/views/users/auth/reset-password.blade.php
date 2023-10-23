@@ -76,16 +76,41 @@
           <strong><h6 style=" margin-top: 2%;">Reset Password</h6></strong>
           <p style=" margin-top: 2%;">Enter email for verification code</p>
 
+          @if($errors->any())
+                @foreach($errors->all() as $error)
+                    <div class="alert alert-danger">
+                        {{$error}}
+                    </div>
+                @endforeach
+            @endif
 
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{session('success')}}
+                </div>
+            @endif
 
-          <form action="#" style="margin-top: 10%;">
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    {{session('error')}}
+                </div>
+            @endif
+
+            @if(session('message'))
+                <div class="alert alert-danger">
+                    {{session('message')}}
+                </div>
+            @endif
+
+          <form action="{{route('tenant-user-reset-password')}}" style="margin-top: 10%;" method="POST">
+            @csrf
             <div class="ip">
               <strong><label>Email</label></strong>
-              <input type="text"  placeholder="Your email " style="border-radius: 20px;">
+              <input type="text"  name="email" placeholder="Your email " style="border-radius: 20px;">
             </div>
 
 
-            <a href="{{route('tenant-user-reset-password-message')}}"><button style="margin-top: 5%;">Send</button></a>
+            <button type="submit" style="margin-top: 5%;">Send</button>
 
 
 

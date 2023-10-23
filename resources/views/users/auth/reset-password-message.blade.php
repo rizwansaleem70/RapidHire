@@ -63,7 +63,7 @@
 
 
 
-  <section class="account-section" style="background-image: url(.app-assets/users/images/used/Signin.png);
+  <section class="account-section" style="background-image: url(./app-assets/users/images/used/Signin.png);
   background-size: cover; /* Adjust the background size property */
   background-repeat: no-repeat; /* Prevent the background image from repeating */
   width: 100%;
