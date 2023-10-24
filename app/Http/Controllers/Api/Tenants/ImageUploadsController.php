@@ -10,7 +10,6 @@ use App\Http\Requests\Tenants\StoreImageUploadRequest;
 use App\Http\Resources\Tenants\ImageUploadResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class ImageUploadsController extends Controller
 {
@@ -25,7 +24,8 @@ class ImageUploadsController extends Controller
         try {
             DB::beginTransaction();
             $imageUpload = $this->ImageUpload->store($request->prepareRequest());
-            $imageUpload = url(Storage::url($imageUpload));
+//            $imageUpload = new ImageUploadResource($imageUpload);
+            $image = $imageUpload;
             DB::commit();
             return $this->successResponse("Image Upload Successfully", $imageUpload);
         } catch (CustomException $th) {

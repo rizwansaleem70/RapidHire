@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\Tenants\LogosController;
 use App\Http\Controllers\Api\Tenants\MemberController;
 use App\Http\Controllers\Api\Tenants\OrganizationsController;
 use App\Http\Controllers\Api\Tenants\QuestionBanksController;
+use App\Http\Controllers\Api\Tenants\RequirementsController;
 use App\Http\Controllers\Api\Tenants\SettingsController;
 use App\Http\Controllers\Api\Tenants\SocialMediasController;
 use App\Http\Controllers\Api\Tenants\TestsController;
@@ -66,7 +67,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['job' => JobsController::class]);
         Route::post('question-list/{id?}' , [JobsController::class,'questionList']);
         Route::apiResources(['department' => DepartmentsController::class]);
-        Route::apiResources(['job-requirement' => JobRequirementController::class]);
+        Route::apiResources(['requirement' => RequirementsController::class]);
         Route::apiResources(['social-media' => SocialMediasController::class]);
         Route::apiResources(['members' => MemberController::class]);
         Route::apiResources(['question-bank' => QuestionBanksController::class]);

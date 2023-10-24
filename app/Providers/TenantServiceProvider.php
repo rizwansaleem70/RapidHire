@@ -8,7 +8,7 @@ use App\Contracts\Tenants\DepartmentContract;
 use App\Contracts\Tenants\ImageUploadContract;
 use App\Contracts\Tenants\InterviewFeedbackContract;
 use App\Contracts\Tenants\JobContract;
-use App\Contracts\Tenants\JobRequirementContract;
+use App\Contracts\Tenants\RequirementContract;
 use App\Contracts\Tenants\JobShortlistingContract;
 use App\Contracts\Tenants\LocationContract;
 use App\Contracts\Tenants\MemberContract;
@@ -22,7 +22,7 @@ use App\Http\Services\Tenants\CategoryService;
 use App\Http\Services\Tenants\DepartmentService;
 use App\Http\Services\Tenants\ImageUploadService;
 use App\Http\Services\Tenants\InterviewFeedbackService;
-use App\Http\Services\Tenants\JobRequirementService;
+use App\Http\Services\Tenants\RequirementService;
 use App\Http\Services\Tenants\JobService;
 use App\Http\Services\Tenants\JobShortlistingService;
 use App\Http\Services\Tenants\LocationService;
@@ -72,9 +72,9 @@ class TenantServiceProvider extends ServiceProvider
             }
         );
         $this->app->bind(
-            JobRequirementContract::class,
+            RequirementContract::class,
             function ($app) {
-                return $app->make(JobRequirementService::class);
+                return $app->make(RequirementService::class);
             }
         );
         $this->app->bind(
