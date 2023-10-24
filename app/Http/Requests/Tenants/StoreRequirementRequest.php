@@ -5,7 +5,7 @@ namespace App\Http\Requests\Tenants;
 
 use App\Abstracts\FormRequest;
 
-class StoreJobRequirementRequest extends FormRequest
+class StoreRequirementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

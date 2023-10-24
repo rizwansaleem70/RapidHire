@@ -5,7 +5,7 @@ namespace App\Http\Requests\Tenants;
 
 use App\Abstracts\FormRequest;
 
-class UpdateOrganizationRequest extends FormRequest
+class StoreImageUploadRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,19 +23,15 @@ class UpdateOrganizationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'phone' => 'required',
-            'website' => 'required',
+            'image' => 'required|image',
         ];
     }
 
-    public function prepareRequest():array
+    public function prepareRequest(): array
     {
         $request = $this;
         return [
-            'name' => $request['name'],
-            'phone' => $request['phone'],
-            'website' => $request['website'],
+            'image' => $request['image']
         ];
     }
 }

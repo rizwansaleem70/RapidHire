@@ -2,25 +2,24 @@
 
 namespace App\Http\Services\Tenants;
 
-use App\Contracts\Tenants\DepartmentContract;
+use App\Contracts\Tenants\RequirementContract;
 use App\Exceptions\CustomException;
-use App\Models\Tenants\Department;
+use App\Models\Requirement;
 
 /**
-* @var DepartmentService
+* @var RequirementService
 */
-class DepartmentService implements DepartmentContract
+class RequirementService implements RequirementContract
 {
-    public Department $model;
+    public Requirement $model;
     public function __construct()
     {
-        $this->model = new Department();
+        $this->model = new Requirement();
     }
 
     public function index()
     {
         return $this->model->latest()->get();
-
     }
 
     /**
@@ -29,10 +28,7 @@ class DepartmentService implements DepartmentContract
     public function show($id)
     {
         $model = $this->model->find($id);
-        if (empty($model)) {
-            throw new CustomException("Department Not Found!");
-        }
-        return $model;
+        return empty($model) ? throw new CustomException("Requirement Not Found!") : $model;
     }
 
     /**
@@ -41,31 +37,28 @@ class DepartmentService implements DepartmentContract
     public function store($data)
     {
         $model = new $this->model;
-        return $this->prepareData($model,$data, true);
+        return $this->prepareData($model, $data, true);
     }
-
     /**
      * @throws CustomException
      */
     public function update($data, $id)
     {
         $model = $this->model->find($id);
-        if (empty($model)) {
-            throw new CustomException("Department Not Found!");
-        }
+        if (empty($model)) throw new CustomException("Requirement Not Found!");
         return $this->prepareData($model, $data, false);
     }
 
     /**
      * @throws CustomException
      */
-    public function delete($id): bool
+    public function delete($id)
     {
-        $department = $this->model->find($id);
-        if (empty($department)) {
-            throw new CustomException("Department Not Found!");
+        $model = $this->model->find($id);
+        if (empty($model)) {
+            throw new CustomException("Requirement Not Found!");
         }
-        $department->delete();
+        $model->delete();
         return true;
     }
     private function prepareData($model, $data, $new_record = false)

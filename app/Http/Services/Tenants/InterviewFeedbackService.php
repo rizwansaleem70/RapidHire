@@ -2,19 +2,19 @@
 
 namespace App\Http\Services\Tenants;
 
-use App\Contracts\Tenants\OrganizationContract;
+use App\Contracts\Tenants\InterviewFeedbackContract;
 use App\Exceptions\CustomException;
-use App\Models\Tenants\Organization;
+use App\Models\Tenants\InterviewFeedback;
 
 /**
-* @var OrganizationService
+* @var InterviewFeedbackService
 */
-class OrganizationService implements OrganizationContract
+class InterviewFeedbackService implements InterviewFeedbackContract
 {
-    public Organization $model;
+    public InterviewFeedback $model;
     public function __construct()
     {
-        $this->model = new Organization();
+        $this->model = new InterviewFeedback();
     }
     public function index()
     {
@@ -24,7 +24,7 @@ class OrganizationService implements OrganizationContract
     {
         $model = $this->model->find($id);
         if (empty($model)) {
-            throw new CustomException("Organization record Not Found!");
+            throw new CustomException("Interview Feedback Not Found!");
         }
         return $model;
     }
@@ -39,7 +39,7 @@ class OrganizationService implements OrganizationContract
     {
         $model = $this->model->find($id);
         if (empty($model)) {
-            throw new CustomException("Organization Record Not Found!");
+            throw new CustomException("Interview Feedback Record Not Found!");
         }
         return $this->prepareData($model, $data, false);
     }
@@ -48,7 +48,7 @@ class OrganizationService implements OrganizationContract
     {
         $location = $this->model->find($id);
         if (empty($location)) {
-            throw new CustomException("Organization Record Not Found!");
+            throw new CustomException("Interview Feedback Record Not Found!");
         }
         $location->delete();
         return true;
@@ -57,12 +57,6 @@ class OrganizationService implements OrganizationContract
     {
         if (isset($data['name']) && $data['name']) {
             $model->name = $data['name'];
-        }
-        if (isset($data['phone']) && $data['phone']) {
-            $model->phone = $data['phone'];
-        }
-        if (isset($data['website']) && $data['website']) {
-            $model->website = $data['website'];
         }
         $model->save();
         return $model;

@@ -71,8 +71,8 @@ class JobService implements JobContract
         if (isset($data['location_id']) && $data['location_id']) {
             $model->location_id = $data['location_id'];
         }
-        if (isset($data['category_id']) && $data['category_id']) {
-            $model->category_id = $data['category_id'];
+        if (isset($data['total_position']) && $data['total_position']) {
+            $model->total_position = $data['total_position'];
         }
         if (isset($data['department_id']) && $data['department_id']) {
             $model->department_id = $data['department_id'];
@@ -113,15 +113,14 @@ class JobService implements JobContract
         if (isset($data['salary_deliver']) && $data['salary_deliver']) {
             $model->salary_deliver = $data['salary_deliver'];
         }
-        if (isset($data['image']) && $data['image']) {
-            $image_path = $this->upload($data['image']);
-            $model->image = $image_path;
+        if (isset($data['cover_image']) && $data['cover_image']) {
+            $model->cover_image = $data['cover_image'];
         }
 
         $model->save();
         $model->jobQuestion()->sync($data['question_bank_id']);
         $model->jobHiringManager()->sync($data['job_hiring_manager_id']);
-        $model->jobTestService()->sync($data['test_service_id']);
+        $model->requirement()->sync($data['requirement_id']);
         return $model;
     }
 }

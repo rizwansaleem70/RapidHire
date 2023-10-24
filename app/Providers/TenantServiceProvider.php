@@ -5,12 +5,13 @@ namespace App\Providers;
 use App\Contracts\AuthContract;
 use App\Contracts\Tenants\CategoryContract;
 use App\Contracts\Tenants\DepartmentContract;
+use App\Contracts\Tenants\ImageUploadContract;
+use App\Contracts\Tenants\InterviewFeedbackContract;
 use App\Contracts\Tenants\JobContract;
-use App\Contracts\Tenants\JobRequirementContract;
+use App\Contracts\Tenants\RequirementContract;
 use App\Contracts\Tenants\JobShortlistingContract;
 use App\Contracts\Tenants\LocationContract;
 use App\Contracts\Tenants\MemberContract;
-use App\Contracts\Tenants\OrganizationContract;
 use App\Contracts\Tenants\QuestionBankContract;
 use App\Contracts\Tenants\SettingContract;
 use App\Contracts\Tenants\SocialMediaContract;
@@ -19,12 +20,13 @@ use App\Contracts\Tenants\TestServiceContract;
 use App\Http\Services\AuthService;
 use App\Http\Services\Tenants\CategoryService;
 use App\Http\Services\Tenants\DepartmentService;
-use App\Http\Services\Tenants\JobRequirementService;
+use App\Http\Services\Tenants\ImageUploadService;
+use App\Http\Services\Tenants\InterviewFeedbackService;
+use App\Http\Services\Tenants\RequirementService;
 use App\Http\Services\Tenants\JobService;
 use App\Http\Services\Tenants\JobShortlistingService;
 use App\Http\Services\Tenants\LocationService;
 use App\Http\Services\Tenants\MemberService;
-use App\Http\Services\Tenants\OrganizationService;
 use App\Http\Services\Tenants\QuestionBankService;
 use App\Http\Services\Tenants\SettingService;
 use App\Http\Services\Tenants\SocialMediaService;
@@ -70,9 +72,9 @@ class TenantServiceProvider extends ServiceProvider
             }
         );
         $this->app->bind(
-            JobRequirementContract::class,
+            RequirementContract::class,
             function ($app) {
-                return $app->make(JobRequirementService::class);
+                return $app->make(RequirementService::class);
             }
         );
         $this->app->bind(
@@ -118,9 +120,15 @@ class TenantServiceProvider extends ServiceProvider
             }
         );
         $this->app->bind(
-            OrganizationContract::class,
+            InterviewFeedbackContract::class,
             function ($app) {
-                return $app->make(OrganizationService::class);
+                return $app->make(InterviewFeedbackService::class);
+            }
+        );
+        $this->app->bind(
+            ImageUploadContract::class,
+            function ($app) {
+                return $app->make(ImageUploadService::class);
             }
         );
     }

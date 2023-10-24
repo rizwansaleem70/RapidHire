@@ -4,7 +4,7 @@ namespace App\Http\Requests\Tenants;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateSettingRequest extends FormRequest
+class StoreConfigurationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
