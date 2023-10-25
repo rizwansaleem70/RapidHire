@@ -13,14 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    // dd('1696403197', \Carbon\Carbon::createFromTimestamp('1696403197')->toDateTimeString());
-    return view('admin.dashboard.index');
-})->name('admin.dashboard.index');
+// Route::get('/', function () {
+//     // dd('1696403197', \Carbon\Carbon::createFromTimestamp('1696403197')->toDateTimeString());
+//     return view('admin.dashboard.index');
+// })->name('admin.dashboard.index');
 
-// Auth::routes();
+// // Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Route::get('Super-Admin', [App\Http\Controllers\HomeController::class, 'admin'])->name('SuperAdmin');
 // Route::get('All-Tenants', [App\Http\Controllers\HomeController::class, 'tenant'])->name('tenant.index');
