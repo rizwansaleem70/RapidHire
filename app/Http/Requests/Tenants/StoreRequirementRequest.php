@@ -5,7 +5,7 @@ namespace App\Http\Requests\Tenants;
 
 use App\Abstracts\FormRequest;
 
-class UpdateDepartmentRequest extends FormRequest
+class StoreRequirementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,6 +24,8 @@ class UpdateDepartmentRequest extends FormRequest
     {
         return [
             'data.*.name' => 'required',
+            'data.*.input_type' => 'required',
+            'data.*.option' => 'required',
         ];
     }
 

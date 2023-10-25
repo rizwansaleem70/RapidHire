@@ -2,17 +2,16 @@
 
 namespace App\Http\Requests\Tenants;
 
+use Illuminate\Foundation\Http\FormRequest;
 
-use App\Abstracts\FormRequest;
-
-class UpdateDepartmentRequest extends FormRequest
+class StoreConfigurationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -23,13 +22,7 @@ class UpdateDepartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'data.*.name' => 'required',
+            //
         ];
-    }
-
-    public function prepareRequest(): array
-    {
-        $request = $this;
-        return $request['data'];
     }
 }

@@ -12,61 +12,57 @@ use QCod\Settings\Setting\Setting;
 */
 class SettingService implements SettingContract
 {
-    use ImageUpload;
-    public Setting $model;
+    public $model;
     public function __construct()
     {
-        $this->model = new Setting();
+        $this->model = settings();
     }
-    public function index()
+    public function index($type)
     {
-        return $this->model->latest()->get();
+        return $this->model->group($type)->all();
     }
-    public function show($id)
-    {
-        $model = $this->model->find($id);
-        if (empty($model)) {
-            throw new CustomException("Setting Record Not Found!");
-        }
-        return $model;
-    }
-
-    public function store($data)
+    public function store($data,$type)
     {
         $model = new $this->model;
-        return $this->prepareData($model, $data, true);
+        return $this->prepareData($model, $data,$type, true);
     }
-
-    public function update($data, $id)
+    private function prepareData($model, $data,$type, $new_record = false)
     {
-        $model = $this->model->find($id);
-        if (empty($model)) {
-            throw new CustomException("Job Record Not Found!");
+        switch($type) {
+            case('logo'):
+                $model = $model->group('logo')->set('logo', $data['logo']);
+                break;
+            case('color-scheme'):
+                $model = $model->group('color-scheme')->set([
+                    'primary' => $data['primary'],
+                    'secondary' => $data['secondary'],
+                ]);
+                break;
+            case('organization'):
+                $model = $model->group('organization')->set([
+                    'name' => $data['name'],
+                    'phone' => $data['phone'],
+                    'website' => $data['website'],
+                ]);
+                break;
+            case('configuration'):
+                $model = $model->group('configuration')->set([
+                    'candidate_reapply_days' => $data['candidate_reapply_days'],
+                    'company_contract_email' => $data['company_contract_email'],
+                    'default_email_signature' => $data['default_email_signature'],
+                    'company_title_about' => $data['company_title_about'],
+                    'job_description_about' => $data['job_description_about'],
+                ]);
+                break;
+            case('core-value'):
+                $model = $model->group('core-value')->set([
+                    'title' => $data['title'],
+                    'icon' => $data['icon'],
+                    'description' => $data['description'],
+                ]);
+                break;
+            default:
         }
-        return $this->prepareData($model, $data, false);
-    }
-
-    public function delete($id)
-    {
-        $setting = $this->model->find($id);
-        if (empty($setting)) {
-            throw new CustomException("Job Record Not Found!");
-        }
-        $setting->delete();
-        return true;
-    }
-    private function prepareData($model, $data, $new_record = false)
-    {
-        if (isset($data['name']) && $data['name']) {
-            $model->name = $data['name'];
-        }
-        if (isset($data['val']) && $data['val']) {
-            $model->val = $data['val'];
-        }
-        if (isset($data['group']) && $data['group']) {
-            $model->group = $data['group'];
-        }
-        $model->save();
         return $model;
     }
 }

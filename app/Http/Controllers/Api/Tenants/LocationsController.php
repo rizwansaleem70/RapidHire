@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 
 class LocationsController extends Controller
 {
-    public $location;
+    public LocationContract $location;
 
     public function __construct(LocationContract $location)
     {

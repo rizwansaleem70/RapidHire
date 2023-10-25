@@ -2,16 +2,17 @@
 
 namespace App\Http\Requests\Tenants;
 
-use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateSettingRequest extends FormRequest
+use App\Abstracts\FormRequest;
+
+class UpdateRequirementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,15 @@ class UpdateSettingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'data.*.name' => 'required',
+            'data.*.input_type' => 'required',
+            'data.*.option' => 'required',
         ];
+    }
+
+    public function prepareRequest(): array
+    {
+        $request = $this;
+        return $request['data'];
     }
 }

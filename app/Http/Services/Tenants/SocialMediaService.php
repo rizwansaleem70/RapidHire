@@ -6,6 +6,7 @@ use App\Contracts\Tenants\SocialMediaContract;
 use App\Exceptions\CustomException;
 use App\Models\Tenants\SocialMedia;
 use App\Traits\ImageUpload;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -39,16 +40,22 @@ class SocialMediaService implements SocialMediaContract
      */
     public function store($data)
     {
-        $jobQualification = $this->model->where('name', ucfirst($data['name']))->first();
-        if ($jobQualification) {
-            throw new CustomException("Social Media is already exist!");
-        }
-        $jobQualification = $this->model->where('user_id', Auth::user()->id)->where('priority',$data['priority'])->first();
-        if ($jobQualification) {
-            throw new CustomException("This priority is already assigned to another social media record.");
+        $new_data = [];
+        foreach ($data as $value)
+        {
+            $value['user_id'] = Auth::user()->id;
+            $new_data[] = $value;
+            $jobQualification = $this->model->where('name', ucfirst($value['name']))->first();
+            if ($jobQualification) {
+                throw new CustomException("Social Media ".$value['name']." is already exist!");
+            }
+            $jobQualification = $this->model->where('user_id', Auth::user()->id)->where('priority', $value['priority'])->first();
+            if ($jobQualification) {
+                throw new CustomException("This priority ".$value['priority']." is already assigned to another social media record.");
+            }
         }
         $model = new $this->model;
-        return $this->prepareData($model, $data, true);
+        return $this->prepareData($model, $new_data, true);
     }
     /**
      * @throws CustomException
@@ -74,21 +81,7 @@ class SocialMediaService implements SocialMediaContract
     }
     private function prepareData($model, $data, $new_record = false)
     {
-        $model->user_id = Auth::user()->id;
-
-        if (isset($data['name']) && $data['name']) {
-            $model->name = $data['name'];
-        }
-        if (isset($data['icon']) && $data['icon']) {
-            $model->icon = $this->upload($data['icon']);
-        }
-        if (isset($data['url']) && $data['url']) {
-            $model->url = $data['url'];
-        }
-        if (isset($data['priority']) && $data['priority']) {
-            $model->priority = $data['priority'];
-        }
-        $model->save();
+        $model->insert($data);
         return $model;
     }
 }

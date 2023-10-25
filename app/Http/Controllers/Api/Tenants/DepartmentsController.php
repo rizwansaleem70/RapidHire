@@ -46,7 +46,8 @@ class DepartmentsController extends Controller
         try {
             DB::beginTransaction();
             $department = $this->department->store($request->prepareRequest());
-            $department = new Department($department);
+            if ($department)
+                $department = new DepartmentCollection($this->department->index());
             DB::commit();
             return $this->successResponse("Department Added Successfully", $department);
         } catch (CustomException $th) {
@@ -82,7 +83,8 @@ class DepartmentsController extends Controller
         try {
             DB::beginTransaction();
             $department = $this->department->update($request->prepareRequest(), $id);
-            $department = new Department($department);
+            if ($department)
+                $department = new DepartmentCollection($this->department->index());
             DB::commit();
             return $this->successResponse("Department Updated Successfully", $department);
         } catch (CustomException $th) {

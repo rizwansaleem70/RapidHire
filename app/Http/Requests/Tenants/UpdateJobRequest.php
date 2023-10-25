@@ -23,8 +23,8 @@ class UpdateJobRequest extends FormRequest
     {
         return [
             'location_id' => 'required|exists:locations,id',
-            'category_id' => 'required|exists:categories,id',
             'department_id' => 'required|exists:departments,id',
+            'requirement_id.*' => 'required|exists:requirements,id',
             'job_hiring_manager_id.*' => 'required|exists:users,id',
             'question_bank_id.*' => 'required|exists:question_banks,id',
             'name' => 'required|string',
@@ -34,11 +34,12 @@ class UpdateJobRequest extends FormRequest
             'min_salary' => 'required',
             'max_salary' => 'nullable',
             'expiry_date' => 'nullable',
+            'total_position' => 'required',
             'is_active' => 'required|boolean',
             'rating' => 'nullable',
             'status' => 'required|in:published,draft',
             'salary_deliver' => 'required|in:monthly,yearly',
-            'image' => 'nullable',
+            'cover_image' => 'nullable',
         ];
     }
 
@@ -47,8 +48,8 @@ class UpdateJobRequest extends FormRequest
         $request = $this;
         return [
             'location_id' => $request['location_id'],
-            'category_id' => $request['category_id'],
             'department_id' => $request['department_id'],
+            'requirement_id' => $request['requirement_id'],
             'job_hiring_manager_id' => $request['job_hiring_manager_id'],
             'question_bank_id' => $request['question_bank_id'],
             'name' => $request['name'],
@@ -58,11 +59,12 @@ class UpdateJobRequest extends FormRequest
             'min_salary' => $request['min_salary'],
             'max_salary' => $request['max_salary'],
             'expiry_date' => $request['expiry_date'],
+            'total_position' => $request['total_position'],
             'is_active' => $request['is_active'],
             'rating' => $request['rating'],
             'status' => $request['status'],
             'salary_deliver' => $request['salary_deliver'],
-            'image' => $request['image'],
+            'cover_image' => $request['cover_image'],
         ];
     }
 }

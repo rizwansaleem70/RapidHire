@@ -7,8 +7,6 @@ namespace App\Contracts\Tenants;
 */
 interface SettingContract
 {
-    public function index();
-    public function store($data);
-    public function update($data,$id);
-    public function delete($id);
+    public function index($type);
+    public function store($data,$type);
 }

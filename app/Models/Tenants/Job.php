@@ -3,6 +3,7 @@
 namespace App\Models\Tenants;
 
 use App\Models\JobQuestion;
+use App\Models\Requirement;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,5 +27,9 @@ class Job extends Model
     public function jobTestService(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(TestService::class,'job_test_services','job_id','test_service_id');
+    }
+    public function requirement(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Requirement::class,'job_requirements','job_id','requirement_id');
     }
 }

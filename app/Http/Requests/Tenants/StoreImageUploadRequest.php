@@ -5,7 +5,7 @@ namespace App\Http\Requests\Tenants;
 
 use App\Abstracts\FormRequest;
 
-class StoreJobRequirementRequest extends FormRequest
+class StoreImageUploadRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,7 @@ class StoreJobRequirementRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'input_type' => 'required',
-            'option' => 'required',
+            'image' => 'required|image',
         ];
     }
 
@@ -33,9 +31,7 @@ class StoreJobRequirementRequest extends FormRequest
     {
         $request = $this;
         return [
-            'name' => $request['name'],
-            'input_type' => $request['input_type'],
-            'option' => $request['option'],
+            'image' => $request['image']
         ];
     }
 }

@@ -31,7 +31,8 @@ class RegisterTenantJob implements ShouldQueue
     {
         $this->tenant->run(function (){
             User::create([
-                'name'=> $this->tenant->name,
+                'first_name'=> $this->tenant->first_name,
+                'last_name'=> $this->tenant->last_name,
                 'email'=> $this->tenant->email,
                 'password'=> $this->tenant->password,
             ]);

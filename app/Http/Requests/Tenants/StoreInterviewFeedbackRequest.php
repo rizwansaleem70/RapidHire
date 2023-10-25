@@ -5,7 +5,7 @@ namespace App\Http\Requests\Tenants;
 
 use App\Abstracts\FormRequest;
 
-class UpdateDepartmentRequest extends FormRequest
+class StoreInterviewFeedbackRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,13 +23,15 @@ class UpdateDepartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'data.*.name' => 'required',
+            'name' => 'required',
         ];
     }
 
-    public function prepareRequest(): array
+    public function prepareRequest():array
     {
         $request = $this;
-        return $request['data'];
+        return [
+            'name' => $request['name'],
+        ];
     }
 }

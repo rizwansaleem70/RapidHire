@@ -22,20 +22,88 @@ class StoreSettingRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required|string',
-            'val' => 'required|image',
-            'group' => 'required',
-        ];
+        $type = $this->route()->parameters['type'];
+        switch($type) {
+            case('logo'):
+                $request = [
+                    'logo' => 'required',
+                ];
+                break;
+            case('color-scheme'):
+                $request = [
+                    'primary' => 'required',
+                    'secondary' => 'required',
+                ];
+                break;
+            case('organization'):
+                $request = [
+                    'name' => 'required',
+                    'phone' => 'required',
+                    'website' => 'required',
+                ];
+                break;
+            case('configuration'):
+                $request = [
+                    'candidate_reapply_days' => 'required',
+                    'company_contract_email' => 'required',
+                    'default_email_signature' => 'required',
+                    'company_title_about' => 'required',
+                    'job_description_about' => 'required',
+                ];
+                break;
+            case('core-value'):
+                $request = [
+                    'title' => 'required',
+                    'icon' => 'required',
+                    'description' => 'required'
+                ];
+                break;
+            default:
+        }
+        return $request;
     }
 
     public function prepareRequest(): array
     {
         $request = $this;
-        return [
-            'name' => $request['name'],
-            'val' => $request['value'],
-            'group' => $request['group'],
-        ];
+        $type = $this->route()->parameters['type'];
+        switch($type) {
+            case('logo'):
+                $prepareRequest = [
+                    'logo' => $request['logo'],
+                ];
+                break;
+            case('color-scheme'):
+                $prepareRequest = [
+                    'primary' => $request['primary'],
+                    'secondary' => $request['secondary'],
+                ];
+                break;
+            case('organization'):
+                $prepareRequest = [
+                    'name' => $request['name'],
+                    'phone' => $request['phone'],
+                    'website' => $request['website'],
+                ];
+                break;
+            case('configuration'):
+                $prepareRequest = [
+                    'candidate_reapply_days' => $request['candidate_reapply_days'],
+                    'company_contract_email' => $request['company_contract_email'],
+                    'default_email_signature' => $request['default_email_signature'],
+                    'company_title_about' => $request['company_title_about'],
+                    'job_description_about' => $request['job_description_about'],
+                ];
+                break;
+            case('core-value'):
+                $prepareRequest = [
+                    'title' => $request['title'],
+                    'icon' => $request['icon'],
+                    'description' => $request['description'],
+                ];
+                break;
+            default:
+        }
+        return $prepareRequest;
     }
 }
