@@ -55,7 +55,7 @@
             </ul>
         </div>
         <div class="shadow-bottom"></div>
-        <div class="main-menu-content">
+        {{-- <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
                 <li class="nav-item {{ Route::is('admin.dashboard.index') ? 'active' : '' }}">
                     <a class="d-flex align-items-center" href="{{route('admin.dashboard.index')}}"><i data-feather="home"></i><span
@@ -66,6 +66,6 @@
                             class="menu-title text-truncate" data-i18n="Dashboards">Tenant</span></a>
                 </li>
             </ul>
-        </div>
+        </div> --}}
     </div>
     <!-- END: Main Menu-->
