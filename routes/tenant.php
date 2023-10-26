@@ -22,6 +22,7 @@ use App\Http\Controllers\Api\Tenants\SettingsController;
 use App\Http\Controllers\Api\Tenants\SocialMediasController;
 use App\Http\Controllers\Api\Tenants\TestsController;
 use App\Http\Controllers\Api\Tenants\TestServicesController;
+use App\Http\Controllers\Tenant\User\HomeController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -42,16 +43,17 @@ Route::middleware(['web',InitializeTenancyByDomain::class, PreventAccessFromCent
 //    Route::get('/',function (){
 //        return 'tenant application'.tenant('id');
 //    });
-    Route::get('/', [UserAuthController::class, 'home'])->name('tenant-user-home');
-    Route::view('user-about', 'users/about')->name('tenant-user-about');
-    Route::view('user-jobs', 'users/jobs')->name('tenant-user-jobs');
-    Route::view('user-submit', 'users/submit')->name('tenant-user-submit');
-    Route::view('user-contact-us', 'users/contact-us')->name('tenant-user-contact-us');
-    Route::view('user-apply', 'users/apply')->name('tenant-user-apply');
+    Route::get('/', [HomeController::class, 'index'])->name('tenant-user-home');
+
+    Route::get('user-about', [HomeController::class, 'about'])->name('tenant-user-about');
+    Route::get('user-contact-us', [HomeController::class, 'contact'])->name('tenant-user-contact-us');
+    Route::get('user-jobs', [HomeController::class, 'jobs'])->name('tenant-user-jobs');
+    Route::get('user-submit', [HomeController::class, 'submit'])->name('tenant-user-submit');
+    Route::get('user-apply/{id}', [HomeController::class, 'jobApply'])->name('tenant-user-apply');
 
     // Tenant Candidate User Auth Routes
     Route::get('user-signup', [UserAuthController::class, 'signup'])->name('tenant-user-signup');
-    Route::post('user-signup', [Userauthcontroller::class, 'register'])->name('register-user');
+    Route::post('user-signup', [UserAuthController::class, 'register'])->name('register-user');
 
     Route::get('user-login', [UserAuthController::class, 'loginPage'])->name('tenant-user-login');
     Route::post('user-login', [UserAuthController::class, 'login'])->name('tenant-user-login');
@@ -60,6 +62,9 @@ Route::middleware(['web',InitializeTenancyByDomain::class, PreventAccessFromCent
 
     Route::get('user-reset-password', [UserAuthController::class, 'resetPasswordPage'])->name('tenant-user-reset-password');
     Route::post('user-reset-password', [UserAuthController::class, 'resetPassword'])->name('tenant-user-reset-password');
+
+    Route::post('like-job',[HomeController::class,'like'])->name('user-like-job');
+    Route::post('dislike-job',[HomeController::class,'dislike'])->name('user-dislike-job');
 });
 
 Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {

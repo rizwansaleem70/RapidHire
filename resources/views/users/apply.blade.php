@@ -16,7 +16,7 @@
               </div>
               <div class="content">
                 <a href="#" class="category">Rockstar Games New York</a>
-                <h6><a href="#">Senior UI/UX Designer <span class="icon-bolt"></span></a></h6>
+                <h6><a href="#"> {{$job->name}} <span class="icon-bolt"></span></a></h6>
                 <ul class="job-info">
                   <li><span class="icon-map-pin"></span>
                     <span>Las Vegas, NV 89107, USA</span></li>
@@ -32,7 +32,18 @@
             <div class="content-right">
               <div class="top">
                 <a href="#" class="share"><i class="icon-share2"></i></a>
-                <a href="#" class="wishlist"><i class="icon-heart"></i></a>
+                <a href="#" class="wishlist"><span class="icon-heart" id="heart_{{$job->id}}"
+                    @if(Auth::check())
+                        onclick="favorite({{$job->id}})"
+                        @foreach ($favJobs as $favJob)
+                            @if ($favJob->job_id == $job->id && $favJob->is_active == 1)
+                                style="color: red"
+                            @endif
+                        @endforeach
+                    @else
+                        onclick="favoriteButton()"
+                    @endif
+                    ></span></a>
                 <a href="{{route('tenant-user-submit')}}" class="btn btn-popup"><i class="icon-send"></i>Apply Now</a>
               </div>
               <div class="bottom">
@@ -73,6 +84,7 @@
             <div class="content-tab">
               <div class="inner-content">
                 <h5>Full Job Description</h5>
+                <p style="color: red">{{$job->job_description}}</p>
                 <p>Are you a User Experience Designer with a track record of delivering intuitive digital experiences that
                   drive results? Are you a strategic storyteller and systems thinker who can concept and craft smart,
                   world-class campaigns across a variety of mediums?
@@ -565,5 +577,59 @@
       </div>
     </div>
   </section>
+
+<script>
+
+    function favorite(id) {
+        var icon = document.getElementById('heart_' + id);
+        if (icon.style.color === "red") {
+            dislike(id);
+        }
+        else
+        {
+            like(id);
+        }
+    }
+
+    function like(id) {
+        var icon = document.getElementById('heart_' + id);
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('user-like-job') }}',
+            data: {
+                _token: "{{ csrf_token() }}",
+                job_id: id,
+                is_active: 1,
+            },
+            success: function(response) {
+                if (icon) {
+                    icon.style.color = "red";
+                }
+            }
+        });
+    }
+
+    function dislike(id) {
+        var icon = document.getElementById('heart_' + id);
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('user-dislike-job') }}',
+            data: {
+                _token: "{{ csrf_token() }}",
+                job_id: id,
+            },
+            success: function(response) {
+                if (icon) {
+                    icon.removeAttribute('style');
+                }
+            }
+        });
+    }
+
+    function favoriteButton() {
+        alert('Please Login for add Job to Favorite');
+    }
+
+</script>
 
 @endsection

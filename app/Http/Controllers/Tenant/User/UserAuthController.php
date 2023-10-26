@@ -19,11 +19,6 @@ class UserAuthController extends Controller
         $this->user = $user;
     }
 
-    public function home()
-    {
-        return view('users.home');
-    }
-
     public function signup()
     {
         return view('users.auth.signup');
@@ -37,7 +32,7 @@ class UserAuthController extends Controller
             if($user == true){
                 DB::commit();
                 session()->flash('success', 'You have Successfully Registered');
-                return view('users.home');
+                return redirect()->route('tenant-user-home');
             }
             else{
                 DB::rollBack();
@@ -61,7 +56,7 @@ class UserAuthController extends Controller
             $user=$this->user->login($request->prepareData());
             if($user == true){
                 session()->flash('success', 'You have Successfully Login');
-                return view('users.home');
+                return redirect()->route('tenant-user-home');
             }
             else{
                 session()->flash('message', 'Invalid Credentials, Try Again');
@@ -75,7 +70,8 @@ class UserAuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return view('users.home');
+        session()->flash('success', 'You have Successfully Logout');
+        return redirect()->route('tenant-user-home');
     }
 
     public function resetPasswordPage()
