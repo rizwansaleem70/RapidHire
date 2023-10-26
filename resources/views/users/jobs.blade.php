@@ -168,218 +168,227 @@
                             <div class="inner" style="">
 
                                 @foreach ($jobs as $job)
-                                <div class="features-job cl2">
-                                    <div class="job-archive-header">
-                                        <div class="inner-box">
-                                            <div class="logo-company">
-                                                <img src="{{asset('app-assets/users/images/logo-company/cty1.png')}}" alt="images/logo-company/cty1.png">
-                                            </div>
-                                            <div class="box-content">
-                                                <h4>
-                                                    <a href="#">Rockstar Games New York</a>
-                                                </h4>
-                                            <h3>
-                                                <a href="#"> {{$job->name}} </a>
-                                                <span class="icon-bolt"></span>
-                                            </h3>
-                                            <ul>
-                                                <li>
-                                                <span class="icon-map-pin"></span>
-                                                Las Vegas, NV 89107, USA
-                                                </li>
-                                                <li>
-                                                <span class="icon-calendar"></span>
-                                                2 days ago
-                                                </li>
-                                            </ul>
+                                    <div class="features-job cl2">
+                                        <div class="job-archive-header">
+                                            <div class="inner-box">
+                                                <div class="logo-company">
+                                                    <img src="{{asset('app-assets/users/images/logo-company/cty1.png')}}" alt="images/logo-company/cty1.png">
+                                                </div>
+                                                <div class="box-content">
+                                                    <h4>
+                                                        <a href="#">Rockstar Games New York</a>
+                                                    </h4>
+                                                    <h3>
+                                                        <a href="#"> {{$job->name}} </a>
+                                                        <span class="icon-bolt"></span>
+                                                    </h3>
+                                                    <ul>
+                                                        <li><span class="icon-map-pin"></span>Las Vegas, NV 89107, USA</li>
+                                                        <li><span class="icon-calendar"></span>2 days ago</li>
+                                                    </ul>
 
-                                                @auth
-                                                    @foreach ($favJobs as $favJob)
-
-                                                        @if (auth()->user()->id === $favJob->user_id)
-                                                            @if ($favJob->job_id === $job->id)
-                                                                @if ($favJob->is_active === 1)
-                                                                    {{$favJob->user_id}}
-                                                                    {{$favJob->job_id}}
-                                                                    <span class="icon-heart" id="heart" style="color: red"></span>
+                                                    <span class="icon-heart" id="heart_{{$job->id}}"
+                                                        @if(Auth::check())
+                                                            onclick="favorite({{$job->id}})"
+                                                            @foreach ($favJobs as $favJob)
+                                                                @if ($favJob->job_id == $job->id && $favJob->is_active == 1)
+                                                                    style="color: red"
                                                                 @endif
-                                                            @else
-                                                                <span class="icon-heart" id="heart" style="color: black"></span>
-                                                            @endif
+                                                            @endforeach
                                                         @else
-                                                            <span class="icon-heart" id="heart" style="color: black"></span>
+                                                            onclick="favoriteButton()"
                                                         @endif
+                                                        ></span>
 
-                                                    @endforeach
-                                                @else
-                                                    <span class="icon-heart" id="heart" style="color: black"></span>
-                                                @endauth
+                                                    <div class="button-container">
+                                                            <a href="{{ route('tenant-user-apply', [ 'id' => $job->id ]) }}">
+                                                            <button class="btn btn-primary"> Apply </button>
+                                                            </a>
+                                                    </div>
 
-                                            <div class="button-container">
-                                                    <a href="{{ route('tenant-user-apply', [ 'id' => $job->id ]) }}">
-                                                    <button class="btn btn-primary"> Apply </button>
-                                                    </a>
-                                            </div>
-
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="job-archive-footer">
-                                    <div class="job-footer-left">
 
-                                        <ul class="job-tag">
-                                        <li><a href="#">Full-time</a></li>
-                                        <li><a href="#">Remote</a></li>
-                                        </ul>
-                                        <div class="star">
-
-                                        <span class="icon-star-full"></span>
-                                        <span class="icon-star-full"></span>
-                                        <span class="icon-star-full"></span>
-                                        <span class="icon-star-full"></span>
-                                        <span class="icon-star-full"></span>
+                                        <div class="job-archive-footer">
+                                            <div class="job-footer-left">
+                                                <ul class="job-tag">
+                                                    <li><a href="#">Full-time</a></li>
+                                                    <li><a href="#">Remote</a></li>
+                                                </ul>
+                                                <div class="star">
+                                                    <span class="icon-star-full"></span>
+                                                    <span class="icon-star-full"></span>
+                                                    <span class="icon-star-full"></span>
+                                                    <span class="icon-star-full"></span>
+                                                    <span class="icon-star-full"></span>
+                                                </div>
+                                            </div>
+                                            <div class="job-footer-right">
+                                                <div class="price">
+                                                <span class="icon-dolar1"></span>
+                                                <p>$83,000 - $110,000 <span class="year">/year</span></p>
+                                                </div>
+                                                <p class="days">22 days left to apply</p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="job-footer-right">
-                                        <div class="price">
-                                        <span class="icon-dolar1"></span>
-                                        <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                        </div>
-                                        <p class="days">22 days left to apply</p>
-                                    </div>
-                                    </div>
-                                </div>
-
-
                                 @endforeach
 
-                            <ul class="pagination-job padding">
-                                <li><a href="#"><i class="icon-keyboard_arrow_left"></i></a></li>
-                                <li><a href="#">1</a></li>
-                                <li class="current"><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#"><i class="icon-keyboard_arrow_right"></i></a></li>
-                            </ul>
-                            </div>
-
-                    <div class="inner" style="display: none;">
-                        <div class="group-col-3">
-                            @foreach ($jobs as $job)
-                        <div class="features-job cl3">
-
-                            <div class="job-archive-header">
-                            <div class="inner-box">
-                                <div class="logo-company">
-                                <img src="{{asset('app-assets/users/images/logo-company/cty1.png')}}" alt="company">
-                                </div>
-                                <div class="box-content">
-                                    <h4>
-                                        <a href="#">Rockstar Games New York</a>
-                                    </h4>
-                                    <h3>
-                                        <a href="#"> {{$job->name}} </a>
-                                        <span class="icon-bolt"></span>
-                                    </h3>
-                                    <ul>
-                                        <li>
-                                        <span class="icon-map-pin"></span>
-                                        Las Vegas, NV 89107, USA
-                                        </li>
-                                        <li>
-                                        <span class="icon-calendar"></span>
-                                        2 days ago
-                                        </li>
-                                    </ul>
-                                    @auth
-                                        @foreach ($favJobs as $favJob)
-
-                                            @if (auth()->user()->id === $favJob->user_id)
-                                                @if ($favJob->job_id === $job->id)
-                                                    @if ($favJob->is_active === 1)
-                                                        {{$favJob->user_id}}
-                                                        {{$favJob->job_id}}
-                                                        <span class="icon-heart" id="heart" style="color: red"></span>
-                                                    @endif
-                                                @else
-                                                    <span class="icon-heart" id="heart" style="color: black"></span>
-                                                @endif
-                                            @else
-                                                <span class="icon-heart" id="heart" style="color: black"></span>
-                                            @endif
-
-                                        @endforeach
-                                    @else
-                                        <span class="icon-heart" id="heart" style="color: black"></span>
-                                    @endauth
-
-                                    <div class="button-container">
-                                        <a href="{{ route('tenant-user-apply', [ 'id' => $job->id ]) }}">
-                                            <button class="btn btn-primary"> Apply </button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="job-archive-footer">
-                            <div class="job-footer-left">
-                                <ul class="job-tag">
-                                <li><a href="#"> Full-time</a></li>
-                                <li><a href="#"> Remote</a></li>
+                                <ul class="pagination-job padding">
+                                    <li><a href="#"><i class="icon-keyboard_arrow_left"></i></a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li class="current"><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#"><i class="icon-keyboard_arrow_right"></i></a></li>
                                 </ul>
-                                <div class="star">
-                                <span class="icon-star-full"></span>
-                                <span class="icon-star-full"></span>
-                                <span class="icon-star-full"></span>
-                                <span class="icon-star-full"></span>
-                                <span class="icon-star-full"></span>
-                                </div>
-                            </div>
-                            <div class="job-footer-right">
-                                <div class="price">
-                                <span class="icon-dolar1"></span>
-                                <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                </div>
-                                <p class="days">22 days left to apply</p>
-                            </div>
                             </div>
 
+                            <div class="inner" style="display: none;">
+                                <div class="group-col-3">
+                                    @foreach ($jobs as $job)
+                                        <div class="features-job cl3">
+                                            <div class="job-archive-header">
+                                                <div class="inner-box">
+                                                    <div class="logo-company">
+                                                        <img src="{{asset('app-assets/users/images/logo-company/cty1.png')}}" alt="company">
+                                                    </div>
+                                                    <div class="box-content">
+                                                        <h4>
+                                                            <a href="#">Rockstar Games New York</a>
+                                                        </h4>
+                                                        <h3>
+                                                            <a href="#"> {{$job->name}} </a>
+                                                            <span class="icon-bolt"></span>
+                                                        </h3>
+                                                        <ul>
+                                                            <li>
+                                                            <span class="icon-map-pin"></span>
+                                                            Las Vegas, NV 89107, USA
+                                                            </li>
+                                                            <li>
+                                                            <span class="icon-calendar"></span>
+                                                            2 days ago
+                                                            </li>
+                                                        </ul>
+
+                                                        <span class="icon-heart" id="heart_{{$job->id}}"
+                                                            @if(Auth::check())
+                                                                onclick="favorite({{$job->id}})"
+                                                                @foreach ($favJobs as $favJob)
+                                                                    @if ($favJob->job_id == $job->id && $favJob->is_active == 1)
+                                                                        style="color: red"
+                                                                    @endif
+                                                                @endforeach
+                                                            @else
+                                                                onclick="favoriteButton()"
+                                                            @endif
+                                                            ></span>
+
+                                                        <div class="button-container">
+                                                            <a href="{{ route('tenant-user-apply', [ 'id' => $job->id ]) }}">
+                                                                <button class="btn btn-primary"> Apply </button>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="job-archive-footer">
+                                                <div class="job-footer-left">
+                                                    <ul class="job-tag">
+                                                        <li><a href="#"> Full-time</a></li>
+                                                        <li><a href="#"> Remote</a></li>
+                                                    </ul>
+                                                    <div class="star">
+                                                        <span class="icon-star-full"></span>
+                                                        <span class="icon-star-full"></span>
+                                                        <span class="icon-star-full"></span>
+                                                        <span class="icon-star-full"></span>
+                                                        <span class="icon-star-full"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="job-footer-right">
+                                                    <div class="price">
+                                                        <span class="icon-dolar1"></span>
+                                                        <p>$83,000 - $110,000 <span class="year">/year</span></p>
+                                                    </div>
+                                                    <p class="days">22 days left to apply</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                <ul class="pagination-job padding">
+                                    <li><a href="#"><i class="icon-keyboard_arrow_left"></i></a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li class="current"><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#"><i class="icon-keyboard_arrow_right"></i></a></li>
+                                </ul>
+
+                            </div>
 
                         </div>
-                        @endforeach
-                        </div>
-
-
-                        <ul class="pagination-job padding">
-                        <li><a href="#"><i class="icon-keyboard_arrow_left"></i></a></li>
-                        <li><a href="#">1</a></li>
-                        <li class="current"><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#"><i class="icon-keyboard_arrow_right"></i></a></li>
-                        </ul>
-
                     </div>
-
-                </div>
                 </div>
             </div>
-            </div>
-
         </div>
     </div>
 </section>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    const heartIcon = document.getElementById('heart');
 
-    heartIcon.addEventListener('click', function() {
-        if (heartIcon.style.color === 'red') {
-            heartIcon.style.color = 'black';
-        } else {
-            heartIcon.style.color = 'red';
+    function favorite(id) {
+        var icon = document.getElementById('heart_' + id);
+        if (icon.style.color === "red") {
+            dislike(id);
         }
-    });
-});
+        else
+        {
+            like(id);
+        }
+    }
+
+    function like(id) {
+        var icon = document.getElementById('heart_' + id);
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('user-like-job') }}',
+            data: {
+                _token: "{{ csrf_token() }}",
+                job_id: id,
+                is_active: 1,
+            },
+            success: function(response) {
+                if (icon) {
+                    icon.style.color = "red";
+                }
+            }
+        });
+    }
+
+    function dislike(id) {
+        var icon = document.getElementById('heart_' + id);
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('user-dislike-job') }}',
+            data: {
+                _token: "{{ csrf_token() }}",
+                job_id: id,
+            },
+            success: function(response) {
+                if (icon) {
+                    icon.removeAttribute('style');
+                }
+            }
+        });
+    }
+
+    function favoriteButton() {
+        alert('Please Login for add Job to Favorite');
+    }
+
 </script>
 
 @endsection

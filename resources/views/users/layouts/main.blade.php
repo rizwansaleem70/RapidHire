@@ -15,6 +15,7 @@
     <title>Career Website | Rapid Hire</title>
 
     <meta charset="UTF-8"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
     <!-- Font -->

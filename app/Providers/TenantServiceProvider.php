@@ -127,6 +127,8 @@ class TenantServiceProvider extends ServiceProvider
             UserAuthContract::class,
             function ($app) {
                 return $app->make(UserAuthService::class);
+            }
+        );
         $this->app->bind(
             InterviewFeedbackContract::class,
             function ($app) {
