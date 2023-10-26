@@ -55,4 +55,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Job::class,'job_hiring_managers','user_id','job_id');
     }
+    public function favoriteJobs()
+    {
+        return $this->hasMany(FavoriteJob::class);
+    }
 }

@@ -100,76 +100,18 @@
         <!-- wd-job-category -->
         <div class="col-md-12">
           <div class="group-category-job  wow fadeInUp">
-            <div class="job-category-box">
-              <div class="job-category-header">
-                <h1>Human Resource</h1>
-                <p>120 Jobs available</p>
-              </div>
-              <a href="#" class="btn-category-job">Explore Jobs <span class="icon-keyboard_arrow_right"></span></a>
-            </div>
-            <div class="job-category-box  ">
-              <div class="job-category-header">
-                <h1>Project Manager</h1>
-                <p>120 Jobs available</p>
-              </div>
-              <a href="#" class="btn-category-job">Explore Jobs <span class="icon-keyboard_arrow_right"></span></a>
-            </div>
-            <div class="job-category-box ">
-              <div class="job-category-header">
-                <h1>Delivery Driver</h1>
-                <p>120 Jobs available</p>
-              </div>
-              <a href="#" class="btn-category-job">Explore Jobs <span class="icon-keyboard_arrow_right"></span></a>
-            </div>
-            <div class="job-category-box ">
-              <div class="job-category-header">
-                <h1>Accounting</h1>
-                <p>120 Jobs available</p>
-              </div>
-              <a href="#" class="btn-category-job">Explore Jobs <span class="icon-keyboard_arrow_right"></span></a>
-            </div>
-            <div class="job-category-box ">
-              <div class="job-category-header">
-                <h1>Customer Service</h1>
-                <p>120 Jobs available</p>
-              </div>
-              <a href="#" class="btn-category-job">Explore Jobs <span class="icon-keyboard_arrow_right"></span></a>
-            </div>
-            <div class="job-category-box ">
-              <div class="job-category-header">
-                <h1>Data Science</h1>
-                <p>120 Jobs available</p>
-              </div>
-              <a href="#" class="btn-category-job">Explore Jobs <span class="icon-keyboard_arrow_right"></span></a>
-            </div>
-            <div class="job-category-box ">
-              <div class="job-category-header">
-                <h1>Engineering</h1>
-                <p>120 Jobs available</p>
-              </div>
-              <a href="#" class="btn-category-job">Explore Jobs <span class="icon-keyboard_arrow_right"></span></a>
-            </div>
-            <div class="job-category-box ">
-              <div class="job-category-header">
-                <h1>IT & Networking</h1>
-                <p>120 Jobs available</p>
-              </div>
-              <a href="#" class="btn-category-job">Explore Jobs <span class="icon-keyboard_arrow_right"></span></a>
-            </div>
-            <div class="job-category-box ">
-              <div class="job-category-header">
-                <h1>Sales & Marketing</h1>
-                <p>120 Jobs available</p>
-              </div>
-              <a href="#" class="btn-category-job">Explore Jobs <span class="icon-keyboard_arrow_right"></span></a>
-            </div>
-            <div class="job-category-box ">
-              <div class="job-category-header">
-                <h1>Writing</h1>
-                <p>120 Jobs available</p>
-              </div>
-              <a href="#" class="btn-category-job">Explore Jobs <span class="icon-keyboard_arrow_right"></span></a>
-            </div>
+
+            @foreach ($departments as $department)
+
+                <div class="job-category-box">
+                <div class="job-category-header">
+                    <h1>{{$department->name}}</h1>
+                    <p>120 Jobs available</p>
+                </div>
+                <a href="#" class="btn-category-job">Explore Jobs <span class="icon-keyboard_arrow_right"></span></a>
+                </div>
+            @endforeach
+
           </div>
         </div>
 

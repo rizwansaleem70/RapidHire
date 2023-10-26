@@ -32,4 +32,8 @@ class Job extends Model
     {
         return $this->belongsToMany(Requirement::class,'job_requirements','job_id','requirement_id');
     }
+    public function favoriteJob()
+    {
+        return $this->belongsTo(FavoriteJob::class);
+    }
 }

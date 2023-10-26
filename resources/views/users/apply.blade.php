@@ -16,7 +16,9 @@
               </div>
               <div class="content">
                 <a href="#" class="category">Rockstar Games New York</a>
-                <h6><a href="#">Senior UI/UX Designer <span class="icon-bolt"></span></a></h6>
+                <h6><a href="#"> {{$job->id}} <span class="icon-bolt"></span></a></h6>
+                <h6><a href="#"> {{$job->name}} <span class="icon-bolt"></span></a></h6>
+                <h6><a href="#"> {{$job->job_description}} <span class="icon-bolt"></span></a></h6>
                 <ul class="job-info">
                   <li><span class="icon-map-pin"></span>
                     <span>Las Vegas, NV 89107, USA</span></li>
@@ -32,7 +34,7 @@
             <div class="content-right">
               <div class="top">
                 <a href="#" class="share"><i class="icon-share2"></i></a>
-                <a href="#" class="wishlist"><i class="icon-heart"></i></a>
+                <a href="#" class="wishlist"><i class="icon-heart" id="heart" style="color: black"></i></a>
                 <a href="{{route('tenant-user-submit')}}" class="btn btn-popup"><i class="icon-send"></i>Apply Now</a>
               </div>
               <div class="bottom">
@@ -565,5 +567,19 @@
       </div>
     </div>
   </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        const heartIcon = document.getElementById("heart");
+
+        heartIcon.addEventListener("click", function() {
+            if (heartIcon.style.color === "red") {
+            heartIcon.style.color = "black";
+            } else {
+            heartIcon.style.color = "red";
+            }
+        });
+        });
+    </script>
 
 @endsection
