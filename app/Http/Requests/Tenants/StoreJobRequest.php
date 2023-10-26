@@ -25,7 +25,7 @@ class StoreJobRequest extends FormRequest
             'location_id' => 'required|exists:locations,id',
             'department_id' => 'required|exists:departments,id',
             'requirement_id.*' => 'required|exists:requirements,id',
-            'job_hiring_manager_id.*' => 'required|exists:users,id',
+            'job_hiring_manager_id.*' => 'required|exists:candidates,id',
             'question_bank_id.*' => 'required|exists:question_banks,id',
             'name' => 'required|string',
             'job_description' => 'required|string',

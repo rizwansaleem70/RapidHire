@@ -22,7 +22,7 @@ class CandidateRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|unique:candidates,email',
             'password' => 'required|min:8|confirmed',
         ];
     }

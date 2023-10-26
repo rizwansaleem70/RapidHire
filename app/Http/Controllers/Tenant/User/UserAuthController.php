@@ -12,21 +12,15 @@ use Illuminate\Support\Facades\Auth;
 
 class UserAuthController extends Controller
 {
-    public $user;
+    public UserAuthContract $user;
 
     public function __construct(UserAuthContract $user)
     {
         $this->user = $user;
     }
-
-    public function home()
-    {
-        return view('users.home');
-    }
-
     public function signup()
     {
-        return view('users.auth.signup');
+        return view('candidates.auth.signup');
     }
 
     public function register(CandidateRegisterRequest $request)
@@ -37,12 +31,12 @@ class UserAuthController extends Controller
             if($user == true){
                 DB::commit();
                 session()->flash('success', 'You have Successfully Registered');
-                return view('users.home');
+                return view('candidates.home');
             }
             else{
                 DB::rollBack();
                 session()->flash('message', 'Please Add Valid Credentials, Try Again');
-                return view('users.auth.login');
+                return view('candidates.auth.login');
             }
         } catch (\Exception $th) {
             DB::rollBack();
@@ -52,7 +46,7 @@ class UserAuthController extends Controller
 
     public function loginPage()
     {
-        return view('users.auth.login');
+        return view('candidates.auth.login');
     }
 
     public function login(CandidateLoginRequest $request)
@@ -61,11 +55,11 @@ class UserAuthController extends Controller
             $user=$this->user->login($request->prepareData());
             if($user == true){
                 session()->flash('success', 'You have Successfully Login');
-                return view('users.home');
+                return view('candidates.home');
             }
             else{
                 session()->flash('message', 'Invalid Credentials, Try Again');
-                return view('users.auth.login');
+                return view('candidates.auth.login');
             }
         } catch (\Exception $th) {
             return $this->failedResponse($th->getMessage());
@@ -75,18 +69,18 @@ class UserAuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return view('users.home');
+        return view('candidates.home');
     }
 
     public function resetPasswordPage()
     {
-        return view('users.auth.reset-password');
+        return view('candidates.auth.reset-password');
     }
 
     public function resetPassword(ResetPasswordRequest $request)
     {
         $new = $request->prepareData();
-        return view('users.auth.reset-password-message');
+        return view('candidates.auth.reset-password-message');
     }
 
 }

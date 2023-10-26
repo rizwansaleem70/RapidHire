@@ -674,7 +674,7 @@
             // the renderer)
             that._detailsDisplay(row, false);
           } else if (e.type === 'mousedown') {
-            // For mouse users, prevent the focus ring from showing
+            // For mouse candidates, prevent the focus ring from showing
             $(this).css('outline', 'none');
           } else if (e.type === 'mouseup') {
             // And then re-allow at the end of the click

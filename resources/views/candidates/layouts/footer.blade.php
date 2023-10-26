@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-lg-2 col-md-4">
                         <div class="footer-logo">
-                            <img src="{{asset('app-assets/users/images/used/devjeco.png')}}" alt="images">
+                            <img src="{{asset('app-assets/candidates/images/used/devjeco.png')}}" alt="images">
                         </div>
                     </div>
 

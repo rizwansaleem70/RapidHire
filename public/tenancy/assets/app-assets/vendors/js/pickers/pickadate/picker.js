@@ -18,7 +18,7 @@
     // Browser globals.
     else if ( typeof window == 'object' )
         window.Picker = factory( jQuery )
-    
+
     else this.Picker = factory( jQuery )
 
 }(function( $ ) {
@@ -735,7 +735,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
 
                             event.preventDefault()
 
-                            // Re-focus onto the holder so that users can click away
+                            // Re-focus onto the holder so that candidates can click away
                             // from elements focused within the picker.
                             P.$holder.eq(0).focus()
                         }
