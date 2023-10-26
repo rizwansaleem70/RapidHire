@@ -30,7 +30,7 @@ $(function () {
     userProfileSidebar = $('.user-profile-sidebar'),
     statusRadio = $('.chat-application .user-status input:radio[name=userStatus]'),
     userChats = $('.user-chats'),
-    chatsUserList = $('.chat-users-list'),
+    chatsUserList = $('.chat-candidates-list'),
     chatList = $('.chat-list'),
     contactList = $('.contact-list'),
     closeIcon = $('.chat-application .close-icon'),
@@ -134,7 +134,7 @@ $(function () {
     });
   }
 
-  // Add class active on click of Chat users list
+  // Add class active on click of Chat candidates list
   if (chatUsersListWrapper.find('ul li').length) {
     chatUsersListWrapper.find('ul li').on('click', function () {
       var $this = $(this),

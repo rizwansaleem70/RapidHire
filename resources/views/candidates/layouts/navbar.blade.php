@@ -8,7 +8,7 @@
                         <div id="logo" class="logo">
                             <a href="{{route('tenant-user-home')}}">
                                 <img class="site-logo"
-                                     src="{{asset('app-assets/users/images/used/devjeco-logo1 1.png')}}"
+                                     src="{{asset('app-assets/candidates/images/used/devjeco-logo1 1.png')}}"
                                      alt="Image">
 
                             </a>

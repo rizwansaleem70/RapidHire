@@ -34,22 +34,22 @@ use Illuminate\Support\Facades\Route;
 // Route::post('Create-User', [App\Http\Controllers\TenantUserController::class, 'store'])->name('user.store');
 
 // /*View Routes*/
-// Route::view('user-home', 'users/home')->name('tenant-user-home');
+// Route::view('user-home', 'candidates/home')->name('tenant-user-home');
 
-// Route::view('user-about', 'users/about')->name('tenant-user-about');
+// Route::view('user-about', 'candidates/about')->name('tenant-user-about');
 
-// Route::view('user-jobs', 'users/jobs')->name('tenant-user-jobs');
+// Route::view('user-jobs', 'candidates/jobs')->name('tenant-user-jobs');
 
-// Route::view('user-submit', 'users/submit')->name('tenant-user-submit');
+// Route::view('user-submit', 'candidates/submit')->name('tenant-user-submit');
 
-// Route::view('user-contact-us', 'users/contact-us')->name('tenant-user-contact-us');
+// Route::view('user-contact-us', 'candidates/contact-us')->name('tenant-user-contact-us');
 
-// Route::view('user-login', 'users/auth/login')->name('tenant-user-login');
+// Route::view('user-login', 'candidates/auth/login')->name('tenant-user-login');
 
-// Route::view('user-signup', 'users/auth/signup')->name('tenant-user-signup');
+// Route::view('user-signup', 'candidates/auth/signup')->name('tenant-user-signup');
 
-// Route::view('user-reset-password', 'users/auth/reset-password')->name('tenant-user-reset-password');
+// Route::view('user-reset-password', 'candidates/auth/reset-password')->name('tenant-user-reset-password');
 
-// Route::view('user-reset-password-message', 'users/auth/reset-password-message')->name('tenant-user-reset-password-message');
+// Route::view('user-reset-password-message', 'candidates/auth/reset-password-message')->name('tenant-user-reset-password-message');
 
-// Route::view('user-apply', 'users/apply')->name('tenant-user-apply');
+// Route::view('user-apply', 'candidates/apply')->name('tenant-user-apply');

@@ -3,7 +3,7 @@
 namespace App\Contracts\Tenants\Users;
 
 /**
-* @var Tenants/Users/UserAuthContract
+* @var /Users/UserAuthContract
 */
 interface UserAuthContract
 {

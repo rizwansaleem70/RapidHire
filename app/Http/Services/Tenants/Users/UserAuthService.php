@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 /**
-* @var Tenants/Users/UserAuthService
+* @var UserAuthService
 */
 class UserAuthService implements UserAuthContract
 {

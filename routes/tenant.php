@@ -4,25 +4,20 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\Tenants\CategoriesController;
-use App\Http\Controllers\Api\Tenants\ColorSchemesController;
 use App\Http\Controllers\Api\Tenants\DepartmentsController;
-use App\Http\Controllers\Api\Tenants\HomesController;
 use App\Http\Controllers\Api\Tenants\ImageUploadsController;
 use App\Http\Controllers\Api\Tenants\InterviewFeedbacksController;
-use App\Http\Controllers\Api\Tenants\JobRequirementController;
 use App\Http\Controllers\Api\Tenants\JobsController;
 use App\Http\Controllers\Api\Tenants\JobShortlistingController;
 use App\Http\Controllers\Api\Tenants\LocationsController;
-use App\Http\Controllers\Api\Tenants\LogosController;
 use App\Http\Controllers\Api\Tenants\MemberController;
-use App\Http\Controllers\Api\Tenants\OrganizationsController;
 use App\Http\Controllers\Api\Tenants\QuestionBanksController;
 use App\Http\Controllers\Api\Tenants\RequirementsController;
 use App\Http\Controllers\Api\Tenants\SettingsController;
 use App\Http\Controllers\Api\Tenants\SocialMediasController;
 use App\Http\Controllers\Api\Tenants\TestsController;
 use App\Http\Controllers\Api\Tenants\TestServicesController;
-use App\Http\Controllers\Tenant\User\HomeController;
+use App\Http\Controllers\Tenants\Candidate\HomesController as CandidateHomesController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -43,13 +38,12 @@ Route::middleware(['web',InitializeTenancyByDomain::class, PreventAccessFromCent
 //    Route::get('/',function (){
 //        return 'tenant application'.tenant('id');
 //    });
-    Route::get('/', [HomeController::class, 'index'])->name('tenant-user-home');
-
-    Route::get('user-about', [HomeController::class, 'about'])->name('tenant-user-about');
-    Route::get('user-contact-us', [HomeController::class, 'contact'])->name('tenant-user-contact-us');
-    Route::get('user-jobs', [HomeController::class, 'jobs'])->name('tenant-user-jobs');
-    Route::get('user-submit', [HomeController::class, 'submit'])->name('tenant-user-submit');
-    Route::get('user-apply/{id}', [HomeController::class, 'jobApply'])->name('tenant-user-apply');
+    Route::get('/', [CandidateHomesController::class, 'home'])->name('tenant-user-home');
+    Route::view('user-about', 'candidates/about')->name('tenant-user-about');
+    Route::view('user-jobs', 'candidates/jobs')->name('tenant-user-jobs');
+    Route::view('user-submit', 'candidates/submit')->name('tenant-user-submit');
+    Route::view('user-contact-us', 'candidates/contact-us')->name('tenant-user-contact-us');
+    Route::view('user-apply', 'candidates/apply')->name('tenant-user-apply');
 
     // Tenant Candidate User Auth Routes
     Route::get('user-signup', [UserAuthController::class, 'signup'])->name('tenant-user-signup');

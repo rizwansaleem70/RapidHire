@@ -44,9 +44,9 @@ class CreateTenantsTable extends Migration
             $table->foreignIdFor(User::class,'deleted_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('created_by')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('updated_by')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('deleted_by')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('created_by')->references('id')->on('candidates')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('updated_by')->references('id')->on('candidates')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('deleted_by')->references('id')->on('candidates')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('package_id')->references('id')->on('packages')->onUpdate('cascade')->onDelete('cascade');
         });
     }
