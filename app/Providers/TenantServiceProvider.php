@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Contracts\AuthContract;
 use App\Contracts\Tenants\Candidates\HomeContract;
+use App\Contracts\Tenants\Candidates\JobContract as CandidateJobContract;
 use App\Contracts\Tenants\CategoryContract;
 use App\Contracts\Tenants\DepartmentContract;
 use App\Contracts\Tenants\ImageUploadContract;
@@ -21,6 +22,7 @@ use App\Contracts\Tenants\TestServiceContract;
 use App\Contracts\Tenants\Users\UserAuthContract;
 use App\Http\Services\AuthService;
 use App\Http\Services\Tenants\Candidates\HomeService;
+use App\Http\Services\Tenants\Candidates\JobService as CandidateJobService;
 use App\Http\Services\Tenants\CategoryService;
 use App\Http\Services\Tenants\DepartmentService;
 use App\Http\Services\Tenants\ImageUploadService;
@@ -145,6 +147,12 @@ class TenantServiceProvider extends ServiceProvider
             HomeContract::class,
             function ($app) {
                 return $app->make(HomeService::class);
+            }
+        );
+        $this->app->bind(
+            CandidateJobContract::class,
+            function ($app) {
+                return $app->make(CandidateJobService::class);
             }
         );
     }
