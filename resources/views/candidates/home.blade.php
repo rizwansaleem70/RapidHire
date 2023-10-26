@@ -139,20 +139,26 @@
                     <!-- wd-job-category -->
                     <div class="col-md-12">
                         <div class="group-category-job  wow row ">
-                            @foreach($home['jobs'] as $job)
-                                <div class="job-category-box2 col-md-4">
-                                    <div class="job-category-header">
-                                        <h1>{{$job->name}}</h1>
+                            @if(!$home['jobs']->isEmpty()  )
+                                @foreach($home['jobs'] as $job)
+                                    <div class="job-category-box2 col-md-4">
+                                        <div class="job-category-header">
+                                            <h1>{{$job->name}}</h1>
+                                        </div>
+                                        <p>{{$job->total_position}} Jobs available</p>
+                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAX0lEQVR4nO3SwQmAMBBE0dQSS8zBQxqwyLDDdiBkIUctQM8a5T/4BQxMSgAAAAAAAK/a3ZculTBbZ65LZbjny4AwayEdn8is/W/AcM8h1S5tMxdSvb0QAAAAAABAetIJeOBba7Ua6isAAAAASUVORK5CYII=">
+                                        <div class="job-category-header" style="opacity: 60%;">
+                                            <p>Software Engineer
+                                            <p>
+                                            <p>Ubisoft</p>
+                                        </div>
                                     </div>
-                                    <p>{{$job->total_position}} Jobs available</p>
-                                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAX0lEQVR4nO3SwQmAMBBE0dQSS8zBQxqwyLDDdiBkIUctQM8a5T/4BQxMSgAAAAAAAK/a3ZculTBbZ65LZbjny4AwayEdn8is/W/AcM8h1S5tMxdSvb0QAAAAAABAetIJeOBba7Ua6isAAAAASUVORK5CYII=">
-                                    <div class="job-category-header" style="opacity: 60%;">
-                                        <p>Software Engineer
-                                        <p>
-                                        <p>Ubisoft</p>
-                                    </div>
+                                @endforeach
+                            @else
+                                <div class="alert alert-primary" >
+                                    This is a info alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
                                 </div>
-                            @endforeach
+                            @endif
                         </div>
                     </div>
 

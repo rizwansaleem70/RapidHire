@@ -33,31 +33,31 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
-        // if ($request->is('api/*') || $request->wantsJson())
-        // {
-        //     if ($e instanceof AuthorizationException) {
-        //         return response()->json([
-        //             'status' => false,
-        //             'message' => 'unauthenticated'
-        //         ], 401);
-        //     }
+         if ($request->is('api/*') || $request->wantsJson())
+         {
+             if ($e instanceof AuthorizationException) {
+                 return response()->json([
+                     'status' => false,
+                     'message' => 'unauthenticated'
+                 ], 401);
+             }
 
 
-        //     if ($e instanceof RouteNotFoundException || $e instanceof NotFoundHttpException) {
-        //         return response()->json([
-        //             'status' => false,
-        //             'message' => 'Not Found'
-        //         ], 404);
-        //     }
+             if ($e instanceof RouteNotFoundException || $e instanceof NotFoundHttpException) {
+                 return response()->json([
+                     'status' => false,
+                     'message' => 'Not Found'
+                 ], 404);
+             }
 
 
-        //     return response()->json([
-        //         'status' => false,
-        //         'message' => $e->getMessage()
-        //     ]);
+             return response()->json([
+                 'status' => false,
+                 'message' => $e->getMessage()
+             ]);
 
-        //     return parent::render($request, $e);
-        // }
+             return parent::render($request, $e);
+         }
         return parent::render($request, $e);
     }
 }
