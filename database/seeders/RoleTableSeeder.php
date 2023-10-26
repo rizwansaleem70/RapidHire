@@ -22,7 +22,7 @@ class RoleTableSeeder extends Seeder
         Role::create(['name' => 'SubAdmin']);
         $admin1 = User::create([
             'name' => 'Super Admin',
-            'email' => 'admin@test.com',
+            'email' => 'admin@rapidhire.com',
             'password' => '12345678',
         ]);
 

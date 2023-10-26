@@ -25,7 +25,7 @@ class CreateMemberRequest extends AbstractsFormRequest
         return [
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|unique:candidates',
+            'email' => 'required|unique:users',
             'role' => 'required',
             'status' => 'required|boolean',
             'password' => 'required|confirmed'

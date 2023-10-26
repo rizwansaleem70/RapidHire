@@ -17,13 +17,13 @@ class IdentifyTenancy
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $domain = Domain::where('domain', $request->header('X-Tenant'))->first();
-        if (!$domain)
-            abort(404, "Tenant not found!");
+        // $domain = Domain::where('domain', $request->header('X-Tenant'))->first();
+        // if (!$domain)
+        //     abort(404, "Tenant not found!");
 
-        $tenant = $domain->tenant;
+        // $tenant = $domain->tenant;
 
-        tenancy()->initialize($tenant);
+        // tenancy()->initialize($tenant);
 
         return $next($request);
     }

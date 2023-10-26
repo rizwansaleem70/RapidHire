@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('cover_letter_path');
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('candidates')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('job_id')->references('id')->on('jobs')->onUpdate('cascade')->onDelete('cascade');
         });
     }

@@ -39,14 +39,8 @@ class CreateTenantsTable extends Migration
             $table->boolean('is_verified')->default(false);
             $table->boolean('is_actively_recruiting')->default(false);
             $table->json('data')->nullable();
-            $table->foreignIdFor(User::class,'created_by')->nullable();
-            $table->foreignIdFor(User::class,'updated_by')->nullable();
-            $table->foreignIdFor(User::class,'deleted_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('created_by')->references('id')->on('candidates')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('updated_by')->references('id')->on('candidates')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('deleted_by')->references('id')->on('candidates')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('package_id')->references('id')->on('packages')->onUpdate('cascade')->onDelete('cascade');
         });
     }

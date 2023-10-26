@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('priority')->default(1);
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('candidates')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
