@@ -5,6 +5,7 @@ namespace App\Models\Tenants;
 use App\Models\JobQuestion;
 use App\Models\Requirement;
 use App\Models\User;
+use App\Traits\General;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Job extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory,SoftDeletes,General;
     public function getImageAttribute($value){
         return url(Storage::url($value));
     }
@@ -31,6 +32,9 @@ class Job extends Model
     public function requirement(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Requirement::class,'job_requirements','job_id','requirement_id');
+    }
+    public function location(){
+        return $this->belongsTo(Location::class,'location_id','id');
     }
     public function favoriteJob()
     {

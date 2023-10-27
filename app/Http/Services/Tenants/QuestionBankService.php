@@ -32,7 +32,6 @@ class QuestionBankService implements QuestionBankContract
     public function store($data)
     {
         $model = new $this->model;
-        $data['is_active'] = true;
         return $this->prepareData($model, $data, true);
     }
 
@@ -56,19 +55,7 @@ class QuestionBankService implements QuestionBankContract
     }
     private function prepareData($model, $data, $new_record = false)
     {
-        if (isset($data['department_id']) && $data['department_id']) {
-            $model->department_id = $data['department_id'];
-        }
-        if (isset($data['input_type']) && $data['input_type']) {
-            $model->input_type = $data['input_type'];
-        }
-        if (isset($data['question']) && $data['question']) {
-            $model->question = $data['question'];
-        }
-        if (isset($data['is_active']) && $data['is_active']) {
-            $model->is_active = $data['is_active'];
-        }
-        $model->save();
+        $model->insert($data);
         return $model;
     }
 }

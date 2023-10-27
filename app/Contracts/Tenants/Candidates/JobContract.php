@@ -7,5 +7,5 @@ namespace App\Contracts\Tenants\Candidates;
 */
 interface JobContract
 {
-    public function listing();
+    public function listing($filter);
 }
