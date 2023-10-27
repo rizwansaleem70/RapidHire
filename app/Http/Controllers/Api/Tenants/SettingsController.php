@@ -8,7 +8,19 @@ use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\StoreSettingRequest;
 use App\Http\Requests\Tenants\UpdateSettingRequest;
+use App\Http\Resources\Tenants\DepartmentCollection;
+use App\Http\Resources\Tenants\InterviewFeedbackResourceCollection;
+use App\Http\Resources\Tenants\QuestionBankResourceCollection;
+use App\Http\Resources\Tenants\RequirementResourceCollection;
 use App\Http\Resources\Tenants\SettingResource;
+use App\Http\Resources\Tenants\SettingResourceCollection;
+use App\Http\Resources\Tenants\SocialMediaResourceCollection;
+use App\Models\Requirement;
+use App\Models\Tenants\Department;
+use App\Models\Tenants\InterviewFeedback;
+use App\Models\Tenants\JobRequirement;
+use App\Models\Tenants\QuestionBank;
+use App\Models\Tenants\SocialMedia;
 use Illuminate\Support\Facades\DB;
 
 class SettingsController extends Controller
@@ -23,15 +35,27 @@ class SettingsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($type)
+    public function index()
     {
         try {
-            $setting = $this->setting->index($type);
-            return $this->successResponse("Successfully Fetch Record", $setting);
+            $settings = $this->setting->index();
+            $departments = Department::get();
+            $requirements = Requirement::get();
+            $question_bank = QuestionBank::get();
+            $social_media = SocialMedia::get();
+            $interview_feedback = InterviewFeedback::get();
+            return $this->successResponse("Successfully Fetch Record", [
+                "settings" => $settings,
+                "departments" => new DepartmentCollection($departments),
+                "requirements" => new RequirementResourceCollection($requirements),
+                "question_bank" => new QuestionBankResourceCollection($question_bank),
+                "social_media" => new SocialMediaResourceCollection($social_media),
+                "interview_feedback" => new InterviewFeedbackResourceCollection($interview_feedback)
+            ]);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("setting index ", $type, $th->getMessage());
+            Helper::logMessage("setting index ", "", $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -39,19 +63,19 @@ class SettingsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSettingRequest $request,$type)
+    public function store(StoreSettingRequest $request, $type)
     {
         try {
             DB::beginTransaction();
-            $setting = $this->setting->store($request->prepareRequest(),$type);
+            $setting = $this->setting->store($request->prepareRequest(), $type);
             if ($setting)
                 $setting = $this->setting->index($type);
             DB::commit();
-            return $this->successResponse(ucfirst($type) ." Added Successfully", $setting);
+            return $this->successResponse(ucfirst($type) . " Added Successfully", $setting);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("setting index", $request->input(). " " .$type, $th->getMessage());
+            Helper::logMessage("setting index", $request->input() . " " . $type, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }

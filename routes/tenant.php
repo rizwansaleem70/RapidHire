@@ -35,13 +35,14 @@ use App\Http\Controllers\Tenant\User\UserAuthController;
 | Feel free to customize them however you want. Good luck!
 |
 */
-Route::middleware(['web',InitializeTenancyByDomain::class, PreventAccessFromCentralDomains::class,])->group(function () {
-//    Route::get('/',function (){
-//        return 'tenant application'.tenant('id');
-//    });
+
+Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCentralDomains::class,])->group(function () {
+    //    Route::get('/',function (){
+    //        return 'tenant application'.tenant('id');
+    //    });
     Route::get('/', [CandidateHomeController::class, 'home'])->name('tenant-user-home');
     Route::view('user-about', 'candidates/about')->name('tenant-user-about');
-    Route::get('job',[CandidateJobsController::class,'listing'])->name('candidate.job.list');
+    Route::get('job', [CandidateJobsController::class, 'listing'])->name('candidate.job.list');
     Route::view('user-submit', 'candidates/submit')->name('tenant-user-submit');
     Route::view('user-contact-us', 'candidates/contact-us')->name('tenant-user-contact-us');
     Route::view('user-apply', 'candidates/apply')->name('tenant-user-apply');
@@ -58,8 +59,8 @@ Route::middleware(['web',InitializeTenancyByDomain::class, PreventAccessFromCent
     Route::get('user-reset-password', [UserAuthController::class, 'resetPasswordPage'])->name('tenant-user-reset-password');
     Route::post('user-reset-password', [UserAuthController::class, 'resetPassword'])->name('tenant-user-reset-password');
 
-    Route::post('like-job',[CandidateJobsController::class,'like'])->name('user-like-job');
-    Route::post('dislike-job',[CandidateJobsController::class,'dislike'])->name('user-dislike-job');
+    Route::post('like-job', [CandidateJobsController::class, 'like'])->name('user-like-job');
+    Route::post('dislike-job', [CandidateJobsController::class, 'dislike'])->name('user-dislike-job');
 });
 
 Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
@@ -74,7 +75,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['category' => CategoriesController::class]);
         Route::apiResources(['location' => LocationsController::class]);
         Route::apiResources(['job' => JobsController::class]);
-        Route::post('question-list/{id?}' , [JobsController::class,'questionList']);
+        Route::post('question-list/{id?}', [JobsController::class, 'questionList']);
         Route::apiResources(['department' => DepartmentsController::class]);
         Route::apiResources(['requirement' => RequirementsController::class]);
         Route::apiResources(['social-media' => SocialMediasController::class]);
@@ -83,9 +84,9 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['test-service' => TestServicesController::class]);
         Route::apiResources(['test' => TestsController::class]);
         Route::apiResources(['job-shortlisting' => JobShortlistingController::class]);
-        Route::get('settings/{type}', [SettingsController::class,'index']);
-        Route::post('settings/{type}', [SettingsController::class,'store']);
+        Route::get('settings', [SettingsController::class, 'index']);
+        Route::post('settings/{type}', [SettingsController::class, 'store']);
         Route::apiResources(['interview-feedback' => InterviewFeedbacksController::class]);
-        Route::post('image-upload' ,[ImageUploadsController::class,'store']);
+        Route::post('image-upload', [ImageUploadsController::class, 'store']);
     });
 });

@@ -3,10 +3,10 @@
 namespace App\Contracts\Tenants;
 
 /**
-* @var SettingContract
-*/
+ * @var SettingContract
+ */
 interface SettingContract
 {
-    public function index($type);
-    public function store($data,$type);
+    public function index();
+    public function store($data, $type);
 }
