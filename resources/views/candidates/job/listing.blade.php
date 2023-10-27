@@ -171,6 +171,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="content-tab">
                                 <div class="inner" style="">
                                     @foreach($data['jobs'] as $job)
@@ -199,7 +200,18 @@
                                                                 {{ \Carbon\Carbon::parse($job->post_date)->diffForHumans() }}
                                                             </li>
                                                         </ul>
-                                                        <span class="icon-heart"></span>
+                                                        <span class="icon-heart" id="heart_{{$job->id}}"
+                                                            @if(Auth::check())
+                                                                onclick="favorite({{$job->id}})"
+                                                                @foreach ($data['favJobs'] as $favJob)
+                                                                    @if ($favJob->job_id == $job->id && $favJob->is_active == 1)
+                                                                        style="color: red"
+                                                                    @endif
+                                                                @endforeach
+                                                            @else
+                                                                onclick="favoriteButton()"
+                                                            @endif
+                                                            ></span>
                                                         <div class="button-container">
                                                             <a href="{{route('tenant-user-apply')}}">
                                                                 <button>Apply</button>
@@ -270,7 +282,18 @@
                                                                     {{ \Carbon\Carbon::parse($job->post_date)->diffForHumans() }}
                                                                 </li>
                                                             </ul>
-                                                            <span class="icon-heart"></span>
+                                                            <span class="icon-heart" id="heart_{{$job->id}}"
+                                                                @if(Auth::check())
+                                                                    onclick="favorite({{$job->id}})"
+                                                                    @foreach ($data['favJobs'] as $favJob)
+                                                                        @if ($favJob->job_id == $job->id && $favJob->is_active == 1)
+                                                                            style="color: red"
+                                                                        @endif
+                                                                    @endforeach
+                                                                @else
+                                                                    onclick="favoriteButton()"
+                                                                @endif
+                                                                ></span>
                                                             <div class="button-container">
                                                                 <a href="{{route('tenant-user-apply')}}">
                                                                     <button>Apply</button>
@@ -320,5 +343,58 @@
             </div>
         </div>
     </section>
+
+    <script>
+
+        function favorite(id) {
+            var icon = document.getElementById('heart_' + id);
+            if (icon.style.color === "red") {
+                dislike(id);
+            }
+            else {
+                like(id);
+            }
+        }
+
+        function like(id) {
+            var icon = document.getElementById('heart_' + id);
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('user-like-job') }}',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    job_id: id,
+                    is_active: 1,
+                },
+                success: function(response) {
+                    if (icon) {
+                        icon.style.color = "red";
+                    }
+                },
+            });
+        }
+
+        function dislike(id) {
+            var icon = document.getElementById('heart_' + id);
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('user-dislike-job') }}',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    job_id: id,
+                },
+                success: function(response) {
+                    if (icon) {
+                        icon.removeAttribute('style');
+                    }
+                },
+            });
+        }
+
+        function favoriteButton() {
+            alert("Please Login first to Favorite Job");
+        }
+
+    </script>
 
 @endsection
