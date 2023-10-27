@@ -139,7 +139,6 @@
                     <!-- wd-job-category -->
                     <div class="col-md-12">
                         <div class="group-category-job  wow row ">
-                            @if(!$home['jobs']->isEmpty()  )
                                 @foreach($home['jobs'] as $job)
                                     <div class="job-category-box2 col-md-4">
                                         <div class="job-category-header">
@@ -154,11 +153,6 @@
                                         </div>
                                     </div>
                                 @endforeach
-                            @else
-                                <div class="alert alert-primary" >
-                                    This is a info alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
-                                </div>
-                            @endif
                         </div>
                     </div>
 

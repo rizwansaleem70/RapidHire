@@ -33,7 +33,7 @@
                             </h6>
                             <ul class="navigation-menu-footer">
                                 <li> <a href="{{route('tenant-user-about')}}">About</a> </li>
-                                <li> <a href="{{route('tenant-user-jobs')}}">Jobs</a> </li>
+                                <li> <a href="{{route('candidate.job.list')}}">Jobs</a> </li>
 
                                 <li> <a href="{{route('tenant-user-contact-us')}}">Contact Us</a> </li>
 

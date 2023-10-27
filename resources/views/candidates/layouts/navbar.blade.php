@@ -30,7 +30,7 @@
                                     </li>
 
                                     <li class="menu-item ">
-                                        <a href="{{route('tenant-user-jobs')}}">Jobs</a>
+                                        <a href="{{route('candidate.job.list')}}">Jobs</a>
 
                                     </li>
                                     <li class="menu-item">
