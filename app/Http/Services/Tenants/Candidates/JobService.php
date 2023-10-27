@@ -4,6 +4,7 @@ namespace App\Http\Services\Tenants\Candidates;
 
 use App\Contracts\Tenants\Candidates\JobContract;
 use App\Models\Tenants\Job;
+use App\Models\Tenants\User\FavoriteJob;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -20,11 +21,25 @@ class JobService implements JobContract
 
     public function listing()
     {
-        $jobs = $this->modelJob->select('*',
-            DB::raw('DATEDIFF(expiry_date, post_date) AS remaining_days')
-        )->paginate(10);
-        return [
-            'jobs' => $jobs,
-        ];
+        if(auth()->user())
+        {
+            $favJobs = FavoriteJob::where('user_id',auth()->user()->id)->get();
+            $jobs = $this->modelJob->select('*',
+                DB::raw('DATEDIFF(expiry_date, post_date) AS remaining_days')
+            )->paginate(10);
+            return [
+                'jobs' => $jobs,
+                'favJobs' => $favJobs,
+            ];
+        }
+        else
+        {
+            $jobs = $this->modelJob->select('*',
+                DB::raw('DATEDIFF(expiry_date, post_date) AS remaining_days')
+            )->paginate(10);
+            return [
+                'jobs' => $jobs,
+            ];
+        }
     }
 }

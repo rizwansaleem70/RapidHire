@@ -2,7 +2,7 @@
 @section('main-section')
 
     @if($errors->any())
-        <div class="alert alert-danger">
+        <div class="alert alert-danger flash">
             <ul>
                 @foreach($errors->all() as $error)
                     <li>{{$error}}</li>
@@ -12,13 +12,13 @@
     @endif
 
     @if(session('success'))
-        <div class="alert alert-success">
+        <div class="alert alert-success flash">
             {{session('success')}}
         </div>
     @endif
 
     @if(session('message'))
-        <div class="alert alert-danger">
+        <div class="alert alert-danger flash">
             {{session('message')}}
         </div>
     @endif
@@ -103,16 +103,20 @@
                     <!-- wd-job-category -->
                     <div class="col-md-12">
                         <div class="group-category-job  wow fadeInUp row">
-                            @foreach($home['departments'] as $department)
-                                <div class="job-category-box col-md-3">
-                                    <div class="job-category-header">
-                                        <span class="d-block fs-5 fw-bold">{{$department->name}}</span>
+                            @if (count($home['departments']) > 0)
+                                @foreach($home['departments'] as $department)
+                                    <div class="job-category-box col-md-3">
+                                        <div class="job-category-header">
+                                            <span class="d-block fs-5 fw-bold">{{$department->name}}</span>
+                                        </div>
+                                        <p>{{$department->job_count}} Jobs available</p>
+                                        <a href="#" class="btn-category-job">Explore Jobs <span
+                                                class="icon-keyboard_arrow_right"></span></a>
                                     </div>
-                                    <p>{{$department->job_count}} Jobs available</p>
-                                    <a href="#" class="btn-category-job">Explore Jobs <span
-                                            class="icon-keyboard_arrow_right"></span></a>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            @else
+                                <center><div class="alert alert-info">No Department found.</div></center>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -139,6 +143,7 @@
                     <!-- wd-job-category -->
                     <div class="col-md-12">
                         <div class="group-category-job  wow row ">
+                            @if (count($home['jobs']) > 0)
                                 @foreach($home['jobs'] as $job)
                                     <div class="job-category-box2 col-md-4">
                                         <div class="job-category-header">
@@ -153,6 +158,9 @@
                                         </div>
                                     </div>
                                 @endforeach
+                            @else
+                                <center><div class="alert alert-info">No Trending Jobs found.</div></center>
+                            @endif
                         </div>
                     </div>
 
@@ -538,7 +546,7 @@
 
         <script>
             window.setTimeout(function () {
-                $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                $(".flash").fadeTo(500, 0).slideUp(500, function () {
                     $(this).remove();
                 });
             }, 5000);

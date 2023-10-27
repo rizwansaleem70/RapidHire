@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenants\Candidate;
 use App\Contracts\Tenants\Candidates\HomeContract;
 use App\Http\Controllers\Controller;
 use App\Models\Tenants\Department;
+use Symfony\Component\HttpFoundation\Request;
 use App\Models\Tenants\Job;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -27,4 +28,5 @@ class HomeController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
+
 }
