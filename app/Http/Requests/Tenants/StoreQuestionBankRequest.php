@@ -23,19 +23,15 @@ class StoreQuestionBankRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'department_id' => 'required|exists:departments,id',
-            'input_type' => 'required|string',
-            'question' => 'required',
+            'data.*.department_id' => 'required|exists:departments,id',
+            'data.*.input_type' => 'required|string',
+            'data.*.question' => 'required',
         ];
     }
 
     public function prepareRequest():array
     {
         $request = $this;
-        return [
-            'department_id' => $request['department_id'],
-            'input_type' => $request['input_type'],
-            'question' => $request['question']
-        ];
+        return $request['data'];
     }
 }

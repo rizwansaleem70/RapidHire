@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Tenants\Candidate;
 
 use App\Contracts\Tenants\Candidates\JobContract;
 use App\Http\Controllers\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use App\Models\Tenants\User\FavoriteJob;
+use Illuminate\Http\Request;
 
 class JobsController extends Controller
 {
@@ -16,10 +16,10 @@ class JobsController extends Controller
         $this->job = $job;
     }
 
-    public function listing()
+    public function listing(Request $request)
     {
         try {
-            $data = $this->job->listing();
+            $data = $this->job->listing($request);
             return view('candidates.job.listing',compact('data'));
         } catch (\Exception $th) {
             return $this->failedResponse($th->getMessage());

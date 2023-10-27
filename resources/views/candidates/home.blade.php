@@ -94,7 +94,7 @@
                                 <h1>Browse by category</h1>
                                 <p>Recruitment Made Easy in 100 seconds</p>
                             </div>
-                            <a href="job-single.html" class="tf-button">
+                            <a href="{{route('candidate.job.list')}}" class="tf-button">
                                 All Categories
                                 <span class="icon-arrow-right2"></span>
                             </a>
@@ -105,7 +105,7 @@
                         <div class="group-category-job  wow fadeInUp row">
                             @if (count($home['departments']) > 0)
                                 @foreach($home['departments'] as $department)
-                                    <div class="job-category-box col-md-3">
+                                    <div class="job-category-box">
                                         <div class="job-category-header">
                                             <span class="d-block fs-5 fw-bold">{{$department->name}}</span>
                                         </div>

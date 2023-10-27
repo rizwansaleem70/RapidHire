@@ -13,7 +13,7 @@ use Stancl\Tenancy\Database\Concerns\HasDomains;
 
 class Tenant extends BaseTenant implements TenantWithDatabase
 {
-    use HasDatabase, HasDomains, HasRoles, HasPermissions,SoftDeletes,SoftDeleteColumnValuesUpdate;
+    use HasDatabase, HasDomains, HasRoles, HasPermissions,SoftDeletes;
 
 //    protected $guard_name = 'web';
 

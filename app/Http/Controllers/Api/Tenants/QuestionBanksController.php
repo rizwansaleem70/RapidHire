@@ -45,7 +45,8 @@ class QuestionBanksController extends Controller
         try {
             DB::beginTransaction();
             $questionBank = $this->questionBank->store($request->prepareRequest());
-            $questionBank = new QuestionBankResource($questionBank);
+            if ($questionBank)
+                $questionBank = new QuestionBankResourceCollection($this->questionBank->index());
             DB::commit();
             return $this->successResponse("Question Added Successfully", $questionBank);
         } catch (CustomException $th) {
