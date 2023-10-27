@@ -23,26 +23,26 @@ class StoreSettingRequest extends FormRequest
     public function rules(): array
     {
         $type = $this->route()->parameters['type'];
-        switch($type) {
-            case('logo'):
+        switch ($type) {
+            case ('logo'):
                 $request = [
                     'logo' => 'required',
                 ];
                 break;
-            case('color-scheme'):
+            case ('color-scheme'):
                 $request = [
                     'primary' => 'required',
                     'secondary' => 'required',
                 ];
                 break;
-            case('organization'):
+            case ('organization'):
                 $request = [
                     'name' => 'required',
                     'phone' => 'required',
                     'website' => 'required',
                 ];
                 break;
-            case('configuration'):
+            case ('configuration'):
                 $request = [
                     'candidate_reapply_days' => 'required',
                     'company_contract_email' => 'required',
@@ -51,7 +51,7 @@ class StoreSettingRequest extends FormRequest
                     'job_description_about' => 'required',
                 ];
                 break;
-            case('core-value'):
+            case ('core-value'):
                 $request = [
                     'title' => 'required',
                     'icon' => 'required',
@@ -67,26 +67,26 @@ class StoreSettingRequest extends FormRequest
     {
         $request = $this;
         $type = $this->route()->parameters['type'];
-        switch($type) {
-            case('logo'):
+        switch ($type) {
+            case ('logo'):
                 $prepareRequest = [
                     'logo' => $request['logo'],
                 ];
                 break;
-            case('color-scheme'):
+            case ('color-scheme'):
                 $prepareRequest = [
                     'primary' => $request['primary'],
                     'secondary' => $request['secondary'],
                 ];
                 break;
-            case('organization'):
+            case ('organization'):
                 $prepareRequest = [
                     'name' => $request['name'],
                     'phone' => $request['phone'],
                     'website' => $request['website'],
                 ];
                 break;
-            case('configuration'):
+            case ('configuration'):
                 $prepareRequest = [
                     'candidate_reapply_days' => $request['candidate_reapply_days'],
                     'company_contract_email' => $request['company_contract_email'],
@@ -95,7 +95,7 @@ class StoreSettingRequest extends FormRequest
                     'job_description_about' => $request['job_description_about'],
                 ];
                 break;
-            case('core-value'):
+            case ('core-value'):
                 $prepareRequest = [
                     'title' => $request['title'],
                     'icon' => $request['icon'],

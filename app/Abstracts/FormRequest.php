@@ -33,6 +33,6 @@ abstract class FormRequest extends LaravelFormRequest
         throw new HttpResponseException(response()->json([
             'status' => false,
             'message' => $errors,
-        ], Response::HTTP_UNPROCESSABLE_ENTITY));
+        ]));
     }
 }
