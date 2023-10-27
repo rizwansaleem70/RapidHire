@@ -173,469 +173,80 @@
                             </div>
                             <div class="content-tab">
                                 <div class="inner" style="">
-                                    <div class="features-job cl2">
-                                        <div class="job-archive-header">
-                                            <div class="inner-box">
-                                                <div class="logo-company">
-                                                    <img src="{{asset('app-assets/candidates/images/logo-company/cty1.png')}}"
-                                                         alt="images/logo-company/cty1.png">
-                                                </div>
-                                                <div class="box-content">
-                                                    <h4>
-                                                        <a href="jobs-single.html">Rockstar Games New York</a>
-                                                    </h4>
-                                                    <h3>
-                                                        <a href="jobs-single.html">Senior UI/UX Designer</a>
-                                                        <span class="icon-bolt"></span>
-                                                    </h3>
-                                                    <ul>
-                                                        <li>
-                                                            <span class="icon-map-pin"></span>
-                                                            Las Vegas, NV 89107, USA
-                                                        </li>
-                                                        <li>
-                                                            <span class="icon-calendar"></span>
-                                                            2 days ago
-                                                        </li>
-                                                    </ul>
-                                                    <span class="icon-heart"></span>
-                                                    <div class="button-container">
-                                                        <a href="{{route('tenant-user-apply')}}">
-                                                            <button>Apply</button>
-                                                        </a>
+                                    @foreach ($jobs as $job)
+                                        <div class="features-job cl2">
+                                            <div class="job-archive-header">
+                                                <div class="inner-box">
+                                                    <div class="logo-company">
+                                                        <img src="{{asset('app-assets/candidates/images/logo-company/cty1.png')}}"
+                                                            alt="images/logo-company/cty1.png">
                                                     </div>
+                                                    <div class="box-content">
+                                                        <h4>
+                                                            <a href="#">Rockstar Games New York</a>
+                                                        </h4>
+                                                        <h3>
+                                                            <a href="#"> {{$job->name}} </a>
+                                                            <span class="icon-bolt"></span>
+                                                        </h3>
+                                                        <ul>
+                                                            <li>
+                                                                <span class="icon-map-pin"></span>
+                                                                Las Vegas, NV 89107, USA
+                                                            </li>
+                                                            <li>
+                                                                <span class="icon-calendar"></span>
+                                                                2 days ago
+                                                            </li>
+                                                        </ul>
+                                                        <span class="icon-heart" id="heart_{{$job->id}}"
+                                                            @if(Auth::check())
+                                                                onclick="favorite({{$job->id}})"
+                                                                @foreach ($favJobs as $favJob)
+                                                                    @if ($favJob->job_id == $job->id && $favJob->is_active == 1)
+                                                                        style="color: red"
+                                                                    @endif
+                                                                @endforeach
+                                                            @else
+                                                                onclick="favoriteButton()"
+                                                            @endif
+                                                            ></span>
+                                                        <div class="button-container">
+                                                            <a href="{{route('tenant-user-apply')}}">
+                                                                <button>Apply</button>
+                                                            </a>
+                                                        </div>
 
 
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="job-archive-footer">
-                                            <div class="job-footer-left">
+                                            <div class="job-archive-footer">
+                                                <div class="job-footer-left">
 
-                                                <ul class="job-tag">
-                                                    <li><a href="#">Full-time</a></li>
-                                                    <li><a href="#">Remote</a></li>
-                                                </ul>
-                                                <div class="star">
+                                                    <ul class="job-tag">
+                                                        <li><a href="#">Full-time</a></li>
+                                                        <li><a href="#">Remote</a></li>
+                                                    </ul>
+                                                    <div class="star">
 
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                </div>
-                                            </div>
-                                            <div class="job-footer-right">
-                                                <div class="price">
-                                                    <span class="icon-dolar1"></span>
-                                                    <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                </div>
-                                                <p class="days">22 days left to apply</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="features-job cl2">
-                                        <div class="job-archive-header">
-                                            <div class="inner-box">
-                                                <div class="logo-company">
-                                                    <img src="{{asset('app-assets/candidates/images/logo-company/cty11.png')}}"
-                                                         alt="images/logo-company/cty11.png">
-                                                </div>
-                                                <div class="box-content">
-                                                    <h4>
-                                                        <a href="jobs-single.html">Rockstar Games New York</a>
-                                                    </h4>
-                                                    <h3>
-                                                        <a href="jobs-single.html">Social Media Marketing</a>
-                                                        <span class="icon-bolt"></span>
-                                                    </h3>
-                                                    <ul>
-                                                        <li>
-                                                            <span class="icon-map-pin"></span>
-                                                            Las Vegas, NV 89107, USA
-                                                        </li>
-                                                        <li>
-                                                            <span class="icon-calendar"></span>
-                                                            2 days ago
-                                                        </li>
-                                                    </ul>
-                                                    <span class="icon-heart"></span>
-                                                    <div class="button-container">
-                                                        <a href="{{route('tenant-user-apply')}}">
-                                                            <button>Apply</button>
-                                                        </a>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="job-archive-footer">
-                                            <div class="job-footer-left">
-                                                <ul class="job-tag">
-                                                    <li><a href="#">Freelancer</a></li>
-                                                    <li><a href="#">Remote</a></li>
-                                                </ul>
-                                                <div class="star">
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                </div>
-                                            </div>
-                                            <div class="job-footer-right">
-                                                <div class="price">
-                                                    <span class="icon-dolar1"></span>
-                                                    <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                </div>
-                                                <p class="days">22 days left to apply</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="features-job cl2">
-                                        <div class="job-archive-header">
-                                            <div class="inner-box">
-                                                <div class="logo-company">
-                                                    <img src="{{asset('app-assets/candidates/images/logo-company/cty8.png')}}"
-                                                         alt="images/logo-company/cty8.png">
-                                                </div>
-                                                <div class="box-content">
-                                                    <h4>
-                                                        <a href="jobs-single.html">Rockstar Games New York</a>
-                                                    </h4>
-                                                    <h3>
-                                                        <a href="jobs-single.html">HR Administration</a>
-                                                        <span class="icon-bolt"></span>
-                                                    </h3>
-                                                    <ul>
-                                                        <li>
-                                                            <span class="icon-map-pin"></span>
-                                                            Las Vegas, NV 89107, USA
-                                                        </li>
-                                                        <li>
-                                                            <span class="icon-calendar"></span>
-                                                            2 days ago
-                                                        </li>
-                                                    </ul>
-                                                    <span class="icon-heart"></span>
-                                                    <div class="button-container">
-                                                        <a href="{{route('tenant-user-apply')}}">
-                                                            <button>Apply</button>
-                                                        </a>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="job-archive-footer">
-                                            <div class="job-footer-left">
-                                                <ul class="job-tag">
-                                                    <li><a href="#">Temporary</a></li>
-                                                    <li><a href="#">On-site</a></li>
-                                                </ul>
-                                                <div class="star">
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                </div>
-                                            </div>
-                                            <div class="job-footer-right">
-                                                <div class="price">
-                                                    <span class="icon-dolar1"></span>
-                                                    <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                </div>
-                                                <p class="days">22 days left to apply</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="features-job cl2">
-                                        <div class="job-archive-header">
-                                            <div class="inner-box">
-                                                <div class="logo-company">
-                                                    <img src="{{asset('app-assets/candidates/images/logo-company/cty10.png')}}"
-                                                         alt="images/logo-company/cty10.png">
-                                                </div>
-                                                <div class="box-content">
-                                                    <h4>
-                                                        <a href="jobs-single.html">Rockstar Games New York</a>
-                                                    </h4>
-                                                    <h3>
-                                                        <a href="jobs-single.html">Full Stack Development</a>
-                                                        <span class="icon-bolt"></span>
-                                                    </h3>
-                                                    <ul>
-                                                        <li>
-                                                            <span class="icon-map-pin"></span>
-                                                            Las Vegas, NV 89107, USA
-                                                        </li>
-                                                        <li>
-                                                            <span class="icon-calendar"></span>
-                                                            2 days ago
-                                                        </li>
-                                                    </ul>
-                                                    <span class="icon-heart"></span>
-                                                    <div class="button-container">
-                                                        <a href="{{route('tenant-user-apply')}}">
-                                                            <button>Apply</button>
-                                                        </a>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="job-archive-footer">
-                                            <div class="job-footer-left">
-                                                <ul class="job-tag">
-                                                    <li><a href="#">Part-time</a></li>
-                                                    <li><a href="#">Remote</a></li>
-                                                </ul>
-                                                <div class="star">
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                </div>
-                                            </div>
-                                            <div class="job-footer-right">
-                                                <div class="price">
-                                                    <span class="icon-dolar1"></span>
-                                                    <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                </div>
-                                                <p class="days">22 days left to apply</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="features-job cl2">
-                                        <div class="job-archive-header">
-                                            <div class="inner-box">
-                                                <div class="logo-company">
-                                                    <img src="{{asset('app-assets/candidates/images/logo-company/cty4.png')}}"
-                                                         alt="images/logo-company/cty4.png">
-                                                </div>
-                                                <div class="box-content">
-                                                    <h4>
-                                                        <a href="jobs-single.html">Rockstar Games New York</a>
-                                                    </h4>
-                                                    <h3>
-                                                        <a href="jobs-single.html">Project manager</a>
-                                                        <span class="icon-bolt"></span>
-                                                    </h3>
-                                                    <ul>
-                                                        <li>
-                                                            <span class="icon-map-pin"></span>
-                                                            Las Vegas, NV 89107, USA
-                                                        </li>
-                                                        <li>
-                                                            <span class="icon-calendar"></span>
-                                                            2 days ago
-                                                        </li>
-                                                    </ul>
-                                                    <span class="icon-heart"></span>
-                                                    <div class="button-container">
-                                                        <a href="{{route('tenant-user-apply')}}">
-                                                            <button>Apply</button>
-                                                        </a>
+                                                        <span class="icon-star-full"></span>
+                                                        <span class="icon-star-full"></span>
+                                                        <span class="icon-star-full"></span>
+                                                        <span class="icon-star-full"></span>
+                                                        <span class="icon-star-full"></span>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="job-archive-footer">
-                                            <div class="job-footer-left">
-                                                <ul class="job-tag">
-                                                    <li><a href="#">Freelancer</a></li>
-                                                    <li><a href="#">Remote</a></li>
-                                                </ul>
-                                                <div class="star">
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                </div>
-                                            </div>
-                                            <div class="job-footer-right">
-                                                <div class="price">
-                                                    <span class="icon-dolar1"></span>
-                                                    <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                </div>
-                                                <p class="days">22 days left to apply</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="features-job cl2">
-                                        <div class="job-archive-header">
-                                            <div class="inner-box">
-                                                <div class="logo-company">
-                                                    <img src="{{asset('app-assets/candidates/images/logo-company/cty7.png')}}"
-                                                         alt="images/logo-company/cty7.png">
-                                                </div>
-                                                <div class="box-content">
-                                                    <h4>
-                                                        <a href="jobs-single.html">Rockstar Games New York</a>
-                                                    </h4>
-                                                    <h3>
-                                                        <a href="jobs-single.html">Senior DevOps Engineer</a>
-                                                        <span class="icon-bolt"></span>
-                                                    </h3>
-                                                    <ul>
-                                                        <li>
-                                                            <span class="icon-map-pin"></span>
-                                                            Las Vegas, NV 89107, USA
-                                                        </li>
-                                                        <li>
-                                                            <span class="icon-calendar"></span>
-                                                            2 days ago
-                                                        </li>
-                                                    </ul>
-                                                    <span class="icon-heart"></span>
-                                                    <div class="button-container">
-                                                        <a href="{{route('tenant-user-apply')}}">
-                                                            <button>Apply</button>
-                                                        </a>
+                                                <div class="job-footer-right">
+                                                    <div class="price">
+                                                        <span class="icon-dolar1"></span>
+                                                        <p>$83,000 - $110,000 <span class="year">/year</span></p>
                                                     </div>
+                                                    <p class="days">22 days left to apply</p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="job-archive-footer">
-                                            <div class="job-footer-left">
-                                                <ul class="job-tag">
-                                                    <li><a href="#">Contract</a></li>
-                                                    <li><a href="#">On-site</a></li>
-                                                </ul>
-                                                <div class="star">
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                </div>
-                                            </div>
-                                            <div class="job-footer-right">
-                                                <div class="price">
-                                                    <span class="icon-dolar1"></span>
-                                                    <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                </div>
-                                                <p class="days">22 days left to apply</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="features-job cl2">
-                                        <div class="job-archive-header">
-                                            <div class="inner-box">
-                                                <div class="logo-company">
-                                                    <img src="{{asset('app-assets/candidates/images/logo-company/cty9.png')}}"
-                                                         alt="images/logo-company/cty9.png">
-                                                </div>
-                                                <div class="box-content">
-                                                    <h4>
-                                                        <a href="jobs-single.html">Rockstar Games New York</a>
-                                                    </h4>
-                                                    <h3>
-                                                        <a href="jobs-single.html">Project manager</a>
-                                                        <span class="icon-bolt"></span>
-                                                    </h3>
-                                                    <ul>
-                                                        <li>
-                                                            <span class="icon-map-pin"></span>
-                                                            Las Vegas, NV 89107, USA
-                                                        </li>
-                                                        <li>
-                                                            <span class="icon-calendar"></span>
-                                                            2 days ago
-                                                        </li>
-                                                    </ul>
-                                                    <span class="icon-heart"></span>
-                                                    <div class="button-container">
-                                                        <a href="{{route('tenant-user-apply')}}">
-                                                            <button>Apply</button>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="job-archive-footer">
-                                            <div class="job-footer-left">
-                                                <ul class="job-tag">
-                                                    <li><a href="#">Full-time</a></li>
-                                                    <li><a href="#">Remote</a></li>
-                                                </ul>
-                                                <div class="star">
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                </div>
-                                            </div>
-                                            <div class="job-footer-right">
-                                                <div class="price">
-                                                    <span class="icon-dolar1"></span>
-                                                    <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                </div>
-                                                <p class="days">22 days left to apply</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="features-job cl2">
-                                        <div class="job-archive-header">
-                                            <div class="inner-box">
-                                                <div class="logo-company">
-                                                    <img src="{{asset('app-assets/candidates/images/logo-company/cty10.png')}}"
-                                                         alt="images/logo-company/cty10.png">
-                                                </div>
-                                                <div class="box-content">
-                                                    <h4>
-                                                        <a href="jobs-single.html">Rockstar Games New York</a>
-                                                    </h4>
-                                                    <h3>
-                                                        <a href="jobs-single.html">Social Media Marketing </a>
-                                                        <span class="icon-bolt"></span>
-                                                    </h3>
-                                                    <ul>
-                                                        <li>
-                                                            <span class="icon-map-pin"></span>
-                                                            Las Vegas, NV 89107, USA
-                                                        </li>
-                                                        <li>
-                                                            <span class="icon-calendar"></span>
-                                                            2 days ago
-                                                        </li>
-                                                    </ul>
-                                                    <span class="icon-heart"></span>
-                                                    <div class="button-container">
-                                                        <a href="{{route('tenant-user-apply')}}">
-                                                            <button>Apply</button>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="job-archive-footer">
-                                            <div class="job-footer-left">
-                                                <ul class="job-tag">
-                                                    <li><a href="#">Freelancer</a></li>
-                                                    <li><a href="#">Remote</a></li>
-                                                </ul>
-                                                <div class="star">
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                </div>
-                                            </div>
-                                            <div class="job-footer-right">
-                                                <div class="price">
-                                                    <span class="icon-dolar1"></span>
-                                                    <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                </div>
-                                                <p class="days">22 days left to apply</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
 
                                     <ul class="pagination-job padding">
                                         <li><a href="#"><i class="icon-keyboard_arrow_left"></i></a></li>
@@ -647,712 +258,78 @@
                                 </div>
                                 <div class="inner" style="display: none;">
                                     <div class="group-col-3">
-                                        <div class="features-job cl3">
-                                            <div class="job-archive-header">
-                                                <div class="inner-box">
-                                                    <div class="logo-company">
-                                                        <img src="{{asset('app-assets/candidates/images/logo-company/cty1.png')}}"
-                                                             alt="images/logo-company/cty1.png">
-                                                    </div>
-                                                    <div class="box-content">
-                                                        <h4>
-                                                            <a href="jobs-single.html">Rockstar Games New York</a>
-                                                        </h4>
-                                                        <h3>
-                                                            <a href="jobs-single.html">Senior UI/UX Designer</a>
-                                                            <span class="icon-bolt"></span>
-                                                        </h3>
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-map-pin"></span>
-                                                                Las Vegas, NV 89107, USA
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-calendar"></span>
-                                                                2 days ago
-                                                            </li>
-                                                        </ul>
-                                                        <span class="icon-heart"></span>
-                                                        <div class="button-container">
-                                                            <a href="{{route('tenant-user-apply')}}">
-                                                                <button>Apply</button>
-                                                            </a>
+                                        @foreach ($jobs as $job)
+                                            <div class="features-job cl3">
+                                                <div class="job-archive-header">
+                                                    <div class="inner-box">
+                                                        <div class="logo-company">
+                                                            <img src="{{asset('app-assets/candidates/images/logo-company/cty1.png')}}"
+                                                                alt="images/logo-company/cty1.png">
+                                                        </div>
+                                                        <div class="box-content">
+                                                            <h4>
+                                                                <a href="#">Rockstar Games New York</a>
+                                                            </h4>
+                                                            <h3>
+                                                                <a href="#"> {{$job->name}} </a>
+                                                                <span class="icon-bolt"></span>
+                                                            </h3>
+                                                            <ul>
+                                                                <li>
+                                                                    <span class="icon-map-pin"></span>
+                                                                    Las Vegas, NV 89107, USA
+                                                                </li>
+                                                                <li>
+                                                                    <span class="icon-calendar"></span>
+                                                                    2 days ago
+                                                                </li>
+                                                            </ul>
+                                                            <span class="icon-heart" id="heart_{{$job->id}}"
+                                                                @if(Auth::check())
+                                                                    onclick="favorite({{$job->id}})"
+                                                                    @foreach ($favJobs as $favJob)
+                                                                        @if ($favJob->job_id == $job->id && $favJob->is_active == 1)
+                                                                            style="color: red"
+                                                                        @endif
+                                                                    @endforeach
+                                                                    @else
+                                                                    onclick="favoriteButton()"
+                                                                @endif
+                                                            ></span>
+                                                            <div class="button-container">
+                                                                <a href="{{route('tenant-user-apply')}}">
+                                                                    <button>Apply</button>
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="job-archive-footer">
-                                                <div class="job-footer-left">
-                                                    <ul class="job-tag">
-                                                        <li><a href="#"> Full-time</a></li>
-                                                        <li><a href="#"> Remote</a></li>
-                                                    </ul>
-                                                    <div class="star">
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="job-footer-right">
-                                                    <div class="price">
-                                                        <span class="icon-dolar1"></span>
-                                                        <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                    </div>
-                                                    <p class="days">22 days left to apply</p>
-                                                </div>
-                                            </div>
-                                            <a href="jobs-single.html" class="jobtex-link-item" tabindex="0"></a>
-
-                                        </div>
-                                        <div class="features-job cl3">
-                                            <div class="job-archive-header">
-                                                <div class="inner-box">
-                                                    <div class="logo-company">
-                                                        <img src="{{asset('app-assets/candidates/images/logo-company/cty11.png')}}"
-                                                             alt="images/logo-company/cty11.png">
-                                                    </div>
-                                                    <div class="box-content">
-                                                        <h4>
-                                                            <a href="jobs-single.html">Rockstar Games New York</a>
-                                                        </h4>
-                                                        <h3>
-                                                            <a href="jobs-single.html">Social Media Marketing</a>
-                                                            <span class="icon-bolt"></span>
-                                                        </h3>
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-map-pin"></span>
-                                                                Las Vegas, NV 89107, USA
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-calendar"></span>
-                                                                2 days ago
-                                                            </li>
+                                                <div class="job-archive-footer">
+                                                    <div class="job-footer-left">
+                                                        <ul class="job-tag">
+                                                            <li><a href="#"> Full-time</a></li>
+                                                            <li><a href="#"> Remote</a></li>
                                                         </ul>
-                                                        <span class="icon-heart"></span>
-                                                        <div class="button-container">
-                                                            <a href="{{route('tenant-user-apply')}}">
-                                                                <button>Apply</button>
-                                                            </a>
+                                                        <div class="star">
+                                                            <span class="icon-star-full"></span>
+                                                            <span class="icon-star-full"></span>
+                                                            <span class="icon-star-full"></span>
+                                                            <span class="icon-star-full"></span>
+                                                            <span class="icon-star-full"></span>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="job-archive-footer">
-                                                <div class="job-footer-left">
-                                                    <ul class="job-tag">
-                                                        <li><a href="#"> Freelancer</a></li>
-                                                        <li><a href="#"> Remote</a></li>
-                                                    </ul>
-                                                    <div class="star">
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="job-footer-right">
-                                                    <div class="price">
-                                                        <span class="icon-dolar1"></span>
-                                                        <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                    </div>
-                                                    <p class="days">22 days left to apply</p>
-                                                </div>
-                                            </div>
-                                            <a href="jobs-single.html" class="jobtex-link-item" tabindex="0"></a>
-
-                                        </div>
-                                        <div class="features-job cl3">
-                                            <div class="job-archive-header">
-                                                <div class="inner-box">
-                                                    <div class="logo-company">
-                                                        <img src="{{asset('app-assets/candidates/images/logo-company/cty8.png')}}"
-                                                             alt="images/logo-company/cty8.png">
-                                                    </div>
-                                                    <div class="box-content">
-                                                        <h4>
-                                                            <a href="jobs-single.html">Rockstar Games New York</a>
-                                                        </h4>
-                                                        <h3>
-                                                            <a href="jobs-single.html">HR Administration</a>
-                                                            <span class="icon-bolt"></span>
-                                                        </h3>
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-map-pin"></span>
-                                                                Las Vegas, NV 89107, USA
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-calendar"></span>
-                                                                2 days ago
-                                                            </li>
-                                                        </ul>
-                                                        <span class="icon-heart"></span>
-                                                        <div class="button-container">
-                                                            <a href="{{route('tenant-user-apply')}}">
-                                                                <button>Apply</button>
-                                                            </a>
+                                                    <div class="job-footer-right">
+                                                        <div class="price">
+                                                            <span class="icon-dolar1"></span>
+                                                            <p>$83,000 - $110,000 <span class="year">/year</span></p>
                                                         </div>
+                                                        <p class="days">22 days left to apply</p>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="job-archive-footer">
-                                                <div class="job-footer-left">
-                                                    <ul class="job-tag">
-                                                        <li><a href="#">Temporary</a></li>
-                                                        <li><a href="#">On-site</a></li>
-                                                    </ul>
-                                                    <div class="star">
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="job-footer-right">
-                                                    <div class="price">
-                                                        <span class="icon-dolar1"></span>
-                                                        <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                    </div>
-                                                    <p class="days">22 days left to apply</p>
-                                                </div>
-                                            </div>
-                                            <a href="jobs-single.html" class="jobtex-link-item" tabindex="0"></a>
+                                                <a href="jobs-single.html" class="jobtex-link-item" tabindex="0"></a>
 
-                                        </div>
-                                        <div class="features-job cl3">
-                                            <div class="job-archive-header">
-                                                <div class="inner-box">
-                                                    <div class="logo-company">
-                                                        <img src="{{asset('app-assets/candidates/images/logo-company/cty10.png')}}"
-                                                             alt="images/logo-company/cty10.png">
-                                                    </div>
-                                                    <div class="box-content">
-                                                        <h4>
-                                                            <a href="jobs-single.html">Rockstar Games New York</a>
-                                                        </h4>
-                                                        <h3>
-                                                            <a href="jobs-single.html">Full Stack Development</a>
-                                                            <span class="icon-bolt"></span>
-                                                        </h3>
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-map-pin"></span>
-                                                                Las Vegas, NV 89107, USA
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-calendar"></span>
-                                                                2 days ago
-                                                            </li>
-                                                        </ul>
-                                                        <span class="icon-heart"></span>
-                                                        <div class="button-container">
-                                                            <a href="{{route('tenant-user-apply')}}">
-                                                                <button>Apply</button>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
-                                            <div class="job-archive-footer">
-                                                <div class="job-footer-left">
-                                                    <ul class="job-tag">
-                                                        <li><a href="#"> Part-time</a></li>
-                                                        <li><a href="#"> Remote</a></li>
-                                                    </ul>
-                                                    <div class="star">
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="job-footer-right">
-                                                    <div class="price">
-                                                        <span class="icon-dolar1"></span>
-                                                        <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                    </div>
-                                                    <p class="days">22 days left to apply</p>
-                                                </div>
-                                            </div>
-                                            <a href="jobs-single.html" class="jobtex-link-item" tabindex="0"></a>
-
-                                        </div>
-                                        <div class="features-job cl3">
-                                            <div class="job-archive-header">
-                                                <div class="inner-box">
-                                                    <div class="logo-company">
-                                                        <img src="{{asset('app-assets/candidates/images/logo-company/cty4.png')}}"
-                                                             alt="images/logo-company/cty4.png">
-                                                    </div>
-                                                    <div class="box-content">
-                                                        <h4>
-                                                            <a href="jobs-single.html">Rockstar Games New York</a>
-                                                        </h4>
-                                                        <h3>
-                                                            <a href="jobs-single.html">Project manager</a>
-                                                            <span class="icon-bolt"></span>
-                                                        </h3>
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-map-pin"></span>
-                                                                Las Vegas, NV 89107, USA
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-calendar"></span>
-                                                                2 days ago
-                                                            </li>
-                                                        </ul>
-                                                        <span class="icon-heart"></span>
-                                                        <div class="button-container">
-                                                            <a href="{{route('tenant-user-apply')}}">
-                                                                <button>Apply</button>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="job-archive-footer">
-                                                <div class="job-footer-left">
-                                                    <ul class="job-tag">
-                                                        <li><a href="#"> Freelancer</a></li>
-                                                        <li><a href="#"> Remote</a></li>
-                                                    </ul>
-                                                    <div class="star">
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="job-footer-right">
-                                                    <div class="price">
-                                                        <span class="icon-dolar1"></span>
-                                                        <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                    </div>
-                                                    <p class="days">22 days left to apply</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="features-job cl3">
-                                            <div class="job-archive-header">
-                                                <div class="inner-box">
-                                                    <div class="logo-company">
-                                                        <img src="{{asset('app-assets/candidates/images/logo-company/cty7.png')}}"
-                                                             alt="images/logo-company/cty7.png">
-                                                    </div>
-                                                    <div class="box-content">
-                                                        <h4>
-                                                            <a href="jobs-single.html">Rockstar Games New York</a>
-                                                        </h4>
-                                                        <h3>
-                                                            <a href="jobs-single.html">Senior DevOps Engineer</a>
-                                                            <span class="icon-bolt"></span>
-                                                        </h3>
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-map-pin"></span>
-                                                                Las Vegas, NV 89107, USA
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-calendar"></span>
-                                                                2 days ago
-                                                            </li>
-                                                        </ul>
-                                                        <span class="icon-heart"></span>
-                                                        <div class="button-container">
-                                                            <a href="{{route('tenant-user-apply')}}">
-                                                                <button>Apply</button>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="job-archive-footer">
-                                                <div class="job-footer-left">
-                                                    <ul class="job-tag">
-                                                        <li><a href="#"> Contract</a></li>
-                                                        <li><a href="#"> On-site</a></li>
-                                                    </ul>
-                                                    <div class="star">
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="job-footer-right">
-                                                    <div class="price">
-                                                        <span class="icon-dolar1"></span>
-                                                        <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                    </div>
-                                                    <p class="days">22 days left to apply</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="features-job cl3">
-                                            <div class="job-archive-header">
-                                                <div class="inner-box">
-                                                    <div class="logo-company">
-                                                        <img src="{{asset('app-assets/candidates/images/logo-company/cty9.png')}}"
-                                                             alt="images/logo-company/cty9.png">
-                                                    </div>
-                                                    <div class="box-content">
-                                                        <h4>
-                                                            <a href="jobs-single.html">Rockstar Games New York</a>
-                                                        </h4>
-                                                        <h3>
-                                                            <a href="jobs-single.html">Project manager</a>
-                                                            <span class="icon-bolt"></span>
-                                                        </h3>
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-map-pin"></span>
-                                                                Las Vegas, NV 89107, USA
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-calendar"></span>
-                                                                2 days ago
-                                                            </li>
-                                                        </ul>
-                                                        <span class="icon-heart"></span>
-                                                        <div class="button-container">
-                                                            <a href="{{route('tenant-user-apply')}}">
-                                                                <button>Apply</button>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="job-archive-footer">
-                                                <div class="job-footer-left">
-                                                    <ul class="job-tag">
-                                                        <li><a href="#"> Full-time</a></li>
-                                                        <li><a href="#"> Remote</a></li>
-                                                    </ul>
-                                                    <div class="star">
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="job-footer-right">
-                                                    <div class="price">
-                                                        <span class="icon-dolar1"></span>
-                                                        <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                    </div>
-                                                    <p class="days">22 days left to apply</p>
-                                                </div>
-                                            </div>
-                                            <a href="jobs-single.html" class="jobtex-link-item" tabindex="0"></a>
-
-                                        </div>
-                                        <div class="features-job cl3">
-                                            <div class="job-archive-header">
-                                                <div class="inner-box">
-                                                    <div class="logo-company">
-                                                        <img src="{{asset('app-assets/candidates/images/logo-company/cty10.png')}}"
-                                                             alt="images/logo-company/cty10.png">
-                                                    </div>
-                                                    <div class="box-content">
-                                                        <h4>
-                                                            <a href="jobs-single.html">Rockstar Games New York</a>
-                                                        </h4>
-                                                        <h3>
-                                                            <a href="jobs-single.html">Social Media Marketing </a>
-                                                            <span class="icon-bolt"></span>
-                                                        </h3>
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-map-pin"></span>
-                                                                Las Vegas, NV 89107, USA
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-calendar"></span>
-                                                                2 days ago
-                                                            </li>
-                                                        </ul>
-                                                        <span class="icon-heart"></span>
-                                                        <div class="button-container">
-                                                            <a href="{{route('tenant-user-apply')}}">
-                                                                <button>Apply</button>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="job-archive-footer">
-                                                <div class="job-footer-left">
-                                                    <ul class="job-tag">
-                                                        <li><a href="#"> Freelancer</a></li>
-                                                        <li><a href="#"> Remote</a></li>
-                                                    </ul>
-                                                    <div class="star">
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="job-footer-right">
-                                                    <div class="price">
-                                                        <span class="icon-dolar1"></span>
-                                                        <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                    </div>
-                                                    <p class="days">22 days left to apply</p>
-                                                </div>
-                                            </div>
-                                            <a href="jobs-single.html" class="jobtex-link-item" tabindex="0"></a>
-
-                                        </div>
-                                        <div class="features-job cl3">
-                                            <div class="job-archive-header">
-                                                <div class="inner-box">
-                                                    <div class="logo-company">
-                                                        <img src="{{asset('app-assets/candidates/images/logo-company/cty2.png')}}"
-                                                             alt="images/logo-company/cty2.png">
-                                                    </div>
-                                                    <div class="box-content">
-                                                        <h4>
-                                                            <a href="jobs-single.html">Rockstar Games New York</a>
-                                                        </h4>
-                                                        <h3>
-                                                            <a href="jobs-single.html">Senior UI/UX Designer</a>
-                                                            <span class="icon-bolt"></span>
-                                                        </h3>
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-map-pin"></span>
-                                                                Las Vegas, NV 89107, USA
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-calendar"></span>
-                                                                2 days ago
-                                                            </li>
-                                                        </ul>
-                                                        <span class="icon-heart"></span>
-                                                        <div class="button-container">
-                                                            <a href="{{route('tenant-user-apply')}}">
-                                                                <button>Apply</button>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="job-archive-footer">
-                                                <div class="job-footer-left">
-                                                    <ul class="job-tag">
-                                                        <li><a href="#">Temporary</a></li>
-                                                        <li><a href="#">On-site</a></li>
-                                                    </ul>
-                                                    <div class="star">
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="job-footer-right">
-                                                    <div class="price">
-                                                        <span class="icon-dolar1"></span>
-                                                        <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                    </div>
-                                                    <p class="days">22 days left to apply</p>
-                                                </div>
-                                            </div>
-                                            <a href="jobs-single.html" class="jobtex-link-item" tabindex="0"></a>
-
-                                        </div>
-                                        <div class="features-job cl3">
-                                            <div class="job-archive-header">
-                                                <div class="inner-box">
-                                                    <div class="logo-company">
-                                                        <img src="{{asset('app-assets/candidates/images/logo-company/cty10.png')}}"
-                                                             alt="images/logo-company/cty9.png">
-                                                    </div>
-                                                    <div class="box-content">
-                                                        <h4>
-                                                            <a href="jobs-single.html">Rockstar Games New York</a>
-                                                        </h4>
-                                                        <h3>
-                                                            <a href="jobs-single.html">Full Stack Development</a>
-                                                            <span class="icon-bolt"></span>
-                                                        </h3>
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-map-pin"></span>
-                                                                Las Vegas, NV 89107, USA
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-calendar"></span>
-                                                                2 days ago
-                                                            </li>
-                                                        </ul>
-                                                        <span class="icon-heart"></span>
-                                                        <div class="button-container">
-                                                            <a href="{{route('tenant-user-apply')}}">
-                                                                <button>Apply</button>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="job-archive-footer">
-                                                <div class="job-footer-left">
-                                                    <ul class="job-tag">
-                                                        <li><a href="#">Full-time</a></li>
-                                                        <li><a href="#">Remote</a></li>
-                                                    </ul>
-                                                    <div class="star">
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="job-footer-right">
-                                                    <div class="price">
-                                                        <span class="icon-dolar1"></span>
-                                                        <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                    </div>
-                                                    <p class="days">22 days left to apply</p>
-                                                </div>
-                                            </div>
-                                            <a href="jobs-single.html" class="jobtex-link-item" tabindex="0"></a>
-
-                                        </div>
-                                        <div class="features-job cl3">
-                                            <div class="job-archive-header">
-                                                <div class="inner-box">
-                                                    <div class="logo-company">
-                                                        <img src="{{asset('app-assets/candidates/images/logo-company/cty4.png')}}"
-                                                             alt="images/logo-company/cty10.png">
-                                                    </div>
-                                                    <div class="box-content">
-                                                        <h4>
-                                                            <a href="jobs-single.html">Rockstar Games New York</a>
-                                                        </h4>
-                                                        <h3>
-                                                            <a href="jobs-single.html">Project manager</a>
-                                                            <span class="icon-bolt"></span>
-                                                        </h3>
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-map-pin"></span>
-                                                                Las Vegas, NV 89107, USA
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-calendar"></span>
-                                                                2 days ago
-                                                            </li>
-                                                        </ul>
-                                                        <span class="icon-heart"></span>
-                                                        <div class="button-container">
-                                                            <a href="{{route('tenant-user-apply')}}">
-                                                                <button>Apply</button>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="job-archive-footer">
-                                                <div class="job-footer-left">
-                                                    <ul class="job-tag">
-                                                        <li><a href="#">Freelancer</a></li>
-                                                        <li><a href="#">Remote</a></li>
-                                                    </ul>
-                                                    <div class="star">
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="job-footer-right">
-                                                    <div class="price">
-                                                        <span class="icon-dolar1"></span>
-                                                        <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                    </div>
-                                                    <p class="days">22 days left to apply</p>
-                                                </div>
-                                            </div>
-                                            <a href="jobs-single.html" class="jobtex-link-item" tabindex="0"></a>
-
-                                        </div>
-                                        <div class="features-job cl3">
-                                            <div class="job-archive-header">
-                                                <div class="inner-box">
-                                                    <div class="logo-company">
-                                                        <img src="{{asset('app-assets/candidates/images/logo-company/cty7.png')}}"
-                                                             alt="images/logo-company/cty2.png">
-                                                    </div>
-                                                    <div class="box-content">
-                                                        <h4>
-                                                            <a href="jobs-single.html">Rockstar Games New York</a>
-                                                        </h4>
-                                                        <h3>
-                                                            <a href="jobs-single.html">Senior DevOps Engineer</a>
-                                                            <span class="icon-bolt"></span>
-                                                        </h3>
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-map-pin"></span>
-                                                                Las Vegas, NV 89107, USA
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-calendar"></span>
-                                                                2 days ago
-                                                            </li>
-                                                        </ul>
-                                                        <span class="icon-heart"></span>
-                                                        <div class="button-container">
-                                                            <a href="{{route('tenant-user-apply')}}">
-                                                                <button>Apply</button>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="job-archive-footer">
-                                                <div class="job-footer-left">
-                                                    <ul class="job-tag">
-                                                        <li><a href="#">Temporary</a></li>
-                                                        <li><a href="#">On-site</a></li>
-                                                    </ul>
-                                                    <div class="star">
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                        <span class="icon-star-full"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="job-footer-right">
-                                                    <div class="price">
-                                                        <span class="icon-dolar1"></span>
-                                                        <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                    </div>
-                                                    <p class="days">22 days left to apply</p>
-                                                </div>
-                                            </div>
-                                            <a href="jobs-single.html" class="jobtex-link-item" tabindex="0"></a>
-
-
-                                        </div>
-
+                                        @endforeach
                                     </div>
 
                                     <ul class="pagination-job padding">
@@ -1371,5 +348,60 @@
             </div>
         </div>
     </section>
+
+    <script>
+
+        function favorite(id) {
+            var icon = document.getElementById('heart_' + id);
+            if (icon.style.color === "red") {
+                like(id);
+            }
+            else {
+                dislike(id);
+            }
+        }
+
+        function like(id) {
+            alert('white button');
+            var icon = document.getElementById('heart_' + id);
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('user-like-job') }}',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    job_id: id,
+                    is_active: 1,
+                },
+                success: function(response) {
+                    if (icon) {
+                        icon.style.color = "red";
+                    }
+                },
+            });
+        }
+
+        function dislike(id) {
+            alert('red button');
+            var icon = document.getElementById('heart_' + id);
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('user-dislike-job') }}',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    job_id: id,
+                },
+                success: function(response) {
+                    if (icon) {
+                        icon.removeAttribute('style');
+                    }
+                },
+            });
+        }
+
+        function favoriteButton() {
+            alert("Please Login first to Favorite Job");
+        }
+
+    </script>
 
 @endsection
