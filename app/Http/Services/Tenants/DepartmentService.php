@@ -40,8 +40,7 @@ class DepartmentService implements DepartmentContract
      */
     public function store($data)
     {
-        $model = new $this->model;
-        return $this->prepareData($model,$data, true);
+        return $this->prepareData(null,$data, true);
     }
 
     /**
@@ -68,9 +67,13 @@ class DepartmentService implements DepartmentContract
         $department->delete();
         return true;
     }
-    private function prepareData($model, $data, $new_record = false)
+    private function prepareData( $model,$data, $new_record = false)
     {
-        $model->insert($data);
+        foreach($data['name'] as $value){
+            $model = $new_record ? new $this->model:$model;
+            $model['name'] = $value;
+            $model->save();
+        }
         return $model;
     }
 }

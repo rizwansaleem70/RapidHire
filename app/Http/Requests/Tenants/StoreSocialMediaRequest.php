@@ -22,10 +22,7 @@ class StoreSocialMediaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'data.*.name' => 'required|string',
-            'data.*.icon' => 'required',
-            'data.*.url' => 'required',
-            'data.*.priority' => 'required',
+            'data' => 'required',
         ];
     }
 

@@ -43,17 +43,20 @@ class SocialMediaService implements SocialMediaContract
         $new_data = [];
         foreach ($data as $value)
         {
-            $value['user_id'] = Auth::user()->id;
-            $new_data[] = $value;
-            $jobQualification = $this->model->where('name', ucfirst($value['name']))->first();
-            if ($jobQualification) {
-                throw new CustomException("Social Media ".$value['name']." is already exist!");
-            }
+            $new_data[] = [
+                'name' => $value['url'],
+                'priority' => $value['priority'],
+                'icon' => $value['icon'],
+                'url' => $value['url'],
+                'user_id' =>  Auth::user()->id,
+
+            ];
             $jobQualification = $this->model->where('user_id', Auth::user()->id)->where('priority', $value['priority'])->first();
             if ($jobQualification) {
                 throw new CustomException("This priority ".$value['priority']." is already assigned to another social media record.");
             }
         }
+
         $model = new $this->model;
         return $this->prepareData($model, $new_data, true);
     }

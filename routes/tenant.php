@@ -17,7 +17,8 @@ use App\Http\Controllers\Api\Tenants\SettingsController;
 use App\Http\Controllers\Api\Tenants\SocialMediasController;
 use App\Http\Controllers\Api\Tenants\TestsController;
 use App\Http\Controllers\Api\Tenants\TestServicesController;
-use App\Http\Controllers\Tenants\Candidate\HomesController as CandidateHomesController;
+use App\Http\Controllers\Tenants\Candidate\HomeController as CandidateHomeController;
+use App\Http\Controllers\Tenants\Candidate\JobsController as CandidateJobsController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -38,9 +39,9 @@ Route::middleware(['web',InitializeTenancyByDomain::class, PreventAccessFromCent
 //    Route::get('/',function (){
 //        return 'tenant application'.tenant('id');
 //    });
-    Route::get('/', [CandidateHomesController::class, 'home'])->name('tenant-user-home');
+    Route::get('/', [CandidateHomeController::class, 'home'])->name('tenant-user-home');
     Route::view('user-about', 'candidates/about')->name('tenant-user-about');
-    Route::view('user-jobs', 'candidates/jobs')->name('tenant-user-jobs');
+    Route::get('job',[CandidateJobsController::class,'listing'])->name('candidate.job.list');
     Route::view('user-submit', 'candidates/submit')->name('tenant-user-submit');
     Route::view('user-contact-us', 'candidates/contact-us')->name('tenant-user-contact-us');
     Route::view('user-apply', 'candidates/apply')->name('tenant-user-apply');

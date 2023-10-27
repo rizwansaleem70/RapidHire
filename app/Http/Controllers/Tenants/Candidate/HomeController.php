@@ -9,7 +9,7 @@ use App\Models\Tenants\Job;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
-class HomesController extends Controller
+class HomeController extends Controller
 {
     public HomeContract $home;
 
