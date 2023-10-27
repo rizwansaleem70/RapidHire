@@ -15,8 +15,4 @@ use Illuminate\Support\Facades\Storage;
 class SocialMedia extends Model
 {
     use HasFactory,SoftDeletes;
-
-    public function getIconAttribute($value){
-        return url(Storage::url($value));
-    }
 }
