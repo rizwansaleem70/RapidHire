@@ -69,11 +69,11 @@ class DepartmentService implements DepartmentContract
     }
     private function prepareData( $model,$data, $new_record = false)
     {
-        foreach($data['name'] as $value){
-            $model = $new_record ? new $this->model:$model;
-            $model['name'] = $value;
-            $model->save();
-        }
+            foreach((array)$data['name'] as $value){
+                $model = new $this->model;
+                $model['name'] = $value;
+                $model->save();
+            }
         return $model;
     }
 }
