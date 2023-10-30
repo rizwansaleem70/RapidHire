@@ -32,7 +32,7 @@
                             <div class="top">
                                 <a href="#" class="share"><i class="icon-share2"></i></a>
                                 <a href="#" class="wishlist"><i class="icon-heart"></i></a>
-                                <a href="{{route('tenant-user-submit')}}" class="btn btn-popup"><i
+                                <a href="{{route('candidate.job.apply',$data['job']->slug)}}" class="btn btn-popup"><i
                                         class="icon-send"></i>Apply Now</a>
                             </div>
                             <div class="bottom">
@@ -192,3 +192,55 @@
     </section>
 
 @endsection
+<script>
+
+    function favorite(id) {
+        var icon = document.getElementById('heart_' + id);
+        if (icon.style.color === "red") {
+            dislike(id);
+        }
+        else {
+            like(id);
+        }
+    }
+
+    function like(id) {
+        var icon = document.getElementById('heart_' + id);
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('user-like-job') }}',
+            data: {
+                _token: "{{ csrf_token() }}",
+                job_id: id,
+                is_active: 1,
+            },
+            success: function(response) {
+                if (icon) {
+                    icon.style.color = "red";
+                }
+            },
+        });
+    }
+
+    function dislike(id) {
+        var icon = document.getElementById('heart_' + id);
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('user-dislike-job') }}',
+            data: {
+                _token: "{{ csrf_token() }}",
+                job_id: id,
+            },
+            success: function(response) {
+                if (icon) {
+                    icon.removeAttribute('style');
+                }
+            },
+        });
+    }
+
+    function favoriteButton() {
+        alert("Please Login first to Favorite Job");
+    }
+
+</script>

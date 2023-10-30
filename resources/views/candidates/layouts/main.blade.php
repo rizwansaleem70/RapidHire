@@ -60,6 +60,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/custom.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
 
 </head>
 <body>
@@ -112,6 +113,8 @@
 <script src="{{asset('app-assets/candidates/javascript/plugin.min.js')}}"></script>
 <script src="{{asset('app-assets/candidates/javascript/jquery.cookie.js')}}"></script>
 <script src="{{asset('app-assets/candidates/javascript/main.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+
 <script>
     window.setTimeout(function () {
         $(".flash").fadeTo(500, 0).slideUp(500, function () {

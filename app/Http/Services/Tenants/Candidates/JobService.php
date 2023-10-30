@@ -4,14 +4,14 @@ namespace App\Http\Services\Tenants\Candidates;
 
 use App\Contracts\Tenants\Candidates\JobContract;
 use App\Exceptions\CustomException;
+use App\Models\Tenants\Candidate\FavoriteJob;
 use App\Models\Tenants\Department;
 use App\Models\Tenants\Job;
 use App\Models\Tenants\Location;
 use App\Models\Tenants\Setting;
 use App\Models\Tenants\SocialMedia;
-use App\Traits\General;
-use App\Models\Tenants\User\FavoriteJob;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -61,36 +61,17 @@ class JobService implements JobContract
                     ->orWhereBetween('max_salary', [$filter->min_salary, $filter->max_salary]);
             });
         $totalJobs = $query->count();
-        $jobs = $query->with('location')->select('*',
+        $jobs = $query->with('location','favorite')->select('*',
             DB::raw('DATEDIFF(expiry_date, post_date) AS remaining_days')
         )->paginate(10);
         $location = $this->modelLocation->pluck('name','id');
+        $logo = settings()->group('logo')->get('logo');
         return [
             'jobs' => $jobs,
             'totalJobs' => $totalJobs,
             'location' => $location,
-
+            'logo' => $logo
         ];
-        if(auth()->user())
-        {
-            $favJobs = FavoriteJob::where('user_id',auth()->user()->id)->get();
-            $jobs = $this->modelJob->select('*',
-                DB::raw('DATEDIFF(expiry_date, post_date) AS remaining_days')
-            )->paginate(10);
-            return [
-                'jobs' => $jobs,
-                'favJobs' => $favJobs,
-            ];
-        }
-        else
-        {
-            $jobs = $this->modelJob->select('*',
-                DB::raw('DATEDIFF(expiry_date, post_date) AS remaining_days')
-            )->paginate(10);
-            return [
-                'jobs' => $jobs,
-            ];
-        }
     }
 
     public function jobDetail($slug)
@@ -119,6 +100,18 @@ class JobService implements JobContract
             'company_title_about' => $company_title_about,
             'related_jobs' => $related_jobs,
             'logo' => $logo
+        ];
+    }
+
+    public function jobApply($slug)
+    {
+        $user = Auth::user();
+        $logo = settings()->group('logo')->get('logo');
+        $job = $this->modelJob->with('location')->where('slug',$slug)->first();
+        return [
+            'job' => $job,
+            'logo' => $logo,
+            'user' => $user
         ];
     }
 }

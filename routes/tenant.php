@@ -44,15 +44,17 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
     Route::view('user-about', 'candidates/about')->name('tenant-user-about');
     Route::get('job', [CandidateJobsController::class, 'listing'])->name('candidate.job.list');
     Route::get('job-detail/{slug}' ,[CandidateJobsController::class,'jobDetail'])->name('candidate.job.detail');
-//    Route::view('job-detail', 'candidates/apply')->name('tenant-user-apply');
-    Route::view('user-submit', 'candidates/submit')->name('tenant-user-submit');
+    Route::group(['middleware' => 'auth:sanctum'], function () {
+
+        Route::get('job-apply/{slug}', [CandidateJobsController::class, 'jobApply'])->name('candidate.job.apply');
+    });
     Route::view('user-contact-us', 'candidates/contact-us')->name('tenant-user-contact-us');
 
     // Tenant Candidate User Auth Routes
     Route::get('user-signup', [UserAuthController::class, 'signup'])->name('tenant-user-signup');
     Route::post('user-signup', [UserAuthController::class, 'register'])->name('register-user');
 
-    Route::get('user-login', [UserAuthController::class, 'loginPage'])->name('tenant-user-login');
+    Route::get('login', [UserAuthController::class, 'loginPage'])->name('candidate.login');
     Route::post('user-login', [UserAuthController::class, 'login'])->name('tenant-user-login');
 
     Route::get('user-logout', [UserAuthController::class, 'logout'])->name('tenant-user-logout');
