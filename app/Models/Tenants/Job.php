@@ -10,10 +10,26 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Job extends Model
 {
     use HasFactory,SoftDeletes,General;
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            $model->slug = $model->createUniqueSlug($model->name);
+        });
+    }
+
+    protected function createUniqueSlug($name)
+    {
+        $slug = Str::slug($name);
+        $count = static::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
+        $id = self::max('id') + 1;
+        return $count ? "{$slug}-{$id}" : $slug;
+    }
     public function getImageAttribute($value){
         return url(Storage::url($value));
     }

@@ -79,6 +79,7 @@ class JobService implements JobContract
         }
         if (isset($data['name']) && $data['name']) {
             $model->name = $data['name'];
+            $model->slug = $data['name'];
         }
         if (isset($data['job_description']) && $data['job_description']) {
             $model->job_description = $data['job_description'];
