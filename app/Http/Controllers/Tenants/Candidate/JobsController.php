@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Tenants\Candidate;
 
 use App\Contracts\Tenants\Candidates\JobContract;
+use App\Exceptions\CustomException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tenants\Candidate\JobDetailRequest;
 use App\Models\Tenants\User\FavoriteJob;
 use Illuminate\Http\Request;
 
@@ -21,8 +23,17 @@ class JobsController extends Controller
         try {
             $data = $this->job->listing($request);
             return view('candidates.job.listing',compact('data'));
-        } catch (\Exception $th) {
-            return $this->failedResponse($th->getMessage());
+        } catch (CustomException|\Exception $th) {
+            return redirect()->back()->with('message',$th->getMessage());
+        }
+    }
+    public function jobDetail($slug)
+    {
+        try {
+            $data = $this->job->jobDetail($slug);
+            return view('candidates.job.job_detail',compact('data'));
+        } catch (CustomException|\Exception $th) {
+            return redirect()->back()->with('message',$th->getMessage());
         }
     }
 

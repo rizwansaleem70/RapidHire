@@ -168,7 +168,7 @@
                                                     </div>
                                                     <div class="box-content">
                                                         <h3>
-                                                            <a href="jobs-single.html">{{$job->name}}</a>
+                                                            <a href="{{route('candidate.job.detail',$job->slug)}}">{{$job->name}}</a>
                                                             <span class="icon-bolt"></span>
                                                         </h3>
                                                         <ul>
@@ -194,7 +194,7 @@
                                                             @endif
                                                             ></span>
                                                         <div class="button-container">
-                                                            <a href="{{route('tenant-user-apply')}}">
+                                                            <a href="{{route('candidate.job.detail',$job->slug)}}">
                                                                 <button>Apply</button>
                                                             </a>
                                                         </div>
@@ -264,7 +264,7 @@
                                                                 @endif
                                                                 ></span>
                                                             <div class="button-container">
-                                                                <a href="{{route('tenant-user-apply')}}">
+                                                                <a href="{{route('candidate.job.detail',$job->slug)}}">
                                                                     <button>Apply</button>
                                                                 </a>
                                                             </div>
