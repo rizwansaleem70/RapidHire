@@ -23,15 +23,17 @@ class UpdateRequirementRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'data.*.name' => 'required',
-            'data.*.input_type' => 'required',
-            'data.*.option' => 'required',
+            'name' => 'required',
+            'option' => 'required',
         ];
     }
 
     public function prepareRequest(): array
     {
         $request = $this;
-        return $request['data'];
+        return [
+            'name' => $request['name'],
+            'option' => $request['option'],
+        ];
     }
 }

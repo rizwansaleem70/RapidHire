@@ -63,7 +63,18 @@ class RequirementService implements RequirementContract
     }
     private function prepareData($model, $data, $new_record = false)
     {
-        $model->insert($data);
+        if ($new_record){
+            $model->insert($data);
+        }
+        else{
+            if (isset($data['name']) && $data['name']) {
+                $model->name = $data['name'];
+            }
+            if (isset($data['option']) && $data['option']) {
+                $model->option = $data['option'];
+            }
+            $model->save();
+        }
         return $model;
     }
 }
