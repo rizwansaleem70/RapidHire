@@ -8,4 +8,5 @@ namespace App\Contracts\Tenants\Candidates;
 interface JobContract
 {
     public function listing($filter);
+    public function jobDetail($slug);
 }
