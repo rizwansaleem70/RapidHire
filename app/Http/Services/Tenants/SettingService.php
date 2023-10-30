@@ -15,24 +15,30 @@ use App\Models\Tenants\Setting;
 class SettingService implements SettingContract
 {
     public $model;
+    public $get_settings;
     public function __construct()
     {
-        $this->model = new Setting();
+        $this->model = settings();
+        $this->get_settings = new Setting();
     }
     public function index()
     {
         $settings = [
-            "logo" => asset('storage/' . $this->model::getValue(Constant::LOGO, "logo")),
-            "primary_color" => $this->model::getValue(Constant::COLOR_SCHEME, "primary"),
-            "secondary_color" => $this->model::getValue(Constant::COLOR_SCHEME, "secondary"),
-            "name" => $this->model::getValue(Constant::ORGANIZATION, "name"),
-            "phone" => $this->model::getValue(Constant::ORGANIZATION, "phone"),
-            "website" => $this->model::getValue(Constant::ORGANIZATION, "website"),
-            "candidate_reapply_days" => $this->model::getValue(Constant::CONFIGURATION, "candidate_reapply_days"),
-            "company_contract_email" => $this->model::getValue(Constant::CONFIGURATION, "company_contract_email"),
-            "default_email_signature" => $this->model::getValue(Constant::CONFIGURATION, "default_email_signature"),
-            "company_title_about" => $this->model::getValue(Constant::CONFIGURATION, "company_title_about"),
-            "job_description_about" => $this->model::getValue(Constant::CONFIGURATION, "job_description_about"),
+            "logo" => asset('storage/' . $this->get_settings::getValue(Constant::LOGO, "logo")),
+            "primary_color" => $this->get_settings::getValue(Constant::COLOR_SCHEME, "primary"),
+            "secondary_color" => $this->get_settings::getValue(Constant::COLOR_SCHEME, "secondary"),
+            "name" => $this->get_settings::getValue(Constant::ORGANIZATION, "name"),
+            "phone" => $this->get_settings::getValue(Constant::ORGANIZATION, "phone"),
+            "website" => $this->get_settings::getValue(Constant::ORGANIZATION, "website"),
+            "candidate_reapply_days" => $this->get_settings::getValue(Constant::CONFIGURATION, "candidate_reapply_days"),
+            "company_contract_email" => $this->get_settings::getValue(Constant::CONFIGURATION, "company_contract_email"),
+            "default_email_signature" => $this->get_settings::getValue(Constant::CONFIGURATION, "default_email_signature"),
+            "company_title_about" => $this->get_settings::getValue(Constant::CONFIGURATION, "company_title_about"),
+            "job_description_about" => $this->get_settings::getValue(Constant::CONFIGURATION, "job_description_about"),
+            "core_values" => $this->get_settings::getValue(Constant::CORE_VALUE, "core-value"),
+            "title" => $this->get_settings::getValue(Constant::CORE_VALUE, "title"),
+            "icon" => asset('storage/' . $this->get_settings::getValue(Constant::CORE_VALUE, "icon")),
+            "description" => $this->get_settings::getValue(Constant::CORE_VALUE, "description"),
         ];
         return $settings;
     }
