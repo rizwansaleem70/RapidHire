@@ -4,6 +4,7 @@ namespace App\Http\Services\Tenants\Candidates;
 
 use App\Contracts\Tenants\Candidates\JobContract;
 use App\Exceptions\CustomException;
+use App\Models\Tenants\Department;
 use App\Models\Tenants\Job;
 use App\Models\Tenants\Location;
 use App\Models\Tenants\Setting;
@@ -22,6 +23,7 @@ class JobService implements JobContract
     protected Location $modelLocation;
     protected Setting $modelSetting;
     protected SocialMedia $modelSocialMedia;
+    protected Department $modelDepartment;
 
     public function __construct()
     {
@@ -29,6 +31,7 @@ class JobService implements JobContract
         $this->modelLocation = new Location();
         $this->modelSetting = new Setting();
         $this->modelSocialMedia = new SocialMedia();
+        $this->modelDepartment = new Department();
 
     }
 
@@ -92,11 +95,17 @@ class JobService implements JobContract
 
     public function jobDetail($slug)
     {
+        $logo = settings()->group('logo')->get('logo');
         $website = settings()->group('organization')->get('website');
         $companyEmail = settings()->group('configuration')->get('company_contract_email');
         $company_title_about = settings()->group('configuration')->get('company_title_about');
         $socialMedia = $this->modelSocialMedia->orderBy('priority')->get();
         $job = $this->modelJob->with('location')->where('slug',$slug)->first();
+        $related_jobs = $this->modelJob->with('location')
+            ->where('department_id', $job->department_id)
+            ->where('id', '<>', $job->id)
+            ->select('*', DB::raw('DATEDIFF(expiry_date, post_date) AS remaining_days'))
+            ->get();
         $remaining_days = Carbon::parse($job->post_date)->diffInDays(Carbon::parse($job->expiry_date));
         if (!$job){
             throw new CustomException("Job Record Not Found!");
@@ -107,7 +116,9 @@ class JobService implements JobContract
             'website' => $website,
             'companyEmail' => $companyEmail,
             'socialMedia' => $socialMedia,
-            'company_title_about' => $company_title_about
+            'company_title_about' => $company_title_about,
+            'related_jobs' => $related_jobs,
+            'logo' => $logo
         ];
     }
 }
