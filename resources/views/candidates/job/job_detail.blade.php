@@ -12,7 +12,7 @@
                     <div class="wd-job-author2">
                         <div class="content-left">
                             <div class="thumb">
-                                <img src="{{asset('app-assets/candidates/images/logo-company/cty4.png')}}" alt="logo">
+                                <img src="{{$data['logo']}}" alt="logo">
                             </div>
                             <div class="content">
                                 <h6><a href="#">{{$data['job']->name}} <span class="icon-bolt"></span></a></h6>
@@ -93,180 +93,51 @@
 
                                 <div class="related-job">
                                     <h6>Related Jobs</h6>
-                                    <div class="features-job mg-bt-0">
-                                        <div class="job-archive-header">
-                                            <div class="inner-box">
-                                                <div class="logo-company">
-                                                    <img src="{{asset('app-assets/candidates/images/logo-company/cty2.png')}}"
-                                                         alt="images/logo-company/cty2.png"/>
+                                    @foreach($data['related_jobs'] as $value)
+                                        <div class="features-job mg-bt-2">
+                                            <div class="job-archive-header">
+                                                <div class="inner-box">
+                                                    <div class="logo-company">
+                                                        <img src="{{$data['logo']}}"
+                                                             alt=" Logo"/>
+                                                    </div>
+                                                    <div class="box-content">
+                                                        <h3>
+                                                            <a href="{{route('candidate.job.detail',$value->slug)}}">{{$value->name}}</a>
+                                                            <span class="icon-bolt"></span>
+                                                        </h3>
+                                                        <ul>
+                                                            <li>
+                                                                <span class="icon-map-pin"></span>
+                                                                {{$value->location->name}}
+                                                            </li>
+                                                            <li>
+                                                                <span class="icon-calendar"></span>
+                                                                {{ \Carbon\Carbon::parse($value->post_date)->diffForHumans() }}
+                                                            </li>
+                                                        </ul>
+                                                        <span class="icon-heart"></span>
+                                                    </div>
                                                 </div>
-                                                <div class="box-content">
-                                                    <h4>
-                                                        <a href="jobs-single.html">Tamari Law Group LLC</a>
-                                                    </h4>
-                                                    <h3>
-                                                        <a href="jobs-single.html">HR Administration</a>
-                                                        <span class="icon-bolt"></span>
-                                                    </h3>
-                                                    <ul>
-                                                        <li>
-                                                            <span class="icon-map-pin"></span>
-                                                            Las Vegas, NV 89107, USA
-                                                        </li>
-                                                        <li>
-                                                            <span class="icon-calendar"></span>
-                                                            2 days ago
-                                                        </li>
+                                            </div>
+                                            <div class="job-archive-footer">
+                                                <div class="job-footer-left">
+                                                    <ul class="job-tag">
+                                                        <li><a href="#">{{$value->type}}</a></li>
+                                                        <li><a href="#">{{$value->job_type}}</a></li>
                                                     </ul>
-                                                    <span class="icon-heart"></span>
+                                                </div>
+                                                <div class="job-footer-right">
+                                                    <div class="price">
+                                                        <span class="icon-dolar1"></span>
+                                                        <p class="mt-3">{{$value->min_salary}} - {{$value->max_salary}} <span class="year">/ {{$value->salary_deliver}}</span></p>
+                                                    </div>
+                                                    <p class="days">{{$value->remaining_days}} days left to apply</p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="job-archive-footer">
-                                            <div class="job-footer-left">
-                                                <ul class="job-tag">
-                                                    <li><a href="#"> Part-time</a></li>
-                                                    <li><a href="$"> Remote</a></li>
-                                                </ul>
-                                                <div class="star">
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                </div>
-                                            </div>
-                                            <div class="job-footer-right">
-                                                <div class="price">
-                                                    <span class="icon-dolar1"></span>
-                                                    <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                </div>
-                                                <p class="days">24 days left to apply</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="features-job mg-bt-0">
-                                        <div class="job-archive-header">
-                                            <div class="inner-box">
-                                                <div class="logo-company">
-                                                    <img src="{{asset('app-assets/candidates/images/logo-company/cty7.png')}}"
-                                                         alt="images/logo-company/cty7.png"/>
-                                                </div>
-                                                <div class="box-content">
-                                                    <h4>
-                                                        <a href="jobs-single.html">Tamari Law Group LLC</a>
-                                                    </h4>
-                                                    <h3>
-                                                        <a href="jobs-single.html">HR Administration</a>
-                                                        <span class="icon-bolt"></span>
-                                                    </h3>
-                                                    <ul>
-                                                        <li>
-                                                            <span class="icon-map-pin"></span>
-                                                            Las Vegas, NV 89107, USA
-                                                        </li>
-                                                        <li>
-                                                            <span class="icon-calendar"></span>
-                                                            2 days ago
-                                                        </li>
-                                                    </ul>
-                                                    <span class="icon-heart"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="job-archive-footer">
-                                            <div class="job-footer-left">
-                                                <ul class="job-tag">
-                                                    <li><a href="#"> Part-time</a></li>
-                                                    <li><a href="#"> Remote</a></li>
-                                                </ul>
-                                                <div class="star">
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                </div>
-                                            </div>
-                                            <div class="job-footer-right">
-                                                <div class="price">
-                                                    <span class="icon-dolar1"></span>
-                                                    <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                </div>
-                                                <p class="days">24 days left to apply</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="features-job mg-bt-0">
-                                        <div class="job-archive-header">
-                                            <div class="inner-box">
-                                                <div class="logo-company">
-                                                    <img src="{{asset('app-assets/candidates/images/logo-company/cty8.png')}}"
-                                                         alt="images/logo-company/cty8.png"/>
-                                                </div>
-                                                <div class="box-content">
-                                                    <h4>
-                                                        <a href="jobs-single.html">Tamari Law Group LLC</a>
-                                                    </h4>
-                                                    <h3>
-                                                        <a href="jobs-single.html">HR Administration</a>
-                                                        <span class="icon-bolt"></span>
-                                                    </h3>
-                                                    <ul>
-                                                        <li>
-                                                            <span class="icon-map-pin"></span>
-                                                            Las Vegas, NV 89107, USA
-                                                        </li>
-                                                        <li>
-                                                            <span class="icon-calendar"></span>
-                                                            2 days ago
-                                                        </li>
-                                                    </ul>
-                                                    <span class="icon-heart"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="job-archive-footer">
-                                            <div class="job-footer-left">
-                                                <ul class="job-tag">
-                                                    <li><a href="#"> Part-time</a></li>
-                                                    <li><a href="#"> Remote</a></li>
-                                                </ul>
-                                                <div class="star">
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                    <span class="icon-star-full"></span>
-                                                </div>
-                                            </div>
-                                            <div class="job-footer-right">
-                                                <div class="price">
-                                                    <span class="icon-dolar1"></span>
-                                                    <p>$83,000 - $110,000 <span class="year">/year</span></p>
-                                                </div>
-                                                <p class="days">24 days left to apply</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
-                            </div>
-                            <div class="inner-content">
-                                <h5>Full Job Description</h5>
-                                <p>Are you a User Experience Designer with a track record of delivering intuitive
-                                    digital experiences that
-                                    drive results? Are you a strategic storyteller and systems thinker who can concept
-                                    and craft smart,
-                                    world-class campaigns across a variety of mediums?
-                                </p>
-                            </div>
-                            <div class="inner-content">
-                                <h5>Full Reviews</h5>
-                                <p>Are you a User Experience Designer with a track record of delivering intuitive
-                                    digital experiences that
-                                    drive results? Are you a strategic storyteller and systems thinker who can concept
-                                    and craft smart.
-                                </p>
                             </div>
                         </div>
                     </article>

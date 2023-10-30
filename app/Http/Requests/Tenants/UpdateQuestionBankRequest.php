@@ -23,8 +23,6 @@ class UpdateQuestionBankRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'department_id' => 'required|exists:departments,id',
-            'input_type' => 'required|string',
             'question' => 'required',
         ];
     }
@@ -33,8 +31,6 @@ class UpdateQuestionBankRequest extends FormRequest
     {
         $request = $this;
         return [
-            'department_id' => $request['department_id'],
-            'input_type' => $request['input_type'],
             'question' => $request['question'],
         ];
     }

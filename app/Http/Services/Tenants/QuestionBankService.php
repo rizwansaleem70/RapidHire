@@ -55,7 +55,15 @@ class QuestionBankService implements QuestionBankContract
     }
     private function prepareData($model, $data, $new_record = false)
     {
-        $model->insert($data);
+        if ($new_record){
+            $model->insert($data);
+        }
+        else{
+            if (isset($data['question']) && $data['question']) {
+                $model->question = $data['question'];
+            }
+            $model->save();
+        }
         return $model;
     }
 }
