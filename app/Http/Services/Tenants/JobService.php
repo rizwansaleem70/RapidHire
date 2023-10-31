@@ -36,9 +36,9 @@ class JobService implements JobContract
     {
         return $this->model->latest()->get();
     }
-    public function questionList($id)
+    public function questionList($query)
     {
-        return $this->departmentModel->with('questionBank')->whereId($id)->get();
+        return $this->departmentModel->with('questionBank')->whereId($query->department_id)->get();
     }
 
     public function store($data)

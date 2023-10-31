@@ -10,5 +10,5 @@ interface JobContract
     public function listing($filter);
     public function jobDetail($slug);
     public function jobApply($slug);
-    public function jobApplyStore($inputs);
+    public function jobApplyStore($data);
 }
