@@ -185,5 +185,8 @@ class JobService implements JobContract
         $model->requirement()->sync($data['requirement_id']);
         return $model;
     }
-
+    public function jobApplyStore($inputs)
+    {
+        // TODO: Implement jobApplyStore() method.
+    }
 }
