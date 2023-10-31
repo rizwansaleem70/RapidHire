@@ -13,12 +13,12 @@ return new class extends Migration {
         Schema::create('experiences', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('post_name');
+            $table->string('position_title');
             $table->date('start_date');
             $table->date('end_date');
             $table->string('organization_name');
-            $table->string('address');
-            $table->enum('experience_level', ['entry', 'junior', 'mid', 'senior', 'expert']);
+            $table->string('source_detail')->nullable();
+            $table->string('is_present')->default('0');
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');

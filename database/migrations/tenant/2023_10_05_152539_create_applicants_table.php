@@ -17,8 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('job_id');
             $table->enum('status', ['applied','draft', 'job-offered', 'interview', 'pending', 'underview']);
             $table->date('applied_date');
-            $table->enum('availability', ['confirmed', 'not confirmed']);
-            $table->boolean('is_liked')->default(true);
             $table->string('resume_path');
             $table->string('cover_letter_path');
             $table->softDeletes();

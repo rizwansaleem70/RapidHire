@@ -29,7 +29,6 @@ return new class extends Migration
             $table->date('post_date');
             $table->integer('total_position');
             $table->date('expiry_date')->nullable();
-            $table->boolean('is_active')->default(true);
             $table->decimal('rating', 3, 1)->default(0);
             $table->enum('status', ['published', 'draft'])->default('published');
             $table->enum('salary_deliver', ['monthly', 'yearly'])->default('monthly');
