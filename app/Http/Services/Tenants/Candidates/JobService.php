@@ -114,4 +114,9 @@ class JobService implements JobContract
             'user' => $user
         ];
     }
+
+    public function jobApplyStore($inputs)
+    {
+        // TODO: Implement jobApplyStore() method.
+    }
 }
