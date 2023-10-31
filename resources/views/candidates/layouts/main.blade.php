@@ -60,8 +60,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/custom.css')}}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
-
+    @stack('css')
 </head>
 <body>
 <a id="scroll-top"></a>
@@ -113,7 +112,6 @@
 <script src="{{asset('app-assets/candidates/javascript/plugin.min.js')}}"></script>
 <script src="{{asset('app-assets/candidates/javascript/jquery.cookie.js')}}"></script>
 <script src="{{asset('app-assets/candidates/javascript/main.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
 
 <script>
     window.setTimeout(function () {
@@ -121,7 +119,10 @@
             $(this).remove();
         });
     }, 3000);
+
+
 </script>
+@stack('js')
 </body>
 
 </html>
