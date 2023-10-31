@@ -2,8 +2,8 @@
 
 namespace App\Models\Tenants;
 
-use App\Models\JobQuestion;
 use App\Models\Requirement;
+use App\Models\Tenants\Candidate\FavoriteJob;
 use App\Models\User;
 use App\Traits\General;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -49,11 +49,12 @@ class Job extends Model
     {
         return $this->belongsToMany(Requirement::class,'job_requirements','job_id','requirement_id');
     }
-    public function location(){
+    public function location(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Location::class,'location_id','id');
     }
-    public function favoriteJob()
+    public function favorite(): \Illuminate\Database\Eloquent\Relations\hasOne
     {
-        return $this->belongsTo(FavoriteJob::class);
+        return $this->hasOne(FavoriteJob::class,'job_id','id');
     }
 }

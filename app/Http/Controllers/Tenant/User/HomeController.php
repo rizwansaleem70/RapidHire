@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Tenant\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Tenants\Candidate\FavoriteJob;
 use App\Models\Tenants\Department;
 use App\Models\Tenants\Job;
-use App\Models\Tenants\User\FavoriteJob;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
