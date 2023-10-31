@@ -15,7 +15,9 @@
                                     <img src="{{$data['logo']}}" alt="logo">
                                 </div>
                                 <div class="content">
-                                    <h6><a href="{{route('candidate.job.detail',$data['job']->slug)}}">{{$data['job']->name}}<span class="icon-bolt"></span></a></h6>
+                                    <h6>
+                                        <a href="{{route('candidate.job.detail',$data['job']->slug)}}">{{$data['job']->name}}
+                                            <span class="icon-bolt"></span></a></h6>
                                 </div>
                             </div>
 
@@ -56,7 +58,8 @@
                             <div class="custom-file-upload" id="drop-area" style="padding: 5%;">
                                 <label for="file-upload" class="file-label">Drag & Drop files here or </label>
                                 <div class="button-container" style="text-align: center;">
-                                    <button id="add-letter" class="upload-button" type="button">Upload COVER LETTER</button>
+                                    <button id="add-letter" class="upload-button" type="button">Upload COVER LETTER
+                                    </button>
                                 </div>
                                 <p id="selectedFileName2" style="margin-top: 2rem;">No file chosen</p>
                             </div>
@@ -65,158 +68,114 @@
                     <div class="col-lg-12">
 
 
-                        <form>
+                        <form action="{{route('candidate.job.apply.save')}}" method="post">
+                            @csrf
                             <div class="form-group">
-                                <input type="text" class="form-control" id="first_name" readonly value="{{$data['user']->first_name}}" aria-describedby="name"
+                                <input type="text" class="form-control" id="first_name" readonly
+                                       value="{{$data['user']->first_name}}" aria-describedby="name"
                                        placeholder="First Name *">
 
                             </div>
                             <div class="form-group">
 
-                                <input type="text" class="form-control" readonly value="{{$data['user']->last_name}}" id="last_name" aria-describedby="name"
+                                <input type="text" class="form-control" readonly value="{{$data['user']->last_name}}"
+                                       id="last_name" aria-describedby="name"
                                        placeholder="Last Name *">
                             </div>
                             <div class="form-group">
 
-                                <input type="email" class="form-control" id="email" readonly value="{{$data['user']->email}}" aria-describedby="email"
+                                <input type="email" class="form-control" id="email" readonly
+                                       value="{{$data['user']->email}}" aria-describedby="email"
                                        placeholder="Email *">
                             </div>
 
                             <div class="form-group">
 
-                                <input type="phone" class="form-control" id="phone" readonly value="{{$data['user']->phone}}" aria-describedby="phone"
+                                <input type="phone" class="form-control" id="phone" readonly
+                                       value="{{$data['user']->phone}}" aria-describedby="phone"
                                        placeholder="Phone *">
                             </div>
 
                             <div class="form-group">
 
-                                <input type="text" class="form-control" readonly value="{{$data['user']->address}}" id="address" aria-describedby="address"
+                                <input type="text" class="form-control" readonly value="{{$data['user']->address}}"
+                                       id="address" aria-describedby="address"
                                        placeholder="Address *">
                             </div>
 
 
                             <div class="form-group">
 
-                                <input type="text" class="form-control" readonly value="{{$data['user']->city}}" id="city" aria-describedby="city"
+                                <input type="text" class="form-control" readonly value="{{$data['user']->city}}"
+                                       id="city" aria-describedby="city"
                                        placeholder="City *">
                             </div>
 
                             <div class="form-group">
 
-                                <input type="text" class="form-control" readonly value="{{$data['user']->gender}}" id="gender" aria-describedby="gender"
+                                <input type="text" class="form-control" readonly value="{{$data['user']->gender}}"
+                                       id="gender" aria-describedby="gender"
                                        placeholder="Gender *">
                             </div>
 
                             <div class="form-group">
 
-                                <input type="text" class="form-control" id="skills" name="skill[]" aria-describedby="skills"
+                                <input type="text" class="form-control" id="skills" name="skills"
+                                       aria-describedby="skills"
                                        placeholder="Skills *">
-                            </div>
-
-                            <div class="form-group ">
-                                <label for="inputState">Source</label>
-                                <select id="inputState" placeholder="Select Source*" class="form-control">
-                                    <option>Choose...</option>
-                                    <option>...</option>
-                                </select>
                             </div>
 
                             <div class="form-group">
 
-                                <input type="text" class="form-control" id="source" aria-describedby="source"
+                                <input type="text" class="form-control" name="source_detail" id="source" aria-describedby="source"
                                        placeholder="Source Detail ">
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-3">
-
-                                    <select id="inputState" class="form-control">
-                                        <option selected>Employer *</option>
-                                        <option>...</option>
-                                    </select>
+                                    <input type="text" name="data[0][organization_name]" class="form-control" id="title"
+                                           aria-describedby="tiltle"
+                                           placeholder="Organization Name  ">
                                 </div>
-
                                 <div class="form-group col-md-3">
 
-                                    <input type="text" class="form-control" id="title" aria-describedby="tiltle"
-                                           placeholder="Title * ">
+                                    <input type="text" class="form-control" id="title" name="data[0][position_title]" aria-describedby="title"
+                                           placeholder="Position Title * ">
                                 </div>
 
                                 <div class="form-group col-md-2">
 
-                                    <input type="number" class="form-control" id="start" aria-describedby="start"
-                                           placeholder="Start ">
+                                    <input type="number" class="form-control" name="data[0][start_date]" id="start"
+                                           aria-describedby="start"
+                                           placeholder="Start Date ">
                                 </div>
 
                                 <div class="form-group col-md-2">
 
-                                    <input type="number" class="form-control" id="end" aria-describedby="end"
+                                    <input type="number" class="form-control" id="end" name="data[0][end_date]"
+                                           aria-describedby="end"
                                            placeholder="End ">
                                 </div>
 
                                 <div class="form-check  col-md-1" style="margin-top: 1rem;">
-                                    <input class="form-check-input" type="checkbox" id="gridCheck1">
+                                    <input class="form-check-input" type="checkbox" name="data[0][is_present]" value="{{false}}" id="gridCheck1">
                                     <label class="form-check-label" for="gridCheck1">
                                         Present
                                     </label>
                                 </div>
                                 <div class="form-check  col-md-1" style="margin-top: 1rem;">
-                                    <label for="gridCheck1">
-                                        <i class="fas fa-plus"></i>
-                                    </label>
-                                    <input class="form-check-input" type="checkbox" id="gridCheck1" style="display: none;">
-
-
+                                    <button type="button" name="add" id="dynamic-ar" class="btn btn-primary"><i class="fas fa-plus"></i></button>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="form-group col-md-3">
-
-                                    <select id="inputState" class="form-control">
-                                        <option selected>Employer *</option>
-                                        <option>...</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group col-md-3">
-
-                                    <input type="text" class="form-control" id="title" aria-describedby="tiltle"
-                                           placeholder="Title * ">
-                                </div>
-
-                                <div class="form-group col-md-2">
-
-                                    <input type="number" class="form-control" id="start" aria-describedby="start"
-                                           placeholder="Start ">
-                                </div>
-
-                                <div class="form-group col-md-2">
-
-                                    <input type="number" class="form-control" id="end" aria-describedby="end"
-                                           placeholder="End ">
-                                </div>
-
-                                <div class="form-check  col-md-1" style="margin-top: 1rem;">
-                                    <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                    <label class="form-check-label" for="gridCheck1">
-                                        Present
-                                    </label>
-                                </div>
-                                <div class="form-check  col-md-1" style="margin-top: 1rem;">
-                                    <label for="gridCheck1">
-                                        <i class="fas fa-plus"></i>
-                                    </label>
-                                    <input class="form-check-input" type="checkbox" id="gridCheck1" style="display: none;">
-
-
-                                </div>
+                            <div id="dynamicAddRemove">
                             </div>
-
+                            <div class="d-flex justify-content-end">
+                                <button class="cancel-button mr-2">Cancel</button>
+                                <button class="save-button" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Save
+                                </button>
+                            </div>
                         </form>
                         <div class="container">
-                            <button class="cancel-button">Cancel</button>
-                            <button class="save-button" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Save
-                            </button>
+
 
 
                             <div class="modal fade" id="exampleModalCenter">
@@ -224,10 +183,12 @@
                                     <div class="modal-content">
                                         <div class="modal-body">
                                             <div class="thank-you-pop">
-                                                <img src="{{asset('app-assets/candidates/images/used/verified.gif')}}" alt="">
+                                                <img src="{{asset('app-assets/candidates/images/used/verified.gif')}}"
+                                                     alt="">
                                                 <h4>Your job application has been successfully submitted</h4>
                                                 <p class="lead">Our team will review your application, and if your
-                                                    qualifications match our requirements, we will be in touch for the next
+                                                    qualifications match our requirements, we will be in touch for the
+                                                    next
                                                     steps in the hiring process.</p>
                                             </div>
                                         </div>
@@ -247,112 +208,172 @@
     </div>
 
 @endsection
-<script>
-    const dropArea = document.getElementById('drop-area');
 
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-        dropArea.addEventListener(eventName, preventDefaults, false);
-    });
+@push('js')
 
-    function preventDefaults(e) {
-        e.preventDefault();
-        e.stopPropagation();
-    }
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript">
+        var i = 0;
+        $("#dynamic-ar").click(function () {
+            ++i;
+            $("#dynamicAddRemove").append(
+                `<div class="row del-class">
+                    <div class="form-group col-md-3">
+                        <input type="text" name="data[${i}][organization_name]" class="form-control" id="title"
+                               aria-describedby="title"
+                               placeholder="Organization Name  ">
+                    </div>
+                    <div class="form-group col-md-3">
 
-    ['dragenter', 'dragover'].forEach(eventName => {
-        dropArea.addEventListener(eventName, highlight, false);
-    });
+                        <input type="text" class="form-control" id="title" name="data[${i}][position_title]" aria-describedby="title"
+                               placeholder="Position Title * ">
+                    </div>
 
-    ['dragleave', 'drop'].forEach(eventName => {
-        dropArea.addEventListener(eventName, unhighlight, false);
-    });
+                    <div class="form-group col-md-2">
 
-    function highlight(e) {
-        dropArea.classList.add('drag-over');
-    }
+                        <input type="number" class="form-control" name="data[${i}][start_date]" id="start"
+                               aria-describedby="start"
+                               placeholder="Start Date ">
+                    </div>
 
-    function unhighlight(e) {
-        dropArea.classList.remove('drag-over');
-    }
+                    <div class="form-group col-md-2">
 
-    dropArea.addEventListener('drop', handleDrop, false);
+                        <input type="number" class="form-control" id="end" name="data[${i}][end_date]"
+                               aria-describedby="end"
+                               placeholder="End ">
+                    </div>
 
-    function handleDrop(e) {
-        let dt = e.dataTransfer;
-        let files = dt.files;
-
-        // Handle the dropped files here
-        handleFiles(files);
-    }
-
-    function handleFiles(files) {
-        // Handle the dropped files here
-        // You can perform operations on the files such as uploading or displaying file details
-        console.log(files);
-    }
-
-    // Button event listeners
-    const addFilesButton = document.getElementById('add-files');
-    addFilesButton.addEventListener('click', function () {
-        const fileInput = document.getElementById('file-upload');
-        fileInput.click();
-    });
-
-    const linkedinButton = document.getElementById('linkedin-button');
-    linkedinButton.addEventListener('click', function () {
-        // Handle LinkedIn authentication and integration logic here
-        console.log('Connecting with LinkedIn...');
-    });
-
-
-    document.getElementById('add-files').addEventListener('click', function () {
-        var input = document.createElement('input');
-        input.type = 'file';
-        input.accept = '.pdf, .doc, .docx'; // Specify allowed file types
-
-        input.addEventListener('change', function (event) {
-            var file = event.target.files[0];
-            var selectedFileName = document.getElementById('selectedFileName');
-
-            if (file) {
-                // Handle the uploaded file here
-                console.log('File uploaded:', file);
-
-                // Change the text content of the <p> element
-                selectedFileName.textContent = 'File Name: ' + file.name;
-
-                // You can send the file to the server or perform other actions with it
-            } else {
-                selectedFileName.textContent = 'No file chosen';
-                console.log('No file selected');
-            }
+                    <div class="form-check  col-md-1" style="margin-top: 1rem;">
+                        <input class="form-check-input" type="checkbox" name="data[${i}][is_present]" value="0" id="gridCheck1">
+                        <label class="form-check-label" for="gridCheck1">
+                            Present
+                        </label>
+                    </div>
+                    <div class="form-check  col-md-1" style="margin-top: 1rem;">
+                        <button type="button" class="btn btn-outline-danger remove-input-field"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>`
+            );
         });
-        input.click();
-    });
-
-
-    document.getElementById('add-letter').addEventListener('click', function () {
-        var input = document.createElement('input');
-        input.type = 'file';
-        input.accept = '.pdf, .doc, .docx'; // Specify allowed file types
-
-        input.addEventListener('change', function (event) {
-            var file = event.target.files[0];
-            var selectedFileName = document.getElementById('selectedFileName2');
-
-            if (file) {
-                // Handle the uploaded file here
-                console.log('File uploaded:', file);
-
-                // Change the text content of the <p> element
-                selectedFileName.textContent = 'File Name: ' + file.name;
-
-                // You can send the file to the server or perform other actions with it
-            } else {
-                selectedFileName.textContent = 'No file chosen';
-                console.log('No file selected');
-            }
+        $(document).on('click', '.remove-input-field', function () {
+            $(this).parents('.del-class').remove();
         });
-        input.click();
-    });
-</script>
+    </script>
+    <script>
+
+        var input = document.querySelector('input[name=skills]');
+
+        new Tagify(input)
+
+        const dropArea = document.getElementById('drop-area');
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight(e) {
+            dropArea.classList.add('drag-over');
+        }
+
+        function unhighlight(e) {
+            dropArea.classList.remove('drag-over');
+        }
+
+        dropArea.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            let dt = e.dataTransfer;
+            let files = dt.files;
+
+            // Handle the dropped files here
+            handleFiles(files);
+        }
+
+        function handleFiles(files) {
+            // Handle the dropped files here
+            // You can perform operations on the files such as uploading or displaying file details
+            console.log(files);
+        }
+
+        // Button event listeners
+        const addFilesButton = document.getElementById('add-files');
+        addFilesButton.addEventListener('click', function () {
+            const fileInput = document.getElementById('file-upload');
+            fileInput.click();
+        });
+
+        const linkedinButton = document.getElementById('linkedin-button');
+        linkedinButton.addEventListener('click', function () {
+            // Handle LinkedIn authentication and integration logic here
+            console.log('Connecting with LinkedIn...');
+        });
+
+
+        document.getElementById('add-files').addEventListener('click', function () {
+            var input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.pdf, .doc, .docx'; // Specify allowed file types
+
+            input.addEventListener('change', function (event) {
+                var file = event.target.files[0];
+                var selectedFileName = document.getElementById('selectedFileName');
+
+                if (file) {
+                    // Handle the uploaded file here
+                    console.log('File uploaded:', file);
+
+                    // Change the text content of the <p> element
+                    selectedFileName.textContent = 'File Name: ' + file.name;
+
+                    // You can send the file to the server or perform other actions with it
+                } else {
+                    selectedFileName.textContent = 'No file chosen';
+                    console.log('No file selected');
+                }
+            });
+            input.click();
+        });
+
+
+        document.getElementById('add-letter').addEventListener('click', function () {
+            var input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.pdf, .doc, .docx'; // Specify allowed file types
+
+            input.addEventListener('change', function (event) {
+                var file = event.target.files[0];
+                var selectedFileName = document.getElementById('selectedFileName2');
+
+                if (file) {
+                    // Handle the uploaded file here
+                    console.log('File uploaded:', file);
+
+                    // Change the text content of the <p> element
+                    selectedFileName.textContent = 'File Name: ' + file.name;
+
+                    // You can send the file to the server or perform other actions with it
+                } else {
+                    selectedFileName.textContent = 'No file chosen';
+                    console.log('No file selected');
+                }
+            });
+            input.click();
+        });
+    </script>
+
+@endpush
