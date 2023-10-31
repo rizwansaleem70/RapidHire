@@ -114,11 +114,11 @@
 <script src="{{asset('app-assets/candidates/javascript/main.js')}}"></script>
 
 <script>
-    window.setTimeout(function () {
-        $(".flash").fadeTo(500, 0).slideUp(500, function () {
-            $(this).remove();
-        });
-    }, 3000);
+    // window.setTimeout(function () {
+    //     $(".flash").fadeTo(500, 0).slideUp(500, function () {
+    //         $(this).remove();
+    //     });
+    // }, 3000);
 
 
 </script>

@@ -45,9 +45,8 @@ class JobsController extends Controller
             return redirect()->back()->with('message',$th->getMessage());
         }
     }
-    public function jobApplyStore(Request $request)
+    public function jobApplyStore(StoreJobApplyRequest $request)
     {
-        dd($request->all());
         try {
             $data = $this->job->jobApplyStore($request->prepareRequest());
             return redirect()->back()->with('success', 'You have Successfully Apply on this Job');
