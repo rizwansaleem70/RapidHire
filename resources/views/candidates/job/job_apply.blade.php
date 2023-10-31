@@ -35,7 +35,10 @@
                             <div class="custom-file-upload" id="drop-area" style="padding: 5%;">
                                 <label for="file-upload" class="file-label">Drag & Drop files here or </label>
                                 <div class="button-container" style="text-align: center;">
-                                    <button id="add-files" class="upload-button" type="button">Upload CV/RESUME</button>
+                                    <button id="add-files" class="upload-button" type="button">
+                                        <input type="file" class="form-control" name="resume_path">
+{{--                                        Upload CV/RESUME--}}
+                                    </button>
 
 
                                     <a href="https://www.linkedin.com/">
@@ -58,7 +61,8 @@
                             <div class="custom-file-upload" id="drop-area" style="padding: 5%;">
                                 <label for="file-upload" class="file-label">Drag & Drop files here or </label>
                                 <div class="button-container" style="text-align: center;">
-                                    <button id="add-letter" class="upload-button" type="button">Upload COVER LETTER
+                                    <button id="add-letter" class="upload-button" type="button">
+                                        <input type="file" class="form-control" name="cover_letter_path">
                                     </button>
                                 </div>
                                 <p id="selectedFileName2" style="margin-top: 2rem;">No file chosen</p>
@@ -68,7 +72,7 @@
                     <div class="col-lg-12">
 
 
-                        <form action="{{route('candidate.job.apply.save')}}" method="post">
+                        <form action="{{route('candidate.job.apply.save')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <input type="text" class="form-control" id="first_name" readonly

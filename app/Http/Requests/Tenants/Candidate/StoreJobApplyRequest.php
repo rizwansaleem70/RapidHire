@@ -36,8 +36,9 @@ class StoreJobApplyRequest extends FormRequest
     {
         $request = $this;
         return [
-            'name' => $request['name'],
-            'parent_id' => $request['parent_id'],
+            'skills' => $request['skills'],
+            'source_detail' => $request['source_detail'],
+            'data' => $request['data']
         ];
     }
 }

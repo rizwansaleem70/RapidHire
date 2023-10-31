@@ -45,12 +45,13 @@ class JobsController extends Controller
             return redirect()->back()->with('message',$th->getMessage());
         }
     }
-    public function jobApplyStore(StoreJobApplyRequest $request)
+    public function jobApplyStore(Request $request)
     {
         dd($request->all());
         try {
             $data = $this->job->jobApplyStore($request->prepareRequest());
-            return view('candidates.job.job_apply',compact('data'));
+            return redirect()->back()->with('success', 'You have Successfully Apply on this Job');
+//            return view('candidates.job.job_apply',compact('data'));
         } catch (CustomException|\Exception $th) {
             return redirect()->back()->with('message',$th->getMessage());
         }
