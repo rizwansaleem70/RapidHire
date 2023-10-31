@@ -2,18 +2,34 @@
 
 namespace App\Models\Tenants;
 
-use App\Models\JobQuestion;
 use App\Models\Requirement;
+use App\Models\Tenants\Candidate\FavoriteJob;
 use App\Models\User;
 use App\Traits\General;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Job extends Model
 {
     use HasFactory,SoftDeletes,General;
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            $model->slug = $model->createUniqueSlug($model->name);
+        });
+    }
+
+    protected function createUniqueSlug($name)
+    {
+        $slug = Str::slug($name);
+        $count = static::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
+        $id = self::max('id') + 1;
+        return $count ? "{$slug}-{$id}" : $slug;
+    }
     public function getImageAttribute($value){
         return url(Storage::url($value));
     }
@@ -33,11 +49,12 @@ class Job extends Model
     {
         return $this->belongsToMany(Requirement::class,'job_requirements','job_id','requirement_id');
     }
-    public function location(){
+    public function location(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Location::class,'location_id','id');
     }
-    public function favoriteJob()
+    public function favorite(): \Illuminate\Database\Eloquent\Relations\hasOne
     {
-        return $this->belongsTo(FavoriteJob::class);
+        return $this->hasOne(FavoriteJob::class,'job_id','id');
     }
 }

@@ -14,6 +14,7 @@ use App\Http\Resources\Tenants\DepartmentCollection;
 use App\Http\Resources\Tenants\Job;
 use App\Http\Resources\Tenants\JobCollection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class JobsController extends Controller
 {
@@ -62,10 +63,10 @@ class JobsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function questionList(GetQuestionListRequest $request)
+    public function questionList(Request $request)
     {
         try {
-            $job = $this->job->questionList($request->department_id);
+            $job = $this->job->questionList($request);
             $job = new DepartmentCollection($job);
             return $this->successResponse("Department Records Found Successfully", $job);
         } catch (CustomException $th) {

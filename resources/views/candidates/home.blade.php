@@ -1,28 +1,5 @@
 @extends('candidates.layouts.main')
 @section('main-section')
-
-    @if($errors->any())
-        <div class="alert alert-danger flash">
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{$error}}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    @if(session('success'))
-        <div class="alert alert-success flash">
-            {{session('success')}}
-        </div>
-    @endif
-
-    @if(session('message'))
-        <div class="alert alert-danger flash">
-            {{session('message')}}
-        </div>
-    @endif
-
     <!-- SLIDER-->
     <section class="tf-slider sl4 over-flow-hidden" style="background-color: #0c3438; width: 100% !important;">
         <div class="tf-container">
@@ -543,14 +520,5 @@
         </section>
         <!-- End-WD-review-job -->
         <!-- wd-counter -->
-
-        <script>
-            window.setTimeout(function () {
-                $(".flash").fadeTo(500, 0).slideUp(500, function () {
-                    $(this).remove();
-                });
-            }, 5000);
-        </script>
-
     </div><!-- /.boxed -->
 @endsection

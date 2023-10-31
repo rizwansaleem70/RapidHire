@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Tenants\User;
+namespace App\Models\Tenants\Candidate;
 
+use App\Models\Tenants\Job;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
-use App\Models\Tenants\Job;
 
 class FavoriteJob extends Model
 {

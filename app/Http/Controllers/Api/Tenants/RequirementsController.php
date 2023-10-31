@@ -81,8 +81,7 @@ class RequirementsController extends Controller
         try {
             DB::beginTransaction();
             $requirement = $this->requirement->update($request->prepareRequest(), $id);
-            if ($requirement)
-                $requirement = new RequirementResourceCollection($this->requirement->index());
+            $requirement = new RequirementResource($requirement);
             DB::commit();
             return $this->successResponse("Requirement Updated Successfully", $requirement);
         } catch (CustomException $th) {

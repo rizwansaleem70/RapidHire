@@ -163,12 +163,12 @@
                                             <div class="job-archive-header">
                                                 <div class="inner-box">
                                                     <div class="logo-company">
-                                                        <img src="{{asset('app-assets/candidates/images/logo-company/cty1.png')}}"
-                                                             alt="images/logo-company/cty1.png">
+                                                        <img src="{{$data['logo']}}"
+                                                             alt="Logo">
                                                     </div>
                                                     <div class="box-content">
                                                         <h3>
-                                                            <a href="jobs-single.html">{{$job->name}}</a>
+                                                            <a href="{{route('candidate.job.detail',$job->slug)}}">{{$job->name}}</a>
                                                             <span class="icon-bolt"></span>
                                                         </h3>
                                                         <ul>
@@ -182,19 +182,17 @@
                                                             </li>
                                                         </ul>
                                                         <span class="icon-heart" id="heart_{{$job->id}}"
-                                                            @if(Auth::check())
+                                                            @if($job->favorite && Auth::check())
                                                                 onclick="favorite({{$job->id}})"
-                                                                @foreach ($data['favJobs'] as $favJob)
-                                                                    @if ($favJob->job_id == $job->id && $favJob->is_active == 1)
                                                                         style="color: red"
-                                                                    @endif
-                                                                @endforeach
                                                             @else
                                                                 onclick="favoriteButton()"
                                                             @endif
-                                                            ></span>
+                                                            >
+
+                                                        </span>
                                                         <div class="button-container">
-                                                            <a href="{{route('tenant-user-apply')}}">
+                                                            <a href="{{route('candidate.job.detail',$job->slug)}}">
                                                                 <button>Apply</button>
                                                             </a>
                                                         </div>
@@ -233,12 +231,12 @@
                                                 <div class="job-archive-header">
                                                     <div class="inner-box">
                                                         <div class="logo-company">
-                                                            <img src="{{asset('app-assets/candidates/images/logo-company/cty1.png')}}"
-                                                                 alt="images/logo-company/cty1.png">
+                                                            <img src="{{$data['logo']}}"
+                                                                 alt="Logo">
                                                         </div>
                                                         <div class="box-content">
                                                             <h3>
-                                                                <a href="jobs-single.html">{{$job->name}}</a>
+                                                                <a href="{{route('candidate.job.detail',$job->slug)}}">{{$job->name}}</a>
                                                                 <span class="icon-bolt"></span>
                                                             </h3>
                                                             <ul>
@@ -251,20 +249,18 @@
                                                                     {{ \Carbon\Carbon::parse($job->post_date)->diffForHumans() }}
                                                                 </li>
                                                             </ul>
-                                                            <span class="icon-heart mt-5" id="heart_{{$job->id}}"
-                                                                @if(Auth::check())
-                                                                    onclick="favorite({{$job->id}})"
-                                                                    @foreach ($data['favJobs'] as $favJob)
-                                                                        @if ($favJob->job_id == $job->id && $favJob->is_active == 1)
-                                                                            style="color: red"
-                                                                        @endif
-                                                                    @endforeach
-                                                                @else
-                                                                    onclick="favoriteButton()"
-                                                                @endif
-                                                                ></span>
+                                                            <span class="icon-heart" id="heart_{{$job->id}}"
+                                                                  @if($job->favorite && Auth::check())
+                                                                      onclick="favorite({{$job->id}})"
+                                                                  style="color: red"
+                                                                  @else
+                                                                      onclick="favoriteButton()"
+                                                            @endif
+                                                            >
+
+                                                        </span>
                                                             <div class="button-container">
-                                                                <a href="{{route('tenant-user-apply')}}">
+                                                                <a href="{{route('candidate.job.detail',$job->slug)}}">
                                                                     <button>Apply</button>
                                                                 </a>
                                                             </div>
@@ -286,8 +282,6 @@
                                                         <p class="days">{{$job->remaining_days}} days left to apply</p>
                                                     </div>
                                                 </div>
-                                                <a href="jobs-single.html" class="jobtex-link-item" tabindex="0"></a>
-
                                             </div>
                                         @endforeach
 
@@ -306,57 +300,57 @@
         </div>
     </section>
 
-    <script>
-
-        function favorite(id) {
-            var icon = document.getElementById('heart_' + id);
-            if (icon.style.color === "red") {
-                dislike(id);
-            }
-            else {
-                like(id);
-            }
-        }
-
-        function like(id) {
-            var icon = document.getElementById('heart_' + id);
-            $.ajax({
-                type: 'POST',
-                url: '{{ route('user-like-job') }}',
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    job_id: id,
-                    is_active: 1,
-                },
-                success: function(response) {
-                    if (icon) {
-                        icon.style.color = "red";
-                    }
-                },
-            });
-        }
-
-        function dislike(id) {
-            var icon = document.getElementById('heart_' + id);
-            $.ajax({
-                type: 'POST',
-                url: '{{ route('user-dislike-job') }}',
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    job_id: id,
-                },
-                success: function(response) {
-                    if (icon) {
-                        icon.removeAttribute('style');
-                    }
-                },
-            });
-        }
-
-        function favoriteButton() {
-            alert("Please Login first to Favorite Job");
-        }
-
-    </script>
 
 @endsection
+<script>
+
+    function favorite(id) {
+        var icon = document.getElementById('heart_' + id);
+        if (icon.style.color === "red") {
+            dislike(id);
+        }
+        else {
+            like(id);
+        }
+    }
+
+    function like(id) {
+        var icon = document.getElementById('heart_' + id);
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('user-like-job') }}',
+            data: {
+                _token: "{{ csrf_token() }}",
+                job_id: id,
+                is_active: 1,
+            },
+            success: function(response) {
+                if (icon) {
+                    icon.style.color = "red";
+                }
+            },
+        });
+    }
+
+    function dislike(id) {
+        var icon = document.getElementById('heart_' + id);
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('user-dislike-job') }}',
+            data: {
+                _token: "{{ csrf_token() }}",
+                job_id: id,
+            },
+            success: function(response) {
+                if (icon) {
+                    icon.removeAttribute('style');
+                }
+            },
+        });
+    }
+
+    function favoriteButton() {
+        alert("Please Login first to Favorite Job");
+    }
+
+</script>

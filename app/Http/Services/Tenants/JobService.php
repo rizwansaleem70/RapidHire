@@ -36,9 +36,9 @@ class JobService implements JobContract
     {
         return $this->model->latest()->get();
     }
-    public function questionList($id)
+    public function questionList($query)
     {
-        return $this->departmentModel->whereId($id)->get();
+        return $this->departmentModel->with('questionBank')->whereId($query->department_id)->get();
     }
 
     public function store($data)
@@ -79,6 +79,7 @@ class JobService implements JobContract
         }
         if (isset($data['name']) && $data['name']) {
             $model->name = $data['name'];
+            $model->slug = $data['name'];
         }
         if (isset($data['job_description']) && $data['job_description']) {
             $model->job_description = $data['job_description'];
@@ -100,9 +101,6 @@ class JobService implements JobContract
         }
         if (isset($data['expiry_date']) && $data['expiry_date']) {
             $model->expiry_date = $data['expiry_date'];
-        }
-        if (isset($data['is_active']) && $data['is_active']) {
-            $model->is_active = $data['is_active'];
         }
         if (isset($data['rating']) && $data['rating']) {
             $model->rating = $data['rating'];

@@ -60,7 +60,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/custom.css')}}">
-
+    @stack('css')
 </head>
 <body>
 <a id="scroll-top"></a>
@@ -70,6 +70,29 @@
 <!-- /end -->
 <!-- Boxed -->
 @include('candidates.layouts.navbar')
+    <div class="container mt-3">
+        @if($errors->any())
+            <div class="alert alert-danger flash">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{$error}}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if(session('success'))
+            <div class="alert alert-success flash">
+                {{session('success')}}
+            </div>
+        @endif
+
+        @if(session('message'))
+            <div class="alert alert-danger flash">
+                {{session('message')}}
+            </div>
+        @endif
+    </div>
 @yield('main-section')
 @include('candidates.layouts.footer')
 <script src="{{asset('app-assets/candidates/javascript/jquery.min.js')}}"></script>
@@ -89,6 +112,17 @@
 <script src="{{asset('app-assets/candidates/javascript/plugin.min.js')}}"></script>
 <script src="{{asset('app-assets/candidates/javascript/jquery.cookie.js')}}"></script>
 <script src="{{asset('app-assets/candidates/javascript/main.js')}}"></script>
+
+<script>
+    // window.setTimeout(function () {
+    //     $(".flash").fadeTo(500, 0).slideUp(500, function () {
+    //         $(this).remove();
+    //     });
+    // }, 3000);
+
+
+</script>
+@stack('js')
 </body>
 
 </html>

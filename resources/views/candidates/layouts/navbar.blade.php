@@ -91,7 +91,7 @@
                         {{-- User Not Signed In --}}
                         @else
                         <div class="header-customize-item button">
-                            <a href="{{route('tenant-user-login')}}">Sign In / Sign Up</a>
+                            <a href="{{route('candidate.login')}}">Sign In / Sign Up</a>
                         </div>
                         @endauth
                     </div>

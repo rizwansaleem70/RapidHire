@@ -16,7 +16,7 @@ class QuestionBankResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'department_id' => $this->department_id,
+            'department' => new Department($this->department),
             'input_type' => $this->input_type,
             'question' => $this->question,
         ];
