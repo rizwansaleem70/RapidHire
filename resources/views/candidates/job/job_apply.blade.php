@@ -14,9 +14,10 @@
                                 <div class="thumb">
                                     <img src="{{$data['logo']}}" alt="logo">
                                 </div>
+
                                 <div class="content">
                                     <h6>
-                                        <a href="{{route('candidate.job.detail',$data['job']->slug)}}">{{$data['job']->name}}
+                                        <a href="{{route('candidate.job.detail',$data['job']? $data['job']->slug:"")}}">{{@$data['job']->name}}
                                             <span class="icon-bolt"></span></a></h6>
                                 </div>
                             </div>
@@ -51,7 +52,7 @@
 
                                 </div>
                                 <span id="file-name-display"></span> <!-- Display uploaded file name here -->
-                                <input type="hidden" name="job_id" value="{{$data['job']->id}}">
+                                <input type="hidden" name="job_id" value="{{@$data['job']->id}}">
 
                                 <h6><strong>UPLOAD COVER LETTER</strong></h6>
                                 <div class="custom-file-upload" id="drop-area" style="padding: 5%;">

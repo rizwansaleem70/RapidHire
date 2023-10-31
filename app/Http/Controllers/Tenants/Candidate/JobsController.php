@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\Candidate\StoreJobApplyRequest;
 use App\Models\Tenants\Candidate\FavoriteJob;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class JobsController extends Controller
 {
@@ -48,7 +49,9 @@ class JobsController extends Controller
     public function jobApplyStore(StoreJobApplyRequest $request)
     {
         try {
-            $data = $this->job->jobApplyStore($request->prepareRequest());
+            DB::beginTransaction();
+            $this->job->jobApplyStore($request->prepareRequest());
+            DB::commit();
             return redirect()->back()->with('success', 'You have Successfully Apply on this Job');
 //            return view('candidates.job.job_apply',compact('data'));
         } catch (CustomException|\Exception $th) {

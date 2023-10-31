@@ -4,8 +4,7 @@ namespace App\Http\Services\Tenants\Candidates;
 
 use App\Contracts\Tenants\Candidates\JobContract;
 use App\Exceptions\CustomException;
-use App\Models\Tenants\Application;
-use App\Models\Tenants\Candidate\FavoriteJob;
+use App\Models\Tenants\Applicant;
 use App\Models\Tenants\Department;
 use App\Models\Tenants\Experience;
 use App\Models\Tenants\Job;
@@ -28,7 +27,7 @@ class JobService implements JobContract
     protected Setting $modelSetting;
     protected SocialMedia $modelSocialMedia;
     protected Department $modelDepartment;
-    protected Application $modelApplication;
+    protected Applicant $modelApplicant;
     protected Experience $modelExperience;
 
     public function __construct()
@@ -38,7 +37,7 @@ class JobService implements JobContract
         $this->modelSetting = new Setting();
         $this->modelSocialMedia = new SocialMedia();
         $this->modelDepartment = new Department();
-        $this->modelApplication = new Application();
+        $this->modelApplicant = new Applicant();
         $this->modelExperience = new Experience();
 
     }
@@ -125,23 +124,30 @@ class JobService implements JobContract
 
     public function jobApplyStore($data)
     {
-        $model = new $this->modelApplication;
-        return $this->prepareData($model, $data, true);
+        $modelApplicant = new $this->modelApplicant;
+        return $this->prepareData($modelApplicant, $data, true);
     }
-    private function prepareData($model, $data, $new_record = false)
+    private function prepareData($modelApplicant,$data, $new_record = false)
     {
-        dd($data);
-        $model->user_id = Auth::user()->id;
-        $model->job_id = $data['job_id'];
-        $model->status = 'applied';
-        $model->applied_date = date('Y-m-d');
-        $model->resume_path = $this->upload($data['resume_path']);
-        $model->cover_letter_path = $this->upload($data['cover_letter_path']);
-        $model->save();
-        return $model;
-    }
-    public function jobApplyStore($inputs)
-    {
-        // TODO: Implement jobApplyStore() method.
+        $user_id = Auth::user()->id;
+        $modelApplicant->user_id = $user_id;
+        $modelApplicant->job_id = $data['job_id'];
+        $modelApplicant->status = 'applied';
+        $modelApplicant->applied_date = date('Y-m-d');
+        $modelApplicant->resume_path = $this->upload($data['resume_path']);
+        $modelApplicant->cover_letter_path = $this->upload($data['cover_letter_path']);
+        $modelApplicant->save();
+        foreach ($data['data'] as $value){
+            $modelExperience = new $this->modelExperience;
+            $modelExperience->user_id = $user_id;
+            $modelExperience->organization_name = $value['organization_name'];
+            $modelExperience->position_title = $value['position_title'];
+            $modelExperience->source_detail = $data['source_detail'];
+            $modelExperience->start_date = $value['start_date'];
+            $modelExperience->end_date = $value['end_date'];
+            $modelExperience->is_present = $value['is_present'] ? true : false;
+            $modelExperience->save();
+        }
+        return $modelApplicant;
     }
 }
