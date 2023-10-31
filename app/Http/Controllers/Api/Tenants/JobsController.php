@@ -112,4 +112,13 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
+
+    public function requirements($id)
+    {
+        try {
+            dd($id);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
 }

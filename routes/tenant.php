@@ -88,5 +88,6 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::post('settings/{type}', [SettingsController::class, 'store']);
         Route::apiResources(['interview-feedback' => InterviewFeedbacksController::class]);
         Route::post('image-upload', [ImageUploadsController::class, 'store']);
+        Route::get('job_requirements', [JobsController::class, 'requirements']);
     });
 });
