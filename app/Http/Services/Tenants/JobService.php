@@ -102,9 +102,6 @@ class JobService implements JobContract
         if (isset($data['expiry_date']) && $data['expiry_date']) {
             $model->expiry_date = $data['expiry_date'];
         }
-        if (isset($data['is_active']) && $data['is_active']) {
-            $model->is_active = $data['is_active'];
-        }
         if (isset($data['rating']) && $data['rating']) {
             $model->rating = $data['rating'];
         }
