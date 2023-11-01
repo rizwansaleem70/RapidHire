@@ -3,9 +3,9 @@
 namespace App\Http\Services\Tenants;
 
 use App\Contracts\Tenants\HomeContract;
-use App\Models\State;
 use App\Models\Tenants\City;
 use App\Models\Tenants\Country;
+use App\Models\Tenants\State;
 
 /**
 * @var HomeService

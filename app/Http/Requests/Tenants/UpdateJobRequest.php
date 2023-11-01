@@ -22,7 +22,9 @@ class UpdateJobRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'location_id' => 'required|exists:locations,id',
+            'country_id' => 'required|exists:countries,id',
+            'state_id' => 'required|exists:states,id',
+            'city_id' => 'required|exists:cities,id',
             'department_id' => 'required|exists:departments,id',
             'requirement_id.*' => 'required|exists:requirements,id',
             'job_hiring_manager_id.*' => 'nullable|exists:users,id',
@@ -46,7 +48,9 @@ class UpdateJobRequest extends FormRequest
     {
         $request = $this;
         return [
-            'location_id' => $request['location_id'],
+            'country_id' => $request['country_id'],
+            'state_id' => $request['state_id'],
+            'city_id' => $request['city_id'],
             'department_id' => $request['department_id'],
             'requirement_id' => $request['requirement_id'],
             'job_hiring_manager_id' => $request['job_hiring_manager_id'],
