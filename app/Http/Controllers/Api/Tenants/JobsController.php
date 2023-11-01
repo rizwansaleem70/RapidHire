@@ -13,6 +13,7 @@ use App\Http\Resources\Tenants\Department;
 use App\Http\Resources\Tenants\DepartmentCollection;
 use App\Http\Resources\Tenants\Job;
 use App\Http\Resources\Tenants\JobCollection;
+use App\Http\Resources\Tenants\RequirementResourceCollection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -117,9 +118,14 @@ class JobsController extends Controller
     public function requirements($id)
     {
         try {
-            dd($id);
+            $requirements = $this->job->requirements($id);
+            $requirements = new RequirementResourceCollection($requirements);
+            return $this->successResponse("Success", $requirements);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            //throw $th;
+            Helper::logMessage("job requirements", 'id = ' . $id, $th->getMessage());
+            return $this->failedResponse($th->getMessage());
         }
     }
 }

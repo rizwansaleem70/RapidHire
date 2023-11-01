@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 /**
-* @var JobService
-*/
+ * @var JobService
+ */
 class JobService implements JobContract
 {
     use ImageUpload;
@@ -120,5 +120,13 @@ class JobService implements JobContract
         $model->jobHiringManager()->sync($data['job_hiring_manager_id']);
         $model->requirement()->sync($data['requirement_id']);
         return $model;
+    }
+    public function requirements($id)
+    {
+        $job = $this->model->with('requirement')->find($id);
+        if (empty($job)) {
+            throw new CustomException("Job Not Found!");
+        }
+        return $job->requirement;
     }
 }
