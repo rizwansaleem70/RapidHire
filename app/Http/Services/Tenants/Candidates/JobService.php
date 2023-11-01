@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 /**
-* @var JobService
-*/
+ * @var JobService
+ */
 class JobService implements JobContract
 {
     use ImageUpload;
@@ -39,7 +39,6 @@ class JobService implements JobContract
         $this->modelDepartment = new Department();
         $this->modelApplicant = new Applicant();
         $this->modelExperience = new Experience();
-
     }
 
     public function listing($filter)
@@ -68,10 +67,11 @@ class JobService implements JobContract
                     ->orWhereBetween('max_salary', [$filter->min_salary, $filter->max_salary]);
             });
         $totalJobs = $query->count();
-        $jobs = $query->with('location','favorite')->select('*',
+        $jobs = $query->with('location', 'favorite')->select(
+            '*',
             DB::raw('DATEDIFF(expiry_date, post_date) AS remaining_days')
         )->paginate(10);
-        $location = $this->modelLocation->pluck('name','id');
+        $location = $this->modelLocation->pluck('name', 'id');
         $logo = settings()->group('logo')->get('logo');
         return [
             'jobs' => $jobs,
@@ -88,19 +88,19 @@ class JobService implements JobContract
         $companyEmail = settings()->group('configuration')->get('company_contract_email');
         $company_title_about = settings()->group('configuration')->get('company_title_about');
         $socialMedia = $this->modelSocialMedia->orderBy('priority')->get();
-        $job = $this->modelJob->with('location')->where('slug',$slug)->first();
+        $job = $this->modelJob->with('location')->where('slug', $slug)->first();
         $related_jobs = $this->modelJob->with('location')
             ->where('department_id', $job->department_id)
             ->where('id', '<>', $job->id)
             ->select('*', DB::raw('DATEDIFF(expiry_date, post_date) AS remaining_days'))
             ->get();
         $remaining_days = Carbon::parse($job->post_date)->diffInDays(Carbon::parse($job->expiry_date));
-        if (!$job){
+        if (!$job) {
             throw new CustomException("Job Record Not Found!");
         }
         return [
             'job' => $job,
-            'remaining_days'=> $remaining_days,
+            'remaining_days' => $remaining_days,
             'website' => $website,
             'companyEmail' => $companyEmail,
             'socialMedia' => $socialMedia,
@@ -114,7 +114,7 @@ class JobService implements JobContract
     {
         $user = Auth::user();
         $logo = settings()->group('logo')->get('logo');
-        $job = $this->modelJob->with('location')->where('slug',$slug)->first();
+        $job = $this->modelJob->with('location')->where('slug', $slug)->first();
         return [
             'job' => $job,
             'logo' => $logo,
@@ -127,7 +127,20 @@ class JobService implements JobContract
         $modelApplicant = new $this->modelApplicant;
         return $this->prepareData($modelApplicant, $data, true);
     }
-    private function prepareData($modelApplicant,$data, $new_record = false)
+
+    public function getApplicantJobs($data)
+    {
+        $query = $this->modelJob->query()->latest();
+        $jobs = $query->with('location', 'favorite')->select(
+            '*',
+            DB::raw('DATEDIFF(expiry_date, post_date) AS remaining_days')
+        )
+            ->withCount(['applicants'])
+            ->paginate(10);
+        return $jobs;
+    }
+
+    private function prepareData($modelApplicant, $data, $new_record = false)
     {
         $user_id = Auth::user()->id;
         $modelApplicant->user_id = $user_id;
@@ -137,7 +150,7 @@ class JobService implements JobContract
         $modelApplicant->resume_path = $this->upload($data['resume_path']);
         $modelApplicant->cover_letter_path = $this->upload($data['cover_letter_path']);
         $modelApplicant->save();
-        foreach ($data['data'] as $value){
+        foreach ($data['data'] as $value) {
             $modelExperience = new $this->modelExperience;
             $modelExperience->user_id = $user_id;
             $modelExperience->organization_name = $value['organization_name'];

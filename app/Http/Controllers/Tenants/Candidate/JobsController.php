@@ -6,6 +6,7 @@ use App\Contracts\Tenants\Candidates\JobContract;
 use App\Exceptions\CustomException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\Candidate\StoreJobApplyRequest;
+use App\Http\Resources\Tenants\ApplicantJobResourceCollection;
 use App\Models\Tenants\Candidate\FavoriteJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,27 +24,27 @@ class JobsController extends Controller
     {
         try {
             $data = $this->job->listing($request);
-            return view('candidates.job.listing',compact('data'));
-        } catch (CustomException|\Exception $th) {
-            return redirect()->back()->with('message',$th->getMessage());
+            return view('candidates.job.listing', compact('data'));
+        } catch (CustomException | \Exception $th) {
+            return redirect()->back()->with('message', $th->getMessage());
         }
     }
     public function jobDetail($slug)
     {
         try {
             $data = $this->job->jobDetail($slug);
-            return view('candidates.job.job_detail',compact('data'));
-        } catch (CustomException|\Exception $th) {
-            return redirect()->back()->with('message',$th->getMessage());
+            return view('candidates.job.job_detail', compact('data'));
+        } catch (CustomException | \Exception $th) {
+            return redirect()->back()->with('message', $th->getMessage());
         }
     }
     public function jobApply($slug)
     {
         try {
             $data = $this->job->jobApply($slug);
-            return view('candidates.job.job_apply',compact('data'));
-        } catch (CustomException|\Exception $th) {
-            return redirect()->back()->with('message',$th->getMessage());
+            return view('candidates.job.job_apply', compact('data'));
+        } catch (CustomException | \Exception $th) {
+            return redirect()->back()->with('message', $th->getMessage());
         }
     }
     public function jobApplyStore(StoreJobApplyRequest $request)
@@ -53,9 +54,9 @@ class JobsController extends Controller
             $this->job->jobApplyStore($request->prepareRequest());
             DB::commit();
             return redirect()->back()->with('success', 'You have Successfully Apply on this Job');
-//            return view('candidates.job.job_apply',compact('data'));
-        } catch (CustomException|\Exception $th) {
-            return redirect()->back()->with('message',$th->getMessage());
+            //            return view('candidates.job.job_apply',compact('data'));
+        } catch (CustomException | \Exception $th) {
+            return redirect()->back()->with('message', $th->getMessage());
         }
     }
 
@@ -65,8 +66,8 @@ class JobsController extends Controller
         $job_id = $request->job_id;
 
         $row = FavoriteJob::where('user_id', $user_id)
-                ->where('job_id', $job_id)
-                ->first();
+            ->where('job_id', $job_id)
+            ->first();
 
         if ($row) {
             $row->update(['is_active' => $request->is_active]);
@@ -85,11 +86,25 @@ class JobsController extends Controller
         $job_id = $request->job_id;
 
         $row = FavoriteJob::where('user_id', $user_id)
-                ->where('job_id', $job_id)
-                ->first();
+            ->where('job_id', $job_id)
+            ->first();
 
         if ($row) {
             $row->delete();
         }
+    }
+
+    public function getJobs(Request $request)
+    {
+        $data = $this->job->getApplicantJobs($request);
+        $data = new ApplicantJobResourceCollection($data);
+        return $this->successResponse("Jobs Listing", $data);
+    }
+
+    public function getJobApplicants(Request $request, $job_id)
+    {
+        $data = $this->job->getJobApplicant($job_id);
+        $data = new ApplicantJobResourceCollection($data);
+        return $this->successResponse("Jobs Listing", $data);
     }
 }

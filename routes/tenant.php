@@ -89,5 +89,8 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['interview-feedback' => InterviewFeedbacksController::class]);
         Route::post('image-upload', [ImageUploadsController::class, 'store']);
         Route::get('job/{id}/requirements', [JobsController::class, 'requirements']);
+
+        Route::get('applicants', [CandidateJobsController::class, 'getJobs']);
+        Route::get('applicants/{job_id}', [CandidateJobsController::class, 'getJobApplicants']);
     });
 });

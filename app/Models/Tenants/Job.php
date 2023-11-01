@@ -2,19 +2,20 @@
 
 namespace App\Models\Tenants;
 
-use App\Models\Requirement;
-use App\Models\Tenants\Candidate\FavoriteJob;
 use App\Models\User;
 use App\Traits\General;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Requirement;
 use Illuminate\Support\Str;
+use App\Models\Tenants\Applicant;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Tenants\Candidate\FavoriteJob;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Job extends Model
 {
-    use HasFactory,SoftDeletes,General;
+    use HasFactory, SoftDeletes, General;
     protected static function boot()
     {
         parent::boot();
@@ -30,31 +31,43 @@ class Job extends Model
         $id = self::max('id') + 1;
         return $count ? "{$slug}-{$id}" : $slug;
     }
-    public function getImageAttribute($value){
+    public function getImageAttribute($value)
+    {
         return url(Storage::url($value));
     }
+
     public function jobQuestion(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(QuestionBank::class,'job_questions','job_id','question_bank_id');
+        return $this->belongsToMany(QuestionBank::class, 'job_questions', 'job_id', 'question_bank_id');
     }
+
     public function jobHiringManager(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(User::class,'job_hiring_managers','job_id','user_id');
+        return $this->belongsToMany(User::class, 'job_hiring_managers', 'job_id', 'user_id');
     }
+
     public function jobTestService(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(TestService::class,'job_test_services','job_id','test_service_id');
+        return $this->belongsToMany(TestService::class, 'job_test_services', 'job_id', 'test_service_id');
     }
+
     public function requirement(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Requirement::class,'job_requirements','job_id','requirement_id');
+        return $this->belongsToMany(Requirement::class, 'job_requirements', 'job_id', 'requirement_id');
     }
+
     public function location(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Location::class,'location_id','id');
+        return $this->belongsTo(Location::class, 'location_id', 'id');
     }
+
     public function favorite(): \Illuminate\Database\Eloquent\Relations\hasOne
     {
-        return $this->hasOne(FavoriteJob::class,'job_id','id');
+        return $this->hasOne(FavoriteJob::class, 'job_id', 'id');
+    }
+
+    public function applicants(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(Applicant::class, 'job_id');
     }
 }
