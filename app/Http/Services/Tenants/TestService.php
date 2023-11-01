@@ -7,18 +7,24 @@ use App\Exceptions\CustomException;
 use App\Models\Tenants\Test;
 
 /**
-* @var TestService
-*/
+ * @var TestService
+ */
 class TestService implements TestContract
 {
     public Test $model;
+    public TestService $services;
     public function __construct()
     {
         $this->model = new Test();
+        $this->services = new TestService();
     }
     public function index()
     {
         return $this->model->latest()->get();
+    }
+    public function getTestServices()
+    {
+        return $this->services->with(['tests'])->get();
     }
     public function show($id)
     {

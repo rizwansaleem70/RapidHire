@@ -70,9 +70,9 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
     //    Route::post('forgot', [AuthController::class, 'forgot']);
 
     Route::group(['middleware' => 'auth:sanctum'], function () {
-        Route::get('get-all-country', [HomeController::class,'getAllCountry']);
-        Route::get('get-all-state-from-country', [HomeController::class,'getAllState']);
-        Route::get('get-all-city-from-state', [HomeController::class,'getAllCity']);
+        Route::get('get-all-country', [HomeController::class, 'getAllCountry']);
+        Route::get('get-all-state-from-country', [HomeController::class, 'getAllState']);
+        Route::get('get-all-city-from-state', [HomeController::class, 'getAllCity']);
         Route::post('change-password', [AuthController::class, 'changePassword']);
         Route::get('delete-profile', [AuthController::class, 'deleteProfile']);
         Route::get('logout', [AuthController::class, 'logout']);
@@ -96,5 +96,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
 
         Route::get('applicants', [CandidateJobsController::class, 'getJobs']);
         Route::get('applicants/{job_id}', [CandidateJobsController::class, 'getJobApplicants']);
+
+        // Route::get('test-services', [TestsController::class, 'getTestServices']);
     });
 });

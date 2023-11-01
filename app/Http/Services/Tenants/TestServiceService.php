@@ -7,8 +7,8 @@ use App\Exceptions\CustomException;
 use App\Models\Tenants\TestService;
 
 /**
-* @var TestServiceService
-*/
+ * @var TestServiceService
+ */
 class TestServiceService implements TestServiceContract
 {
     public TestService $model;
@@ -18,7 +18,7 @@ class TestServiceService implements TestServiceContract
     }
     public function index()
     {
-        return $this->model->latest()->get();
+        return $this->model->with(['tests'])->get();
     }
     public function show($id)
     {

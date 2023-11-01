@@ -109,4 +109,16 @@ class TestsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
+
+
+    public function getTestServices()
+    {
+        try {
+            $services = $this->test->getTestServices();
+            return $this->successResponse("Test services list", $services);
+        } catch (\Throwable $th) {
+            Helper::logMessage("test services", 'id = ', $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
 }

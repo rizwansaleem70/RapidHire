@@ -140,6 +140,14 @@ class JobService implements JobContract
         return $jobs;
     }
 
+
+    public function getJobApplicant($job_id)
+    {
+        $query = $this->modelApplicant->query()->latest();
+        $jobs = $query->paginate(10);
+        return $jobs;
+    }
+
     private function prepareData($modelApplicant, $data, $new_record = false)
     {
         $user_id = Auth::user()->id;
