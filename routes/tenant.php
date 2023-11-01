@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\Tenants\CategoriesController;
 use App\Http\Controllers\Api\Tenants\DepartmentsController;
+use App\Http\Controllers\Api\Tenants\HomeController;
 use App\Http\Controllers\Api\Tenants\ImageUploadsController;
 use App\Http\Controllers\Api\Tenants\InterviewFeedbacksController;
 use App\Http\Controllers\Api\Tenants\JobsController;
@@ -69,6 +70,9 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
     //    Route::post('forgot', [AuthController::class, 'forgot']);
 
     Route::group(['middleware' => 'auth:sanctum'], function () {
+        Route::get('get-all-country', [HomeController::class,'getAllCountry']);
+        Route::get('get-all-state-from-country', [HomeController::class,'getAllState']);
+        Route::get('get-all-city-from-state', [HomeController::class,'getAllCity']);
         Route::post('change-password', [AuthController::class, 'changePassword']);
         Route::get('delete-profile', [AuthController::class, 'deleteProfile']);
         Route::get('logout', [AuthController::class, 'logout']);
