@@ -155,6 +155,12 @@ class TenantServiceProvider extends ServiceProvider
                 return $app->make(CandidateJobService::class);
             }
         );
+        $this->app->bind(
+            \App\Contracts\Tenants\HomeContract::class,
+            function ($app) {
+                return $app->make(\App\Http\Services\Tenants\HomeService::class);
+            }
+        );
     }
     /**
      * Bootstrap services.
