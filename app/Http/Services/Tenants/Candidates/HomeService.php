@@ -26,7 +26,7 @@ class HomeService implements HomeContract
     public function index()
     {
         $departments = $this->modelDepartment->withCount(['job' => function ($query) {
-                        $query->where('is_active', 1);
+                        $query->where('status', 'published');
                     }])->get();
         $jobs = $this->modelJob->orderBy('views', 'desc')->limit(6)->get();
         return [
