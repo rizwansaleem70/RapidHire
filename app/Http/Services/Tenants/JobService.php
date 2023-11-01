@@ -68,8 +68,14 @@ class JobService implements JobContract
     private function prepareData($model, $data, $new_record = false)
     {
         $model->user_id = Auth::user()->id;
-        if (isset($data['location_id']) && $data['location_id']) {
-            $model->location_id = $data['location_id'];
+        if (isset($data['country_id']) && $data['country_id']) {
+            $model->country_id = $data['country_id'];
+        }
+        if (isset($data['state_id']) && $data['state_id']) {
+            $model->state_id = $data['state_id'];
+        }
+        if (isset($data['city_id']) && $data['city_id']) {
+            $model->city_id = $data['city_id'];
         }
         if (isset($data['total_position']) && $data['total_position']) {
             $model->total_position = $data['total_position'];
