@@ -22,6 +22,10 @@ class ProfileHeaderResource extends JsonResource
             'ATS_source' => 0,
             'BPO_experience' => 0,
             'hiring_chance' => 0,
+            'avatar' => $this->avatar,
+            'country' => $this->country->name,
+            'state' => isset($this->state->name),
+            'city' => isset($this->city->name),
         ];
     }
 }
