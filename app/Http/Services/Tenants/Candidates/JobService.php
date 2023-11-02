@@ -141,7 +141,7 @@ class JobService implements JobContract
     public function getApplicantJobs($data)
     {
         $query = $this->modelJob->query()->latest();
-        $jobs = $query->with('location', 'favorite')->select(
+        $jobs = $query->with('favorite')->select(
             '*',
             DB::raw('DATEDIFF(expiry_date, post_date) AS remaining_days')
         )
