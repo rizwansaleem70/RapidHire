@@ -56,9 +56,17 @@ class Job extends Model
         return $this->belongsToMany(Requirement::class, 'job_requirements', 'job_id', 'requirement_id');
     }
 
-    public function location(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function country(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Location::class, 'location_id', 'id');
+        return $this->belongsTo(Country::class, 'country_id', 'id');
+    }
+    public function state(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(State::class, 'state_id', 'id');
+    }
+    public function city(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(City::class, 'city_id', 'id');
     }
 
     public function favorite(): \Illuminate\Database\Eloquent\Relations\hasOne

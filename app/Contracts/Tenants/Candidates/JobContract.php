@@ -12,5 +12,5 @@ interface JobContract
     public function jobApply($slug);
     public function jobApplyStore($data);
     public function getApplicantJobs($data);
-    public function getJobApplicant($job_id);
+    public function getJobApplicant($filter,$job_id);
 }
