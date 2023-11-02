@@ -18,7 +18,9 @@ class ApplicantJobResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'expiry_date' => $this->expiry_date,
-            'applicants' => $this->applicants_count
+            'post_date' => $this->post_date,
+            'applicants' => $this->applicants_count,
+            'status' => $this->status
         ];
     }
 }
