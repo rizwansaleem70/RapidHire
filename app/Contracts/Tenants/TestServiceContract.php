@@ -12,5 +12,6 @@ interface TestServiceContract
     public function store($data);
     public function update($data, $id);
     public function delete($id);
-    public function jobServicesTests($id, $service_tests);
+    public function saveJobServiceTests($id, $service_tests);
+    public function getJobServiceTests($id);
 }

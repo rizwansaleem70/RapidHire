@@ -14,9 +14,17 @@ class TestResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-       return [
-            'id' => $this->id,
-            'name' => $this->name,
-       ];
+        if ($request->test_ids) {
+            return [
+                'id' => $this->id,
+                'name' => $this->name,
+                "is_selected" => in_array($this->id, $request->test_ids) ? true : false
+            ];
+        } else {
+            return [
+                'id' => $this->id,
+                'name' => $this->name,
+            ];
+        }
     }
 }

@@ -43,10 +43,10 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
     //    });
     Route::get('/', [CandidateHomeController::class, 'home'])->name('tenant-user-home');
     Route::view('user-about', 'candidates/about')->name('tenant-user-about');
-    Route::get('get-all-state-from-country', [HomeController::class,'getAllState']);
-    Route::get('get-all-city-from-state', [HomeController::class,'getAllCity']);
+    Route::get('get-all-state-from-country', [HomeController::class, 'getAllState']);
+    Route::get('get-all-city-from-state', [HomeController::class, 'getAllCity']);
     Route::get('job', [CandidateJobsController::class, 'listing'])->name('candidate.job.list');
-    Route::get('job-detail/{slug}' ,[CandidateJobsController::class,'jobDetail'])->name('candidate.job.detail');
+    Route::get('job-detail/{slug}', [CandidateJobsController::class, 'jobDetail'])->name('candidate.job.detail');
     Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('job-apply/{slug}', [CandidateJobsController::class, 'jobApply'])->name('candidate.job.apply');
         Route::post('job-apply', [CandidateJobsController::class, 'jobApplyStore'])->name('candidate.job.apply.save');
@@ -103,6 +103,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::get('applicants/{job_id}', [CandidateJobsController::class, 'getJobApplicants']);
 
         // Route::get('test-services', [TestsController::class, 'getTestServices']);
-        Route::post('job/{id}/services-tests', [TestServicesController::class, 'jobServicesTests']);
+        Route::post('job/{id}/services-tests', [TestServicesController::class, 'saveJobServiceTests']);
+        Route::get('job/{id}/services-tests', [TestServicesController::class, 'getJobServiceTests']);
     });
 });

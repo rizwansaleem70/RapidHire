@@ -111,14 +111,39 @@ class TestServicesController extends Controller
         }
     }
 
-    public function jobServicesTests(Request $request, $id)
+    public function saveJobServiceTests(Request $request, $id)
     {
         try {
-            $tests = $this->testService->jobServicesTests($id, $request->service_tests);
+            DB::beginTransaction();
+            $tests = $this->testService->saveJobServiceTests($id, $request->service_tests);
+            if ($tests) {
+                DB::commit();
+                return $this->successResponse("Service Tests Updated Successfully");
+            }
+        } catch (CustomException $th) {
+            DB::rollBack();
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Helper::logMessage("save job service tests", 'id = ' . $id, $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+
+    public function getJobServiceTests(Request $request, $id)
+    {
+        try {
+            $test_ids = $this->testService->getJobServiceTests($id);
+            $testService = $this->testService->index();
+            $request->test_ids = $test_ids;
+            $testService = new TestServiceResourceCollection($testService);
+            if ($test_ids) {
+                return $this->successResponse("Success", $testService);
+            }
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("job services tests", 'id = ' . $id, $th->getMessage());
+            Helper::logMessage("get job service tests", 'id = ' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
