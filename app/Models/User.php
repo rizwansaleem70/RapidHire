@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Tenants\Applicant;
+use App\Models\Tenants\Experience;
 use App\Models\Tenants\Job;
 use App\Traits\SoftDeleteColumnValuesUpdate;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -58,5 +60,11 @@ class User extends Authenticatable
     public function favoriteJobs()
     {
         return $this->hasMany(FavoriteJob::class);
+    }
+    public function applicant(){
+        return $this->hasOne(Applicant::class,'user_id');
+    }
+    public function experience(){
+        return $this->hasMany(Experience::class,'user_id');
     }
 }

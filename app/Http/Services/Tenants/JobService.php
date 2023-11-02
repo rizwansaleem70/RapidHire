@@ -34,7 +34,7 @@ class JobService implements JobContract
     }
     public function index()
     {
-        return $this->model->latest()->get();
+        return $this->model->latest()->paginate(10);
     }
     public function questionList($query)
     {
