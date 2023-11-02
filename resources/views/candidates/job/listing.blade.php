@@ -179,7 +179,7 @@
                                             <div class="job-archive-header">
                                                 <div class="inner-box">
                                                     <div class="logo-company">
-                                                        <img src="{{$data['logo']}}"
+                                                        <img src="{{asset($data['logo'])}}"
                                                              alt="Logo">
                                                     </div>
                                                     <div class="box-content">

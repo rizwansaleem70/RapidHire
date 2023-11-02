@@ -99,9 +99,10 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::post('image-upload', [ImageUploadsController::class, 'store']);
         Route::get('job/{id}/requirements', [JobsController::class, 'requirements']);
 
-        Route::get('applicants', [CandidateJobsController::class, 'getJobs']);
-        Route::get('applicants/{job_id}', [CandidateJobsController::class, 'getJobApplicants']);
-
+        Route::get('applicants', [JobsController::class, 'getJobs']);
+        Route::get('applicants/{job_id}', [JobsController::class, 'getJobApplicants']);
+        Route::get('job-applicant-profile-header/{user_id}',[JobsController::class,'jobApplicantProfileHeader']);
+        Route::get('job-applicant-profile/{user_id}',[JobsController::class,'jobApplicantProfile']);
         // Route::get('test-services', [TestsController::class, 'getTestServices']);
         Route::post('job/{id}/services-tests', [TestServicesController::class, 'saveJobServiceTests']);
         Route::get('job/{id}/services-tests', [TestServicesController::class, 'getJobServiceTests']);

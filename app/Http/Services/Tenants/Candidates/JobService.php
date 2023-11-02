@@ -24,7 +24,6 @@ use Illuminate\Support\Facades\DB;
 class JobService implements JobContract
 {
     use ImageUpload;
-    protected User $modelUser;
     protected Job $modelJob;
     protected Country $modelCountry;
     protected Setting $modelSetting;
@@ -35,7 +34,6 @@ class JobService implements JobContract
 
     public function __construct()
     {
-        $this->modelUser = new User();
         $this->modelJob = new Job();
         $this->modelCountry = new Country();
         $this->modelSetting = new Setting();
@@ -137,51 +135,6 @@ class JobService implements JobContract
         $modelApplicant = new $this->modelApplicant;
         return $this->prepareData($modelApplicant, $data, true);
     }
-
-    public function getApplicantJobs($data)
-    {
-        $query = $this->modelJob->query()->latest();
-        $jobs = $query->with('location', 'favorite')->select(
-            '*',
-            DB::raw('DATEDIFF(expiry_date, post_date) AS remaining_days')
-        )
-            ->withCount(['applicants'])
-            ->paginate(10);
-        return $jobs;
-    }
-//    public function getJobApplicant($job_id)
-//    {
-//        $query = $this->modelApplicant->query()->latest();
-//        $jobs = $query->paginate(10);
-//        return $jobs;
-//    }
-    public function getJobApplicant($filter,$job_id)
-    {
-        $baseQuery = $this->modelApplicant->where('job_id', $job_id);
-
-        $totalApplicant = $baseQuery->count();
-
-         $applicants = (clone $baseQuery)->when($filter->status, function ($q, $status) {
-            return $q->where('status', $status);
-        })->with('user.experience')->paginate(10);
-
-        $totalQualification = (clone $baseQuery)->where('status', 'qualification')->count();
-        $totalTesting = (clone $baseQuery)->where('status', 'testing')->count();
-        $totalInterview = (clone $baseQuery)->where('status', 'interview')->count();
-        $totalOffer = (clone $baseQuery)->where('status', 'offer')->count();
-        $totalRejected = (clone $baseQuery)->where('status', 'rejected')->count();
-        $totalWithdraw = (clone $baseQuery)->where('status', 'withdraw')->count();
-        return [
-            'totalApplicant' =>$totalApplicant,
-            'totalQualification' =>$totalQualification,
-            'totalTesting' =>$totalTesting,
-            'totalInterview' =>$totalInterview,
-            'totalOffer' =>$totalOffer,
-            'totalRejected' =>$totalRejected,
-            'totalWithdraw' =>$totalWithdraw,
-            'applicants' =>$applicants,
-        ];
-    }
     private function prepareData($modelApplicant, $data, $new_record = false)
     {
         $skill = json_decode($data['skills']);
@@ -194,6 +147,7 @@ class JobService implements JobContract
         $modelApplicant->user_id = $user_id;
         $modelApplicant->job_id = $data['job_id'];
         $modelApplicant->skills = $commaSeparatedValuesSkill;
+        $modelApplicant->source_detail = $data['source_detail'];
         $modelApplicant->applied_date = date('Y-m-d');
         $modelApplicant->resume_path = $this->upload($data['resume_path']);
         $modelApplicant->cover_letter_path = $this->upload($data['cover_letter_path']);
@@ -203,7 +157,6 @@ class JobService implements JobContract
             $modelExperience->user_id = $user_id;
             $modelExperience->organization_name = $value['organization_name'];
             $modelExperience->position_title = $value['position_title'];
-            $modelExperience->source_detail = $data['source_detail'];
             $modelExperience->start_date = $value['start_date'];
             $modelExperience->end_date = $value['end_date'];
             $modelExperience->is_present = isset($data['is_present']);

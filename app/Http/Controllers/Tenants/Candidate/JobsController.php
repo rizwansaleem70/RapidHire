@@ -95,32 +95,4 @@ class JobsController extends Controller
             $row->delete();
         }
     }
-
-    public function getJobs(Request $request)
-    {
-        try{
-            $data = $this->job->getApplicantJobs($request);
-            $data = new ApplicantJobResourceCollection($data);
-            return $this->successResponse("Jobs Listing", $data);
-        } catch (CustomException $th) {
-            return $this->failedResponse($th->getMessage());
-        } catch (\Throwable $th) {
-            Helper::logMessage("getJobs Listing", 'none', $th->getMessage());
-            return $this->failedResponse($th->getMessage());
-        }
-    }
-
-    public function getJobApplicants(Request $request, $job_id)
-    {
-        try {
-            $data = $this->job->getJobApplicant($request,$job_id);
-            $data = new JobApplicantResourceCollection($data['applicants'], $data);
-            return $this->successResponse("Jobs Applicant Listing", $data);
-        } catch (CustomException $th) {
-        return $this->failedResponse($th->getMessage());
-        } catch (\Throwable $th) {
-            Helper::logMessage("getJobApplicants", 'none', $th->getMessage());
-            return $this->failedResponse($th->getMessage());
-        }
-    }
 }

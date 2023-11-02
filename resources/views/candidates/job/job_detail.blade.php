@@ -12,7 +12,7 @@
                     <div class="wd-job-author2">
                         <div class="content-left">
                             <div class="thumb">
-                                <img src="{{$data['logo']}}" alt="logo">
+                                <img src="{{asset($data['logo'])}}" alt="logo">
                             </div>
                             <div class="content">
                                 <h6><a href="#">{{$data['job']->name}} <span class="icon-bolt"></span></a></h6>
@@ -98,7 +98,7 @@
                                             <div class="job-archive-header">
                                                 <div class="inner-box">
                                                     <div class="logo-company">
-                                                        <img src="{{$data['logo']}}"
+                                                        <img src="{{asset($data['logo'])}}"
                                                              alt=" Logo"/>
                                                     </div>
                                                     <div class="box-content">
