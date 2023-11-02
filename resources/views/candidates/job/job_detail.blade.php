@@ -18,7 +18,7 @@
                                 <h6><a href="#">{{$data['job']->name}} <span class="icon-bolt"></span></a></h6>
                                 <ul class="job-info">
                                     <li><span class="icon-map-pin"></span>
-                                        <span>{{$data['job']->location->name}}</span></li>
+                                        <span>{{$data['job']->city->name}} , {{$data['job']->state->name}} , {{$data['job']->country->name}}</span></li>
                                     <li><span class="icon-calendar"></span>
                                         <span>{{ \Carbon\Carbon::parse($data['job']->post_date)->diffForHumans() }}</span></li>
                                 </ul>
@@ -109,7 +109,7 @@
                                                         <ul>
                                                             <li>
                                                                 <span class="icon-map-pin"></span>
-                                                                {{$value->location->name}}
+                                                                {{$data['job']->city->name}} , {{$data['job']->state->name}} , {{$data['job']->country->name}}
                                                             </li>
                                                             <li>
                                                                 <span class="icon-calendar"></span>
