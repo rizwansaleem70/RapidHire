@@ -19,7 +19,7 @@ class JobApplicantResource extends JsonResource
             'id' => $this->id,
             'user_id' => $this->user->id,
             'job_id' => $this->job_id,
-            'name' => $this->user->first_name." ".$this->user->last_name,
+            'name' => $this->user->first_name.$this->user->last_name,
             'at_score' => 0,
             'applied_date' => Carbon::parse($this->applied_date)->format('d-F-Y'),
             'skill' => $this->skills,

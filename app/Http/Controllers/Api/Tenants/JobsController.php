@@ -6,16 +6,18 @@ use App\Contracts\Tenants\JobContract;
 use App\Exceptions\CustomException;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Tenants\GetQuestionListRequest;
 use App\Http\Requests\Tenants\StoreJobRequest;
 use App\Http\Requests\Tenants\UpdateJobRequest;
-use App\Http\Resources\Tenants\Department;
+use App\Http\Resources\Tenants\ApplicantJobResourceCollection;
 use App\Http\Resources\Tenants\DepartmentCollection;
 use App\Http\Resources\Tenants\Job;
+use App\Http\Resources\Tenants\JobApplicantResourceCollection;
 use App\Http\Resources\Tenants\JobCollection;
+use App\Http\Resources\Tenants\ProfileHeaderResource;
+use App\Http\Resources\Tenants\ProfileResource;
 use App\Http\Resources\Tenants\RequirementResourceCollection;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class JobsController extends Controller
 {
@@ -125,6 +127,59 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
             Helper::logMessage("job requirements", 'id = ' . $id, $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+    public function getJobs(Request $request)
+    {
+        try{
+            $data = $this->job->getApplicantJobs($request);
+            $data = new ApplicantJobResourceCollection($data);
+            return $this->successResponse("Jobs Listing", $data);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage("getJobs Listing", 'none', $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+
+    public function getJobApplicants(Request $request, $job_id)
+    {
+        try {
+            $data = $this->job->getJobApplicant($request,$job_id);
+            $data = new JobApplicantResourceCollection($data['applicants'], $data);
+            return $this->successResponse("Jobs Applicant Listing", $data);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage("getJobApplicants", 'none', $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+    public function jobApplicantProfileHeader($user_id)
+    {
+        try {
+            $data = $this->job->jobApplicantProfileHeader($user_id);
+            $data = new ProfileHeaderResource($data);
+            return $this->successResponse("Jobs Applicant Listing", $data);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage("getJobApplicants", 'none', $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+    public function jobApplicantProfile(Request $request,$user_id)
+    {
+        try {
+            $data = $this->job->jobApplicantProfile($user_id);
+            $data = new ProfileResource($data);
+            return $this->successResponse("Jobs Applicant Listing", $data);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage("getJobApplicants", 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
