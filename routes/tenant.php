@@ -98,5 +98,6 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::get('applicants/{job_id}', [CandidateJobsController::class, 'getJobApplicants']);
 
         // Route::get('test-services', [TestsController::class, 'getTestServices']);
+        Route::post('job/{id}/services-tests', [TestServicesController::class, 'jobServicesTests']);
     });
 });

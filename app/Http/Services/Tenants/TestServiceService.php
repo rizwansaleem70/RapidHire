@@ -4,6 +4,7 @@ namespace App\Http\Services\Tenants;
 
 use App\Contracts\Tenants\TestServiceContract;
 use App\Exceptions\CustomException;
+use App\Models\Tenants\Job;
 use App\Models\Tenants\TestService;
 
 /**
@@ -12,9 +13,11 @@ use App\Models\Tenants\TestService;
 class TestServiceService implements TestServiceContract
 {
     public TestService $model;
+    protected Job $job;
     public function __construct()
     {
         $this->model = new TestService();
+        $this->job = new Job();
     }
     public function index()
     {
@@ -73,5 +76,13 @@ class TestServiceService implements TestServiceContract
         }
         $model->save();
         return $model;
+    }
+
+    public function jobServicesTests($id, $service_tests)
+    {
+        $job = $this->job->find($id);
+        if (empty($job)) {
+            throw new CustomException("Job Record Not Found!");
+        }
     }
 }

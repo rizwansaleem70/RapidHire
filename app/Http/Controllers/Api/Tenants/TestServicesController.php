@@ -10,6 +10,7 @@ use App\Http\Requests\Tenants\StoreTestServiceRequest;
 use App\Http\Requests\Tenants\UpdateTestServiceRequest;
 use App\Http\Resources\Tenants\TestServiceResource;
 use App\Http\Resources\Tenants\TestServiceResourceCollection;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class TestServicesController extends Controller
@@ -106,6 +107,18 @@ class TestServicesController extends Controller
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
             Helper::logMessage("testService destroy", 'id = ' . $id, $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+
+    public function jobServicesTests(Request $request, $id)
+    {
+        try {
+            $tests = $this->testService->jobServicesTests($id, $request->service_tests);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage("job services tests", 'id = ' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
