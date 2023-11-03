@@ -85,6 +85,8 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['location' => LocationsController::class]);
         Route::apiResources(['job' => JobsController::class]);
         Route::get('question-list', [JobsController::class, 'questionList']);
+        Route::post('job-qualification', [JobsController::class, 'job_qualification']);
+        Route::post('ATS-score',[JobsController::class,'ATS_Score']);
         Route::apiResources(['department' => DepartmentsController::class]);
         Route::apiResources(['requirement' => RequirementsController::class]);
         Route::apiResources(['social-media' => SocialMediasController::class]);
@@ -104,7 +106,6 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::get('job-applicant-profile-header/{user_id}',[JobsController::class,'jobApplicantProfileHeader']);
         Route::get('job-applicant-profile/{user_id}',[JobsController::class,'jobApplicantProfile']);
 
-        Route::post('ATS-score',[JobsController::class,'ATS_Score']);
         // Route::get('test-services', [TestsController::class, 'getTestServices']);
     });
 });
