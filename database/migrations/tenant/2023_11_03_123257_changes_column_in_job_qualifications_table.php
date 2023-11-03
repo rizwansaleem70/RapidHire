@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('name')->after('job_id');
             $table->string('input_type')->after('name');
             $table->string('option')->after('input_type');
-            $table->tinyInteger('position')->after('option');
+            $table->tinyInteger('position')->change();
         });
         if (Schema::hasTable('job_qualification_field_values'))
         {
@@ -51,7 +51,7 @@ return new class extends Migration
             $table->dropColumn('name');
             $table->dropColumn('input_type');
             $table->dropColumn('option');
-            $table->dropColumn('position');
+            $table->integer('position')->change();
         });
     }
 };
