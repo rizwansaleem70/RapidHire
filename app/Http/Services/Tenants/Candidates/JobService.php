@@ -31,9 +31,11 @@ class JobService implements JobContract
     protected Department $modelDepartment;
     protected Applicant $modelApplicant;
     protected Experience $modelExperience;
+    private User $modelUser;
 
     public function __construct()
     {
+        $this->modelUser = new User();
         $this->modelJob = new Job();
         $this->modelCountry = new Country();
         $this->modelSetting = new Setting();
@@ -120,7 +122,7 @@ class JobService implements JobContract
 
     public function jobApply($slug)
     {
-        $user = Auth::user();
+        $user = $this->modelUser->with(['country','state','city'])->find(Auth::user()->id);
         $logo = settings()->group('logo')->get('logo');
         $job = $this->modelJob->with('country','state','city')->where('slug', $slug)->first();
         return [

@@ -99,10 +99,21 @@
                                        placeholder="Address *">
                             </div>
 
-
                             <div class="form-group">
 
-                                <input type="text" class="form-control" readonly value="{{$data['user']->city}}"
+                                <input type="text" class="form-control" readonly value="{{$data['user']->country->name}}"
+                                       id="city" aria-describedby="city"
+                                       placeholder="City *">
+                            </div>
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" readonly value="{{$data['user']->state->name}}"
+                                       id="city" aria-describedby="city"
+                                       placeholder="City *">
+                            </div>
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" readonly value="{{$data['user']->city->name}}"
                                        id="city" aria-describedby="city"
                                        placeholder="City *">
                             </div>
