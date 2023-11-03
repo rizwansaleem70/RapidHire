@@ -6,9 +6,15 @@ use App\Contracts\Tenants\JobContract;
 use App\Exceptions\CustomException;
 use App\Models\JobHiringManager;
 use App\Models\JobQuestion;
+use App\Models\Tenants\Applicant;
 use App\Models\Tenants\Department;
+use App\Models\Tenants\Experience;
 use App\Models\Tenants\Job;
+use App\Models\Tenants\JobATSScore;
+use App\Models\Tenants\JobATSScoreParameter;
+use App\Models\Tenants\JobQualification;
 use App\Models\Tenants\QuestionBank;
+use App\Models\User;
 use App\Traits\ImageUpload;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -21,20 +27,33 @@ class JobService implements JobContract
 {
     use ImageUpload;
     public Job $model;
+    protected User $modelUser;
+
     private JobHiringManager $jobHiringManagerModel;
     private JobQuestion $jobQuestionModel;
     private Department $departmentModel;
+    protected Applicant $modelApplicant;
+    protected Experience $modelExperience;
+    protected JobATSScore $modelJobATSScore;
+    protected JobATSScoreParameter $modelJobATSScoreParameter;
+    private JobQualification $modelJobQualification;
 
     public function __construct()
     {
+        $this->modelUser = new User();
         $this->model = new Job();
         $this->departmentModel = new Department();
         $this->jobQuestionModel = new JobQuestion();
         $this->jobHiringManagerModel = new JobHiringManager();
+        $this->modelApplicant = new Applicant();
+        $this->modelExperience = new Experience();
+        $this->modelJobATSScore = new JobATSScore();
+        $this->modelJobATSScoreParameter = new JobATSScoreParameter();
+        $this->modelJobQualification = new JobQualification();
     }
     public function index()
     {
-        return $this->model->latest()->get();
+        return $this->model->latest()->paginate(10);
     }
     public function questionList($query)
     {
@@ -45,6 +64,16 @@ class JobService implements JobContract
     {
         $model = new $this->model;
         return $this->prepareData($model, $data, true);
+    }
+    public function ATS_Score($data)
+    {
+        $modelJobATSScore = new $this->modelJobATSScore;
+        return $this->prepareATSScoreData($modelJobATSScore, $data, true);
+    }
+    public function job_qualification($data)
+    {
+        $modelJobQualification = new $this->modelJobQualification;
+        return $this->prepareJobQualificationData($modelJobQualification, $data, true);
     }
 
     public function update($data, $id)
@@ -134,5 +163,78 @@ class JobService implements JobContract
             throw new CustomException("Job Not Found!");
         }
         return $job->requirement;
+    }
+    public function getApplicantJobs($data)
+    {
+        $query = $this->model->query()->latest();
+        $jobs = $query->with('favorite')->select(
+            '*',
+            DB::raw('DATEDIFF(expiry_date, post_date) AS remaining_days')
+        )
+            ->withCount(['applicants'])
+            ->paginate(10);
+        return $jobs;
+    }
+    public function getJobApplicant($filter,$job_id)
+    {
+        $baseQuery = $this->modelApplicant->where('job_id', $job_id);
+
+        $totalApplicant = $baseQuery->count();
+
+        $applicants = (clone $baseQuery)->when($filter->status, function ($q, $status) {
+            return $q->where('status', $status);
+        })->with('user.experience')->paginate(10);
+
+        $totalQualification = (clone $baseQuery)->where('status', 'qualification')->count();
+        $totalTesting = (clone $baseQuery)->where('status', 'testing')->count();
+        $totalInterview = (clone $baseQuery)->where('status', 'interview')->count();
+        $totalOffer = (clone $baseQuery)->where('status', 'offer')->count();
+        $totalRejected = (clone $baseQuery)->where('status', 'rejected')->count();
+        $totalWithdraw = (clone $baseQuery)->where('status', 'withdraw')->count();
+        return [
+            'totalApplicant' =>$totalApplicant,
+            'totalQualification' =>$totalQualification,
+            'totalTesting' =>$totalTesting,
+            'totalInterview' =>$totalInterview,
+            'totalOffer' =>$totalOffer,
+            'totalRejected' =>$totalRejected,
+            'totalWithdraw' =>$totalWithdraw,
+            'applicants' =>$applicants,
+        ];
+    }
+    public function jobApplicantProfileHeader($user_id): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null
+    {
+        return $this->modelUser->with(['country', 'state','city'])->whereHas('applicant')->orWhereHas('experience')->find($user_id);
+    }
+    public function jobApplicantProfile($user_id): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null
+    {
+        return $this->modelUser->with(['applicant', 'experience'])->whereHas('applicant')->orWhereHas('experience')->find($user_id);
+    }
+
+    private function prepareATSScoreData($modelJobATSScore, $data, bool $true)
+    {
+        if (isset($data['job_id']) && $data['job_id']) {
+            $modelJobATSScore->job_id = $data['job_id'];
+        }
+        if (isset($data['attribute']) && $data['attribute']) {
+            $modelJobATSScore->attribute = $data['attribute'];
+        }
+        if (isset($data['weight']) && $data['weight']) {
+            $modelJobATSScore->weight = $data['weight'];
+        }
+        $modelJobATSScore->save();
+        foreach ($data['data'] as $value){
+            $modelJobATSScoreParameter = new $this->modelJobATSScoreParameter;
+            $modelJobATSScoreParameter->parameter = $value['parameter'];
+            $modelJobATSScoreParameter->value = $value['value'];
+            $modelJobATSScoreParameter->job_ATS_score_id = $modelJobATSScore->id;
+            $modelJobATSScoreParameter->save();
+        }
+        return true;
+    }
+
+    private function prepareJobQualificationData($modelJobQualification, $data, bool $true)
+    {
+        return $modelJobQualification->insert($data['data']);
     }
 }

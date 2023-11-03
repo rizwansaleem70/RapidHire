@@ -12,7 +12,7 @@
                         <div class="wd-job-author2">
                             <div class="content-left">
                                 <div class="thumb">
-                                    <img src="{{$data['logo']}}" alt="logo">
+                                    <img src="{{asset($data['logo'])}}" alt="logo">
                                 </div>
 
                                 <div class="content">

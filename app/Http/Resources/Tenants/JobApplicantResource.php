@@ -2,10 +2,11 @@
 
 namespace App\Http\Resources\Tenants;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ApplicantJobResource extends JsonResource
+class JobApplicantResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +17,12 @@ class ApplicantJobResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'expiry_date' => $this->expiry_date,
-            'post_date' => $this->post_date,
-            'applicants' => $this->applicants_count,
+            'user_id' => $this->user->id,
+            'job_id' => $this->job_id,
+            'name' => $this->user->first_name.$this->user->last_name,
+            'at_score' => 0,
+            'applied_date' => Carbon::parse($this->applied_date)->format('d-F-Y'),
+            'skill' => $this->skills,
             'status' => $this->status
         ];
     }

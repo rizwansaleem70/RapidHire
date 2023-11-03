@@ -3,7 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Tenants\Applicant;
+use App\Models\Tenants\City;
+use App\Models\Tenants\Country;
+use App\Models\Tenants\Experience;
 use App\Models\Tenants\Job;
+use App\Models\Tenants\State;
 use App\Traits\SoftDeleteColumnValuesUpdate;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
@@ -47,6 +52,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function getAvatarAttribute($value): string
+    {
+        return asset($value);
+    }
     public static function checkPassword($current_password, $hash_password)
     {
         return Hash::check($current_password, $hash_password);
@@ -59,4 +68,23 @@ class User extends Authenticatable
     {
         return $this->hasMany(FavoriteJob::class);
     }
+    public function applicant(){
+        return $this->hasOne(Applicant::class,'user_id');
+    }
+    public function experience(){
+        return $this->hasMany(Experience::class,'user_id');
+    }
+    public function country(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Country::class, 'country_id', 'id');
+    }
+    public function state(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(State::class, 'state_id', 'id');
+    }
+    public function city(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(City::class, 'city_id', 'id');
+    }
+
 }

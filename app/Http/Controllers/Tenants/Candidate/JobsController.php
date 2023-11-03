@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Tenants\Candidate;
 
 use App\Contracts\Tenants\Candidates\JobContract;
 use App\Exceptions\CustomException;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\Candidate\StoreJobApplyRequest;
 use App\Http\Resources\Tenants\ApplicantJobResourceCollection;
+use App\Http\Resources\Tenants\JobApplicantResourceCollection;
 use App\Models\Tenants\Candidate\FavoriteJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -92,19 +94,5 @@ class JobsController extends Controller
         if ($row) {
             $row->delete();
         }
-    }
-
-    public function getJobs(Request $request)
-    {
-        $data = $this->job->getApplicantJobs($request);
-        $data = new ApplicantJobResourceCollection($data);
-        return $this->successResponse("Jobs Listing", $data);
-    }
-
-    public function getJobApplicants(Request $request, $job_id)
-    {
-        $data = $this->job->getJobApplicant($job_id);
-        $data = new ApplicantJobResourceCollection($data);
-        return $this->successResponse("Jobs Listing", $data);
     }
 }

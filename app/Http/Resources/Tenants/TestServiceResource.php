@@ -21,6 +21,7 @@ class TestServiceResource extends JsonResource
             'api_key' => $this->api_key,
             'secret_key' => $this->secret_key,
             'is_active' => $this->is_active,
+            "tests" => new TestResourceCollection($this->tests)
         ];
     }
 }

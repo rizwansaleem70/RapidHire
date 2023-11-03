@@ -17,14 +17,31 @@
                                         </div>
                                     </div>
                                     <div class="group-form">
-                                        <label class="title">Location</label>
+                                        <label class="title">Country</label>
                                         <div class="group-input has-icon">
                                             <i class="icon-map-pin"></i>
-                                            <select name="location_id">
-                                                <option value="">Select Location</option>
-                                                @foreach($data['location'] as $key => $location)
-                                                    <option value="{{$key}}">{{$location}}</option>
+                                            <select id="country-id" name="country_id">
+                                                <option value="">Select Country</option>
+                                                @foreach($data['country'] as $key => $value)
+                                                    <option value="{{$key}}">{{$value}}</option>
                                                 @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="group-form">
+                                        <label class="title">State</label>
+                                        <div class="group-input has-icon">
+                                            <i class="icon-map-pin"></i>
+                                            <select id="state-id" name="state_id">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="group-form">
+
+                                        <label class="title">City</label>
+                                        <div class="group-input has-icon">
+                                            <i class="icon-map-pin"></i>
+                                            <select id="city-id" name="city_id">
                                             </select>
                                         </div>
                                     </div>
@@ -155,7 +172,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="content-tab">
                                 <div class="inner" style="">
                                     @foreach($data['jobs'] as $job)
@@ -163,7 +179,7 @@
                                             <div class="job-archive-header">
                                                 <div class="inner-box">
                                                     <div class="logo-company">
-                                                        <img src="{{$data['logo']}}"
+                                                        <img src="{{asset($data['logo'])}}"
                                                              alt="Logo">
                                                     </div>
                                                     <div class="box-content">
@@ -174,7 +190,7 @@
                                                         <ul>
                                                             <li>
                                                                 <span class="icon-map-pin"></span>
-                                                                {{$job->location->name}}
+                                                                {{$job->city->name}} , {{$job->state->name}} , {{$job->country->name}}
                                                             </li>
                                                             <li>
                                                                 <span class="icon-calendar"></span>
@@ -242,7 +258,7 @@
                                                             <ul>
                                                                 <li>
                                                                     <span class="icon-map-pin"></span>
-                                                                    {{$job->location->name}}
+                                                                    {{$job->city->name}} , {{$job->state->name}} , {{$job->country->name}}
                                                                 </li>
                                                                 <li>
                                                                     <span class="icon-calendar"></span>
@@ -302,8 +318,59 @@
 
 
 @endsection
+@push('js')
 <script>
+    $(document).ready(function () {
+        $('#country-id').on('change', function () {
+            var idCountry = this.value;
+            $("#state-id").html('');
+            $.ajax({
 
+                url: 'get-all-state-from-country',
+                method: "GET",
+                data: {
+                    country_id: idCountry,
+                    _token: '{{csrf_token()}}'
+                },
+                dataType: 'json',
+                success: function (result) {
+                    $('#state-id').html(result.data);
+                    $.each(result.data, function (key, value) {
+                        $("#state-id").append('<option value="' + value.id + '">' + value.name + '</option>');
+                    });
+                    $('#city-id').html('<option value="">Select City</option>');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("Error fetching states:", textStatus, errorThrown);
+                }
+            });
+        });
+        $('#state-id').on('change', function () {
+            var idState = this.value;
+            $("#city-id").html('');
+            $.ajax({
+                url: 'get-all-city-from-state',
+                method: "GET",
+                data: {
+                    state_id: idState,
+                    _token: '{{csrf_token()}}'
+                },
+                dataType: 'json',
+                success: function (res) {
+                    $('#city-id').html('<option value="">Select City</option>');
+                    $.each(res.data, function (key, value) {
+                        $("#city-id").append('<option value="' + value
+                            .id + '">' + value.name + '</option>');
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("Error fetching states:", textStatus, errorThrown);
+                }
+            });
+        });
+    });
+</script>
+<script>
     function favorite(id) {
         var icon = document.getElementById('heart_' + id);
         if (icon.style.color === "red") {
@@ -354,3 +421,4 @@
     }
 
 </script>
+@endpush

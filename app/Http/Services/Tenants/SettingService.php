@@ -22,7 +22,7 @@ class SettingService implements SettingContract
     public function index()
     {
         $settings = [
-            "logo" => asset('storage/' . $this->model::getValue(Constant::LOGO, "logo")),
+            "logo" => asset($this->model::getValue(Constant::LOGO, "logo")),
             "primary_color" => $this->model::getValue(Constant::COLOR_SCHEME, "primary"),
             "secondary_color" => $this->model::getValue(Constant::COLOR_SCHEME, "secondary"),
             "name" => $this->model::getValue(Constant::ORGANIZATION, "name"),

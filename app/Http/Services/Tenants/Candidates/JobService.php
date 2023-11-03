@@ -5,12 +5,14 @@ namespace App\Http\Services\Tenants\Candidates;
 use App\Contracts\Tenants\Candidates\JobContract;
 use App\Exceptions\CustomException;
 use App\Models\Tenants\Applicant;
+use App\Models\Tenants\Country;
 use App\Models\Tenants\Department;
 use App\Models\Tenants\Experience;
 use App\Models\Tenants\Job;
 use App\Models\Tenants\Location;
 use App\Models\Tenants\Setting;
 use App\Models\Tenants\SocialMedia;
+use App\Models\User;
 use App\Traits\ImageUpload;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +25,7 @@ class JobService implements JobContract
 {
     use ImageUpload;
     protected Job $modelJob;
-    protected Location $modelLocation;
+    protected Country $modelCountry;
     protected Setting $modelSetting;
     protected SocialMedia $modelSocialMedia;
     protected Department $modelDepartment;
@@ -33,7 +35,7 @@ class JobService implements JobContract
     public function __construct()
     {
         $this->modelJob = new Job();
-        $this->modelLocation = new Location();
+        $this->modelCountry = new Country();
         $this->modelSetting = new Setting();
         $this->modelSocialMedia = new SocialMedia();
         $this->modelDepartment = new Department();
@@ -47,8 +49,14 @@ class JobService implements JobContract
         $query->when($filter->name, function ($q, $name) {
             return $q->like('name', $name);
         })
-            ->when($filter->location_id, function ($q, $location_id) {
-                return $q->where('location_id', $location_id);
+            ->when($filter->country_id, function ($q, $country_id) {
+                return $q->where('country_id', $country_id);
+            })
+            ->when($filter->state_id, function ($q, $state_id) {
+                return $q->where('state_id', $state_id);
+            })
+            ->when($filter->city_id, function ($q, $city_id) {
+                return $q->where('city_id', $city_id);
             })
             ->when($filter->job_type, function ($q, $job_type) {
                 return $q->like('job_type', $job_type);
@@ -67,16 +75,16 @@ class JobService implements JobContract
                     ->orWhereBetween('max_salary', [$filter->min_salary, $filter->max_salary]);
             });
         $totalJobs = $query->count();
-        $jobs = $query->with('location', 'favorite')->select(
+        $jobs = $query->with( 'country','state','city','favorite')->select(
             '*',
             DB::raw('DATEDIFF(expiry_date, post_date) AS remaining_days')
         )->paginate(10);
-        $location = $this->modelLocation->pluck('name', 'id');
+        $country = $this->modelCountry->pluck('name', 'id');
         $logo = settings()->group('logo')->get('logo');
         return [
             'jobs' => $jobs,
             'totalJobs' => $totalJobs,
-            'location' => $location,
+            'country' => $country,
             'logo' => $logo
         ];
     }
@@ -88,8 +96,8 @@ class JobService implements JobContract
         $companyEmail = settings()->group('configuration')->get('company_contract_email');
         $company_title_about = settings()->group('configuration')->get('company_title_about');
         $socialMedia = $this->modelSocialMedia->orderBy('priority')->get();
-        $job = $this->modelJob->with('location')->where('slug', $slug)->first();
-        $related_jobs = $this->modelJob->with('location')
+        $job = $this->modelJob->with('country','state','city')->where('slug', $slug)->first();
+        $related_jobs = $this->modelJob
             ->where('department_id', $job->department_id)
             ->where('id', '<>', $job->id)
             ->select('*', DB::raw('DATEDIFF(expiry_date, post_date) AS remaining_days'))
@@ -114,7 +122,7 @@ class JobService implements JobContract
     {
         $user = Auth::user();
         $logo = settings()->group('logo')->get('logo');
-        $job = $this->modelJob->with('location')->where('slug', $slug)->first();
+        $job = $this->modelJob->with('country','state','city')->where('slug', $slug)->first();
         return [
             'job' => $job,
             'logo' => $logo,
@@ -127,33 +135,19 @@ class JobService implements JobContract
         $modelApplicant = new $this->modelApplicant;
         return $this->prepareData($modelApplicant, $data, true);
     }
-
-    public function getApplicantJobs($data)
-    {
-        $query = $this->modelJob->query()->latest();
-        $jobs = $query->with('location', 'favorite')->select(
-            '*',
-            DB::raw('DATEDIFF(expiry_date, post_date) AS remaining_days')
-        )
-            ->withCount(['applicants'])
-            ->paginate(10);
-        return $jobs;
-    }
-
-
-    public function getJobApplicant($job_id)
-    {
-        $query = $this->modelApplicant->query()->latest();
-        $jobs = $query->paginate(10);
-        return $jobs;
-    }
-
     private function prepareData($modelApplicant, $data, $new_record = false)
     {
+        $skill = json_decode($data['skills']);
+        $valuesArray = array_map(function($item) {
+            return $item->value;
+        }, $skill);
+        $commaSeparatedValuesSkill = implode(',', $valuesArray);
+
         $user_id = Auth::user()->id;
         $modelApplicant->user_id = $user_id;
         $modelApplicant->job_id = $data['job_id'];
-        $modelApplicant->status = 'applied';
+        $modelApplicant->skills = $commaSeparatedValuesSkill;
+        $modelApplicant->source_detail = $data['source_detail'];
         $modelApplicant->applied_date = date('Y-m-d');
         $modelApplicant->resume_path = $this->upload($data['resume_path']);
         $modelApplicant->cover_letter_path = $this->upload($data['cover_letter_path']);
@@ -163,10 +157,9 @@ class JobService implements JobContract
             $modelExperience->user_id = $user_id;
             $modelExperience->organization_name = $value['organization_name'];
             $modelExperience->position_title = $value['position_title'];
-            $modelExperience->source_detail = $data['source_detail'];
             $modelExperience->start_date = $value['start_date'];
             $modelExperience->end_date = $value['end_date'];
-            $modelExperience->is_present = $value['is_present'] ? true : false;
+            $modelExperience->is_present = isset($data['is_present']);
             $modelExperience->save();
         }
         return $modelApplicant;
