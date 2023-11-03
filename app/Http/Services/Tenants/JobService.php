@@ -10,6 +10,9 @@ use App\Models\Tenants\Applicant;
 use App\Models\Tenants\Department;
 use App\Models\Tenants\Experience;
 use App\Models\Tenants\Job;
+use App\Models\Tenants\JobATSScore;
+use App\Models\Tenants\JobATSScoreParameter;
+use App\Models\Tenants\JobQualification;
 use App\Models\Tenants\QuestionBank;
 use App\Models\User;
 use App\Traits\ImageUpload;
@@ -31,6 +34,10 @@ class JobService implements JobContract
     private Department $departmentModel;
     protected Applicant $modelApplicant;
     protected Experience $modelExperience;
+    protected JobATSScore $modelJobATSScore;
+    protected JobATSScoreParameter $modelJobATSScoreParameter;
+    private JobQualification $modelJobQualification;
+
     public function __construct()
     {
         $this->modelUser = new User();
@@ -40,6 +47,9 @@ class JobService implements JobContract
         $this->jobHiringManagerModel = new JobHiringManager();
         $this->modelApplicant = new Applicant();
         $this->modelExperience = new Experience();
+        $this->modelJobATSScore = new JobATSScore();
+        $this->modelJobATSScoreParameter = new JobATSScoreParameter();
+        $this->modelJobQualification = new JobQualification();
     }
     public function index()
     {
@@ -54,6 +64,16 @@ class JobService implements JobContract
     {
         $model = new $this->model;
         return $this->prepareData($model, $data, true);
+    }
+    public function ATS_Score($data)
+    {
+        $modelJobATSScore = new $this->modelJobATSScore;
+        return $this->prepareATSScoreData($modelJobATSScore, $data, true);
+    }
+    public function job_qualification($data)
+    {
+        $modelJobQualification = new $this->modelJobQualification;
+        return $this->prepareJobQualificationData($modelJobQualification, $data, true);
     }
 
     public function update($data, $id)
@@ -182,12 +202,39 @@ class JobService implements JobContract
             'applicants' =>$applicants,
         ];
     }
-    public function jobApplicantProfileHeader($user_id)
+    public function jobApplicantProfileHeader($user_id): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null
     {
         return $this->modelUser->with(['country', 'state','city'])->whereHas('applicant')->orWhereHas('experience')->find($user_id);
     }
-    public function jobApplicantProfile($user_id)
+    public function jobApplicantProfile($user_id): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null
     {
         return $this->modelUser->with(['applicant', 'experience'])->whereHas('applicant')->orWhereHas('experience')->find($user_id);
+    }
+
+    private function prepareATSScoreData($modelJobATSScore, $data, bool $true)
+    {
+        if (isset($data['job_id']) && $data['job_id']) {
+            $modelJobATSScore->job_id = $data['job_id'];
+        }
+        if (isset($data['attribute']) && $data['attribute']) {
+            $modelJobATSScore->attribute = $data['attribute'];
+        }
+        if (isset($data['weight']) && $data['weight']) {
+            $modelJobATSScore->weight = $data['weight'];
+        }
+        $modelJobATSScore->save();
+        foreach ($data['data'] as $value){
+            $modelJobATSScoreParameter = new $this->modelJobATSScoreParameter;
+            $modelJobATSScoreParameter->parameter = $value['parameter'];
+            $modelJobATSScoreParameter->value = $value['value'];
+            $modelJobATSScoreParameter->job_ATS_score_id = $modelJobATSScore->id;
+            $modelJobATSScoreParameter->save();
+        }
+        return true;
+    }
+
+    private function prepareJobQualificationData($modelJobQualification, $data, bool $true)
+    {
+        return $modelJobQualification->insert($data['data']);
     }
 }
