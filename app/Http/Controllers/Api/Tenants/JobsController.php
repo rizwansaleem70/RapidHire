@@ -7,6 +7,7 @@ use App\Exceptions\CustomException;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\StoreATS_ScoreRequest;
+use App\Http\Requests\Tenants\StoreJobQualificationRequest;
 use App\Http\Requests\Tenants\StoreJobRequest;
 use App\Http\Requests\Tenants\UpdateJobRequest;
 use App\Http\Resources\Tenants\ApplicantJobResourceCollection;
@@ -78,6 +79,19 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
             Helper::logMessage("job show", 'id =' . $id, $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+    public function job_qualification(StoreJobQualificationRequest $request)
+    {
+        try {
+            $jobQualification = $this->job->job_qualification($request);
+//            $jobQualification = new DepartmentCollection($jobQualification);
+            return $this->okResponse("Job Qualification Records Save Successfully");
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage("job_qualification",  $request->all(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }

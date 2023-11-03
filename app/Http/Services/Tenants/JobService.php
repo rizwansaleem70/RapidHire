@@ -12,6 +12,7 @@ use App\Models\Tenants\Experience;
 use App\Models\Tenants\Job;
 use App\Models\Tenants\JobATSScore;
 use App\Models\Tenants\JobATSScoreParameter;
+use App\Models\Tenants\JobQualification;
 use App\Models\Tenants\QuestionBank;
 use App\Models\User;
 use App\Traits\ImageUpload;
@@ -35,6 +36,7 @@ class JobService implements JobContract
     protected Experience $modelExperience;
     protected JobATSScore $modelJobATSScore;
     protected JobATSScoreParameter $modelJobATSScoreParameter;
+    private JobQualification $modelJobQualification;
 
     public function __construct()
     {
@@ -47,6 +49,7 @@ class JobService implements JobContract
         $this->modelExperience = new Experience();
         $this->modelJobATSScore = new JobATSScore();
         $this->modelJobATSScoreParameter = new JobATSScoreParameter();
+        $this->modelJobQualification = new JobQualification();
     }
     public function index()
     {
@@ -66,6 +69,11 @@ class JobService implements JobContract
     {
         $modelJobATSScore = new $this->modelJobATSScore;
         return $this->prepareATSScoreData($modelJobATSScore, $data, true);
+    }
+    public function job_qualification($data)
+    {
+        $modelJobQualification = new $this->modelJobQualification;
+        return $this->prepareJobQualificationData($modelJobQualification, $data, true);
     }
 
     public function update($data, $id)
@@ -223,5 +231,10 @@ class JobService implements JobContract
             $modelJobATSScoreParameter->save();
         }
         return true;
+    }
+
+    private function prepareJobQualificationData($modelJobQualification, $data, bool $true)
+    {
+        return $modelJobQualification->insert($data['data']);
     }
 }
