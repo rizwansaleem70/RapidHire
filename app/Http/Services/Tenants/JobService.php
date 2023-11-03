@@ -68,10 +68,10 @@ class JobService implements JobContract
         $model = new $this->model;
         return $this->prepareData($model, $data, true);
     }
-    public function ATS_Score($data)
+    public function ATS_Score($data,$job_id)
     {
         $modelJobATSScore = new $this->modelJobATSScore;
-        return $this->prepareATSScoreData($modelJobATSScore, $data, true);
+        return $this->prepareATSScoreData($modelJobATSScore, $job_id,$data, true);
     }
     public function job_qualification($data,$job_id)
     {
@@ -230,11 +230,10 @@ class JobService implements JobContract
         return $this->modelUser->with(['applicant', 'experience'])->whereHas('applicant')->orWhereHas('experience')->find($user_id);
     }
 
-    private function prepareATSScoreData($modelJobATSScore, $data, bool $true)
+    private function prepareATSScoreData($modelJobATSScore, $job_id,$data, bool $true)
     {
-        if (isset($data['job_id']) && $data['job_id']) {
-            $modelJobATSScore->job_id = $data['job_id'];
-        }
+            $modelJobATSScore->job_id = $job_id;
+
         if (isset($data['attribute']) && $data['attribute']) {
             $modelJobATSScore->attribute = $data['attribute'];
         }

@@ -212,11 +212,11 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
-    public function ATS_Score(StoreATS_ScoreRequest $request): \Illuminate\Http\JsonResponse
+    public function ATS_Score(StoreATS_ScoreRequest $request,$job_id): \Illuminate\Http\JsonResponse
     {
         try {
             DB::beginTransaction();
-            $this->job->ATS_Score($request);
+            $this->job->ATS_Score($request,$job_id);
 //            $data = new ATS_ScoreResource($data);
             DB::commit();
             return $this->okResponse("Jobs ATS Score Save Successfully");
