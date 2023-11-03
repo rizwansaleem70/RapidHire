@@ -78,4 +78,8 @@ class Job extends Model
     {
         return $this->hasMany(Applicant::class, 'job_id');
     }
+
+    public function jobQualification(){
+        return $this->hasMany(JobRequirement::class,'job_id');
+    }
 }

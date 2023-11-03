@@ -23,10 +23,7 @@ class StoreJobQualificationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'data.*.job_id' => 'required|exists:jobs,id',
-            'data.*.name' => 'required',
-            'data.*.input_type' => 'required',
-            'data.*.option' => 'required',
+            'data.*.requirement_id' => 'required|exists:requirements,id',
             'data.*.position' => 'required',
         ];
     }

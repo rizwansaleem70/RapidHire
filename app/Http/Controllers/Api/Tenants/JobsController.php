@@ -82,10 +82,12 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
-    public function job_qualification(StoreJobQualificationRequest $request)
+    public function job_qualification(StoreJobQualificationRequest $request,$job_id)
     {
         try {
-            $jobQualification = $this->job->job_qualification($request);
+            DB::beginTransaction();
+            $this->job->job_qualification($request,$job_id);
+            DB::commit();
             return $this->okResponse("Job Qualification Records Save Successfully");
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());

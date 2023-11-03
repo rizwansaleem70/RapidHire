@@ -13,6 +13,7 @@ use App\Models\Tenants\Job;
 use App\Models\Tenants\JobATSScore;
 use App\Models\Tenants\JobATSScoreParameter;
 use App\Models\Tenants\JobQualification;
+use App\Models\Tenants\JobRequirement;
 use App\Models\Tenants\QuestionBank;
 use App\Models\User;
 use App\Traits\ImageUpload;
@@ -37,6 +38,7 @@ class JobService implements JobContract
     protected JobATSScore $modelJobATSScore;
     protected JobATSScoreParameter $modelJobATSScoreParameter;
     private JobQualification $modelJobQualification;
+    private JobRequirement $modelJobRequirement;
 
     public function __construct()
     {
@@ -50,6 +52,7 @@ class JobService implements JobContract
         $this->modelJobATSScore = new JobATSScore();
         $this->modelJobATSScoreParameter = new JobATSScoreParameter();
         $this->modelJobQualification = new JobQualification();
+        $this->modelJobRequirement = new JobRequirement();
     }
     public function index()
     {
@@ -70,10 +73,26 @@ class JobService implements JobContract
         $modelJobATSScore = new $this->modelJobATSScore;
         return $this->prepareATSScoreData($modelJobATSScore, $data, true);
     }
-    public function job_qualification($data)
+    public function job_qualification($data,$job_id)
     {
-        $modelJobQualification = new $this->modelJobQualification;
-        return $this->prepareJobQualificationData($modelJobQualification, $data, true);
+        $input = $data->input();
+        $model = $this->model->with('jobQualification')->find($job_id);
+        if (empty($model)) {
+            throw new CustomException("Job Record Not Found!");
+        }
+        foreach ($input as $value){
+            foreach ($value as $finalValue){
+                $qualification = $this->modelJobRequirement->with('requirement')->whereJobIdAndRequirementId($job_id, $finalValue['requirement_id'])->first();
+                $this->modelJobQualification::create([
+                "job_id" => $job_id,
+                "name" => $qualification->requirement->name,
+                "input_type" => $qualification->requirement->input_type,
+                "option" => $qualification->requirement->option,
+                "position" => $finalValue['position']
+            ]);
+            }
+        }
+        return true;
     }
 
     public function update($data, $id)
@@ -231,11 +250,6 @@ class JobService implements JobContract
             $modelJobATSScoreParameter->save();
         }
         return true;
-    }
-
-    private function prepareJobQualificationData($modelJobQualification, $data, bool $true)
-    {
-        return $modelJobQualification->insert($data['data']);
     }
 
     public function get_country_against_job($id)
