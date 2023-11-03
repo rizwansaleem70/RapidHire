@@ -12,6 +12,7 @@ interface JobContract
     public function store($data);
     public function update($data, $id);
     public function delete($id);
+    public function get_country_against_job($id);
     public function requirements($id);
     public function getApplicantJobs($data);
     public function job_qualification($data);

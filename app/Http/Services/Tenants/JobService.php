@@ -237,4 +237,15 @@ class JobService implements JobContract
     {
         return $modelJobQualification->insert($data['data']);
     }
+
+    public function get_country_against_job($id)
+    {
+        $model = $this->model->find($id);
+        if (empty($model)) {
+            throw new CustomException("Job Record Not Found!");
+        }
+        return $data = [
+            'country_id' => $model->country_id
+        ];
+    }
 }
