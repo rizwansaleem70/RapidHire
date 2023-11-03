@@ -26,7 +26,7 @@ class CreateMemberRequest extends AbstractsFormRequest
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required|unique:users',
-            'role' => 'required',
+            'role_id' => 'required|exists:roles,id',
             'status' => 'required|boolean',
             'password' => 'required|confirmed'
         ];
@@ -39,11 +39,8 @@ class CreateMemberRequest extends AbstractsFormRequest
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
-            'role' => $data['role'],
+            'role_id' => $data['role_id'],
             'phone' => $data['phone'],
-            'designation' => $data['designation'],
-            'image' => $data['image'],
-            'department_id' => $data['department_id'],
             'status' => (bool) $data['status'],
             'password' => bcrypt($data['password'])
         ];

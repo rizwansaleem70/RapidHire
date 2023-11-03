@@ -16,10 +16,12 @@ class TestServiceService implements TestServiceContract
     {
         $this->model = new TestService();
     }
+
     public function index()
     {
         return $this->model->with(['tests'])->get();
     }
+
     public function show($id)
     {
         $model = $this->model->find($id);
