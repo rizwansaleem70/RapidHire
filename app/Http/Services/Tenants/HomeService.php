@@ -31,12 +31,17 @@ class HomeService implements HomeContract
 
     public function getAllState($request)
     {
-        return $this->modelState->where('country_id',$request->country_id)->latest()->get();
+        return $this->modelState
+            ->when($request->country_id, function ($q, $country_id) {
+            return $q->where('country_id', $country_id);
+        })->latest()->get();
     }
 
     public function getAllCity($request)
     {
-        return $this->modelCity->where('state_id',$request->state_id)->latest()->get();
-
+        return $this->modelCity
+            ->when($request->state_id, function ($q, $state_id) {
+                return $q->where('state_id', $state_id);
+            })->latest()->get();
     }
 }

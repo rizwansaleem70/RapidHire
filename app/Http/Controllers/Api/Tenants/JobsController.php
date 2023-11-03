@@ -86,12 +86,23 @@ class JobsController extends Controller
     {
         try {
             $jobQualification = $this->job->job_qualification($request);
-//            $jobQualification = new DepartmentCollection($jobQualification);
             return $this->okResponse("Job Qualification Records Save Successfully");
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
             Helper::logMessage("job_qualification",  $request->all(), $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+    public function get_country_against_job($job_id)
+    {
+        try {
+            $data = $this->job->get_country_against_job($job_id);
+            return $this->successResponse("Jobs Country Found Successfully", $data);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage("getJobApplicants", 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
