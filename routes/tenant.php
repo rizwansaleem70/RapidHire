@@ -103,6 +103,8 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::get('applicants/{job_id}', [JobsController::class, 'getJobApplicants']);
         Route::get('job-applicant-profile-header/{user_id}',[JobsController::class,'jobApplicantProfileHeader']);
         Route::get('job-applicant-profile/{user_id}',[JobsController::class,'jobApplicantProfile']);
+
+        Route::post('ATS-score',[JobsController::class,'ATS_Score']);
         // Route::get('test-services', [TestsController::class, 'getTestServices']);
     });
 });
