@@ -23,7 +23,6 @@ class StoreATS_ScoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'job_id' => 'required|exists:jobs,id',
             'attribute' => 'required|string',
             'weight' => 'required',
             'data.*.parameter' => 'required',
@@ -35,7 +34,6 @@ class StoreATS_ScoreRequest extends FormRequest
     {
         $request = $this;
         return [
-            'job_id' => $request['job_id'],
             'attribute' => $request['attribute'],
             'weight' => $request['weight'],
             'data' => $request['data'],
