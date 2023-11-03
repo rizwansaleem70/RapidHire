@@ -16,10 +16,12 @@ class RoleTableSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::create(['name' => 'SuperAdmin']);
-        Role::create(['name' => 'Admin']);
-        Role::create(['name' => 'Tenant']);
-        Role::create(['name' => 'SubAdmin']);
+        Role::create(['id' => '1', 'name' => 'SuperAdmin']);
+        Role::create(['id' => '2', 'name' => 'Admin']);
+        Role::create(['id' => '3', 'name' => 'Tenant']);
+        Role::create(['id' => '4', 'name' => 'SubAdmin']);
+        Role::create(['id' => '5', 'name' => 'Interviewer']);
+        Role::create(['id' => '6', 'name' => 'Recruiter']);
         $admin1 = User::create([
             'name' => 'Super Admin',
             'email' => 'admin@rapidhire.com',
@@ -32,11 +34,11 @@ class RoleTableSeeder extends Seeder
             'name' => 'Tenant',
         ]);
 
-        $module2 =Module::create([
+        $module2 = Module::create([
             'name' => 'Candidate',
         ]);
 
-//      Tenant Permissions
+        //      Tenant Permissions
         Permission::create([
             'name' => 'tenant.view',
             'module_id' => $module1->id
@@ -52,7 +54,7 @@ class RoleTableSeeder extends Seeder
             'module_id' => $module1->id
         ]);
 
-//      Candidate Permissions
+        //      Candidate Permissions
         Permission::create([
             'name' => 'candidate.view',
             'module_id' => $module2->id
@@ -65,6 +67,5 @@ class RoleTableSeeder extends Seeder
             'name' => 'candidate.delete',
             'module_id' => $module2->id
         ]);
-
     }
 }
