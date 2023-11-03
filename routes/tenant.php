@@ -85,7 +85,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['location' => LocationsController::class]);
         Route::apiResources(['job' => JobsController::class]);
         Route::get('question-list', [JobsController::class, 'questionList']);
-        Route::post('job-qualification', [JobsController::class, 'job_qualification']);
+        Route::post('job-qualification/{job_id}', [JobsController::class, 'job_qualification']);
         Route::get('get-country-against-job/{id}',[JobsController::class,'get_country_against_job']);
         Route::post('ATS-score',[JobsController::class,'ATS_Score']);
         Route::apiResources(['department' => DepartmentsController::class]);
