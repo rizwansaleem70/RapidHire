@@ -38,8 +38,9 @@ class MemberController extends Controller
     {
         try {
             DB::beginTransaction();
-
+            $member = $this->member->store($request->prepareData());
             DB::commit();
+            return $this->successResponse("Member added successfully.");
         } catch (CustomException $th) {
             DB::rollBack();
             return $this->failedResponse($th->getMessage());
@@ -48,14 +49,6 @@ class MemberController extends Controller
             Helper::logMessage("member/store", $request->input(), $th->getMessage());
             return $this->failedResponse('something went wrong!');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
     }
 
     /**

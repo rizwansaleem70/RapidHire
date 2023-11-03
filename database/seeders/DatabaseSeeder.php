@@ -11,6 +11,7 @@ use Database\Seeders\tenant\CitiesTableChunkTwoSeeder;
 use Database\Seeders\tenant\CitiesTableChunkThreeSeeder;
 use Database\Seeders\tenant\CitiesTableChunkFourSeeder;
 use Database\Seeders\tenant\CitiesTableChunkFiveSeeder;
+use Database\Seeders\tenant\RoleTableSeeder;
 use Database\Seeders\tenant\TestServicesSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(RoleTableSeeder::class);
         $this->call(CountriesTableSeeder::class);
         $this->call(StatesTableSeeder::class);
         $this->call(CitiesTableChunkOneSeeder::class);
@@ -28,6 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CitiesTableChunkFourSeeder::class);
         $this->call(CitiesTableChunkFiveSeeder::class);
         $this->call(TestServicesSeeder::class);
+
 
         // $this->call(RoleTableSeeder::class);
         // $this->call(DictionaryTableSeeder::class);

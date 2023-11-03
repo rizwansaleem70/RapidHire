@@ -2,13 +2,14 @@
 
 namespace App\Http\Services;
 
+use App\Models\User;
+use App\Helpers\Constant;
+use App\Mail\OtpSendMail;
+use Illuminate\Support\Str;
 use App\Contracts\AuthContract;
 use App\Exceptions\CustomException;
-use App\Mail\OtpSendMail;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
 
 /**
  * @var AuthService
@@ -25,6 +26,7 @@ class AuthService implements AuthContract
     {
         $model = new $this->model;
         $user = $this->prepareData($model, $data, true);
+        $user->assignRole(Constant::ROLE_USER);
         return $user;
     }
 
@@ -39,9 +41,8 @@ class AuthService implements AuthContract
     }
     public function forgot($data)
     {
-        dd($data);
         $user = User::where('email', $data['email'])->first();
-        if ($user){
+        if ($user) {
             $otp = Str::random(7);
             $mail = Mail::to($user->email)->send(new OtpSendMail($otp));
             dd($mail);
@@ -52,7 +53,7 @@ class AuthService implements AuthContract
         return $user;
     }
 
-    public function prepareData($model, $input,$new_record = false)
+    public function prepareData($model, $input, $new_record = false)
     {
 
         if (isset($input['name']) && $input['name'] != '') {

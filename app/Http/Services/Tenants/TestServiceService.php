@@ -4,7 +4,10 @@ namespace App\Http\Services\Tenants;
 
 use App\Contracts\Tenants\TestServiceContract;
 use App\Exceptions\CustomException;
+use App\Models\Tenants\Job;
+use App\Models\Tenants\JobTestService;
 use App\Models\Tenants\TestService;
+use Illuminate\Support\Facades\Log;
 
 /**
  * @var TestServiceService
@@ -12,14 +15,20 @@ use App\Models\Tenants\TestService;
 class TestServiceService implements TestServiceContract
 {
     public TestService $model;
+    protected Job $job;
+    protected JobTestService $job_test_service;
     public function __construct()
     {
         $this->model = new TestService();
+        $this->job = new Job();
+        $this->job_test_service = new JobTestService();
     }
+
     public function index()
     {
         return $this->model->with(['tests'])->get();
     }
+
     public function show($id)
     {
         $model = $this->model->find($id);
@@ -73,5 +82,49 @@ class TestServiceService implements TestServiceContract
         }
         $model->save();
         return $model;
+    }
+
+    public function saveJobServiceTests($id, $service_tests)
+    {
+        $job = $this->job->find($id);
+        if (empty($job)) {
+            throw new CustomException("Job Record Not Found!");
+        }
+        foreach ($service_tests as $service_key => $tests) {
+            foreach ($tests as $test_key => $test) {
+                $exists = $this->job_test_service
+                    ->where('job_id', $id)
+                    ->where('test_service_id', $service_key)
+                    ->where('test_id', $test)
+                    ->first();
+                if (empty($exists)) {
+                    $this->job_test_service::create([
+                        'job_id' => $id,
+                        'test_service_id' => $service_key,
+                        'test_id' => $test
+                    ]);
+                }
+            }
+            $exists_tests = $this->job_test_service->where('job_id', $id)
+                ->where('test_service_id', $service_key)
+                ->pluck('test_id')
+                ->toArray();
+            $not_taken = array_diff($exists_tests, $tests);
+            $this->job_test_service
+                ->where('job_id', $id)
+                ->where('test_service_id', $service_key)
+                ->whereIn('test_id', $not_taken)->delete();
+        }
+        return true;
+    }
+
+    public function getJobServiceTests($id)
+    {
+        $job = $this->job->find($id);
+        if (empty($job)) {
+            throw new CustomException("Job Record Not Found!");
+        }
+        $test_ids = $this->job_test_service->where('job_id', $id)->pluck('test_id')->toArray();
+        return $test_ids;
     }
 }
