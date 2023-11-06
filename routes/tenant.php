@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Tenants\DepartmentsController;
 use App\Http\Controllers\Api\Tenants\HomeController;
 use App\Http\Controllers\Api\Tenants\ImageUploadsController;
 use App\Http\Controllers\Api\Tenants\InterviewFeedbacksController;
+use App\Http\Controllers\Api\Tenants\InterviewsController;
 use App\Http\Controllers\Api\Tenants\JobsController;
 use App\Http\Controllers\Api\Tenants\JobShortlistingController;
 use App\Http\Controllers\Api\Tenants\LocationsController;
@@ -86,8 +87,8 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['job' => JobsController::class]);
         Route::get('question-list', [JobsController::class, 'questionList']);
         Route::post('job-qualification/{job_id}', [JobsController::class, 'job_qualification']);
-        Route::get('get-country-against-job/{id}',[JobsController::class,'get_country_against_job']);
-        Route::post('ATS-score/{job_id}',[JobsController::class,'ATS_Score']);
+        Route::get('get-country-against-job/{id}', [JobsController::class, 'get_country_against_job']);
+        Route::post('ATS-score/{job_id}', [JobsController::class, 'ATS_Score']);
         Route::apiResources(['department' => DepartmentsController::class]);
         Route::apiResources(['requirement' => RequirementsController::class]);
         Route::apiResources(['social-media' => SocialMediasController::class]);
@@ -114,5 +115,9 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         // Route::get('job/{id}/services-tests', [TestServicesController::class, 'getJobServiceTests']);
         Route::post('job/{id}/services-tests', [TestServicesController::class, 'saveJobServiceTests']);
         Route::get('job/{id}/services-tests', [TestServicesController::class, 'getJobServiceTests']);
+
+        Route::get('schedule_interview', [InterviewsController::class, 'store']);
+        Route::post('get_candidate_interviews/{candidate_id}', [InterviewsController::class, 'index']);
+        Route::delete('schedule_interview/{id}', [InterviewsController::class, 'destroy']);
     });
 });

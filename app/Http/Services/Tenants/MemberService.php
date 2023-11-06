@@ -18,11 +18,11 @@ class MemberService implements MemberContract
         $this->model = new User;
     }
 
-    public function index($role = 'Member')
+    public function index($role = null)
     {
-        return $this->model->whereHas('roles', function ($role) {
-            $role->where('id', Constant::ROLE_INTERVIEWER);
-        })->select('id', 'first_name', 'last_name', 'email', 'status', 'created_at')->get();
+        return $this->model->whereHas('roles', function ($query) use ($role) {
+            $query->whereIn('id', [Constant::ROLE_INTERVIEWER, Constant::ROLE_RECRUITER]);
+        })->select('id', 'first_name', 'last_name', 'email', 'status', 'created_at')->latest()->get();
     }
 
     public function store($data)
