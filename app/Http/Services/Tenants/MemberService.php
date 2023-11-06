@@ -21,14 +21,8 @@ class MemberService implements MemberContract
     public function index($role = null)
     {
         return $this->model->whereHas('roles', function ($query) use ($role) {
-            $query->when($role == null, function ($q) {
-                $q->whereIn('id', [Constant::ROLE_INTERVIEWER, Constant::ROLE_RECRUITER]);
-            });
-
-            $query->when($role != null, function ($q) use ($role) {
-                $q->where('name', $role);
-            });
-        })->select('id', 'first_name', 'last_name', 'email', 'status', 'created_at')->get();
+            $query->whereIn('id', [Constant::ROLE_INTERVIEWER, Constant::ROLE_RECRUITER]);
+        })->select('id', 'first_name', 'last_name', 'email', 'status', 'created_at')->latest()->get();
     }
 
     public function store($data)
