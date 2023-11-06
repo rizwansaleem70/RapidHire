@@ -40,8 +40,7 @@ class CreateMemberRequest extends AbstractsFormRequest
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'role_id' => $data['role_id'],
-            'phone' => $data['phone'],
-            'status' => (bool) $data['status'],
+            'status' => $data['status'],
             'password' => bcrypt($data['password'])
         ];
     }

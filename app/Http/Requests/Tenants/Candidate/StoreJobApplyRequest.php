@@ -26,9 +26,11 @@ class StoreJobApplyRequest extends FormRequest
             'cover_letter_path' => 'nullable|max:2048',
             'skills' => 'required',
             'source_detail' => 'required',
-            'data.*.organization_name' => 'required',
-            'data.*.position_title' => 'required',
-            'data.*.start_date' => 'required',
+            'question.*.answer' => 'nullable',
+            'requirement.*.answer' => 'nullable',
+            'data.*.organization_name' => 'nullable',
+            'data.*.position_title' => 'nullable',
+            'data.*.start_date' => 'nullable',
             'data.*.end_date' => 'nullable',
             'data.*.is_present' => 'nullable',
         ];
@@ -43,6 +45,8 @@ class StoreJobApplyRequest extends FormRequest
             'cover_letter_path' => $request['cover_letter_path'],
             'skills' => $request['skills'],
             'source_detail' => $request['source_detail'],
+            'question' => $request['question'],
+            'requirement' => $request['requirement'],
             'data' => $request['data']
         ];
     }

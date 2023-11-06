@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Tenants;
 
-use App\Models\Tenants\Job;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
