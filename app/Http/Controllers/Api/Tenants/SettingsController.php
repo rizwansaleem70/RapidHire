@@ -15,11 +15,10 @@ use App\Http\Resources\Tenants\RequirementResourceCollection;
 use App\Http\Resources\Tenants\SettingResource;
 use App\Http\Resources\Tenants\SettingResourceCollection;
 use App\Http\Resources\Tenants\SocialMediaResourceCollection;
-use App\Models\Requirement;
 use App\Models\Tenants\Department;
 use App\Models\Tenants\InterviewFeedback;
-use App\Models\Tenants\JobRequirement;
 use App\Models\Tenants\QuestionBank;
+use App\Models\Tenants\Requirement;
 use App\Models\Tenants\SocialMedia;
 use Illuminate\Support\Facades\DB;
 

@@ -101,19 +101,19 @@
 
                             <div class="form-group">
 
-                                <input type="text" class="form-control" readonly value="{{$data['user']->country->name}}"
-                                       id="city" aria-describedby="city"
-                                       placeholder="City *">
+                                <input type="text" class="form-control" readonly value="{{@$data['user']->country->name}}"
+                                       id="country" aria-describedby="country"
+                                       placeholder="Country *">
                             </div>
                             <div class="form-group">
 
-                                <input type="text" class="form-control" readonly value="{{$data['user']->state->name}}"
-                                       id="city" aria-describedby="city"
-                                       placeholder="City *">
+                                <input type="text" class="form-control" readonly value="{{@$data['user']->state->name}}"
+                                       id="state" aria-describedby="state"
+                                       placeholder="State *">
                             </div>
                             <div class="form-group">
 
-                                <input type="text" class="form-control" readonly value="{{$data['user']->city->name}}"
+                                <input type="text" class="form-control" readonly value="{{@$data['user']->city->name}}"
                                        id="city" aria-describedby="city"
                                        placeholder="City *">
                             </div>
@@ -137,6 +137,36 @@
                                 <input type="text" class="form-control" name="source_detail" id="source" aria-describedby="source"
                                        placeholder="Source Detail ">
                             </div>
+                            @if($data['job']->jobQuestion)
+                                @foreach($data['job']->jobQuestion as $key => $question)
+                                    @if($question->questionBank)
+                                        <div class="row">
+                                            <div class="form-group col-md-4 mt-2 d-flex justify-content-center">
+                                                <label for="file-upload" class="file-label"> <strong>Question : </strong>{{$question->questionBank->question}} ?</label>
+                                            </div>
+                                            <div class="form-group col-md-8">
+                                                <input type="hidden" class="form-control" name="question[{{$key}}][id]" value="{{$question->questionBank->id}}">
+                                                <input type="text" class="form-control" name="question[{{$key}}][answer]" value="">
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @endif
+                            @if($data['job']->jobQualification)
+                                @foreach($data['job']->jobQualification as $key => $qualification)
+                                    @if($qualification->requirement)
+                                        <div class="row">
+                                            <div class="form-group col-md-4 mt-2 d-flex justify-content-center">
+                                                <label for="file-upload" class="file-label"> <strong>Requirements : </strong>{{$qualification->requirement->name}} ?</label>
+                                            </div>
+                                            <div class="form-group col-md-8">
+                                                <input type="hidden" class="form-control" name="requirement[{{$key}}][id]" value="{{$qualification->requirement->id}}">
+                                                <input type="text" class="form-control" name="requirement[{{$key}}][answer]" value="">
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @endif
                             <div class="row">
                                 <div class="form-group col-md-3">
                                     <input type="text" name="data[0][organization_name]" class="form-control" id="title"

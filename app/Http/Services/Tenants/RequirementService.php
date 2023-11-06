@@ -4,7 +4,7 @@ namespace App\Http\Services\Tenants;
 
 use App\Contracts\Tenants\RequirementContract;
 use App\Exceptions\CustomException;
-use App\Models\Requirement;
+use App\Models\Tenants\Requirement;
 
 /**
 * @var RequirementService

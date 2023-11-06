@@ -5,6 +5,8 @@ namespace App\Http\Services\Tenants\Candidates;
 use App\Contracts\Tenants\Candidates\JobContract;
 use App\Exceptions\CustomException;
 use App\Models\Tenants\Applicant;
+use App\Models\Tenants\ApplicantQuestionAnswer;
+use App\Models\Tenants\ApplicantRequirementAnswer;
 use App\Models\Tenants\Country;
 use App\Models\Tenants\Department;
 use App\Models\Tenants\Experience;
@@ -32,6 +34,8 @@ class JobService implements JobContract
     protected Applicant $modelApplicant;
     protected Experience $modelExperience;
     private User $modelUser;
+    private ApplicantQuestionAnswer $modelApplicantQuestionAnswer;
+    private ApplicantRequirementAnswer $modelApplicantRequirementAnswer;
 
     public function __construct()
     {
@@ -43,6 +47,8 @@ class JobService implements JobContract
         $this->modelDepartment = new Department();
         $this->modelApplicant = new Applicant();
         $this->modelExperience = new Experience();
+        $this->modelApplicantQuestionAnswer = new ApplicantQuestionAnswer();
+        $this->modelApplicantRequirementAnswer = new ApplicantRequirementAnswer();
     }
 
     public function listing($filter)
@@ -124,7 +130,11 @@ class JobService implements JobContract
     {
         $user = $this->modelUser->with(['country','state','city'])->find(Auth::user()->id);
         $logo = settings()->group('logo')->get('logo');
-        $job = $this->modelJob->with('country','state','city')->where('slug', $slug)->first();
+        $job = $this->modelJob->with(['country','state','city','jobQuestion.questionBank' => function($query){
+            return $query->where('input_type','text');
+        },'jobQualification.requirement'=> function($query){
+            return $query->where('input_type','text');
+        },])->where('slug', $slug)->first();
         return [
             'job' => $job,
             'logo' => $logo,
@@ -163,6 +173,26 @@ class JobService implements JobContract
             $modelExperience->end_date = $value['end_date'];
             $modelExperience->is_present = isset($data['is_present']);
             $modelExperience->save();
+        }
+        if ($data['question']){
+           foreach ($data['question'] as $question){
+               $modelApplicantQuestionAnswer = new $this->modelApplicantQuestionAnswer;
+               $modelApplicantQuestionAnswer->user_id = $user_id;
+               $modelApplicantQuestionAnswer->job_id = $data['job_id'];
+               $modelApplicantQuestionAnswer->question_bank_id = $question['id'];
+               $modelApplicantQuestionAnswer->answer = $question['answer'];
+               $modelApplicantQuestionAnswer->save();
+           }
+        }
+        if ($data['requirement']){
+            foreach ($data['requirement'] as $requirement){
+                $modelApplicantRequirementAnswer = new $this->modelApplicantRequirementAnswer;
+                $modelApplicantRequirementAnswer->user_id = $user_id;
+                $modelApplicantRequirementAnswer->job_id = $data['job_id'];
+                $modelApplicantRequirementAnswer->requirement_id = $requirement['id'];
+                $modelApplicantRequirementAnswer->answer = $requirement['answer'];
+                $modelApplicantRequirementAnswer->save();
+            }
         }
         return $modelApplicant;
     }
