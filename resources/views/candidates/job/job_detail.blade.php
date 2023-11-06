@@ -5,7 +5,7 @@
         <img src="{{asset('app-assets/candidates/images/used/Hero.png')}}" alt="images" style="width:100%">
     </section>
 
-    <section class="form-sticky fixed-space">
+    <section class="form">
         <div class="tf-container">
             <div class="row">
                 <div class="col-lg-12">
