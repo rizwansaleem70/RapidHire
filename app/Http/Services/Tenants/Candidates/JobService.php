@@ -79,7 +79,7 @@ class JobService implements JobContract
         $totalJobs = $query->count();
         $jobs = $query->with( 'country','state','city','favorite')->select(
             '*',
-            DB::raw('DATEDIFF(expiry_date, post_date) AS remaining_days')
+            DB::raw('DATEDIFF(expiry_date, now()) AS remaining_days')
         )->paginate(10);
         $country = $this->modelCountry->pluck('name', 'id');
         $logo = settings()->group('logo')->get('logo');
@@ -102,9 +102,9 @@ class JobService implements JobContract
         $related_jobs = $this->modelJob
             ->where('department_id', $job->department_id)
             ->where('id', '<>', $job->id)
-            ->select('*', DB::raw('DATEDIFF(expiry_date, post_date) AS remaining_days'))
-            ->get();
-        $remaining_days = Carbon::parse($job->post_date)->diffInDays(Carbon::parse($job->expiry_date));
+            ->select('*', DB::raw('DATEDIFF(expiry_date, now()) AS remaining_days'))
+            ->latest()->get();
+        $remaining_days = Carbon::today()->diffInDays(Carbon::parse($job->expiry_date));
         if (!$job) {
             throw new CustomException("Job Record Not Found!");
         }
