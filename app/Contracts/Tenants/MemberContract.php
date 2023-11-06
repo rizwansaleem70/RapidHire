@@ -7,7 +7,7 @@ namespace App\Contracts\Tenants;
  */
 interface MemberContract
 {
-    public function index($role = 'Member');
+    public function index($role = null);
     public function store($input);
     public function update($input, $id);
     public function delete($id);
