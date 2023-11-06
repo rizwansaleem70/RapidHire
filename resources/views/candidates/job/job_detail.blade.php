@@ -5,7 +5,7 @@
         <img src="{{asset('app-assets/candidates/images/used/Hero.png')}}" alt="images" style="width:100%">
     </section>
 
-    <section class="form-sticky fixed-space">
+    <section class="form">
         <div class="tf-container">
             <div class="row">
                 <div class="col-lg-12">
@@ -20,7 +20,7 @@
                                     <li><span class="icon-map-pin"></span>
                                         <span>{{$data['job']->city->name}} , {{$data['job']->state->name}} , {{$data['job']->country->name}}</span></li>
                                     <li><span class="icon-calendar"></span>
-                                        <span>{{ \Carbon\Carbon::parse($data['job']->post_date)->diffForHumans() }}</span></li>
+                                        <span>{{ \Carbon\Carbon::parse($data['job']->created_at)->diffForHumans() }}</span></li>
                                 </ul>
                                 <ul class="tags">
                                     <li><a href="#">{{$data['job']->type}}</a></li>
@@ -113,7 +113,7 @@
                                                             </li>
                                                             <li>
                                                                 <span class="icon-calendar"></span>
-                                                                {{ \Carbon\Carbon::parse($value->post_date)->diffForHumans() }}
+                                                                {{ \Carbon\Carbon::parse($value->created_at)->diffForHumans() }}
                                                             </li>
                                                         </ul>
                                                         <span class="icon-heart"></span>

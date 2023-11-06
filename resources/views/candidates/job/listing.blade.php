@@ -194,7 +194,7 @@
                                                             </li>
                                                             <li>
                                                                 <span class="icon-calendar"></span>
-                                                                {{ \Carbon\Carbon::parse($job->post_date)->diffForHumans() }}
+                                                                {{ \Carbon\Carbon::parse($job->created_at)->diffForHumans() }}
                                                             </li>
                                                         </ul>
                                                         <span class="icon-heart" id="heart_{{$job->id}}"
@@ -262,7 +262,7 @@
                                                                 </li>
                                                                 <li>
                                                                     <span class="icon-calendar"></span>
-                                                                    {{ \Carbon\Carbon::parse($job->post_date)->diffForHumans() }}
+                                                                    {{ \Carbon\Carbon::parse($job->created_at)->diffForHumans() }}
                                                                 </li>
                                                             </ul>
                                                             <span class="icon-heart" id="heart_{{$job->id}}"
