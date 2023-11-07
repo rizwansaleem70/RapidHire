@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ApplicantQuestionAnswer extends Model
 {
     use HasFactory;
+    public function questionBank(){
+        return $this->belongsTo(QuestionBank::class,'question_bank_id','id');
+    }
 }
