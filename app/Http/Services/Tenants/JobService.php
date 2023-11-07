@@ -5,7 +5,6 @@ namespace App\Http\Services\Tenants;
 use App\Contracts\Tenants\JobContract;
 use App\Exceptions\CustomException;
 use App\Models\JobHiringManager;
-use App\Models\JobQuestion;
 use App\Models\Tenants\Applicant;
 use App\Models\Tenants\Department;
 use App\Models\Tenants\Experience;
@@ -13,6 +12,7 @@ use App\Models\Tenants\Job;
 use App\Models\Tenants\JobATSScore;
 use App\Models\Tenants\JobATSScoreParameter;
 use App\Models\Tenants\JobQualification;
+use App\Models\Tenants\JobQuestion;
 use App\Models\Tenants\JobRequirement;
 use App\Models\User;
 use App\Traits\ImageUpload;
@@ -189,7 +189,7 @@ class JobService implements JobContract
         }
 
         $model->save();
-        $model->jobQuestion()->sync($data['question_bank_id']);
+        $model->jobQuestionBank()->sync($data['question_bank_id']);
         $model->jobHiringManager()->sync($data['job_hiring_manager_id']);
         $model->requirement()->sync($data['requirement_id']);
 

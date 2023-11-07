@@ -2,16 +2,14 @@
 
 namespace App\Models\Tenants;
 
+use App\Models\Tenants\Candidate\FavoriteJob;
 use App\Models\User;
 use App\Traits\General;
-use App\Models\Requirement;
-use Illuminate\Support\Str;
-use App\Models\Tenants\Applicant;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Tenants\Candidate\FavoriteJob;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Job extends Model
 {
@@ -36,7 +34,7 @@ class Job extends Model
         return url(Storage::url($value));
     }
 
-    public function jobQuestion(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function jobQuestionBank(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(QuestionBank::class, 'job_questions', 'job_id', 'question_bank_id');
     }
@@ -79,7 +77,12 @@ class Job extends Model
         return $this->hasMany(Applicant::class, 'job_id');
     }
 
-    public function jobQualification(){
+    public function jobQualification(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(JobRequirement::class,'job_id');
+    }
+    public function jobQuestion(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(JobQuestion::class,'job_id');
     }
 }

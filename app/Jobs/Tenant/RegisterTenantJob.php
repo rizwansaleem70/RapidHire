@@ -34,6 +34,9 @@ class RegisterTenantJob implements ShouldQueue
                 'first_name'=> $this->tenant->first_name,
                 'last_name'=> $this->tenant->last_name,
                 'email'=> $this->tenant->email,
+                'country'=> 167,
+                'city'=> 1,
+                'state'=> 3176,
                 'password'=> $this->tenant->password,
             ]);
         });
