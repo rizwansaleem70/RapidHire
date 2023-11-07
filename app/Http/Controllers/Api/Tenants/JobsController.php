@@ -78,15 +78,15 @@ class JobsController extends Controller
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("job show", 'id =' . $id, $th->getMessage());
+            Helper::logMessage("job show", $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
-    public function job_qualification(StoreJobQualificationRequest $request,$job_id)
+    public function job_qualification(StoreJobQualificationRequest $request, $job_id)
     {
         try {
             DB::beginTransaction();
-            $this->job->job_qualification($request,$job_id);
+            $this->job->job_qualification($request, $job_id);
             DB::commit();
             return $this->okResponse("Job Qualification Records Save Successfully");
         } catch (CustomException $th) {
@@ -161,7 +161,7 @@ class JobsController extends Controller
     }
     public function getJobs(Request $request)
     {
-        try{
+        try {
             $data = $this->job->getApplicantJobs($request);
             $data = new ApplicantJobResourceCollection($data);
             return $this->successResponse("Jobs Listing", $data);
@@ -176,7 +176,7 @@ class JobsController extends Controller
     public function getJobApplicants(Request $request, $job_id)
     {
         try {
-            $data = $this->job->getJobApplicant($request,$job_id);
+            $data = $this->job->getJobApplicant($request, $job_id);
             $data = new JobApplicantResourceCollection($data['applicants'], $data);
             return $this->successResponse("Jobs Applicant Listing", $data);
         } catch (CustomException $th) {
@@ -199,7 +199,7 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
-    public function jobApplicantProfile(Request $request,$user_id)
+    public function jobApplicantProfile(Request $request, $user_id)
     {
         try {
             $data = $this->job->jobApplicantProfile($user_id);
@@ -212,12 +212,12 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
-    public function ATS_Score(StoreATS_ScoreRequest $request,$job_id): \Illuminate\Http\JsonResponse
+    public function ATS_Score(StoreATS_ScoreRequest $request, $job_id): \Illuminate\Http\JsonResponse
     {
         try {
             DB::beginTransaction();
-            $this->job->ATS_Score($request,$job_id);
-//            $data = new ATS_ScoreResource($data);
+            $this->job->ATS_Score($request, $job_id);
+            //            $data = new ATS_ScoreResource($data);
             DB::commit();
             return $this->okResponse("Jobs ATS Score Save Successfully");
         } catch (CustomException $th) {

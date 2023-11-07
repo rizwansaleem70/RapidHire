@@ -105,10 +105,8 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
 
         Route::get('applicants', [JobsController::class, 'getJobs']);
         Route::get('applicants/{job_id}', [JobsController::class, 'getJobApplicants']);
-        Route::get('job-applicant-profile-header/{user_id}', [JobsController::class, 'jobApplicantProfileHeader']);
         Route::get('job-applicant-profile/{user_id}', [JobsController::class, 'jobApplicantProfile']);
         Route::get('job-applicant-profile-header/{user_id}', [JobsController::class, 'jobApplicantProfileHeader']);
-        Route::get('job-applicant-profile/{user_id}', [JobsController::class, 'jobApplicantProfile']);
 
         // Route::get('test-services', [TestsController::class, 'getTestServices']);
         // Route::post('job/{id}/services-tests', [TestServicesController::class, 'saveJobServiceTests']);

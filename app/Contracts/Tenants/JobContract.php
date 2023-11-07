@@ -15,9 +15,10 @@ interface JobContract
     public function get_country_against_job($id);
     public function requirements($id);
     public function getApplicantJobs($data);
-    public function job_qualification($data,$job_id);
-    public function ATS_Score($data,$job_id);
-    public function getJobApplicant($filter,$job_id);
+    public function job_qualification($data, $job_id);
+    public function getJobQualifications($job_id);
+    public function ATS_Score($data, $job_id);
+    public function getJobApplicant($filter, $job_id);
     public function jobApplicantProfileHeader($user_id);
     public function jobApplicantProfile($user_id);
 }
