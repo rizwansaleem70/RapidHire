@@ -10,6 +10,7 @@ use App\Http\Requests\Tenants\StoreATS_ScoreRequest;
 use App\Http\Requests\Tenants\StoreJobQualificationRequest;
 use App\Http\Requests\Tenants\StoreJobRequest;
 use App\Http\Requests\Tenants\UpdateJobRequest;
+use App\Http\Resources\Tenants\AnswerResourceCollection;
 use App\Http\Resources\Tenants\ApplicantJobResourceCollection;
 use App\Http\Resources\Tenants\ATS_ScoreResource;
 use App\Http\Resources\Tenants\DepartmentCollection;
@@ -179,6 +180,31 @@ class JobsController extends Controller
             $data = $this->job->getJobApplicant($request, $job_id);
             $data = new JobApplicantResourceCollection($data['applicants'], $data);
             return $this->successResponse("Jobs Applicant Listing", $data);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage("getJobApplicants", 'none', $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+    public function jobApplicantProfileStatus(Request $request, $user_id,$job_id)
+    {
+        try {
+            $data = $this->job->jobApplicantProfileStatus($request,$user_id,$job_id);
+            return $this->successResponse("Status Update Successfully", $data);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage("getJobApplicants", 'none', $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+    public function jobApplicantQuestionAnswer($user_id,$job_id)
+    {
+        try {
+            $data = $this->job->jobApplicantQuestionAnswer($user_id,$job_id);
+            $data = new AnswerResourceCollection($data);
+            return $this->successResponse("Record Found Successfully", $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
