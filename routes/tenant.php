@@ -75,7 +75,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
     Route::post('login', [AuthController::class, 'login']);
     //    Route::post('forgot', [AuthController::class, 'forgot']);
 
-    Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::group(['middleware' => ['auth:sanctum', 'cors']], function () {
         Route::get('get-all-country', [HomeController::class, 'getAllCountry']);
         Route::get('get-all-state-from-country', [HomeController::class, 'getAllState']);
         Route::get('get-all-city-from-state', [HomeController::class, 'getAllCity']);
