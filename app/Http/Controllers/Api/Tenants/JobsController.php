@@ -186,6 +186,18 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
+    public function jobApplicantProfileStatus(Request $request, $user_id,$job_id)
+    {
+        try {
+            $data = $this->job->jobApplicantProfileStatus($request,$user_id,$job_id);
+            return $this->successResponse("Status Update Successfully", $data);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage("getJobApplicants", 'none', $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
     public function jobApplicantProfileHeader($user_id)
     {
         try {

@@ -260,4 +260,17 @@ class JobService implements JobContract
             'country_id' => $model->country_id
         ];
     }
+
+    public function jobApplicantProfileStatus($filter,$user_id, $job_id)
+    {
+        $model = $this->modelApplicant->whereUserIdAndJobId($user_id, $job_id)->first();
+        if (empty($model)) {
+            throw new CustomException("User Not Found!");
+        }
+        $model->status = $filter['status'];
+        $model->save();
+        return [
+            'status' => $model->status,
+        ];
+    }
 }

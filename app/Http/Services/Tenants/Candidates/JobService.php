@@ -158,6 +158,7 @@ class JobService implements JobContract
         $user_id = Auth::user()->id;
         $modelApplicant->user_id = $user_id;
         $modelApplicant->job_id = $data['job_id'];
+        $modelApplicant->status = 'applied';
         $modelApplicant->skills = $commaSeparatedValuesSkill;
         $modelApplicant->source_detail = $data['source_detail'];
         $modelApplicant->applied_date = date('Y-m-d');
