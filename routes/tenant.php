@@ -116,8 +116,8 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::post('job/{id}/services-tests', [TestServicesController::class, 'saveJobServiceTests']);
         Route::get('job/{id}/services-tests', [TestServicesController::class, 'getJobServiceTests']);
 
-        Route::get('schedule_interview', [InterviewsController::class, 'store']);
-        Route::post('get_candidate_interviews/{candidate_id}', [InterviewsController::class, 'index']);
+        Route::post('schedule_interview', [InterviewsController::class, 'store']);
+        Route::get('get_candidate_interviews/{candidate_id}', [InterviewsController::class, 'index']);
         Route::delete('schedule_interview/{id}', [InterviewsController::class, 'destroy']);
     });
 });
