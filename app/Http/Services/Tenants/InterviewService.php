@@ -4,6 +4,7 @@ namespace App\Http\Services\Tenants;
 
 use App\Contracts\Tenants\InterviewContract;
 use App\Models\Tenants\CandidateInterviews;
+use App\Exceptions\CustomException;
 
 /**
  * @var Tenants\InterviewService
@@ -51,10 +52,13 @@ class InterviewService implements InterviewContract
         return $model;
     }
 
-    public function getScheduledInterviews($candidateId)
+    public function getScheduledInterviews($candidate_id)
     {
-        $interviews = $this->model->where('applicant_id', $candidateId)->latest()->get();
-        return $interviews;
+        $model = $this->model->find($candidate_id);
+        if (empty($model)) {
+            throw new CustomException('Candidate Not Found!');
+        }
+        return $this->model->where('applicant_id', $candidate_id)->latest()->get();
     }
 
     public function removeInterview($id)
