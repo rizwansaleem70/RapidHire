@@ -8,6 +8,6 @@ namespace App\Contracts\Tenants;
 interface InterviewContract
 {
     public function setInterview($data);
-    public function getScheduledInterviews($candidateId);
+    public function getScheduledInterviews($candidate_id);
     public function removeInterview($id);
 }
