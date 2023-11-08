@@ -256,7 +256,7 @@ class JobService implements JobContract
 
     public function jobApplicantProfileHeader($user_id)
     {
-        return $this->modelUser->with(['country', 'state', 'city'])->whereHas('applicant')->orWhereHas('experience')->find($user_id);
+        return $this->modelUser->with(['country', 'state', 'city','applicant'])->whereHas('applicant')->orWhereHas('experience')->find($user_id);
     }
 
     public function jobApplicantProfile($user_id)
