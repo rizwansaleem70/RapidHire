@@ -47,7 +47,7 @@ class InterviewsController extends Controller
     {
         try {
             DB::beginTransaction();
-            $interview = $this->interview->setInterview($request->prepareRequest());
+            $interview = $this->interview->setInterview($request->prepareData());
             if ($interview)
                 $interview = new CandidateInterviewResourceCollection($this->interview->getScheduledInterviews($request->applicant_id));
             DB::commit();
