@@ -178,7 +178,7 @@ class JobService implements JobContract
         if ($data['question']){
            foreach ($data['question'] as $question){
                $modelApplicantQuestionAnswer = new $this->modelApplicantQuestionAnswer;
-               $modelApplicantQuestionAnswer->user_id = $user_id;
+               $modelApplicantQuestionAnswer->applicant_id = $modelApplicant->id;
                $modelApplicantQuestionAnswer->job_id = $data['job_id'];
                $modelApplicantQuestionAnswer->question_bank_id = $question['id'];
                $modelApplicantQuestionAnswer->answer = $question['answer'];
@@ -188,7 +188,7 @@ class JobService implements JobContract
         if ($data['requirement']){
             foreach ($data['requirement'] as $requirement){
                 $modelApplicantRequirementAnswer = new $this->modelApplicantRequirementAnswer;
-                $modelApplicantRequirementAnswer->user_id = $user_id;
+                $modelApplicantRequirementAnswer->applicant_id = $modelApplicant->id;
                 $modelApplicantRequirementAnswer->job_id = $data['job_id'];
                 $modelApplicantRequirementAnswer->requirement_id = $requirement['id'];
                 $modelApplicantRequirementAnswer->answer = $requirement['answer'];

@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ExperianceResource extends JsonResource
+class ExperienceResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,6 +17,7 @@ class ExperianceResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'user_id' => $this->user_id,
             'position_title' => $this->position_title,
             'start_date' => Carbon::parse($this->start_date)->format('Y-m-d'),
             'end_date' => Carbon::parse($this->end_date)->format('Y-m-d'),
