@@ -254,9 +254,13 @@ class JobService implements JobContract
         ];
     }
 
-    public function jobApplicantProfileHeader($user_id)
+    public function jobApplicantProfileHeader($applicant_id)
     {
-        return $this->modelUser->with(['country', 'state', 'city','applicant'])->whereHas('applicant')->orWhereHas('experience')->find($user_id);
+        $model = $this->modelApplicant->find($applicant_id);
+        if (empty($model)) {
+            throw new CustomException('Applicant Not Found!');
+        }
+        return $model->with(['user.country', 'user.state', 'user.city','user.experience'])->first();
     }
 
     public function jobApplicantProfile($user_id)
@@ -298,11 +302,11 @@ class JobService implements JobContract
         ];
     }
 
-    public function jobApplicantProfileStatus($filter,$user_id, $job_id)
+    public function jobApplicantProfileStatus($filter,$applicant_id, $job_id)
     {
-        $model = $this->modelApplicant->whereUserIdAndJobId($user_id, $job_id)->first();
+        $model = $this->modelApplicant->whereIdAndJobId($applicant_id, $job_id)->first();
         if (empty($model)) {
-            throw new CustomException("User Not Found!");
+            throw new CustomException("Applicant Not Found!");
         }
         $model->status = $filter['status'];
         $model->save();
@@ -311,10 +315,10 @@ class JobService implements JobContract
         ];
     }
 
-    public function jobApplicantQuestionAnswer($user_id, $job_id)
+    public function jobApplicantQuestionAnswer($applicant_id, $job_id)
     {
-        $modelApplicantRequirementAnswer = $this->modelApplicantRequirementAnswer->whereUserIdAndJobId($user_id, $job_id)->with('requirement')->get();
-        $modelApplicantQuestionAnswer = $this->modelApplicantQuestionAnswer->whereUserIdAndJobId($user_id, $job_id)->with('questionBank')->get();
+        $modelApplicantRequirementAnswer = $this->modelApplicantRequirementAnswer->whereApplicantIdAndJobId($applicant_id, $job_id)->with('requirement')->get();
+        $modelApplicantQuestionAnswer = $this->modelApplicantQuestionAnswer->whereApplicantIdAndJobId($applicant_id, $job_id)->with('questionBank')->get();
         if ($modelApplicantRequirementAnswer->count() == 0 || $modelApplicantQuestionAnswer->count() == 0) {
             throw new CustomException("Record Not Found!");
         }

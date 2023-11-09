@@ -23,6 +23,9 @@ return new class extends Migration
             $table->string('interviewer_link')->nullable();
             $table->string('interviewee_link')->nullable();
             $table->timestamps();
+            $table->foreign('applicant_id')->references('id')->on('applicants')->onUpdate('cascade');
+            $table->foreign('interviewer_id')->references('id')->on('users')->onUpdate('cascade');
+
         });
     }
 

@@ -102,12 +102,11 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['interview-feedback' => InterviewFeedbacksController::class]);
         Route::post('image-upload', [ImageUploadsController::class, 'store']);
         Route::get('job/{id}/requirements', [JobsController::class, 'requirements']);
-
         Route::get('applicants', [JobsController::class, 'getJobs']);
         Route::get('applicants/{job_id}', [JobsController::class, 'getJobApplicants']);
-        Route::get('job-applicant-profile-header/{user_id}', [JobsController::class, 'jobApplicantProfileHeader']);
-        Route::get('job-applicant-profile-status/{user_id}/{job_id}', [JobsController::class, 'jobApplicantProfileStatus']);
-        Route::get('job-applicant-question-answer/{user_id}/{job_id}', [JobsController::class, 'jobApplicantQuestionAnswer']);
+        Route::get('job-applicant-profile-header/{applicant_id}', [JobsController::class, 'jobApplicantProfileHeader']);
+        Route::get('job-applicant-profile-status/{applicant_id}/{job_id}', [JobsController::class, 'jobApplicantProfileStatus']);
+        Route::get('job-applicant-question-answer/{applicant_id}/{job_id}', [JobsController::class, 'jobApplicantQuestionAnswer']);
         Route::get('job-applicant-profile/{user_id}', [JobsController::class, 'jobApplicantProfile']);
 
         // Route::get('test-services', [TestsController::class, 'getTestServices']);

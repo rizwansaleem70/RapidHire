@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Tenants\Applicant;
 use App\Models\Tenants\Requirement;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,11 +17,11 @@ return new class extends Migration
         Schema::create('applicant_requirement_answers', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Job::class,'job_id');
-            $table->foreignIdFor(User::class,'user_id');
+            $table->foreignIdFor(Applicant::class,'applicant_id');
             $table->foreignIdFor(Requirement::class,'requirement_id');
             $table->string('answer');
             $table->foreign('job_id')->references('id')->on('jobs')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
+            $table->foreign('applicant_id')->references('id')->on('applicants')->onUpdate('cascade');
             $table->foreign('requirement_id')->references('id')->on('requirements')->onUpdate('cascade');
             $table->softDeletes();
             $table->timestamps();
