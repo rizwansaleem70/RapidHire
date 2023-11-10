@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Tenants;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -28,13 +29,13 @@ class ProfileResource extends JsonResource
             'mobile' => $this->phone,
             'gender' => $this->gender,
             'is_active' => $this->is_active,
-            'dob' => $this->dob,
+            'dob' => Carbon::parse($this->dob)->format('Y-m-d'),
             'bio' => $this->bio,
             'current_salary' => $this->current_salary,
             'salary_type' => $this->salary_type,
             'skills' => $this->skills,
             'introduction_video_url' => $this->introduction_video_url,
-            'avatar' => asset($this->avatar),
+            'avatar' => $this->avatar ? asset($this->avatar) : "",
             'resume' => $this->resume_path ? asset($this->resume_path) :"",
             'experience' => new ExperienceResourceCollection($this->experience),
             'eduction' =>   new EducationResourceCollection($this->education)
