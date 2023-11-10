@@ -26,10 +26,10 @@ class InterviewsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($candidate_id): \Illuminate\Http\JsonResponse
+    public function index($applicant_id): \Illuminate\Http\JsonResponse
     {
         try {
-            $interview = $this->interview->getScheduledInterviews($candidate_id);
+            $interview = $this->interview->getScheduledInterviews($applicant_id);
             $interview = new CandidateInterviewResourceCollection($interview);
             return $this->successResponse("Successfully", $interview);
         } catch (CustomException $th) {
