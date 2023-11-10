@@ -15,9 +15,8 @@ return new class extends Migration
     {
         Schema::create('job_experiences', function (Blueprint $table) {
             $table->id();
-            $table->foreign(User::class,'user_id');
-            $table->foreign(Job::class,'job_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignIdFor(User::class,'user_id');
+            $table->foreignIdFor(Job::class,'job_id');
             $table->string('position_title');
             $table->date('start_date');
             $table->date('end_date');
@@ -27,6 +26,7 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('job_id')->references('id')->on('jobs')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

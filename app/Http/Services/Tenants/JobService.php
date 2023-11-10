@@ -9,6 +9,7 @@ use App\Models\Tenants\Applicant;
 use App\Models\Tenants\ApplicantQuestionAnswer;
 use App\Models\Tenants\ApplicantRequirementAnswer;
 use App\Models\Tenants\Department;
+use App\Models\Tenants\Education;
 use App\Models\Tenants\Experience;
 use App\Models\Tenants\Job;
 use App\Models\Tenants\JobATSScore;
@@ -42,6 +43,7 @@ class JobService implements JobContract
     protected Applicant $modelApplicant;
 
     protected Experience $modelExperience;
+    protected Education $modelEducation;
 
     protected JobATSScore $modelJobATSScore;
 
@@ -62,6 +64,7 @@ class JobService implements JobContract
         $this->jobHiringManagerModel = new JobHiringManager();
         $this->modelApplicant = new Applicant();
         $this->modelExperience = new Experience();
+        $this->modelEducation = new Education();
         $this->modelJobATSScore = new JobATSScore();
         $this->modelJobATSScoreParameter = new JobATSScoreParameter();
         $this->modelJobQualification = new JobQualification();
@@ -258,11 +261,11 @@ class JobService implements JobContract
 
     public function jobApplicantProfileHeader($applicant_id)
     {
-        $model = $this->modelApplicant->find($applicant_id);
+        $model = $this->modelApplicant->whereId($applicant_id)->first();
         if (empty($model)) {
             throw new CustomException('Applicant Not Found!');
         }
-        return $model->whereId($applicant_id)->with(['user.country', 'user.state', 'user.city','user.experience'])->first();
+        return $model->with(['user.country', 'user.state', 'user.city','user.experience'])->first();
     }
 
 
@@ -328,17 +331,97 @@ class JobService implements JobContract
         ];
     }
 
-    public function applicantProfile($user_id)
+    public function profile($user_id)
     {
-        $model = $this->modelUser->find($user_id);
+        $model = $this->modelUser->whereId($user_id)->first();
         if (empty($model)) {
             throw new CustomException('User Not Found!');
         }
-        return $model->with(['country', 'state', 'city','experience'])->first();
+        return $model->with(['country', 'state', 'city','experience','applicant','education'])->first();
     }
 
-    public function applicantProfileUpdate($data, $user_id)
+    public function profileUpdate($data, $user_id)
     {
-        // TODO: Implement applicantProfileUpdate() method.
+        $model = $this->modelUser->whereId($user_id)->first();
+        if (empty($model)) {
+            throw new CustomException('User Not Found!');
+        }
+        if (isset($data['country']) && $data['country']) {
+            $model->country_id = $data['country'];
+        }
+        if (isset($data['state']) && $data['state']) {
+            $model->state_id = $data['state'];
+        }
+        if (isset($data['city']) && $data['city']) {
+            $model->city_id = $data['city'];
+        }
+        if (isset($data['first_name']) && $data['first_name']) {
+            $model->first_name = $data['first_name'];
+        }
+        if (isset($data['last_name']) && $data['last_name']) {
+            $model->last_name = $data['last_name'];
+        }
+        if (isset($data['address']) && $data['address']) {
+            $model->address = $data['address'];
+        }
+        if (isset($data['phone']) && $data['phone']) {
+            $model->phone = $data['phone'];
+        }
+        if (isset($data['gender']) && $data['gender']) {
+            $model->gender = $data['gender'];
+        }
+        if (isset($data['is_active']) && $data['is_active']) {
+            $model->is_active = $data['is_active'];
+        }
+        if (isset($data['dob']) && $data['dob']) {
+            $model->dob = $data['dob'];
+        }
+        if (isset($data['bio']) && $data['bio']) {
+            $model->bio = $data['bio'];
+        }
+        if (isset($data['current_salary']) && $data['current_salary']) {
+            $model->current_salary = $data['current_salary'];
+        }
+        if (isset($data['salary_type']) && $data['salary_type']) {
+            $model->salary_type = $data['salary_type'];
+        }
+        if (isset($data['skills']) && $data['skills']) {
+            $model->skills = $data['skills'];
+        }
+        if (isset($data['language']) && $data['language']) {
+            $model->language = $data['language'];
+        }
+        if (isset($data['introduction_video_url']) && $data['introduction_video_url']) {
+            $model->introduction_video_url = $data['introduction_video_url'];
+        }
+        if (isset($data['avatar']) && $data['avatar']) {
+            $model->avatar = $data['avatar'];
+        }
+        if (isset($data['resume_path']) && $data['resume_path']) {
+            $model->resume_path = $data['resume_path'];
+        }
+        $model->save();
+        foreach ($data['education'] as $value) {
+            $modelEducation = new $this->modelEducation;
+            $modelEducation->user_id = $model->id;
+            $modelEducation->institute = $value['institute'];
+            $modelEducation->field_of_study = $value['field_of_study'];
+            $modelEducation->start_date = $value['start_date'];
+            $modelEducation->end_date = $value['end_date'];
+            $modelEducation->description = $value['description'];
+            $modelEducation->is_present = $value['is_present'];
+            $modelEducation->save();
+        }
+        foreach ($data['experience'] as $value) {
+            $modelExperience = new $this->modelExperience;
+            $modelExperience->user_id = $model->id;
+            $modelExperience->position_title = $value['position_title'];
+            $modelExperience->start_date = $value['start_date'];
+            $modelExperience->end_date = $value['end_date'];
+            $modelExperience->organization_name = $value['organization_name'];
+            $modelExperience->is_present = $value['is_present'];
+            $modelExperience->save();
+        }
+        return $model;
     }
 }

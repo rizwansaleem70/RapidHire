@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('institute');
             $table->string('field_of_study');
             $table->date('start_date');
-            $table->date('end_date');
-            $table->text('Description');
+            $table->date('end_date')->nullable();
+            $table->string('is_present')->default('0');
+            $table->text('description')->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');

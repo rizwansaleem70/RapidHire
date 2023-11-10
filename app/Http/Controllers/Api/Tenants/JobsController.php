@@ -225,10 +225,10 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
-    public function applicantProfile($user_id)
+    public function profile($user_id)
     {
         try {
-            $data = $this->job->applicantProfile($user_id);
+            $data = $this->job->profile($user_id);
             $data = new ProfileResource($data);
             return $this->successResponse("Applicant Profile", $data);
         } catch (CustomException $th) {
@@ -238,12 +238,14 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
-    public function applicantProfileUpdate(UpdateApplicantProfileRequest $request, $user_id)
+    public function profileUpdate(UpdateApplicantProfileRequest $request, $user_id)
     {
         try {
-            $data = $this->job->applicantProfileUpdate($user_id);
+            DB::beginTransaction();
+            $data = $this->job->profileUpdate($request->all(),$user_id);
+            DB::commit();
             $data = new ProfileResource($data);
-            return $this->successResponse("Jobs Applicant Listing", $data);
+            return $this->successResponse("Profile Update", $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
