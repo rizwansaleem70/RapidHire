@@ -128,13 +128,13 @@
                             <div class="form-group">
 
                                 <input type="text" class="form-control" id="skills" name="skills"
-                                       aria-describedby="skills"
+                                       aria-describedby="skills" value="{{old('skills')}}"
                                        placeholder="Skills *">
                             </div>
 
                             <div class="form-group">
 
-                                <input type="text" class="form-control" name="source_detail" id="source" aria-describedby="source"
+                                <input type="text" class="form-control" name="source_detail"  value="{{old('source_detail')}}" id="source" aria-describedby="source"
                                        placeholder="Source Detail ">
                             </div>
                             @if($data['job']->jobQuestion)

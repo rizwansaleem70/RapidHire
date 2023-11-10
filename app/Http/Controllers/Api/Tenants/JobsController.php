@@ -187,10 +187,10 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
-    public function jobApplicantProfileStatus(Request $request, $user_id,$job_id)
+    public function jobApplicantProfileStatus(Request $request, $applicant_id,$job_id)
     {
         try {
-            $data = $this->job->jobApplicantProfileStatus($request,$user_id,$job_id);
+            $data = $this->job->jobApplicantProfileStatus($request,$applicant_id,$job_id);
             return $this->successResponse("Status Update Successfully", $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
@@ -199,10 +199,10 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
-    public function jobApplicantQuestionAnswer($user_id,$job_id)
+    public function jobApplicantQuestionAnswer($applicant_id,$job_id)
     {
         try {
-            $data = $this->job->jobApplicantQuestionAnswer($user_id,$job_id);
+            $data = $this->job->jobApplicantQuestionAnswer($applicant_id,$job_id);
             $data = new AnswerResourceCollection($data);
             return $this->successResponse("Record Found Successfully", $data);
         } catch (CustomException $th) {
@@ -212,10 +212,10 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
-    public function jobApplicantProfileHeader($user_id)
+    public function jobApplicantProfileHeader($applicant_id)
     {
         try {
-            $data = $this->job->jobApplicantProfileHeader($user_id);
+            $data = $this->job->jobApplicantProfileHeader($applicant_id);
             $data = new ProfileHeaderResource($data);
             return $this->successResponse("Jobs Applicant Listing", $data);
         } catch (CustomException $th) {

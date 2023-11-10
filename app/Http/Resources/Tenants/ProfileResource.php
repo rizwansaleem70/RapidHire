@@ -32,7 +32,7 @@ class ProfileResource extends JsonResource
             'source_detail' => $this->applicant->source_detail,
             'resume' => asset($this->applicant->resume_path),
             'cover_letter' => asset($this->applicant->cover_letter_path),
-            'experience' => new ExperianceResourceCollection($this->experience)
+            'experience' => new ExperienceResourceCollection($this->experience)
         ];
     }
 }
