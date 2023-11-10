@@ -260,7 +260,7 @@ class JobService implements JobContract
         if (empty($model)) {
             throw new CustomException('Applicant Not Found!');
         }
-        return $model->with(['user.country', 'user.state', 'user.city','user.experience'])->first();
+        return $model->whereId($applicant_id)->with(['user.country', 'user.state', 'user.city','user.experience'])->first();
     }
 
 
