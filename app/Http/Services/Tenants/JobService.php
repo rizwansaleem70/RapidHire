@@ -263,10 +263,6 @@ class JobService implements JobContract
         return $model->with(['user.country', 'user.state', 'user.city','user.experience'])->first();
     }
 
-    public function jobApplicantProfile($user_id)
-    {
-        return $this->modelUser->with(['applicant', 'experience'])->whereHas('applicant')->orWhereHas('experience')->find($user_id);
-    }
 
     private function prepareATSScoreData($modelJobATSScore, $job_id, $data, bool $true)
     {
@@ -328,5 +324,19 @@ class JobService implements JobContract
                 'questionAnswer' => $modelApplicantQuestionAnswer,
                 ]
         ];
+    }
+
+    public function applicantProfile($user_id)
+    {
+        $model = $this->modelUser->find($user_id);
+        if (empty($model)) {
+            throw new CustomException('User Not Found!');
+        }
+        return $model->with(['country', 'state', 'city','experience'])->first();
+    }
+
+    public function applicantProfileUpdate($data, $user_id)
+    {
+        // TODO: Implement applicantProfileUpdate() method.
     }
 }

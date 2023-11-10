@@ -107,7 +107,8 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::get('job-applicant-profile-header/{applicant_id}', [JobsController::class, 'jobApplicantProfileHeader']);
         Route::get('job-applicant-profile-status/{applicant_id}/{job_id}', [JobsController::class, 'jobApplicantProfileStatus']);
         Route::get('job-applicant-question-answer/{applicant_id}/{job_id}', [JobsController::class, 'jobApplicantQuestionAnswer']);
-        Route::get('job-applicant-profile/{user_id}', [JobsController::class, 'jobApplicantProfile']);
+        Route::get('applicant-profile/{user_id}', [JobsController::class, 'applicantProfile']);
+        Route::post('applicant-profile/{user_id}', [JobsController::class, 'applicantProfileUpdate']);
 
         // Route::get('test-services', [TestsController::class, 'getTestServices']);
         // Route::post('job/{id}/services-tests', [TestServicesController::class, 'saveJobServiceTests']);
@@ -116,7 +117,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::get('job/{id}/services-tests', [TestServicesController::class, 'getJobServiceTests']);
 
         Route::post('schedule_interview', [InterviewsController::class, 'store']);
-        Route::get('get_candidate_interviews/{candidate_id}', [InterviewsController::class, 'index']);
+        Route::get('get_candidate_interviews/{applicant_id}', [InterviewsController::class, 'index']);
         Route::delete('schedule_interview/{id}', [InterviewsController::class, 'destroy']);
     });
 });

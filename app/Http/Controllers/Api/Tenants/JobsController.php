@@ -6,13 +6,13 @@ use App\Contracts\Tenants\JobContract;
 use App\Exceptions\CustomException;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tenants\Candidate\UpdateApplicantProfileRequest;
 use App\Http\Requests\Tenants\StoreATS_ScoreRequest;
 use App\Http\Requests\Tenants\StoreJobQualificationRequest;
 use App\Http\Requests\Tenants\StoreJobRequest;
 use App\Http\Requests\Tenants\UpdateJobRequest;
 use App\Http\Resources\Tenants\AnswerResourceCollection;
 use App\Http\Resources\Tenants\ApplicantJobResourceCollection;
-use App\Http\Resources\Tenants\ATS_ScoreResource;
 use App\Http\Resources\Tenants\DepartmentCollection;
 use App\Http\Resources\Tenants\Job;
 use App\Http\Resources\Tenants\JobApplicantResourceCollection;
@@ -225,10 +225,23 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
-    public function jobApplicantProfile(Request $request, $user_id)
+    public function applicantProfile($user_id)
     {
         try {
-            $data = $this->job->jobApplicantProfile($user_id);
+            $data = $this->job->applicantProfile($user_id);
+            $data = new ProfileResource($data);
+            return $this->successResponse("Applicant Profile", $data);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage("jobApplicantProfile", 'none', $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+    public function applicantProfileUpdate(UpdateApplicantProfileRequest $request, $user_id)
+    {
+        try {
+            $data = $this->job->applicantProfileUpdate($user_id);
             $data = new ProfileResource($data);
             return $this->successResponse("Jobs Applicant Listing", $data);
         } catch (CustomException $th) {

@@ -52,13 +52,13 @@ class InterviewService implements InterviewContract
         return $model;
     }
 
-    public function getScheduledInterviews($candidate_id)
+    public function getScheduledInterviews($applicant_id)
     {
-        $model = $this->model->find($candidate_id);
+        $model = $this->model->find($applicant_id);
         if (empty($model)) {
-            throw new CustomException('Candidate Not Found!');
+            throw new CustomException('Applicant Not Found!');
         }
-        return $this->model->where('applicant_id', $candidate_id)->latest()->get();
+        return $this->model->where('applicant_id', $applicant_id)->latest()->get();
     }
 
     public function removeInterview($id)
