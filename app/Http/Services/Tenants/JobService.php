@@ -235,6 +235,7 @@ class JobService implements JobContract
             return $q->where('status', $status);
         })->with('user.experience')->paginate(10);
 
+        $totalApplied= (clone $baseQuery)->where('status', 'applied')->count();
         $totalQualification = (clone $baseQuery)->where('status', 'qualification')->count();
         $totalTesting = (clone $baseQuery)->where('status', 'testing')->count();
         $totalInterview = (clone $baseQuery)->where('status', 'interview')->count();
@@ -243,6 +244,7 @@ class JobService implements JobContract
         $totalWithdraw = (clone $baseQuery)->where('status', 'withdraw')->count();
 
         return [
+            'totalApplied' => $totalApplied,
             'totalApplicant' => $totalApplicant,
             'totalQualification' => $totalQualification,
             'totalTesting' => $totalTesting,
