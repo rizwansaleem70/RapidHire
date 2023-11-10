@@ -22,6 +22,6 @@ interface JobContract
     public function jobApplicantProfileStatus($filter,$applicant_id,$job_id);
     public function jobApplicantQuestionAnswer($applicant_id,$job_id);
     public function jobApplicantProfileHeader($applicant_id);
-    public function applicantProfile($user_id);
+    public function profile($user_id);
     public function applicantProfileUpdate($data , $user_id);
 }

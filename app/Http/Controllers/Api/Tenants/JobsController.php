@@ -225,10 +225,10 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
-    public function applicantProfile($user_id)
+    public function profile($user_id)
     {
         try {
-            $data = $this->job->applicantProfile($user_id);
+            $data = $this->job->profile($user_id);
             $data = new ProfileResource($data);
             return $this->successResponse("Applicant Profile", $data);
         } catch (CustomException $th) {

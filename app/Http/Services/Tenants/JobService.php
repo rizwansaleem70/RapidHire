@@ -258,11 +258,11 @@ class JobService implements JobContract
 
     public function jobApplicantProfileHeader($applicant_id)
     {
-        $model = $this->modelApplicant->find($applicant_id);
+        $model = $this->modelApplicant->whereId($applicant_id)->first();
         if (empty($model)) {
             throw new CustomException('Applicant Not Found!');
         }
-        return $model->whereId($applicant_id)->with(['user.country', 'user.state', 'user.city','user.experience'])->first();
+        return $model->with(['user.country', 'user.state', 'user.city','user.experience'])->first();
     }
 
 
@@ -328,13 +328,13 @@ class JobService implements JobContract
         ];
     }
 
-    public function applicantProfile($user_id)
+    public function profile($user_id)
     {
-        $model = $this->modelUser->find($user_id);
+        $model = $this->modelUser->whereId($user_id)->first();
         if (empty($model)) {
             throw new CustomException('User Not Found!');
         }
-        return $model->with(['country', 'state', 'city','experience'])->first();
+        return $model->with(['country', 'state', 'city','experience','applicant','education'])->first();
     }
 
     public function applicantProfileUpdate($data, $user_id)

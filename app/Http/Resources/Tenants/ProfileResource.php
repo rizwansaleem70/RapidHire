@@ -19,9 +19,9 @@ class ProfileResource extends JsonResource
             'full_name' => $this->first_name." ".$this->last_name,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
-            'country' => $this->country->name,
-            'state' => isset($this->state->name),
-            'city' => isset($this->city->name),
+            'country' => $this->country ? $this->country->name :"",
+            'state' => $this->state ? $this->state->name : "",
+            'city' => $this->city ? $this->city->name : "",
             'address'=> $this->address,
             'application_id' => $this->applicant->id,
             'email' => $this->email,
@@ -34,11 +34,10 @@ class ProfileResource extends JsonResource
             'salary_type' => $this->salary_type,
             'skills' => $this->skills,
             'introduction_video_url' => $this->introduction_video_url,
-            'source_detail' => $this->applicant->source_detail,
             'avatar' => asset($this->avatar),
-            'resume' => asset($this->applicant->resume_path),
-            'cover_letter' => asset($this->applicant->cover_letter_path),
-            'experience' => new ExperienceResourceCollection($this->experience)
+            'resume' => $this->resume_path ? asset($this->resume_path) :"",
+            'experience' => new ExperienceResourceCollection($this->experience),
+            'eduction' =>   new EducationResourceCollection($this->education)
         ];
     }
 }
