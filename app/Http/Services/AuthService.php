@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Models\Tenants\Candidate\FavoriteJob;
 use App\Models\User;
 use App\Helpers\Constant;
 use App\Mail\OtpSendMail;
@@ -16,39 +17,41 @@ use Illuminate\Support\Facades\Mail;
  */
 class AuthService implements AuthContract
 {
-    protected $model;
+    protected User $model;
+    protected FavoriteJob $modelFavoriteJob;
     public function __construct()
     {
         $this->model = new User();
+        $this->modelFavoriteJob = new FavoriteJob();
     }
 
-    public function register($data)
+    public function register($input)
     {
         $model = new $this->model;
-        $user = $this->prepareData($model, $data, true);
+        $user = $this->prepareData($model, $input, true);
         $user->assignRole(Constant::ROLE_USER);
         return $user;
     }
 
-    public function login($data)
+    public function login($input)
     {
-        $user = $this->model->where('email', $data['email'])->first();
+        $user = $this->model->where('email', $input['email'])->first();
 
-        if (!($this->model)->checkPassword($data['password'], $user->password))
+        if (!($this->model)->checkPassword($input['password'], $user->password))
             throw new CustomException("Invalid Credentials");
 
         return $user;
     }
-    public function forgot($data)
+    public function forgot($input)
     {
-        $user = User::where('email', $data['email'])->first();
+        $user = User::where('email', $input['email'])->first();
         if ($user) {
             $otp = Str::random(7);
             $mail = Mail::to($user->email)->send(new OtpSendMail($otp));
             dd($mail);
         }
         $model = new $this->model;
-        $user = $this->prepareData($model, $data, false);
+        $user = $this->prepareData($model, $input, false);
 
         return $user;
     }
@@ -75,15 +78,22 @@ class AuthService implements AuthContract
         return $model;
     }
 
-    public function changePassword($data)
+    public function changePassword($input)
     {
         $model = $this->model->find(Auth::user()->id);
-        if (!($this->model)->checkPassword($data['old_password'], $model->password))
+        if (!($this->model)->checkPassword($input['old_password'], $model->password))
             throw new CustomException("Invalid Credentials");
-        return $this->prepareData($model, $data, false);
+        return $this->prepareData($model, $input, false);
     }
-    public function deleteProfile($data)
+    public function deleteProfile($input)
     {
+        $model = $this->model->find(Auth::user()->id);
+        if (!($this->model)->checkPassword($input['password'], $model->password))
+            throw new CustomException("Password Does Not Match");
         return $this->model->destroy(Auth::user()->id);
+    }
+    public function favoriteJob()
+    {
+        return $this->modelFavoriteJob->whereUserId(Auth::user()->id)->with('job')->get();
     }
 }

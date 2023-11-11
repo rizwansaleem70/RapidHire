@@ -80,7 +80,8 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::get('get-all-state-from-country', [HomeController::class, 'getAllState']);
         Route::get('get-all-city-from-state', [HomeController::class, 'getAllCity']);
         Route::post('change-password', [AuthController::class, 'changePassword']);
-        Route::get('delete-profile', [AuthController::class, 'deleteProfile']);
+        Route::post('delete-profile', [AuthController::class, 'deleteProfile']);
+        Route::get('favorite-job', [AuthController::class, 'favoriteJob']);
         Route::get('logout', [AuthController::class, 'logout']);
         Route::apiResources(['category' => CategoriesController::class]);
         Route::apiResources(['location' => LocationsController::class]);
