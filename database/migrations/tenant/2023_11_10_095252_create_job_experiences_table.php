@@ -21,7 +21,6 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->string('organization_name');
-            $table->string('source_detail')->nullable();
             $table->string('is_present')->default('0');
             $table->softDeletes();
             $table->timestamps();

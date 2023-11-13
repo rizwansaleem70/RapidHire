@@ -11,6 +11,7 @@ use App\Models\Tenants\Country;
 use App\Models\Tenants\Department;
 use App\Models\Tenants\Experience;
 use App\Models\Tenants\Job;
+use App\Models\Tenants\JobExperience;
 use App\Models\Tenants\Location;
 use App\Models\Tenants\Setting;
 use App\Models\Tenants\SocialMedia;
@@ -33,6 +34,7 @@ class JobService implements JobContract
     protected Department $modelDepartment;
     protected Applicant $modelApplicant;
     protected Experience $modelExperience;
+    protected JobExperience $modelJobExperience;
     private User $modelUser;
     private ApplicantQuestionAnswer $modelApplicantQuestionAnswer;
     private ApplicantRequirementAnswer $modelApplicantRequirementAnswer;
@@ -47,6 +49,7 @@ class JobService implements JobContract
         $this->modelDepartment = new Department();
         $this->modelApplicant = new Applicant();
         $this->modelExperience = new Experience();
+        $this->modelJobExperience = new JobExperience();
         $this->modelApplicantQuestionAnswer = new ApplicantQuestionAnswer();
         $this->modelApplicantRequirementAnswer = new ApplicantRequirementAnswer();
     }
@@ -166,14 +169,14 @@ class JobService implements JobContract
         $modelApplicant->cover_letter_path = $this->upload($data['cover_letter_path']);
         $modelApplicant->save();
         foreach ($data['data'] as $value) {
-            $modelExperience = new $this->modelExperience;
-            $modelExperience->user_id = $user_id;
-            $modelExperience->organization_name = $value['organization_name'];
-            $modelExperience->position_title = $value['position_title'];
-            $modelExperience->start_date = $value['start_date'];
-            $modelExperience->end_date = $value['end_date'];
-            $modelExperience->is_present = isset($data['is_present']);
-            $modelExperience->save();
+            $modelJobExperience = new $this->modelJobExperience;
+            $modelJobExperience->user_id = $user_id;
+            $modelJobExperience->organization_name = $value['organization_name'];
+            $modelJobExperience->position_title = $value['position_title'];
+            $modelJobExperience->start_date = $value['start_date'];
+            $modelJobExperience->end_date = $value['end_date'];
+            $modelJobExperience->is_present = isset($data['is_present']);
+            $modelJobExperience->save();
         }
         if ($data['question']){
            foreach ($data['question'] as $question){

@@ -51,7 +51,6 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
     Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('job-apply/{slug}', [CandidateJobsController::class, 'jobApply'])->name('candidate.job.apply');
         Route::post('job-apply', [CandidateJobsController::class, 'jobApplyStore'])->name('candidate.job.apply.save');
-//        Route::get('dashboard', [AuthController::class,'dashboard']);
     });
     Route::view('user-contact-us', 'candidates/contact-us')->name('tenant-user-contact-us');
     Route::view('user-apply', 'candidates/apply')->name('tenant-user-apply');
