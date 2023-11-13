@@ -43,7 +43,6 @@
                         </div>
                     </div>
                     <div class="header-ct-right">
-
                         {{-- User Signed In --}}
                         @auth
                         <div class="header-ct-right" style="margin-right: 11rem;">
@@ -53,7 +52,7 @@
                               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpFreAtrOzdfbsrEHLCtHyBDY4x80z6RBeVA&usqp=CAU" alt="" style="width: 50px;">
                             <div class="sub-account">
                               <div class="sub-account-item">
-                                <a href="https://rapid-hire-employee-dashboard.netlify.app/"><span class="icon-dashboard"></span>Dashboard</a>
+                                <a href="{{config('app.candidate_authentication_dashboard').'/'.encrypt(auth()->user()->id)}}"><span class="icon-dashboard"></span>Dashboard</a>
                               </div>
                               <div class="sub-account-item">
                                 <a href="https://rapid-hire-employee-dashboard.netlify.app/createprofile"><span class="icon-profile"></span> Profile</a>
