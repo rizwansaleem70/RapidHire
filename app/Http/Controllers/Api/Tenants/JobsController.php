@@ -243,6 +243,7 @@ class JobsController extends Controller
     {
         try {
             $data = $this->job->profile($user_id);
+            dd($data);
             $data = new ProfileResource($data);
             return $this->successResponse("Applicant Profile", $data);
         } catch (CustomException $th) {
