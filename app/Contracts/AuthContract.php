@@ -13,4 +13,5 @@ interface AuthContract
     public function changePassword($input);
     public function deleteProfile($input);
     public function favoriteJob();
+    public function dashboardAuthenticate($id);
 }

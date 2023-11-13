@@ -6,6 +6,7 @@ use App\Models\Tenants\Candidate\FavoriteJob;
 use App\Models\User;
 use App\Helpers\Constant;
 use App\Mail\OtpSendMail;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use App\Contracts\AuthContract;
 use App\Exceptions\CustomException;
@@ -95,5 +96,13 @@ class AuthService implements AuthContract
     public function favoriteJob()
     {
         return $this->modelFavoriteJob->whereUserId(Auth::user()->id)->with('job')->get();
+    }
+    public function dashboardAuthenticate($id)
+    {
+        $user = $this->model->whereId(Crypt::decrypt($id))->first();
+        if (empty($user)) {
+            throw new CustomException('Applicant Not Found!');
+        }
+        return $user;
     }
 }
