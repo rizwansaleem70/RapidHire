@@ -51,8 +51,7 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
     Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('job-apply/{slug}', [CandidateJobsController::class, 'jobApply'])->name('candidate.job.apply');
         Route::post('job-apply', [CandidateJobsController::class, 'jobApplyStore'])->name('candidate.job.apply.save');
-        Route::get('dashboard', [AuthController::class,'dashboard']);
-        Route::get('dashboard-authenticate', [AuthController::class,'dashboardAuthenticate']);
+//        Route::get('dashboard', [AuthController::class,'dashboard']);
     });
     Route::view('user-contact-us', 'candidates/contact-us')->name('tenant-user-contact-us');
     Route::view('user-apply', 'candidates/apply')->name('tenant-user-apply');
@@ -76,6 +75,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
     //    Route::post('forgot', [AuthController::class, 'forgot']);
+    Route::get('dashboard-authenticate', [AuthController::class,'dashboardAuthenticate']);
 
     Route::group(['middleware' => ['auth:sanctum', 'cors']], function () {
         Route::get('get-all-country', [HomeController::class, 'getAllCountry']);
@@ -117,7 +117,6 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         // Route::get('job/{id}/services-tests', [TestServicesController::class, 'getJobServiceTests']);
         Route::post('job/{id}/services-tests', [TestServicesController::class, 'saveJobServiceTests']);
         Route::get('job/{id}/services-tests', [TestServicesController::class, 'getJobServiceTests']);
-
         Route::post('schedule_interview', [InterviewsController::class, 'store']);
         Route::get('get_candidate_interviews/{applicant_id}', [InterviewsController::class, 'index']);
         Route::delete('schedule_interview/{id}', [InterviewsController::class, 'destroy']);
