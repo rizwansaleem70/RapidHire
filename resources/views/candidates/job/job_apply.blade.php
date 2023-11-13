@@ -94,14 +94,15 @@
                                 <select id="country-id" class="form-control" name="country_id">
                                     <option value=""> Select Country</option>
                                     @foreach($data['countries'] as $key =>$country)
-                                        <option value="{{$key}}"> {{$country}}</option>
+                                        <option {{$key == $data['user']->country_id ? "selected" : ""}}  class="form-control" value="{{$key}}"> {{$country}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="state-id" class="file-label">State </label>
-                                <select id="state-id" class="form-control" name="state_id">
-                                </select>
+                                    <select id="state-id" class="form-control" name="state_id">
+                                    </select>
+
                             </div>
                             <div class="form-group">
                                 <label for="city-id" class="file-label">City </label>
