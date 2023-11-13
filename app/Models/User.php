@@ -4,11 +4,13 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Tenants\Applicant;
+use App\Models\Tenants\Candidate\FavoriteJob;
 use App\Models\Tenants\City;
 use App\Models\Tenants\Country;
 use App\Models\Tenants\Education;
 use App\Models\Tenants\Experience;
 use App\Models\Tenants\Job;
+use App\Models\Tenants\JobExperience;
 use App\Models\Tenants\State;
 use App\Traits\SoftDeleteColumnValuesUpdate;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -75,6 +77,9 @@ class User extends Authenticatable
     }
     public function experience(){
         return $this->hasMany(Experience::class,'user_id');
+    }
+    public function jobExperience(){
+        return $this->hasMany(JobExperience::class,'user_id');
     }
     public function education(){
         return $this->hasMany(Education::class,'user_id');
