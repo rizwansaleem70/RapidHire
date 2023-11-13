@@ -35,7 +35,7 @@
                         <div class="col-lg-12">
                                 <h6><strong>UPLOAD RESUME</strong></h6>
                                 <div class="custom-file-upload" id="drop-area" style="padding: 5%;">
-                                    <label for="file-upload" class="file-label">Drag & Drop files here or </label>
+                                    <label for="file-upload" class="file-label">Select only pdf file </label>
                                     <div class="button-container" style="text-align: center;">
                                         <button id="add-files" class="upload-button" type="button">
                                             <input type="file" class="form-control" name="resume_path">
@@ -56,7 +56,7 @@
 
                                 <h6><strong>UPLOAD COVER LETTER</strong></h6>
                                 <div class="custom-file-upload" id="drop-area" style="padding: 5%;">
-                                    <label for="file-upload" class="file-label">Drag & Drop files here or </label>
+                                    <label for="file-upload" class="file-label">Select only pdf file</label>
                                     <div class="button-container" style="text-align: center;">
                                         <button id="add-letter" class="upload-button" type="button">
                                             <input type="file" class="form-control" name="cover_letter_path">
@@ -130,6 +130,7 @@
                             @if($data['job']->jobQuestion)
                                 @foreach($data['job']->jobQuestion as $key => $question)
                                     @if($question->questionBank)
+
                                         <h6><strong>Question</strong></h6>
                                         <div class="row">
                                             <div class="form-group col-md-4 mt-2 d-flex justify-content-center">
