@@ -13,6 +13,7 @@ use App\Http\Requests\Tenants\StoreJobRequest;
 use App\Http\Requests\Tenants\UpdateJobRequest;
 use App\Http\Resources\Tenants\AnswerResourceCollection;
 use App\Http\Resources\Tenants\ApplicantJobResourceCollection;
+use App\Http\Resources\Tenants\CandidateAppliedJobsResourceCollection;
 use App\Http\Resources\Tenants\DepartmentCollection;
 use App\Http\Resources\Tenants\Job;
 use App\Http\Resources\Tenants\JobApplicantResourceCollection;
@@ -177,9 +178,22 @@ class JobsController extends Controller
     public function getJobApplicants(Request $request, $job_id)
     {
         try {
-            $data = $this->job->getJobApplicant($request, $job_id);
+            $data = $this->job->getJobApplicant($request->all(), $job_id);
             $data = new JobApplicantResourceCollection($data['applicants'], $data);
             return $this->successResponse("Jobs Applicant Listing", $data);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage("getJobApplicants", 'none', $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+    public function candidateAppliedJobs($user_id)
+    {
+        try {
+            $data = $this->job->candidateAppliedJobs($user_id);
+            $data = new CandidateAppliedJobsResourceCollection($data);
+            return $this->successResponse("Applied Jobs Listing", $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
