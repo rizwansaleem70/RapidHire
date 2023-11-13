@@ -258,6 +258,10 @@ class JobService implements JobContract
             'applicants' => $applicants,
         ];
     }
+    public function candidateAppliedJobs($user_id)
+    {
+        return $this->modelApplicant->where('user_id', $user_id)->get();
+    }
 
     public function jobApplicantProfileHeader($applicant_id)
     {

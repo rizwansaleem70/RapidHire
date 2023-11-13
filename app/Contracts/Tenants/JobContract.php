@@ -19,6 +19,7 @@ interface JobContract
     // public function getJobQualifications($job_id);
     public function ATS_Score($data, $job_id);
     public function getJobApplicant($filter, $job_id);
+    public function candidateAppliedJobs($user_id);
     public function jobApplicantProfileStatus($filter,$applicant_id,$job_id);
     public function jobApplicantQuestionAnswer($applicant_id,$job_id);
     public function jobApplicantProfileHeader($applicant_id);
