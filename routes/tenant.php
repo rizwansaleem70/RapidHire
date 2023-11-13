@@ -44,7 +44,7 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
     //    });
     Route::get('/', [CandidateHomeController::class, 'home'])->name('tenant-user-home');
     Route::view('user-about', 'candidates/about')->name('tenant-user-about');
-    Route::get('get-all-state-from-country', [HomeController::class, 'getAllState']);
+    Route::get('get-all-state-from-country', [HomeController::class, 'getAllState'])->name('get-all-state-from-country');
     Route::get('get-all-city-from-state', [HomeController::class, 'getAllCity']);
     Route::get('job', [CandidateJobsController::class, 'listing'])->name('candidate.job.list');
     Route::get('job-detail/{slug}', [CandidateJobsController::class, 'jobDetail'])->name('candidate.job.detail');
