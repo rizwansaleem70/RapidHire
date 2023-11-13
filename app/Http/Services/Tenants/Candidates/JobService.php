@@ -171,6 +171,7 @@ class JobService implements JobContract
         foreach ($data['data'] as $value) {
             $modelJobExperience = new $this->modelJobExperience;
             $modelJobExperience->user_id = $user_id;
+            $modelJobExperience->job_id = $data['job_id'];
             $modelJobExperience->organization_name = $value['organization_name'];
             $modelJobExperience->position_title = $value['position_title'];
             $modelJobExperience->start_date = $value['start_date'];
