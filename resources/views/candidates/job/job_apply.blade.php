@@ -148,6 +148,7 @@
 {{--                                @endforeach--}}
 {{--                            @endif--}}
                             <div class="row">
+                                <h6><strong>Experience</strong></h6>
                                 <div class="form-group col-md-3">
                                     <input type="text" name="data[0][organization_name]" class="form-control" id="title"
                                            aria-describedby="tiltle"

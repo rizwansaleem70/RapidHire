@@ -264,11 +264,11 @@ class JobService implements JobContract
 
     public function jobApplicantProfileHeader($applicant_id)
     {
-        $model = $this->modelApplicant->whereId($applicant_id)->first();
+        $model = $this->modelApplicant->find($applicant_id);
         if (empty($model)) {
             throw new CustomException('Applicant Not Found!');
         }
-        return $model->with(['user.country', 'user.state', 'user.city','user.experience'])->first();
+        return $this->modelApplicant->whereId($applicant_id)->with(['user.country', 'user.state', 'user.city','user.experience'])->first();
     }
 
 
