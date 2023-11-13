@@ -51,6 +51,8 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
     Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('job-apply/{slug}', [CandidateJobsController::class, 'jobApply'])->name('candidate.job.apply');
         Route::post('job-apply', [CandidateJobsController::class, 'jobApplyStore'])->name('candidate.job.apply.save');
+        Route::get('dashboard', [AuthController::class,'dashboard']);
+        Route::get('dashboard-authenticate', [AuthController::class,'dashboardAuthenticate']);
     });
     Route::view('user-contact-us', 'candidates/contact-us')->name('tenant-user-contact-us');
     Route::view('user-apply', 'candidates/apply')->name('tenant-user-apply');
@@ -110,8 +112,6 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::get('job-applicant-question-answer/{applicant_id}/{job_id}', [JobsController::class, 'jobApplicantQuestionAnswer']);
         Route::get('profile/{user_id}', [JobsController::class, 'profile']);
         Route::put('profile-update/{user_id}', [JobsController::class, 'profileUpdate']);
-        Route::get('dashboard', [AuthController::class,'dashboard']);
-        Route::get('dashboard-authenticate', [AuthController::class,'dashboardAuthenticate']);
         // Route::get('test-services', [TestsController::class, 'getTestServices']);
         // Route::post('job/{id}/services-tests', [TestServicesController::class, 'saveJobServiceTests']);
         // Route::get('job/{id}/services-tests', [TestServicesController::class, 'getJobServiceTests']);
