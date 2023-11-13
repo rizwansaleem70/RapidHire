@@ -131,14 +131,12 @@ class JobService implements JobContract
 
     public function jobApply($slug)
     {
-        $user = $this->modelUser->with(['country','state','city'])->find(Auth::user()->id);
+        $countries = $this->modelCountry->pluck('name','id');
+        $user = $this->modelUser->with(['country','state','city','experience'])->find(Auth::user()->id);
         $logo = settings()->group('logo')->get('logo');
-        $job = $this->modelJob->with(['country','state','city','jobQuestion.questionBank' => function($query){
-            return $query->where('input_type','text');
-        },'jobQualification.requirement'=> function($query){
-            return $query->where('input_type','text');
-        },])->where('slug', $slug)->first();
+        $job = $this->modelJob->with(['country','state','city','jobQuestion.questionBank','jobQualification.requirement'])->where('slug', $slug)->first();
         return [
+            'countries' => $countries,
             'job' => $job,
             'logo' => $logo,
             'user' => $user

@@ -66,107 +66,87 @@
                                 </div>
                         </div>
                         <div class="col-lg-12">
+                            <label for="first_name" class="file-label">First Name </label>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="first_name" readonly
-                                       value="{{$data['user']->first_name}}" aria-describedby="name"
-                                       placeholder="First Name *">
-
+                                <input type="text" class="form-control" id="first_name" value="{{$data['user']->first_name}}" placeholder="First Name *">
                             </div>
                             <div class="form-group">
-
-                                <input type="text" class="form-control" readonly value="{{$data['user']->last_name}}"
-                                       id="last_name" aria-describedby="name"
-                                       placeholder="Last Name *">
+                                <label for="last_name" class="file-label">Last Name </label>
+                                <input type="text" class="form-control" value="{{$data['user']->last_name}}" id="last_name" aria-describedby="name" placeholder="Last Name *">
                             </div>
                             <div class="form-group">
-
-                                <input type="email" class="form-control" id="email" readonly
-                                       value="{{$data['user']->email}}" aria-describedby="email"
-                                       placeholder="Email *">
+                                <label for="email" class="file-label">Email </label>
+                                <input type="email" class="form-control" id="email" value="{{$data['user']->email}}" aria-describedby="email" placeholder="Email *">
                             </div>
 
                             <div class="form-group">
-
-                                <input type="phone" class="form-control" id="phone" readonly
-                                       value="{{$data['user']->phone}}" aria-describedby="phone"
-                                       placeholder="Phone *">
+                                <label for="phone" class="file-label">Phone </label>
+                                <input type="tel" class="form-control" id="phone" value="{{$data['user']->phone}}" aria-describedby="phone" placeholder="Phone *">
                             </div>
 
                             <div class="form-group">
-
-                                <input type="text" class="form-control" readonly value="{{$data['user']->address}}"
-                                       id="address" aria-describedby="address"
-                                       placeholder="Address *">
+                                <label for="address" class="file-label">Address </label>
+                                <input type="text" class="form-control" value="{{$data['user']->address}}" id="address" aria-describedby="address" placeholder="Address *">
                             </div>
 
                             <div class="form-group">
-
-                                <input type="text" class="form-control" readonly value="{{@$data['user']->country->name}}"
-                                       id="country" aria-describedby="country"
-                                       placeholder="Country *">
+                                <label for="country-id" class="file-label">Country </label>
+                                <select id="country-id" class="form-control" name="country_id">
+                                    <option value=""> Select Country</option>
+                                    @foreach($data['countries'] as $key =>$country)
+                                        <option value="{{$key}}"> {{$country}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group">
-
-                                <input type="text" class="form-control" readonly value="{{@$data['user']->state->name}}"
-                                       id="state" aria-describedby="state"
-                                       placeholder="State *">
+                                <label for="state-id" class="file-label">State </label>
+                                <select id="state-id" class="form-control" name="state_id">
+                                </select>
                             </div>
                             <div class="form-group">
-
-                                <input type="text" class="form-control" readonly value="{{@$data['user']->city->name}}"
-                                       id="city" aria-describedby="city"
-                                       placeholder="City *">
+                                <label for="city-id" class="file-label">City </label>
+                                <select id="city-id" class="form-control" name="city_id">
+                                </select>
                             </div>
-
                             <div class="form-group">
-
-                                <input type="text" class="form-control" readonly value="{{$data['user']->gender}}"
-                                       id="gender" aria-describedby="gender"
-                                       placeholder="Gender *">
+                                <label for="gender" class="file-label">Gender </label>
+                                <input type="text" class="form-control" value="{{$data['user']->gender}}" id="gender" aria-describedby="gender" placeholder="Gender *">
                             </div>
-
                             <div class="form-group">
-
-                                <input type="text" class="form-control" id="skills" name="skills"
-                                       aria-describedby="skills" value="{{old('skills')}}"
-                                       placeholder="Skills *">
+                                <label for="skills" class="file-label">Skills </label>
+                                <input type="text" class="form-control" id="skills" name="skills" aria-describedby="skills" value="{{old('skills',$data['user']->skills)}}" placeholder="Skills *">
                             </div>
 
-                            <div class="form-group">
-
-                                <input type="text" class="form-control" name="source_detail"  value="{{old('source_detail')}}" id="source" aria-describedby="source"
-                                       placeholder="Source Detail ">
-                            </div>
-                            @if($data['job']->jobQuestion)
-                                @foreach($data['job']->jobQuestion as $key => $question)
-                                    @if($question->questionBank)
-                                        <div class="row">
-                                            <div class="form-group col-md-4 mt-2 d-flex justify-content-center">
-                                                <label for="file-upload" class="file-label"> <strong>Question : </strong>{{$question->questionBank->question}} ?</label>
-                                            </div>
-                                            <div class="form-group col-md-8">
-                                                <input type="hidden" class="form-control" name="question[{{$key}}][id]" value="{{$question->questionBank->id}}">
-                                                <input type="text" class="form-control" name="question[{{$key}}][answer]" value="">
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            @endif
-                            @if($data['job']->jobQualification)
-                                @foreach($data['job']->jobQualification as $key => $qualification)
-                                    @if($qualification->requirement)
-                                        <div class="row">
-                                            <div class="form-group col-md-4 mt-2 d-flex justify-content-center">
-                                                <label for="file-upload" class="file-label"> <strong>Requirements : </strong>{{$qualification->requirement->name}} ?</label>
-                                            </div>
-                                            <div class="form-group col-md-8">
-                                                <input type="hidden" class="form-control" name="requirement[{{$key}}][id]" value="{{$qualification->requirement->id}}">
-                                                <input type="text" class="form-control" name="requirement[{{$key}}][answer]" value="">
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            @endif
+{{--                            @if($data['job']->jobQuestion)--}}
+{{--                                @foreach($data['job']->jobQuestion as $key => $question)--}}
+{{--                                    @if($question->questionBank)--}}
+{{--                                        <div class="row">--}}
+{{--                                            <div class="form-group col-md-4 mt-2 d-flex justify-content-center">--}}
+{{--                                                <label for="file-upload" class="file-label"> <strong>Question : </strong>{{$question->questionBank->question}}</label>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="form-group col-md-8">--}}
+{{--                                                <input type="hidden" class="form-control" name="question[{{$key}}][id]" value="{{$question->questionBank->id}}">--}}
+{{--                                                <input type="text" class="form-control" name="question[{{$key}}][answer]" value="">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    @endif--}}
+{{--                                @endforeach--}}
+{{--                            @endif--}}
+{{--                            @if($data['job']->jobQualification)--}}
+{{--                                @foreach($data['job']->jobQualification as $key => $qualification)--}}
+{{--                                    @if($qualification->requirement)--}}
+{{--                                        <div class="row">--}}
+{{--                                            <div class="form-group col-md-4 mt-2 d-flex justify-content-center">--}}
+{{--                                                <label for="file-upload" class="file-label"> <strong>Requirements : </strong>{{$qualification->requirement->name}}</label>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="form-group col-md-8">--}}
+{{--                                                <input type="hidden" class="form-control" name="requirement[{{$key}}][id]" value="{{$qualification->requirement->id}}">--}}
+{{--                                                <input type="text" class="form-control" name="requirement[{{$key}}][answer]" value="">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    @endif--}}
+{{--                                @endforeach--}}
+{{--                            @endif--}}
                             <div class="row">
                                 <div class="form-group col-md-3">
                                     <input type="text" name="data[0][organization_name]" class="form-control" id="title"
@@ -204,6 +184,10 @@
                                 </div>
                             </div>
                             <div id="dynamicAddRemove">
+                            </div>
+                            <div class="form-group">
+                                <label for="source_detail" class="file-label">Source Detail </label>
+                                <input type="text" class="form-control" name="source_detail"  value="{{old('source_detail')}}" id="source_detail" aria-describedby="source" placeholder="Source Detail ">
                             </div>
                             <div class="d-flex justify-content-end">
                                 <button class="cancel-button mr-2">Cancel</button>
@@ -297,6 +281,57 @@
         var input = document.querySelector('input[name=skills]');
 
         new Tagify(input)
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#country-id').on('change', function () {
+                var idCountry = this.value;
+                $("#state-id").html('');
+                $.ajax({
+
+                    url: `{{route('get-all-state-from-country')}}`,
+                    method: "GET",
+                    data: {
+                        country_id: idCountry,
+                        _token: '{{csrf_token()}}'
+                    },
+                    dataType: 'json',
+                    success: function (result) {
+                        $('#state-id').html(result.data);
+                        $.each(result.data, function (key, value) {
+                            $("#state-id.nice-select").append('<option value="' + value.id + '">' + value.name + '</option>');
+                        });
+                        $('#city-id').html('<option value="">Select City</option>');
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error("Error fetching states:", textStatus, errorThrown);
+                    }
+                });
+            });
+            $('#state-id').on('change', function () {
+                var idState = this.value;
+                $("#city-id").html('');
+                $.ajax({
+                    url: 'get-all-city-from-state',
+                    method: "GET",
+                    data: {
+                        state_id: idState,
+                        _token: '{{csrf_token()}}'
+                    },
+                    dataType: 'json',
+                    success: function (res) {
+                        $('#city-id').html('<option value="">Select City</option>');
+                        $.each(res.data, function (key, value) {
+                            $("#city-id").append('<option value="' + value
+                                .id + '">' + value.name + '</option>');
+                        });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error("Error fetching states:", textStatus, errorThrown);
+                    }
+                });
+            });
+        });
     </script>
 
 @endpush

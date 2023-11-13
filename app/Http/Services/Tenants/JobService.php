@@ -234,10 +234,9 @@ class JobService implements JobContract
 
         $totalApplicant = $baseQuery->count();
 
-        $applicants = (clone $baseQuery)->when($filter->status, function ($q, $status) {
-            return $q->where('status', $status);
+        $applicants = (clone $baseQuery)->when(isset($filter['status']), function ($q) use ($filter) {
+            return $q->where('status', $filter['status']);
         })->with('user.experience')->paginate(10);
-
         $totalApplied= (clone $baseQuery)->where('status', 'applied')->count();
         $totalQualification = (clone $baseQuery)->where('status', 'qualification')->count();
         $totalTesting = (clone $baseQuery)->where('status', 'testing')->count();
