@@ -117,70 +117,66 @@
                                 <input type="text" class="form-control" id="skills" name="skills" aria-describedby="skills" value="{{old('skills',$data['user']->skills)}}" placeholder="Skills *">
                             </div>
 
-{{--                            @if($data['job']->jobQuestion)--}}
-{{--                                @foreach($data['job']->jobQuestion as $key => $question)--}}
-{{--                                    @if($question->questionBank)--}}
-{{--                                        <div class="row">--}}
-{{--                                            <div class="form-group col-md-4 mt-2 d-flex justify-content-center">--}}
-{{--                                                <label for="file-upload" class="file-label"> <strong>Question : </strong>{{$question->questionBank->question}}</label>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="form-group col-md-8">--}}
-{{--                                                <input type="hidden" class="form-control" name="question[{{$key}}][id]" value="{{$question->questionBank->id}}">--}}
-{{--                                                <input type="text" class="form-control" name="question[{{$key}}][answer]" value="">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    @endif--}}
-{{--                                @endforeach--}}
-{{--                            @endif--}}
-{{--                            @if($data['job']->jobQualification)--}}
-{{--                                @foreach($data['job']->jobQualification as $key => $qualification)--}}
-{{--                                    @if($qualification->requirement)--}}
-{{--                                        <div class="row">--}}
-{{--                                            <div class="form-group col-md-4 mt-2 d-flex justify-content-center">--}}
-{{--                                                <label for="file-upload" class="file-label"> <strong>Requirements : </strong>{{$qualification->requirement->name}}</label>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="form-group col-md-8">--}}
-{{--                                                <input type="hidden" class="form-control" name="requirement[{{$key}}][id]" value="{{$qualification->requirement->id}}">--}}
-{{--                                                <input type="text" class="form-control" name="requirement[{{$key}}][answer]" value="">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    @endif--}}
-{{--                                @endforeach--}}
-{{--                            @endif--}}
+                            @if($data['job']->jobQuestion)
+                                @foreach($data['job']->jobQuestion as $key => $question)
+                                    @if($question->questionBank)
+                                        <h6><strong>Question</strong></h6>
+                                        <div class="row">
+                                            <div class="form-group col-md-4 mt-2 d-flex justify-content-center">
+                                                <label for="file-upload" class="file-label">{{$question->questionBank->question}}</label>
+                                            </div>
+                                            <div class="form-group col-md-8">
+                                                <input type="hidden" class="form-control" name="question[{{$key}}][id]" value="{{$question->questionBank->id}}">
+                                                <input type="text" class="form-control" name="question[{{$key}}][answer]" value="">
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @endif
+                            @if($data['job']->jobQualification)
+                                @foreach($data['job']->jobQualification as $key => $qualification)
+                                    @if($qualification->requirement)
+                                        <h6><strong>Requirements</strong></h6>
+                                        <div class="row">
+                                            <div class="form-group col-md-4 mt-2 d-flex justify-content-center">
+                                                <label for="file-upload" class="file-label">{{$qualification->requirement->name}}</label>
+                                            </div>
+                                            <div class="form-group col-md-8">
+                                                <input type="hidden" class="form-control" name="requirement[{{$key}}][id]" value="{{$qualification->requirement->id}}">
+                                                <input type="text" class="form-control" name="requirement[{{$key}}][answer]" value="">
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @endif
                             <div class="row">
                                 <h6><strong>Experience</strong></h6>
                                 <div class="form-group col-md-3">
-                                    <input type="text" name="data[0][organization_name]" class="form-control" id="title"
-                                           aria-describedby="tiltle"
-                                           placeholder="Organization Name  ">
+                                    <label for="title" class="file-label">Organization Name </label>
+                                    <input type="text" name="data[0][organization_name]" class="form-control" id="title" placeholder="Organization Name  ">
                                 </div>
                                 <div class="form-group col-md-3">
-
-                                    <input type="text" class="form-control" id="title" name="data[0][position_title]" aria-describedby="title"
-                                           placeholder="Position Title * ">
+                                    <label for="position_title" class="file-label">Position Title </label>
+                                    <input type="text" class="form-control" id="position_title" name="data[0][position_title]" aria-describedby="title" placeholder="Position Title * ">
                                 </div>
 
                                 <div class="form-group col-md-2">
-
-                                    <input type="date" class="form-control" name="data[0][start_date]" id="start"
-                                           aria-describedby="start"
-                                           placeholder="Start Date ">
+                                    <label for="start" class="file-label">Start Date</label>
+                                    <input type="date" class="form-control" name="data[0][start_date]" id="start" aria-describedby="start" placeholder="Start Date ">
                                 </div>
 
-                                <div class="form-group col-md-2">
-
-                                    <input type="date" class="form-control" id="end" name="data[0][end_date]"
-                                           aria-describedby="end"
-                                           placeholder="End ">
+                                <div class="form-group col-md-2" id="end_0">
+                                    <label for="end" class="file-label">End Date</label>
+                                    <input type="date" class="form-control" id="end" name="data[0][end_date]" aria-describedby="end" placeholder="End ">
                                 </div>
 
-                                <div class="form-check  col-md-1" style="margin-top: 1rem;">
-                                    <input class="form-check-input" type="checkbox" name="data[0][is_present]" value="{{true}}" id="gridCheck1">
+                                <div class="form-check  col-md-1" style="margin-top: 2rem;">
+                                    <input class="form-check-input" type="checkbox" name="data[0][is_present]" value="{{true}}" id="is_present_0">
                                     <label class="form-check-label" for="gridCheck1">
-                                        Present
+                                        Present Job
                                     </label>
                                 </div>
-                                <div class="form-check  col-md-1" style="margin-top: 1rem;">
+                                <div class="form-check  col-md-1" style="margin-top: 2rem;">
                                     <button type="button" name="add" id="dynamic-ar" class="btn btn-primary"><i class="fas fa-plus"></i></button>
                                 </div>
                             </div>
@@ -235,6 +231,19 @@
     <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript">
         var i = 0;
+        function toggleEndDateVisibility(checkbox) {
+            var index = checkbox.attr('id').split('_')[2];
+            var endDateField = $('#end_' + index);
+            if (checkbox.is(':checked')) {
+                endDateField.hide();
+            } else {
+                endDateField.show();
+            }
+        }
+        toggleEndDateVisibility($('#is_present_0'));
+        $('#is_present_0').change(function () {
+            toggleEndDateVisibility($(this));
+        });
         $("#dynamic-ar").click(function () {
             ++i;
             $("#dynamicAddRemove").append(
@@ -257,24 +266,27 @@
                                placeholder="Start Date ">
                     </div>
 
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-2" id="end_${i}">
 
                         <input type="date" class="form-control" id="end" name="data[${i}][end_date]"
                                aria-describedby="end"
                                placeholder="End ">
                     </div>
 
-                    <div class="form-check  col-md-1" style="margin-top: 1rem;">
-                        <input class="form-check-input" type="checkbox" name="data[${i}][is_present]" value="1" id="gridCheck1">
+                    <div class="form-check  col-md-1">
+                        <input class="form-check-input" type="checkbox" name="data[${i}][is_present]" value="1" id="is_present_${i}">
                         <label class="form-check-label" for="gridCheck1">
-                            Present
+                            Present Job
                         </label>
                     </div>
-                    <div class="form-check  col-md-1" style="margin-top: 1rem;">
+                    <div class="form-check  col-md-1">
                         <button type="button" class="btn btn-outline-danger remove-input-field"><i class="fas fa-trash"></i></button>
                     </div>
                 </div>`
             );
+        });
+        $(document).on('change', '[id^=is_present_]', function () {
+            toggleEndDateVisibility($(this));
         });
         $(document).on('click', '.remove-input-field', function () {
             $(this).parents('.del-class').remove();
