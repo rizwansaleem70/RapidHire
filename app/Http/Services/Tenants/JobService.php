@@ -99,20 +99,22 @@ class JobService implements JobContract
 
     public function job_qualification($data, $job_id)
     {
-        $input = $data->input();
-        $model = $this->model->with('jobQualification')->find($job_id);
+        $model = $this->model->find($job_id);
         if (empty($model)) {
             throw new CustomException('Job Record Not Found!');
         }
-        foreach ($input as $value) {
+        foreach ($data as $value) {
             foreach ($value as $finalValue) {
                 $qualification = $this->modelJobRequirement->with('requirement')->whereJobIdAndRequirementId($job_id, $finalValue['requirement_id'])->first();
                 $this->modelJobQualification::create([
                     'job_id' => $job_id,
+                    'requirement_id' => $finalValue['requirement_id'],
+                    'operator' => $finalValue['operator'],
+                    'value' => $finalValue['value'],
+                    'is_required' => $finalValue['is_required'],
                     'name' => $qualification->requirement->name,
                     'input_type' => $qualification->requirement->input_type,
                     'option' => $qualification->requirement->option,
-                    'position' => $finalValue['position'],
                 ]);
             }
         }
