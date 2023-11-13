@@ -100,13 +100,22 @@
                             </div>
                             <div class="form-group">
                                 <label for="state-id" class="file-label">State </label>
-                                    <select id="state-id" class="form-control" name="state_id">
-                                    </select>
-
+                                <select id="state-id" class="form-control" name="state_id">
+                                    @if($data['user']->state_id)
+                                        @foreach($data['states'] as $key =>$state)
+                                            <option {{$key == $data['user']->state_id ? "selected" : ""}}  class="form-control" value="{{$key}}"> {{$state}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="city-id" class="file-label">City </label>
                                 <select id="city-id" class="form-control" name="city_id">
+                                    @if($data['user']->city_id)
+                                        @foreach($data['cities'] as $key =>$city)
+                                            <option {{$key == $data['user']->city_id ? "selected" : ""}}  class="form-control" value="{{$key}}"> {{$city}}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                             <div class="form-group">
