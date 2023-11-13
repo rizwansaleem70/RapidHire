@@ -13,9 +13,6 @@ return new class extends Migration
     {
         Schema::table('applicants', function (Blueprint $table) {
             $table->renameColumn('resume_path','job_resume_path');
-            $table->string('skills')->after('source_detail');
-
-//            $table->dropColumn('skills');
         });
     }
 
