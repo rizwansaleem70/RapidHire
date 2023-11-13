@@ -88,7 +88,7 @@ class JobsController extends Controller
     {
         try {
             DB::beginTransaction();
-            $this->job->job_qualification($request, $job_id);
+            $this->job->job_qualification($request->all(), $job_id);
             DB::commit();
             return $this->okResponse("Job Qualification Records Save Successfully");
         } catch (CustomException $th) {
