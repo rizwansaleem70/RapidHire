@@ -8,10 +8,14 @@ use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\Tenants\ChangePasswordRequest;
+use App\Http\Requests\Tenants\DeleteProfileRequest;
 use App\Http\Requests\Tenants\LoginRequest;
 use App\Http\Requests\Tenants\RegisterRequest;
 use App\Http\Resources\Tenants\LoginUserResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class AuthController extends Controller
@@ -101,10 +105,23 @@ class AuthController extends Controller
             return $this->failedResponse("Something went wrong!");
         }
     }
-    public function deleteProfile()
+    public function favoriteJob()
     {
         try {
-            $this->_auth->deleteProfile(auth()->user()->id);
+            $favoriteJob = $this->_auth->favoriteJob();
+            dd($favoriteJob);
+            return $this->okResponse("Favorite Job Fetch Successfully");
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            helper::logMessage("Logout", "Logout", $th->getMessage());
+            return $this->failedResponse("Something went wrong!");
+        }
+    }
+    public function deleteProfile(DeleteProfileRequest $request)
+    {
+        try {
+            $this->_auth->deleteProfile($request->all());
             return $this->okResponse("User Delete Successfully");
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
@@ -113,4 +130,35 @@ class AuthController extends Controller
             return $this->failedResponse("Something went wrong!");
         }
     }
+    public function dashboard()
+    {
+        try {
+            $data = [
+                'id' => Crypt::encrypt(Auth::user()->id),
+            ];
+            return $this->successResponse("User ID Fetch Successfully",$data);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            helper::logMessage("dashboard", "dashboard", $th->getMessage());
+            return $this->failedResponse("Something went wrong!");
+        }
+    }
+    public function dashboardAuthenticate(Request $request)
+    {
+        try {
+            $user = $this->_auth->dashboardAuthenticate($request->id);
+            $data = [
+                'token' => $user->createToken(Str::random(10))->plainTextToken,
+                'user' => new LoginUserResponse($user),
+            ];
+            return $this->successResponse("User Login Successfully", $data);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            helper::logMessage("dashboardAuthenticate", "dashboardAuthenticate", $th->getMessage());
+            return $this->failedResponse("Something went wrong!");
+        }
+    }
+
 }

@@ -18,7 +18,7 @@ class LoginUserResponse extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'logo' => asset('storage/' . $this->logo)
+            'logo' => $this->logo ? asset('storage/' . $this->logo): ""
         ];
     }
 }
