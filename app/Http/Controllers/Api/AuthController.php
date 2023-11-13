@@ -11,6 +11,7 @@ use App\Http\Requests\Tenants\ChangePasswordRequest;
 use App\Http\Requests\Tenants\DeleteProfileRequest;
 use App\Http\Requests\Tenants\LoginRequest;
 use App\Http\Requests\Tenants\RegisterRequest;
+use App\Http\Resources\Tenants\FavoriteJobResourceCollection;
 use App\Http\Resources\Tenants\LoginUserResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -109,12 +110,12 @@ class AuthController extends Controller
     {
         try {
             $favoriteJob = $this->_auth->favoriteJob();
-            dd($favoriteJob);
-            return $this->okResponse("Favorite Job Fetch Successfully");
+            $data = new FavoriteJobResourceCollection($favoriteJob);
+            return $this->successResponse("Favorite Job Fetch Successfully",$data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("Logout", "Logout", $th->getMessage());
+            helper::logMessage("favorite Job", "favorite Job", $th->getMessage());
             return $this->failedResponse("Something went wrong!");
         }
     }
