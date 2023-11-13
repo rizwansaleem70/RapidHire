@@ -40,12 +40,12 @@
                                         <button id="add-files" class="upload-button" type="button">
                                             <input type="file" class="form-control" name="resume_path">
                                         </button>
-                                        <a href="https://www.linkedin.com/">
-                                            <button id="linkedin-button" class="linkedin-button" type="button"><img
-                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAByElEQVR4nO2ZP0/CQBjG22scXI2Tiauy+glc3MC4+iX8DA6G9IiDJsYBBhdNHJwcNRGIHY3xjoBCgkTEAUP8A63yt7ymBVQEIq2mvSb3JM/UN5fnd+97N1wFgYuLi4tpSTJdQTKJI5lqCFNwxDLVRExjkkyW/xRexAQ7FhoPt4hJ0P7OuxwedS2FSMAygDk2DIRHRhdkGrUOgInqdnDUs0wqNgAYCI6//G8AvkgazgsaaA0dlIIG8+G0twCUggbfFb/XvAWgNfQ+ALWuewtA8XoHfJG0CWF0IpZXYS584y0A5JIFDoA7OzFM43yf3b2G7YsSpEpVqDbb8FprmaO4dvoAk5sJtgEW9jLw+NaEUbosvsPMTopdgOxLHX5TLK+CxCrAuPIf5dgE0Ntgzv/S4S2sHucheqcOrdtPPrMJsK4U+2omQgk4yVUG6jJPNTYBpreTA+ssHmQH6sq1FnsA7R/fe57aSo5d63oH7K6FOADmHTDFRwjzQ0z5LYT4NWpRo24Otyx4+mkR07JlAON9noHgYFjE9MwygPFzwe3gqGsJX/ktA3S6QIJuhxcx2bAV/rMTIRIw3uedPRNENcbG9s5zcXFxCU7pA5Jwntel+S2tAAAAAElFTkSuQmCC"
-                                                    style="width: 20px;">Easy Apply
-                                            </button>
-                                        </a>
+{{--                                        <a href="https://www.linkedin.com/">--}}
+{{--                                            <button id="linkedin-button" class="linkedin-button" type="button"><img--}}
+{{--                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAByElEQVR4nO2ZP0/CQBjG22scXI2Tiauy+glc3MC4+iX8DA6G9IiDJsYBBhdNHJwcNRGIHY3xjoBCgkTEAUP8A63yt7ymBVQEIq2mvSb3JM/UN5fnd+97N1wFgYuLi4tpSTJdQTKJI5lqCFNwxDLVRExjkkyW/xRexAQ7FhoPt4hJ0P7OuxwedS2FSMAygDk2DIRHRhdkGrUOgInqdnDUs0wqNgAYCI6//G8AvkgazgsaaA0dlIIG8+G0twCUggbfFb/XvAWgNfQ+ALWuewtA8XoHfJG0CWF0IpZXYS584y0A5JIFDoA7OzFM43yf3b2G7YsSpEpVqDbb8FprmaO4dvoAk5sJtgEW9jLw+NaEUbosvsPMTopdgOxLHX5TLK+CxCrAuPIf5dgE0Ntgzv/S4S2sHucheqcOrdtPPrMJsK4U+2omQgk4yVUG6jJPNTYBpreTA+ssHmQH6sq1FnsA7R/fe57aSo5d63oH7K6FOADmHTDFRwjzQ0z5LYT4NWpRo24Otyx4+mkR07JlAON9noHgYFjE9MwygPFzwe3gqGsJX/ktA3S6QIJuhxcx2bAV/rMTIRIw3uedPRNENcbG9s5zcXFxCU7pA5Jwntel+S2tAAAAAElFTkSuQmCC"--}}
+{{--                                                    style="width: 20px;">Easy Apply--}}
+{{--                                            </button>--}}
+{{--                                        </a>--}}
 
                                         <p id="selectedFileName" style="margin-top: 2rem;">No file choosen </p>
                                     </div>
@@ -311,9 +311,9 @@
                     dataType: 'json',
                     success: function (result) {
                         $('#state-id').html(result.data);
-                        $.each(result.data, function (key, value) {
-                            $("#state-id.nice-select").append('<option value="' + value.id + '">' + value.name + '</option>');
-                        });
+                        // $.each(result.data, function (key, value) {
+                        //     $("#state-id.nice-select").append('<option value="' + value.id + '">' + value.name + '</option>');
+                        // });
                         $('#city-id').html('<option value="">Select City</option>');
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -325,19 +325,20 @@
                 var idState = this.value;
                 $("#city-id").html('');
                 $.ajax({
-                    url: 'get-all-city-from-state',
+                    url: `{{route('get-all-city-from-state')}}`,
                     method: "GET",
                     data: {
                         state_id: idState,
                         _token: '{{csrf_token()}}'
                     },
                     dataType: 'json',
-                    success: function (res) {
-                        $('#city-id').html('<option value="">Select City</option>');
-                        $.each(res.data, function (key, value) {
-                            $("#city-id").append('<option value="' + value
-                                .id + '">' + value.name + '</option>');
-                        });
+                    success: function (result) {
+                        $('#city-id').html(result.data);
+                        // $('#city-id').html('<option value="">Select City</option>');
+                        // $.each(res.data, function (key, value) {
+                        //     $("#city-id").append('<option value="' + value
+                        //         .id + '">' + value.name + '</option>');
+                        // });
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.error("Error fetching states:", textStatus, errorThrown);

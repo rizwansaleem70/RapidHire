@@ -100,7 +100,7 @@
 <script src="{{asset('app-assets/candidates/javascript/bootstrap.min.js')}}"></script>
 <script src="{{asset('app-assets/candidates/javascript/boostrap-select.min.js')}}"></script>
 <script src="{{asset('app-assets/candidates/javascript/jquery.fancybox.js')}}"></script>
-<script src="{{asset('app-assets/candidates/javascript/jquery.nice-select.min.js')}}"></script>
+{{--<script src="{{asset('app-assets/candidates/javascript/jquery.nice-select.min.js')}}"></script>--}}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFC3m2n0jBRFTMvUNZc0-6Y0Rzlcadzcw"></script>
 <script src="{{asset('app-assets/candidates/javascript/maps.js')}}"></script>
 <script src="{{asset('app-assets/candidates/javascript/countto.js')}}"></script>

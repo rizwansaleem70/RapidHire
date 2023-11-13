@@ -37,9 +37,9 @@ class HomeController extends Controller
     public function getAllState(Request $request): \Illuminate\Http\JsonResponse
     {
         try {
-            $home = $this->home->getAllState($request);
-            $home = new StateResourceCollection($home);
-            return $this->successResponse("Successfully State Fetch", $home);
+            $states = $this->home->getAllState($request);
+            $view = view('candidates.states', compact('states'))->render();
+            return $this->successResponse("Successfully State Fetch", $view);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
@@ -50,9 +50,9 @@ class HomeController extends Controller
     public function getAllCity(Request $request): \Illuminate\Http\JsonResponse
     {
         try {
-            $home = $this->home->getAllCity($request);
-            $home = new CityResourceCollection($home);
-            return $this->successResponse("Successfully City Fetch", $home);
+            $cities = $this->home->getAllCity($request);
+            $view = view('candidates.cities', compact('cities'))->render();
+            return $this->successResponse("Successfully City Fetch", $view);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
