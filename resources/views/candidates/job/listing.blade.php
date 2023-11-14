@@ -19,7 +19,6 @@
                                     <div class="group-form">
                                         <label class="title">Country</label>
                                         <div class="group-input has-icon">
-                                            <i class="icon-map-pin"></i>
                                             <select id="country-id" name="country_id">
                                                 <option value="">Select Country</option>
                                                 @foreach($data['country'] as $key => $value)
@@ -31,7 +30,6 @@
                                     <div class="group-form">
                                         <label class="title">State</label>
                                         <div class="group-input has-icon">
-                                            <i class="icon-map-pin"></i>
                                             <select id="state-id" name="state_id">
                                             </select>
                                         </div>
@@ -40,7 +38,6 @@
 
                                         <label class="title">City</label>
                                         <div class="group-input has-icon">
-                                            <i class="icon-map-pin"></i>
                                             <select id="city-id" name="city_id">
                                             </select>
                                         </div>
@@ -147,28 +144,12 @@
                                             <option>1 Per Page</option>
                                             <option>10 Per Page</option>
                                         </select>
-                                        <div class="nice-select" tabindex="0"><span class="current">12 Per Page</span>
-                                            <ul class="list">
-                                                <li data-value="12 Per Page" class="option selected">12 Per Page</li>
-                                                <li data-value="1 Per Page" class="option">1 Per Page</li>
-                                                <li data-value="10 Per Page" class="option">10 Per Page</li>
-                                            </ul>
-                                        </div>
+                                        
                                         <select>
                                             <option>Sort by (Defaut)</option>
                                             <option>New</option>
                                             <option>Last</option>
                                         </select>
-                                        <div class="nice-select" tabindex="0"><span
-                                                class="current">Sort by (Defaut)</span>
-                                            <ul class="list">
-                                                <li data-value="Sort by (Defaut)" class="option selected">Sort by
-                                                    (Defaut)
-                                                </li>
-                                                <li data-value="New" class="option">New</li>
-                                                <li data-value="Last" class="option">Last</li>
-                                            </ul>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -179,7 +160,7 @@
                                             <div class="job-archive-header">
                                                 <div class="inner-box">
                                                     <div class="logo-company">
-                                                        <img src="{{asset($data['logo'])}}"
+                                                        <img src="{{ asset('images/devjeco-logo.png')}}"
                                                              alt="Logo">
                                                     </div>
                                                     <div class="box-content">
@@ -319,6 +300,7 @@
 
 @endsection
 @push('js')
+{{-- <script src="{{asset('app-assets/candidates/javascript/jquery.nice-select.min.js')}}"></script> --}}
 <script>
     $(document).ready(function () {
         $('#country-id').on('change', function () {

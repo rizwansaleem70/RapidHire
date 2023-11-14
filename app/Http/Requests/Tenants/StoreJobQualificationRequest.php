@@ -24,7 +24,9 @@ class StoreJobQualificationRequest extends FormRequest
     {
         return [
             'data.*.requirement_id' => 'required|exists:requirements,id',
-            'data.*.position' => 'required',
+            'data.*.operator' => 'required',
+            'data.*.value' => 'required',
+            'data.*.is_required' => 'required',
         ];
     }
 

@@ -48,9 +48,9 @@ class InterviewsController extends Controller
         try {
             DB::beginTransaction();
             $interview = $this->interview->setInterview($request->prepareData());
+            DB::commit();
             if ($interview)
                 $interview = new CandidateInterviewResourceCollection($this->interview->getScheduledInterviews($request->applicant_id));
-            DB::commit();
             return $this->successResponse("Interview Scheduled Successfully", $interview);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());

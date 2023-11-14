@@ -44,8 +44,8 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
     //    });
     Route::get('/', [CandidateHomeController::class, 'home'])->name('tenant-user-home');
     Route::view('user-about', 'candidates/about')->name('tenant-user-about');
-    Route::get('get-all-state-from-country', [HomeController::class, 'getAllState'])->name('get-all-state-from-country');
-    Route::get('get-all-city-from-state', [HomeController::class, 'getAllCity'])->name('get-all-city-from-state');
+    Route::get('get-all-state-from-country', [HomeController::class, 'getAllStateCandidate'])->name('get-all-state-from-country');
+    Route::get('get-all-city-from-state', [HomeController::class, 'getAllCityCandidate'])->name('get-all-city-from-state');
     Route::get('job', [CandidateJobsController::class, 'listing'])->name('candidate.job.list');
     Route::get('job-detail/{slug}', [CandidateJobsController::class, 'jobDetail'])->name('candidate.job.detail');
     Route::group(['middleware' => 'auth:sanctum'], function () {
@@ -74,9 +74,10 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
     //    Route::post('forgot', [AuthController::class, 'forgot']);
-    Route::get('dashboard-authenticate', [AuthController::class,'dashboardAuthenticate']);
+    Route::get('dashboard-authenticate', [AuthController::class, 'dashboardAuthenticate']);
 
     Route::group(['middleware' => ['auth:sanctum', 'cors']], function () {
+        Route::get('dashboard', [HomeController::class, 'getDashboardStats']);
         Route::get('get-all-country', [HomeController::class, 'getAllCountry']);
         Route::get('get-all-state-from-country', [HomeController::class, 'getAllState']);
         Route::get('get-all-city-from-state', [HomeController::class, 'getAllCity']);
@@ -88,6 +89,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['location' => LocationsController::class]);
         Route::apiResources(['job' => JobsController::class]);
         Route::get('question-list', [JobsController::class, 'questionList']);
+        Route::get('job-qualification/{job_id}/{applicant_id}', [JobsController::class, 'getJobQualifications']);
         Route::post('job-qualification/{job_id}', [JobsController::class, 'job_qualification']);
         Route::get('get-country-against-job/{id}', [JobsController::class, 'get_country_against_job']);
         Route::post('ATS-score/{job_id}', [JobsController::class, 'ATS_Score']);
@@ -111,7 +113,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::get('job-applicant-question-answer/{applicant_id}/{job_id}', [JobsController::class, 'jobApplicantQuestionAnswer']);
         Route::get('profile/{user_id}', [JobsController::class, 'profile']);
         Route::put('profile-update/{user_id}', [JobsController::class, 'profileUpdate']);
-        Route::get('candidate-applied-jobs/{user_id}', [JobsController::class, 'candidateAppliedJobs']);
+        Route::get('candidate-applied-jobs', [JobsController::class, 'candidateAppliedJobs']);
         // Route::get('test-services', [TestsController::class, 'getTestServices']);
         // Route::post('job/{id}/services-tests', [TestServicesController::class, 'saveJobServiceTests']);
         // Route::get('job/{id}/services-tests', [TestServicesController::class, 'getJobServiceTests']);
@@ -120,5 +122,6 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::post('schedule_interview', [InterviewsController::class, 'store']);
         Route::get('get_candidate_interviews/{applicant_id}', [InterviewsController::class, 'index']);
         Route::delete('schedule_interview/{id}', [InterviewsController::class, 'destroy']);
+        Route::get('documents', [JobsController::class, 'getApplicantDocuments']);
     });
 });

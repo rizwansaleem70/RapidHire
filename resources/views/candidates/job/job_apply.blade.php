@@ -13,6 +13,7 @@
                             <div class="content-left">
                                 <div class="thumb">
                                     <img src="{{ asset($data['logo']) }}" alt="logo">
+                                    {{-- <img src="{{ asset('tenancy/assets/images/devjeco-logo.png') }}" alt="logo"> --}}
                                 </div>
 
                                 <div class="content">
@@ -35,9 +36,15 @@
                     <form action="{{ route('candidate.job.apply.save') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="col-lg-12">
+                            {{--                                        <a href="https://www.linkedin.com/"> --}}
+                            {{--                                            <button id="linkedin-button" class="linkedin-button" type="button"><img --}}
+                            {{--                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAByElEQVR4nO2ZP0/CQBjG22scXI2Tiauy+glc3MC4+iX8DA6G9IiDJsYBBhdNHJwcNRGIHY3xjoBCgkTEAUP8A63yt7ymBVQEIq2mvSb3JM/UN5fnd+97N1wFgYuLi4tpSTJdQTKJI5lqCFNwxDLVRExjkkyW/xRexAQ7FhoPt4hJ0P7OuxwedS2FSMAygDk2DIRHRhdkGrUOgInqdnDUs0wqNgAYCI6//G8AvkgazgsaaA0dlIIG8+G0twCUggbfFb/XvAWgNfQ+ALWuewtA8XoHfJG0CWF0IpZXYS584y0A5JIFDoA7OzFM43yf3b2G7YsSpEpVqDbb8FprmaO4dvoAk5sJtgEW9jLw+NaEUbosvsPMTopdgOxLHX5TLK+CxCrAuPIf5dgE0Ntgzv/S4S2sHucheqcOrdtPPrMJsK4U+2omQgk4yVUG6jJPNTYBpreTA+ssHmQH6sq1FnsA7R/fe57aSo5d63oH7K6FOADmHTDFRwjzQ0z5LYT4NWpRo24Otyx4+mkR07JlAON9noHgYFjE9MwygPFzwe3gqGsJX/ktA3S6QIJuhxcx2bAV/rMTIRIw3uedPRNENcbG9s5zcXFxCU7pA5Jwntel+S2tAAAAAElFTkSuQmCC" --}}
+                            {{--                                                    style="width: 20px;">Easy Apply --}}
+                            {{--                                            </button> --}}
+                            {{--                                        </a> --}}
                             <h6><strong>UPLOAD RESUME</strong></h6>
                             <div class="custom-file-upload" id="drop-area" style="padding: 5%;">
-                                <label for="file-upload" class="file-label">Drag & Drop files here or </label>
+                                <label for="file-upload" class="file-label">Select only pdf file </label>
                                 <div class="button-container" style="text-align: center;">
                                     <button id="add-files" class="upload-button" type="button">
                                         <input type="file" class="form-control" name="resume_path">
@@ -51,180 +58,276 @@
 
                                     <p id="selectedFileName" style="margin-top: 2rem;">No file choosen </p>
                                 </div>
-
                             </div>
                             <span id="file-name-display"></span> <!-- Display uploaded file name here -->
                             <input type="hidden" name="job_id" value="{{ @$data['job']->id }}">
 
                             <h6><strong>UPLOAD COVER LETTER</strong></h6>
                             <div class="custom-file-upload" id="drop-area" style="padding: 5%;">
-                                <label for="file-upload" class="file-label">Drag & Drop files here or </label>
                                 <div class="button-container" style="text-align: center;">
-                                    <button id="add-letter" class="upload-button" type="button">
-                                        <input type="file" class="form-control" name="cover_letter_path">
-                                    </button>
+                                    <span id="file-name-display"></span>
+                                    <!-- Display uploaded file name here -->
+                                    <input type="hidden" name="job_id" value="{{ @$data['job']->id }}">
+
+                                    <h6><strong>UPLOAD COVER LETTER</strong></h6>
+                                    <div class="custom-file-upload" id="drop-area" style="padding: 5%;">
+                                        <label for="file-upload" class="file-label">Select only pdf
+                                            file</label>
+                                        <div class="button-container" style="text-align: center;">
+                                            <button id="add-letter" class="upload-button" type="button">
+                                                <input type="file" class="form-control" name="cover_letter_path">
+                                            </button>
+                                        </div>
+                                        <p id="selectedFileName2" style="margin-top: 2rem;">No file chosen
+                                        </p>
+                                    </div>
+                                    <p id="selectedFileName2" style="margin-top: 2rem;">No file chosen</p>
                                 </div>
-                                <p id="selectedFileName2" style="margin-top: 2rem;">No file chosen</p>
                             </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="first_name" class="file-label">First Name </label>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="first_name"
-                                    value="{{ $data['user']->first_name }}" placeholder="First Name *">
-                            </div>
-                            <div class="form-group">
-                                <label for="last_name" class="file-label">Last Name </label>
-                                <input type="text" class="form-control" value="{{ $data['user']->last_name }}"
-                                    id="last_name" aria-describedby="name" placeholder="Last Name *">
-                            </div>
-                            <div class="form-group">
-                                <label for="email" class="file-label">Email </label>
-                                <input type="email" class="form-control" id="email" value="{{ $data['user']->email }}"
-                                    aria-describedby="email" placeholder="Email *">
-                            </div>
+                            <div class="col-lg-12">
+                                <label for="first_name" class="file-label">First Name </label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="first_name"
+                                        value="{{ $data['user']->first_name }}" placeholder="First Name *">
+                                </div>
+                                <div class="form-group">
+                                    <label for="last_name" class="file-label">Last Name </label>
+                                    <input type="text" class="form-control" value="{{ $data['user']->last_name }}"
+                                        id="last_name" aria-describedby="name" placeholder="Last Name *">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="file-label">Email </label>
+                                    <input type="email" class="form-control" id="email"
+                                        value="{{ $data['user']->email }}" aria-describedby="email" placeholder="Email *">
+                                </div>
 
-                            <div class="form-group">
-                                <label for="phone" class="file-label">Phone </label>
-                                <input type="tel" class="form-control" id="phone" value="{{ $data['user']->phone }}"
-                                    aria-describedby="phone" placeholder="Phone *">
-                            </div>
+                                <div class="form-group">
+                                    <label for="phone" class="file-label">Phone </label>
+                                    <input type="tel" class="form-control" id="phone"
+                                        value="{{ $data['user']->phone }}" aria-describedby="phone"
+                                        placeholder="Phone *">
+                                </div>
 
-                            <div class="form-group">
-                                <label for="address" class="file-label">Address </label>
-                                <input type="text" class="form-control" value="{{ $data['user']->address }}"
-                                    id="address" aria-describedby="address" placeholder="Address *">
-                            </div>
+                                <div class="form-group">
+                                    <label for="address" class="file-label">Address </label>
+                                    <input type="text" class="form-control" value="{{ $data['user']->address }}"
+                                        id="address" aria-describedby="address" placeholder="Address *">
+                                </div>
 
-                            <div class="form-group">
-                                <label for="country-id" class="file-label">Country </label>
-                                <select id="country-id" class="form-control" name="country_id">
-                                    <option value=""> Select Country</option>
-                                    @foreach ($data['countries'] as $key => $country)
-                                        <option value="{{ $key }}"> {{ $country }}</option>
+                                <div class="form-group">
+                                    <label for="country-id" class="file-label">Country </label>
+                                    <select id="country-id" class="form-control" name="country_id">
+                                        <option value=""> Select Country</option>
+                                        @foreach ($data['countries'] as $key => $country)
+                                            <option {{ $key == $data['user']->country_id ? 'selected' : '' }}
+                                                class="form-control" value="{{ $key }}">
+                                                {{ $country }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="state-id" class="file-label">State </label>
+                                    <select id="state-id" class="form-control" name="state_id">
+                                        @if ($data['user']->state_id)
+                                            @foreach ($data['states'] as $key => $state)
+                                                <option {{ $key == $data['user']->state_id ? 'selected' : '' }}
+                                                    class="form-control" value="{{ $key }}">
+                                                    {{ $state }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="city-id" class="file-label">City </label>
+                                    <select id="city-id" class="form-control" name="city_id">
+                                        @if ($data['user']->city_id)
+                                            {{-- @foreach (\App\Models\Tenants\City::cursor() as $key => $city)
+                                                <option {{ $key == $data['user']->city_id ? 'selected' : '' }}
+                                                    class="form-control" value="{{ $key }}">
+                                                    {{ $city }}</option>
+                                            @endforeach --}}
+                                            @foreach ($data['cities'] as $key => $city)
+                                                <option {{ $key == $data['user']->city_id ? 'selected' : '' }}
+                                                    class="form-control" value="{{ $key }}">
+                                                    {{ $city }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="gender" class="file-label">Gender </label>
+                                    <input type="text" class="form-control" value="{{ $data['user']->gender }}"
+                                        id="gender" aria-describedby="gender" placeholder="Gender *">
+                                </div>
+                                <div class="form-group">
+                                    <label for="skills" class="file-label">Skills </label>
+                                    <input type="text" class="form-control" id="skills" name="skills"
+                                        aria-describedby="skills" value="{{ old('skills', $data['user']->skills) }}"
+                                        placeholder="Skills *">
+                                </div>
+
+                                @if ($data['job']->jobQuestion)
+                                    <h6><strong>Job Requirements</strong></h6>
+                                    @foreach ($data['job']->jobQuestion as $key => $question)
+                                        @if ($question->questionBank)
+                                            <div class="row">
+                                                <div class="form-group col-md-4 mt-2 d-flex justify-content-center">
+                                                    <label for="file-upload"
+                                                        class="file-label">{{ $question->questionBank->question }}</label>
+                                                </div>
+                                                <div class="form-group col-md-8">
+                                                    <input type="hidden" class="form-control"
+                                                        name="question[{{ $key }}][id]"
+                                                        value="{{ $question->questionBank->id }}">
+                                                    <input type="text" class="form-control"
+                                                        name="question[{{ $key }}][answer]" value="">
+                                                </div>
+                                            </div>
+                                        @endif
                                     @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="state-id" class="file-label">State </label>
-                                <select id="state-id" class="form-control" name="state_id">
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="city-id" class="file-label">City </label>
-                                <select id="city-id" class="form-control" name="city_id">
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="gender" class="file-label">Gender </label>
-                                <input type="text" class="form-control" value="{{ $data['user']->gender }}"
-                                    id="gender" aria-describedby="gender" placeholder="Gender *">
-                            </div>
-                            <div class="form-group">
-                                <label for="skills" class="file-label">Skills </label>
-                                <input type="text" class="form-control" id="skills" name="skills"
-                                    aria-describedby="skills" value="{{ old('skills', $data['user']->skills) }}"
-                                    placeholder="Skills *">
-                            </div>
+                                @endif
+                                @if ($data['job']->jobQualification)
+                                    <h6><strong>Job Qualifications</strong></h6>
+                                    @foreach ($data['job']->jobQualification as $key => $qualification)
+                                        @if ($qualification->requirement)
+                                            <div class="row">
+                                                <div class="form-group col-md-4 mt-2 d-flex justify-content-center">
+                                                    <label for="file-upload"
+                                                        class="file-label">{{ $qualification->requirement->name }}</label>
+                                                </div>
+                                                <div class="form-group col-md-8">
+                                                    <input type="hidden" class="form-control"
+                                                        name="requirement[{{ $key }}][id]"
+                                                        value="{{ $qualification->requirement->id }}">
+                                                    <input type="text" class="form-control"
+                                                        name="requirement[{{ $key }}][answer]" value="">
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                @endif
+                                <div class="row repeater">
+                                    <h6><strong>Experience</strong></h6>
+                                    <button data-repeater-create type="button" class="btn btn-primary"><i
+                                            class="fas fa-plus"></i></button>
+                                    <div data-repeater-list="experience">
+                                        @if (count($data['user']->experience) > 0)
+                                            @foreach ($data['user']->experience as $key => $experience)
+                                                <div data-repeater-item>
+                                                    <div class="row">
+                                                        <div class="form-group col-md-3">
+                                                            <label for="title_{{ $key }}"
+                                                                class="file-label">Organization Name
+                                                            </label>
+                                                            {!! Form::text('experience[' . $key . '][organization_name]', $experience->organization_name, [
+                                                                'class' => 'form-control',
+                                                                'id' => 'title_' . $key,
+                                                                'placeholder' => 'Organization Name  ',
+                                                            ]) !!}
+                                                        </div>
 
-                            @if ($data['job']->jobQuestion)
-                                @foreach ($data['job']->jobQuestion as $key => $question)
-                                    @if ($question->questionBank)
-                                        <h6><strong>Question</strong></h6>
-                                        <div class="row">
-                                            <div class="form-group col-md-4 mt-2 d-flex justify-content-center">
-                                                <label for="file-upload"
-                                                    class="file-label">{{ $question->questionBank->question }}</label>
-                                            </div>
-                                            <div class="form-group col-md-8">
-                                                <input type="hidden" class="form-control"
-                                                    name="question[{{ $key }}][id]"
-                                                    value="{{ $question->questionBank->id }}">
-                                                <input type="text" class="form-control"
-                                                    name="question[{{ $key }}][answer]" value="">
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            @endif
-                            @if ($data['job']->jobQualification)
-                                @foreach ($data['job']->jobQualification as $key => $qualification)
-                                    @if ($qualification->requirement)
-                                        <h6><strong>Requirements</strong></h6>
-                                        <div class="row">
-                                            <div class="form-group col-md-4 mt-2 d-flex justify-content-center">
-                                                <label for="file-upload"
-                                                    class="file-label">{{ $qualification->requirement->name }}</label>
-                                            </div>
-                                            <div class="form-group col-md-8">
-                                                <input type="hidden" class="form-control"
-                                                    name="requirement[{{ $key }}][id]"
-                                                    value="{{ $qualification->requirement->id }}">
-                                                <input type="text" class="form-control"
-                                                    name="requirement[{{ $key }}][answer]" value="">
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            @endif
-                            <div class="row repeater">
-                                <h6><strong>Experience</strong></h6>
-                                <button data-repeater-create type="button" class="btn btn-primary"><i
-                                        class="fas fa-plus"></i></button>
-                                <div data-repeater-list="experience">
-                                    @if (count($data['user']->experience) > 0)
-                                        @foreach ($data['user']->experience as $key => $experience)
+                                                        <div class="form-group col-md-3">
+                                                            <label for="position_title_{{ $key }}"
+                                                                class="file-label">Position Title </label>
+                                                            {!! Form::text('experience[' . $key . '][position_title]', $experience->position_title, [
+                                                                'class' => 'form-control',
+                                                                'placeholder' => 'Position Title * ',
+                                                                'id' => 'position_title_' . $key,
+                                                            ]) !!}
+                                                        </div>
+
+                                                        <div class="form-group col-md-2">
+                                                            <label for="start_{{ $key }}"
+                                                                class="file-label">Start
+                                                                Date</label>
+                                                            {!! Form::date('experience[' . $key . '][start_date]', $experience->start_date, [
+                                                                'class' => 'form-control',
+                                                                'id' => 'start_' . $key,
+                                                                'placeholder' => 'Start Date ',
+                                                            ]) !!}
+                                                        </div>
+
+                                                        <div class="form-group col-md-2">
+                                                            <label for="end_{{ $key }}" class="file-label">End
+                                                                Date</label>
+                                                            {!! Form::date('experience[' . $key . '][end_date]', $experience->end_date, [
+                                                                'class' => 'form-control',
+                                                                'id' => 'end_' . $key,
+                                                                'placeholder' => 'End Date ',
+                                                            ]) !!}
+                                                        </div>
+
+                                                        <div class="form-check  col-md-1" style="margin-top: 2rem;">
+                                                            {!! Form::hidden('experience[' . $key . '][is_present]', 0) !!}
+                                                            {!! Form::checkbox('experience[' . $key . '][is_present]', 1, $experience->is_present, [
+                                                                'class' => 'form-check-input',
+                                                                'id' => 'is_present_' . $key,
+                                                            ]) !!}
+                                                            <label class="form-check-label"
+                                                                for="is_present_{{ $key }}">
+                                                                Present Job
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="form-check  col-md-1" style="margin-top: 2rem;">
+                                                            <button data-repeater-delete type="button"
+                                                                class="btn btn-danger"><i
+                                                                    class="fas fa-minus"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @else
                                             <div data-repeater-item>
                                                 <div class="row">
                                                     <div class="form-group col-md-3">
-                                                        <label for="title_{{ $key }}"
-                                                            class="file-label">Organization Name
+                                                        <label for="title" class="file-label">Organization
+                                                            Name
                                                         </label>
-                                                        {!! Form::text('experience[' . $key . '][organization_name]', $experience->organization_name, [
+                                                        {!! Form::text('organization_name', null, [
                                                             'class' => 'form-control',
-                                                            'id' => 'title_' . $key,
+                                                            'id' => 'title',
                                                             'placeholder' => 'Organization Name  ',
                                                         ]) !!}
                                                     </div>
 
                                                     <div class="form-group col-md-3">
-                                                        <label for="position_title_{{ $key }}"
-                                                            class="file-label">Position Title </label>
-                                                        {!! Form::text('experience[' . $key . '][position_title]', $experience->position_title, [
+                                                        <label for="position_title" class="file-label">Position Title
+                                                        </label>
+                                                        {!! Form::text('position_title', null, [
                                                             'class' => 'form-control',
                                                             'placeholder' => 'Position Title * ',
-                                                            'id' => 'position_title_' . $key,
+                                                            'id' => 'position_title',
                                                         ]) !!}
                                                     </div>
 
                                                     <div class="form-group col-md-2">
-                                                        <label for="start_{{ $key }}" class="file-label">Start
+                                                        <label for="start" class="file-label">Start
                                                             Date</label>
-                                                        {!! Form::date('experience[' . $key . '][start_date]', $experience->start_date, [
+                                                        {!! Form::date('start_date', null, [
                                                             'class' => 'form-control',
-                                                            'id' => 'start_' . $key,
+                                                            'id' => 'start',
                                                             'placeholder' => 'Start Date ',
                                                         ]) !!}
                                                     </div>
 
                                                     <div class="form-group col-md-2">
-                                                        <label for="end_{{ $key }}" class="file-label">End
+                                                        <label for="end" class="file-label">End
                                                             Date</label>
-                                                        {!! Form::date('experience[' . $key . '][end_date]', $experience->end_date, [
+                                                        {!! Form::date('end_date', null, [
                                                             'class' => 'form-control',
-                                                            'id' => 'end_' . $key,
+                                                            'id' => 'end',
                                                             'placeholder' => 'End Date ',
                                                         ]) !!}
                                                     </div>
 
                                                     <div class="form-check  col-md-1" style="margin-top: 2rem;">
-                                                        {!! Form::hidden('experience[' . $key . '][is_present]', 0) !!}
-                                                        {!! Form::checkbox('experience[' . $key . '][is_present]', 1, $experience->is_present, [
+                                                        {!! Form::hidden('is_present', 0) !!}
+                                                        {!! Form::checkbox('is_present', 1, isset($experience) ? $experience->is_present : false, [
                                                             'class' => 'form-check-input',
-                                                            'id' => 'is_present_' . $key,
+                                                            'id' => 'is_present',
                                                         ]) !!}
-                                                        <label class="form-check-label"
-                                                            for="is_present_{{ $key }}">
+                                                        <label class="form-check-label" for="is_present">
                                                             Present Job
                                                         </label>
                                                     </div>
@@ -235,69 +338,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endforeach
-                                    @else
-                                        <div data-repeater-item>
-                                            <div class="row">
-                                                <div class="form-group col-md-3">
-                                                    <label for="title" class="file-label">Organization Name
-                                                    </label>
-                                                    {!! Form::text('organization_name', null, [
-                                                        'class' => 'form-control',
-                                                        'id' => 'title',
-                                                        'placeholder' => 'Organization Name  ',
-                                                    ]) !!}
-                                                </div>
-
-                                                <div class="form-group col-md-3">
-                                                    <label for="position_title" class="file-label">Position Title </label>
-                                                    {!! Form::text('position_title', null, [
-                                                        'class' => 'form-control',
-                                                        'placeholder' => 'Position Title * ',
-                                                        'id' => 'position_title',
-                                                    ]) !!}
-                                                </div>
-
-                                                <div class="form-group col-md-2">
-                                                    <label for="start" class="file-label">Start
-                                                        Date</label>
-                                                    {!! Form::date('start_date', null, [
-                                                        'class' => 'form-control',
-                                                        'id' => 'start',
-                                                        'placeholder' => 'Start Date ',
-                                                    ]) !!}
-                                                </div>
-
-                                                <div class="form-group col-md-2">
-                                                    <label for="end" class="file-label">End
-                                                        Date</label>
-                                                    {!! Form::date('end_date', null, [
-                                                        'class' => 'form-control',
-                                                        'id' => 'end',
-                                                        'placeholder' => 'End Date ',
-                                                    ]) !!}
-                                                </div>
-
-                                                <div class="form-check  col-md-1" style="margin-top: 2rem;">
-                                                    {!! Form::hidden('is_present', 0) !!}
-                                                    {!! Form::checkbox('is_present', 1, isset($experience) ? $experience->is_present : false, [
-                                                        'class' => 'form-check-input',
-                                                        'id' => 'is_present',
-                                                    ]) !!}
-                                                    <label class="form-check-label" for="is_present">
-                                                        Present Job
-                                                    </label>
-                                                </div>
-
-                                                <div class="form-check  col-md-1" style="margin-top: 2rem;">
-                                                    <button data-repeater-delete type="button" class="btn btn-danger"><i
-                                                            class="fas fa-minus"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-                                </div>
-                                {{-- <div class="form-group col-md-3">
+                                        @endif
+                                    </div>
+                                    {{-- <div class="form-group col-md-3">
                                     <label for="title" class="file-label">Organization Name </label>
                                     <input type="text" name="data[0][organization_name]" class="form-control"
                                         id="title" placeholder="Organization Name  ">
@@ -332,22 +375,22 @@
                                     <button type="button" name="add" id="dynamic-ar" class="btn btn-primary"><i
                                             class="fas fa-plus"></i></button>
                                 </div> --}}
+                                </div>
+                                <div id="dynamicAddRemove">
+                                </div>
+                                <div class="form-group">
+                                    <label for="source_detail" class="file-label">Source Detail </label>
+                                    <input type="text" class="form-control" name="source_detail"
+                                        value="{{ old('source_detail') }}" id="source_detail" aria-describedby="source"
+                                        placeholder="Source Detail ">
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button class="cancel-button mr-2">Cancel</button>
+                                    <button class="save-button" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModalCenter">Save
+                                    </button>
+                                </div>
                             </div>
-                            <div id="dynamicAddRemove">
-                            </div>
-                            <div class="form-group">
-                                <label for="source_detail" class="file-label">Source Detail </label>
-                                <input type="text" class="form-control" name="source_detail"
-                                    value="{{ old('source_detail') }}" id="source_detail" aria-describedby="source"
-                                    placeholder="Source Detail ">
-                            </div>
-                            <div class="d-flex justify-content-end">
-                                <button class="cancel-button mr-2">Cancel</button>
-                                <button class="save-button" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModalCenter">Save
-                                </button>
-                            </div>
-                        </div>
                     </form>
                     <div class="container">
                         <div class="modal fade" id="exampleModalCenter">

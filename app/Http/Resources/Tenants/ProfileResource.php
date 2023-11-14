@@ -24,7 +24,7 @@ class ProfileResource extends JsonResource
             'state' => $this->state ? $this->state->name : "",
             'city' => $this->city ? $this->city->name : "",
             'address'=> $this->address,
-            'application_id' => $this->applicant->id,
+            'application_id' => isset($this->applicant) ? $this->applicant->id : "",
             'email' => $this->email,
             'mobile' => $this->phone,
             'gender' => $this->gender,

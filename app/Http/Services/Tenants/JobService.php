@@ -99,20 +99,22 @@ class JobService implements JobContract
 
     public function job_qualification($data, $job_id)
     {
-        $input = $data->input();
-        $model = $this->model->with('jobQualification')->find($job_id);
+        $model = $this->model->find($job_id);
         if (empty($model)) {
             throw new CustomException('Job Record Not Found!');
         }
-        foreach ($input as $value) {
+        foreach ($data as $value) {
             foreach ($value as $finalValue) {
                 $qualification = $this->modelJobRequirement->with('requirement')->whereJobIdAndRequirementId($job_id, $finalValue['requirement_id'])->first();
                 $this->modelJobQualification::create([
                     'job_id' => $job_id,
+                    'requirement_id' => $finalValue['requirement_id'],
+                    'operator' => $finalValue['operator'],
+                    'value' => $finalValue['value'],
+                    'is_required' => $finalValue['is_required'],
                     'name' => $qualification->requirement->name,
                     'input_type' => $qualification->requirement->input_type,
                     'option' => $qualification->requirement->option,
-                    'position' => $finalValue['position'],
                 ]);
             }
         }
@@ -237,7 +239,7 @@ class JobService implements JobContract
         $applicants = (clone $baseQuery)->when(isset($filter['status']), function ($q) use ($filter) {
             return $q->where('status', $filter['status']);
         })->with('user.experience')->paginate(10);
-        $totalApplied= (clone $baseQuery)->where('status', 'applied')->count();
+        $totalApplied = (clone $baseQuery)->where('status', 'applied')->count();
         $totalQualification = (clone $baseQuery)->where('status', 'qualification')->count();
         $totalTesting = (clone $baseQuery)->where('status', 'testing')->count();
         $totalInterview = (clone $baseQuery)->where('status', 'interview')->count();
@@ -268,7 +270,7 @@ class JobService implements JobContract
         if (empty($model)) {
             throw new CustomException('Applicant Not Found!');
         }
-        return $this->modelApplicant->whereId($applicant_id)->with(['user.country', 'user.state', 'user.city','user.experience'])->first();
+        return $this->modelApplicant->whereId($applicant_id)->with(['user.country', 'user.state', 'user.city', 'user.experience'])->first();
     }
 
 
@@ -306,9 +308,9 @@ class JobService implements JobContract
         ];
     }
 
-    public function jobApplicantProfileStatus($filter,$applicant_id, $job_id)
+    public function jobApplicantProfileStatus($filter, $applicant_id, $job_id)
     {
-        $model = $this->modelApplicant->whereIdAndJobId($applicant_id, $job_id)->first();
+        $model = $this->modelApplicant->where('id', $applicant_id)->first();
         if (empty($model)) {
             throw new CustomException("Applicant Not Found!");
         }
@@ -330,7 +332,7 @@ class JobService implements JobContract
             'data' => [
                 'requirementAnswer' => $modelApplicantRequirementAnswer,
                 'questionAnswer' => $modelApplicantQuestionAnswer,
-                ]
+            ]
         ];
     }
 
@@ -340,7 +342,7 @@ class JobService implements JobContract
         if (empty($model)) {
             throw new CustomException('User Not Found!');
         }
-        return $model->with(['country', 'state', 'city','experience','applicant','education'])->first();
+        return $model->with(['country', 'state', 'city', 'experience', 'applicant', 'education'])->first();
     }
 
     public function profileUpdate($data, $user_id)

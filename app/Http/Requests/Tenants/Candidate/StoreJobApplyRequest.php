@@ -33,6 +33,8 @@ class StoreJobApplyRequest extends FormRequest
             'experience.*.start_date' => 'nullable',
             'experience.*.end_date' => 'nullable',
             'experience.*.is_present' => 'nullable',
+            // 'question.*.answer' => 'required',
+            // 'requirement.*.answer' => 'required',
         ];
     }
 

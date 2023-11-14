@@ -7,6 +7,7 @@ use App\Exceptions\CustomException;
 use App\Models\Tenants\Applicant;
 use App\Models\Tenants\ApplicantQuestionAnswer;
 use App\Models\Tenants\ApplicantRequirementAnswer;
+use App\Models\Tenants\City;
 use App\Models\Tenants\Country;
 use App\Models\Tenants\Department;
 use App\Models\Tenants\Experience;
@@ -15,6 +16,7 @@ use App\Models\Tenants\JobExperience;
 use App\Models\Tenants\Location;
 use App\Models\Tenants\Setting;
 use App\Models\Tenants\SocialMedia;
+use App\Models\Tenants\State;
 use App\Models\User;
 use App\Traits\ImageUpload;
 use Carbon\Carbon;
@@ -38,12 +40,16 @@ class JobService implements JobContract
     private User $modelUser;
     private ApplicantQuestionAnswer $modelApplicantQuestionAnswer;
     private ApplicantRequirementAnswer $modelApplicantRequirementAnswer;
+    private State $modelState;
+    private City $modelCity;
 
     public function __construct()
     {
         $this->modelUser = new User();
         $this->modelJob = new Job();
         $this->modelCountry = new Country();
+        $this->modelState = new State();
+        $this->modelCity = new City();
         $this->modelSetting = new Setting();
         $this->modelSocialMedia = new SocialMedia();
         $this->modelDepartment = new Department();
@@ -60,13 +66,16 @@ class JobService implements JobContract
         $query->when($filter->name, function ($q, $name) {
             return $q->like('name', $name);
         })
+            ->when($filter->department_id, function ($q, $department_id) {
+                return $q->where('department_id', $department_id);
+            })
             ->when($filter->country_id, function ($q, $country_id) {
                 return $q->where('country_id', $country_id);
             })
-            ->when($filter->state_id, function ($q, $state_id) {
+            ->when($filter->state_id && $filter->state_id != 'Select', function ($q, $state_id) {
                 return $q->where('state_id', $state_id);
             })
-            ->when($filter->city_id, function ($q, $city_id) {
+            ->when($filter->city_id && $filter->city_id != 'Select', function ($q, $city_id) {
                 return $q->where('city_id', $city_id);
             })
             ->when($filter->job_type, function ($q, $job_type) {
@@ -85,6 +94,7 @@ class JobService implements JobContract
                 return $q->whereBetween('min_salary', [$filter->min_salary, $filter->max_salary])
                     ->orWhereBetween('max_salary', [$filter->min_salary, $filter->max_salary]);
             });
+        // dd($query->toSql());
         $totalJobs = $query->count();
         $jobs = $query->with('country', 'state', 'city', 'favorite')->select(
             '*',
@@ -132,6 +142,8 @@ class JobService implements JobContract
     public function jobApply($slug)
     {
         $countries = $this->modelCountry->pluck('name', 'id');
+        $states = $this->modelState->pluck('name', 'id');
+        $cities = $this->modelCity->pluck('name', 'id');
         $user = $this->modelUser->with(['country', 'state', 'city', 'experience'])->find(Auth::user()->id);
         $logo = settings()->group('logo')->get('logo');
         $job = $this->modelJob->with(['country', 'state', 'city', 'jobQuestion.questionBank' => function ($query) {
@@ -141,6 +153,8 @@ class JobService implements JobContract
         },])->where('slug', $slug)->first();
         return [
             'countries' => $countries,
+            'states' => $states,
+            'cities' => $cities,
             'job' => $job,
             'logo' => $logo,
             'user' => $user
@@ -167,7 +181,7 @@ class JobService implements JobContract
         $modelApplicant->skills = $commaSeparatedValuesSkill;
         $modelApplicant->source_detail = $data['source_detail'];
         $modelApplicant->applied_date = date('Y-m-d');
-        $modelApplicant->resume_path = $this->upload($data['resume_path']);
+        $modelApplicant->job_resume_path = $this->upload($data['resume_path']);
         $modelApplicant->cover_letter_path = $this->upload($data['cover_letter_path']);
         $modelApplicant->save();
         foreach ($data['experience'] as $value) {
