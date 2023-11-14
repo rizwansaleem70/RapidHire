@@ -10,6 +10,7 @@ interface JobContract
     public function index();
     public function questionList($query);
     public function store($data);
+    public function show($id);
     public function update($data, $id);
     public function delete($id);
     public function get_country_against_job($id);

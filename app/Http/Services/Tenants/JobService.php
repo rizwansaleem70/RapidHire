@@ -89,7 +89,14 @@ class JobService implements JobContract
 
         return $this->prepareData($model, $data, true);
     }
-
+    public function show($id)
+    {
+        $model = $this->model->find($id);
+        if (empty($model)) {
+            throw new CustomException('Job Record Not Found!');
+        }
+        return $this->model->find($id);
+    }
     public function ATS_Score($data, $job_id)
     {
         $modelJobATSScore = new $this->modelJobATSScore;

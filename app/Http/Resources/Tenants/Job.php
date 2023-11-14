@@ -14,6 +14,7 @@ class Job extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        dd($this);
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -28,7 +29,7 @@ class Job extends JsonResource
             'rating' => $this->rating,
             'status' => $this->status,
             'salary_deliver' => $this->salary_deliver,
-            'image' => $this->image,
+            'image' => $this->image ? asset($this->image):"",
         ];
     }
 }
