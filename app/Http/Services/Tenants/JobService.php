@@ -205,7 +205,6 @@ class JobService implements JobContract
         if (isset($data['cover_image']) && $data['cover_image']) {
             $model->cover_image = $data['cover_image'];
         }
-
         $model->save();
         $model->jobQuestionBank()->sync($data['question_bank_id']);
         $model->jobHiringManager()->sync($data['job_hiring_manager_id']);
