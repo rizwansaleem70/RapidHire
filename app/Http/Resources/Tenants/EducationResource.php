@@ -22,7 +22,7 @@ class EducationResource extends JsonResource
             'field_of_study' => $this->field_of_study,
             'start_date' => Carbon::parse($this->start_date)->format('Y-m-d'),
             'end_date' => Carbon::parse($this->end_date)->format('Y-m-d'),
-            'Description' => $this->Description,
+            'description' => $this->description,
             'is_present' => $this->is_present,
         ];
     }

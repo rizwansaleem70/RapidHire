@@ -31,6 +31,7 @@ class ProfileResource extends JsonResource
             'email' => $this->email,
             'mobile' => $this->phone,
             'gender' => $this->gender,
+            'language' => $this->language,
             'is_active' => $this->is_active,
             'facebook' => $this->facebook,
             'linkedin' => $this->linkedin,
