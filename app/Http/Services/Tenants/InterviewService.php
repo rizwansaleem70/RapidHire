@@ -5,6 +5,8 @@ namespace App\Http\Services\Tenants;
 use App\Contracts\Tenants\InterviewContract;
 use App\Models\Tenants\CandidateInterviews;
 use App\Exceptions\CustomException;
+use App\Models\Notification;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @var Tenants\InterviewService
@@ -21,6 +23,11 @@ class InterviewService implements InterviewContract
     {
         $model = new $this->model();
         $interview = $this->prepareDate($model, $data);
+        Notification::create([
+            'user_id' => Auth::id(),
+            'title' => 'interview',
+            'message' => 'Your interview has been scheduled'
+        ]);
         return $interview;
     }
 
@@ -54,8 +61,8 @@ class InterviewService implements InterviewContract
 
     public function getScheduledInterviews($applicant_id)
     {
-        $model = $this->model->find($applicant_id);
-        if (empty($model)) {
+        $model = $this->model->where('applicant_id', $applicant_id)->count();
+        if ($model == 0) {
             throw new CustomException('Applicant Not Found!');
         }
         return $this->model->where('applicant_id', $applicant_id)->latest()->get();

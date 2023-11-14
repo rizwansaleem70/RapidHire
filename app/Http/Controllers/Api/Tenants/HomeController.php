@@ -2,22 +2,46 @@
 
 namespace App\Http\Controllers\Api\Tenants;
 
-use App\Contracts\Tenants\HomeContract;
-use App\Exceptions\CustomException;
 use App\Helpers\Helper;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\Tenants\CityResourceCollection;
-use App\Http\Resources\Tenants\CountryResourceCollection;
-use App\Http\Resources\Tenants\StateResourceCollection;
+use App\Helpers\Constant;
+use App\Models\Tenants\Job;
+use App\Models\Notification;
 use Illuminate\Http\Request;
+use App\Models\Tenants\Applicant;
+use App\Exceptions\CustomException;
+use App\Http\Controllers\Controller;
+use App\Contracts\Tenants\HomeContract;
+use App\Http\Resources\Tenants\CityResourceCollection;
+use App\Http\Resources\Tenants\StateResourceCollection;
+use App\Http\Resources\Tenants\CountryResourceCollection;
 
 class HomeController extends Controller
 {
-
+    public $home;
     public function __construct(HomeContract $home)
     {
         $this->home = $home;
     }
+
+
+    public function getDashboardStats()
+    {
+        $jobs = Job::count();
+        $hired = Applicant::where('status', 'hired')->count();
+        $rejected = Applicant::where('status', 'rejected')->count();
+        $positions = Job::sum('total_position');
+
+        $notifications = Notification::select('id', 'message')->get();
+
+        return $this->successResponse('OK', [
+            'jobs' => $jobs,
+            'hired' => $hired,
+            'rejected' => $rejected,
+            'positions' => $positions,
+            'notifications' => $notifications
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      */

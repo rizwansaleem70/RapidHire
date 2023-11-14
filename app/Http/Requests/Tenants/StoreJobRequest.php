@@ -39,12 +39,12 @@ class StoreJobRequest extends FormRequest
             'total_position' => 'required',
             'rating' => 'nullable',
             'status' => 'required|in:published,draft',
-            'salary_deliver' => 'required|in:monthly,yearly',
+            'salary_deliver' => 'required|in:monthly,yearly,weekly,hourly',
             'cover_image' => 'nullable',
         ];
     }
 
-    public function prepareRequest():array
+    public function prepareRequest(): array
     {
         $request = $this;
         return [

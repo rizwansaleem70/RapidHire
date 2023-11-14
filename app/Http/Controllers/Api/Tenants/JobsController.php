@@ -2,27 +2,30 @@
 
 namespace App\Http\Controllers\Api\Tenants;
 
-use App\Contracts\Tenants\JobContract;
-use App\Exceptions\CustomException;
 use App\Helpers\Helper;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Tenants\Candidate\UpdateApplicantProfileRequest;
-use App\Http\Requests\Tenants\StoreATS_ScoreRequest;
-use App\Http\Requests\Tenants\StoreJobQualificationRequest;
-use App\Http\Requests\Tenants\StoreJobRequest;
-use App\Http\Requests\Tenants\UpdateJobRequest;
-use App\Http\Resources\Tenants\AnswerResourceCollection;
-use App\Http\Resources\Tenants\ApplicantJobResourceCollection;
-use App\Http\Resources\Tenants\CandidateAppliedJobsResourceCollection;
-use App\Http\Resources\Tenants\DepartmentCollection;
-use App\Http\Resources\Tenants\Job;
-use App\Http\Resources\Tenants\JobApplicantResourceCollection;
-use App\Http\Resources\Tenants\JobCollection;
-use App\Http\Resources\Tenants\ProfileHeaderResource;
-use App\Http\Resources\Tenants\ProfileResource;
-use App\Http\Resources\Tenants\RequirementResourceCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Exceptions\CustomException;
+use App\Http\Resources\Tenants\Job;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Contracts\Tenants\JobContract;
+use App\Http\Resources\Tenants\JobCollection;
+use App\Http\Requests\Tenants\StoreJobRequest;
+use App\Http\Requests\Tenants\UpdateJobRequest;
+use App\Http\Resources\Tenants\ProfileResource;
+use App\Http\Requests\Tenants\StoreATS_ScoreRequest;
+use App\Http\Resources\Tenants\DepartmentCollection;
+use App\Http\Resources\Tenants\ProfileHeaderResource;
+use App\Http\Resources\Tenants\AnswerResourceCollection;
+use App\Http\Requests\Tenants\StoreJobQualificationRequest;
+use App\Http\Resources\Tenants\RequirementResourceCollection;
+use App\Http\Resources\Tenants\ApplicantJobResourceCollection;
+use App\Http\Resources\Tenants\JobApplicantResourceCollection;
+use App\Http\Requests\Tenants\Candidate\UpdateApplicantProfileRequest;
+use App\Http\Resources\Tenants\CandidateAppliedJobsResourceCollection;
+use App\Models\Tenants\ApplicantRequirementAnswer;
+use App\Models\Tenants\JobQualification;
 
 class JobsController extends Controller
 {
@@ -188,9 +191,10 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
-    public function candidateAppliedJobs($user_id)
+    public function candidateAppliedJobs()
     {
         try {
+            $user_id = Auth::id();
             $data = $this->job->candidateAppliedJobs($user_id);
             $data = new CandidateAppliedJobsResourceCollection($data);
             return $this->successResponse("Applied Jobs Listing", $data);
@@ -201,10 +205,10 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
-    public function jobApplicantProfileStatus(Request $request, $applicant_id,$job_id)
+    public function jobApplicantProfileStatus(Request $request, $applicant_id, $job_id)
     {
         try {
-            $data = $this->job->jobApplicantProfileStatus($request,$applicant_id,$job_id);
+            $data = $this->job->jobApplicantProfileStatus($request, $applicant_id, $job_id);
             return $this->successResponse("Status Update Successfully", $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
@@ -213,10 +217,10 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
-    public function jobApplicantQuestionAnswer($applicant_id,$job_id)
+    public function jobApplicantQuestionAnswer($applicant_id, $job_id)
     {
         try {
-            $data = $this->job->jobApplicantQuestionAnswer($applicant_id,$job_id);
+            $data = $this->job->jobApplicantQuestionAnswer($applicant_id, $job_id);
             $data = new AnswerResourceCollection($data);
             return $this->successResponse("Record Found Successfully", $data);
         } catch (CustomException $th) {
@@ -257,7 +261,7 @@ class JobsController extends Controller
     {
         try {
             DB::beginTransaction();
-            $data = $this->job->profileUpdate($request->all(),$user_id);
+            $data = $this->job->profileUpdate($request->all(), $user_id);
             DB::commit();
             $data = new ProfileResource($data);
             return $this->successResponse("Profile Update", $data);
@@ -282,5 +286,23 @@ class JobsController extends Controller
             Helper::logMessage("ATS_Score", 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
+    }
+
+    public function getJobQualifications(Request $request, $job_id, $applicant_id)
+    {
+        $qualification_answers = ApplicantRequirementAnswer::with(['requirement'])->where('job_id', $job_id)->where('applicant_id', $applicant_id)->get();
+
+        $data = [];
+        foreach ($qualification_answers as $answer) {
+            $criteria = JobQualification::where('job_id', $job_id)->where('requirement_id', $answer->requirement_id)->first();
+            $data[] = [
+                'question' => $answer->requirement->name,
+                'answer' => $answer->answer,
+                'criteria_value' => optional($criteria)->value,
+                'criteria_operator' => optional($criteria)->operator
+            ];
+        }
+
+        return $this->successResponse("OK", $data);
     }
 }

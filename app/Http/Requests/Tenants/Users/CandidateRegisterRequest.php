@@ -22,6 +22,8 @@ class CandidateRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'first_name' => 'required',
+            'last_name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|confirmed',
         ];
@@ -31,6 +33,8 @@ class CandidateRegisterRequest extends FormRequest
     {
         $data = $this;
         return [
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => $data['password'],
         ];

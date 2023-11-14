@@ -74,7 +74,7 @@ class SettingsController extends Controller
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("setting index", $request->input() . " " . $type, $th->getMessage());
+            Helper::logMessage("setting index", $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }

@@ -12,7 +12,7 @@
                         <div class="wd-job-author2">
                             <div class="content-left">
                                 <div class="thumb">
-                                    <img src="{{asset($data['logo'])}}" alt="logo">
+                                    <img src="{{asset('tenancy/assets/images/devjeco-logo.png')}}" alt="logo">
                                 </div>
 
                                 <div class="content">
@@ -128,10 +128,9 @@
                             </div>
 
                             @if($data['job']->jobQuestion)
+                            <h6><strong>Job Requirements</strong></h6>
                                 @foreach($data['job']->jobQuestion as $key => $question)
                                     @if($question->questionBank)
-
-                                        <h6><strong>Question</strong></h6>
                                         <div class="row">
                                             <div class="form-group col-md-4 mt-2 d-flex justify-content-center">
                                                 <label for="file-upload" class="file-label">{{$question->questionBank->question}}</label>
@@ -145,9 +144,10 @@
                                 @endforeach
                             @endif
                             @if($data['job']->jobQualification)
+                            <h6><strong>Job Qualifications</strong></h6>
                                 @foreach($data['job']->jobQualification as $key => $qualification)
                                     @if($qualification->requirement)
-                                        <h6><strong>Requirements</strong></h6>
+                                        
                                         <div class="row">
                                             <div class="form-group col-md-4 mt-2 d-flex justify-content-center">
                                                 <label for="file-upload" class="file-label">{{$qualification->requirement->name}}</label>

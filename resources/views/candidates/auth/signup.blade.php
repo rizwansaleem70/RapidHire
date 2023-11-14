@@ -104,6 +104,14 @@
                         @csrf
                         <div class="ip">
 
+                            <input type="text" placeholder="First Name" name="first_name" style="border-radius: 20px;">
+                        </div>
+                        <div class="ip">
+
+                            <input type="text" placeholder="Last Name" name="last_name" style="border-radius: 20px;">
+                        </div>
+                        <div class="ip">
+
                             <input type="text" placeholder="Email" name="email" style="border-radius: 20px;">
                         </div>
                         <div class="ip">

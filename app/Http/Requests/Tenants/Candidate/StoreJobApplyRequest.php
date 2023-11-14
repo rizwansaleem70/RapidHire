@@ -26,8 +26,8 @@ class StoreJobApplyRequest extends FormRequest
             'cover_letter_path' => 'nullable|max:2048',
             'skills' => 'required',
             'source_detail' => 'required',
-            'question.*.answer' => 'required',
-            'requirement.*.answer' => 'required',
+            // 'question.*.answer' => 'required',
+            // 'requirement.*.answer' => 'required',
             'data.*.organization_name' => 'nullable',
             'data.*.position_title' => 'nullable',
             'data.*.start_date' => 'nullable',
@@ -36,7 +36,7 @@ class StoreJobApplyRequest extends FormRequest
         ];
     }
 
-    public function prepareRequest():array
+    public function prepareRequest(): array
     {
         $request = $this;
         return [

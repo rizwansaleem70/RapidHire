@@ -14,9 +14,9 @@
                         </div>
                         <div class="form-sl">
                             <div class="form-group-4" style="width: 150px;">
-                                <button type="submit" class="btn btn-find"
+                                <a href="{{ route('candidate.job.list') }}" class="btn btn-find"
                                         style="background-color: #fff; color: black;">Find Jobs
-                                </button>
+                                </a>
                             </div>
                             <!-- End Job  Search Form-->
 
@@ -87,7 +87,7 @@
                                             <span class="d-block fs-5 fw-bold">{{$department->name}}</span>
                                         </div>
                                         <p>{{$department->job_count}} Jobs available</p>
-                                        <a href="#" class="btn-category-job">Explore Jobs <span
+                                        <a href="{{ route('candidate.job.list') }}?department_id={{ $department->id }}" class="btn-category-job">Explore Jobs <span
                                                 class="icon-keyboard_arrow_right"></span></a>
                                     </div>
                                 @endforeach
@@ -111,10 +111,6 @@
                                 <h1>TRENDING JOBS</h1>
 
                             </div>
-                            <a href="job-single.html" class="tf-button">
-                                Features
-                                <span class="icon-arrow-right2"></span>
-                            </a>
                         </div>
                     </div>
                     <!-- wd-job-category -->
@@ -129,9 +125,8 @@
                                         <p>{{$job->total_position}} Jobs available</p>
                                         <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAX0lEQVR4nO3SwQmAMBBE0dQSS8zBQxqwyLDDdiBkIUctQM8a5T/4BQxMSgAAAAAAAK/a3ZculTBbZ65LZbjny4AwayEdn8is/W/AcM8h1S5tMxdSvb0QAAAAAABAetIJeOBba7Ua6isAAAAASUVORK5CYII=">
                                         <div class="job-category-header" style="opacity: 60%;">
-                                            <p>Software Engineer
-                                            <p>
-                                            <p>Ubisoft</p>
+                                            <p>{{ optional($job->department)->name }}</p>
+                                            <p>{{ 'DevJeco' }}</p>
                                         </div>
                                     </div>
                                 @endforeach
