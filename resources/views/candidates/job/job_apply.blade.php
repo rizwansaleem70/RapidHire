@@ -125,15 +125,15 @@
                                         @endif
                                     </select>
                                 </div>
-                                {{-- <div class="form-group">
+                                <div class="form-group">
                                     <label for="city-id" class="file-label">City </label>
                                     <select id="city-id" class="form-control" name="city_id">
                                         @if ($data['user']->city_id)
-                                            @foreach (\App\Models\Tenants\City::cursor() as $key => $city)
-                                                <option {{ $key == $data['user']->city_id ? 'selected' : '' }}
-                                                    class="form-control" value="{{ $key }}">
-                                                    {{ $city }}</option>
-                                            @endforeach
+{{--                                            @foreach (\App\Models\Tenants\City::cursor() as $key => $city)--}}
+{{--                                                <option {{ $key == $data['user']->city_id ? 'selected' : '' }}--}}
+{{--                                                    class="form-control" value="{{ $key }}">--}}
+{{--                                                    {{ $city }}</option>--}}
+{{--                                            @endforeach--}}
                                             @foreach ($data['cities'] as $key => $city)
                                                 <option {{ $key == $data['user']->city_id ? 'selected' : '' }}
                                                     class="form-control" value="{{ $key }}">
@@ -141,7 +141,7 @@
                                             @endforeach
                                         @endif
                                     </select>
-                                </div> --}}
+                                </div>
                                 <div class="form-group">
                                     <label for="gender" class="file-label">Gender </label>
                                     <input type="text" class="form-control" value="{{ $data['user']->gender }}"
