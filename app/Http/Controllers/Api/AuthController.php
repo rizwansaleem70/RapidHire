@@ -78,10 +78,10 @@ class AuthController extends Controller
             return $this->failedResponse("Something went wrong!");
         }
     }
-    public function changePassword(ChangePasswordRequest $request)
+    public function changePassword(ChangePasswordRequest $request,$user_id)
     {
         try {
-            $user = $this->_auth->changePassword($request->prepareData());
+            $user = $this->_auth->changePassword($request->prepareData(),$user_id);
             $data = [
                 'token' => $user->createToken(Str::random(10))->plainTextToken,
                 'user' => new LoginUserResponse($user),
@@ -119,10 +119,10 @@ class AuthController extends Controller
             return $this->failedResponse("Something went wrong!");
         }
     }
-    public function deleteProfile(DeleteProfileRequest $request)
+    public function deleteProfile(DeleteProfileRequest $request,$user_id)
     {
         try {
-            $this->_auth->deleteProfile($request->all());
+            $this->_auth->deleteProfile($request->all(),$user_id);
             return $this->okResponse("User Delete Successfully");
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
