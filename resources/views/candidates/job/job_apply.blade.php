@@ -56,32 +56,22 @@
                                     {{--                                            </button> --}}
                                     {{--                                        </a> --}}
 
-                                    <p id="selectedFileName" style="margin-top: 2rem;">No file choosen </p>
+                                    <p id="selectedFileName" style="margin-top: 2rem;">No file chosen </p>
                                 </div>
                             </div>
                             <span id="file-name-display"></span> <!-- Display uploaded file name here -->
                             <input type="hidden" name="job_id" value="{{ @$data['job']->id }}">
-
                             <h6><strong>UPLOAD COVER LETTER</strong></h6>
                             <div class="custom-file-upload" id="drop-area" style="padding: 5%;">
+                                <label for="file-upload" class="file-label">Select only pdf
+                                    file</label>
                                 <div class="button-container" style="text-align: center;">
-                                    <span id="file-name-display"></span>
-                                    <input type="hidden" name="job_id" value="{{ @$data['job']->id }}">
-
-                                    <h6><strong>UPLOAD COVER LETTER</strong></h6>
-                                    <div class="custom-file-upload" id="drop-area" style="padding: 5%;">
-                                        <label for="file-upload" class="file-label">Select only pdf
-                                            file</label>
-                                        <div class="button-container" style="text-align: center;">
-                                            <button id="add-letter" class="upload-button" type="button">
-                                                <input type="file" class="form-control" name="cover_letter_path">
-                                            </button>
-                                        </div>
-                                        <p id="selectedFileName2" style="margin-top: 2rem;">No file chosen
-                                        </p>
-                                    </div>
-                                    <p id="selectedFileName2" style="margin-top: 2rem;">No file chosen</p>
+                                    <button id="add-letter" class="upload-button" type="button">
+                                        <input type="file" class="form-control" name="cover_letter_path">
+                                    </button>
                                 </div>
+                                <p id="selectedFileName2" style="margin-top: 2rem;">No file chosen
+                                </p>
                             </div>
                             <div class="col-lg-12">
                                 <label for="first_name" class="file-label">First Name </label>
@@ -103,8 +93,7 @@
                                 <div class="form-group">
                                     <label for="phone" class="file-label">Phone </label>
                                     <input type="tel" class="form-control" id="phone"
-                                        value="{{ $data['user']->phone }}" aria-describedby="phone"
-                                        placeholder="Phone *">
+                                        value="{{ $data['user']->phone }}" aria-describedby="phone" placeholder="Phone *">
                                 </div>
 
                                 <div class="form-group">
@@ -136,15 +125,15 @@
                                         @endif
                                     </select>
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="city-id" class="file-label">City </label>
                                     <select id="city-id" class="form-control" name="city_id">
                                         @if ($data['user']->city_id)
-                                            {{-- @foreach (\App\Models\Tenants\City::cursor() as $key => $city)
+                                            @foreach (\App\Models\Tenants\City::cursor() as $key => $city)
                                                 <option {{ $key == $data['user']->city_id ? 'selected' : '' }}
                                                     class="form-control" value="{{ $key }}">
                                                     {{ $city }}</option>
-                                            @endforeach --}}
+                                            @endforeach
                                             @foreach ($data['cities'] as $key => $city)
                                                 <option {{ $key == $data['user']->city_id ? 'selected' : '' }}
                                                     class="form-control" value="{{ $key }}">
@@ -152,7 +141,7 @@
                                             @endforeach
                                         @endif
                                     </select>
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label for="gender" class="file-label">Gender </label>
                                     <input type="text" class="form-control" value="{{ $data['user']->gender }}"
@@ -228,7 +217,7 @@
                                                                 class="file-label">Position Title </label>
                                                             {!! Form::text('experience[' . $key . '][position_title]', $experience->position_title, [
                                                                 'class' => 'form-control',
-                                                                'placeholder' => 'Position Title * ',
+                                                                'placeholder' => 'Position Title ',
                                                                 'id' => 'position_title_' . $key,
                                                             ]) !!}
                                                         </div>
@@ -247,18 +236,22 @@
                                                         <div class="form-group col-md-2">
                                                             <label for="end_{{ $key }}" class="file-label">End
                                                                 Date</label>
-                                                            {!! Form::date('experience[' . $key . '][end_date]', $experience->end_date, [
-                                                                'class' => 'form-control',
-                                                                'id' => 'end_' . $key,
-                                                                'placeholder' => 'End Date ',
-                                                            ]) !!}
+                                                            {!! Form::date(
+                                                                'experience[' . $key . '][end_date]',
+                                                                $experience->is_present == 0 ? $experience->end_date : null,
+                                                                [
+                                                                    'class' => "form-control end_date " . ($experience->is_present ? 'd-none' : ''),
+                                                                    'id' => 'end_' . $key,
+                                                                    'placeholder' => 'End Date ',
+                                                                ],
+                                                            ) !!}
                                                         </div>
-
                                                         <div class="form-check  col-md-1" style="margin-top: 2rem;">
                                                             {!! Form::hidden('experience[' . $key . '][is_present]', 0) !!}
                                                             {!! Form::checkbox('experience[' . $key . '][is_present]', 1, $experience->is_present, [
-                                                                'class' => 'form-check-input',
+                                                                'class' => 'form-check-input is_present_job',
                                                                 'id' => 'is_present_' . $key,
+                                                                "onclick" => "isPresent(".$key.")"
                                                             ]) !!}
                                                             <label class="form-check-label"
                                                                 for="is_present_{{ $key }}">
@@ -293,7 +286,7 @@
                                                         </label>
                                                         {!! Form::text('position_title', null, [
                                                             'class' => 'form-control',
-                                                            'placeholder' => 'Position Title * ',
+                                                            'placeholder' => 'Position Title ',
                                                             'id' => 'position_title',
                                                         ]) !!}
                                                     </div>
@@ -312,8 +305,7 @@
                                                         <label for="end" class="file-label">End
                                                             Date</label>
                                                         {!! Form::date('end_date', null, [
-                                                            'class' => 'form-control',
-                                                            'id' => 'end',
+                                                            'class' => 'form-control end_date',
                                                             'placeholder' => 'End Date ',
                                                         ]) !!}
                                                     </div>
@@ -321,10 +313,9 @@
                                                     <div class="form-check  col-md-1" style="margin-top: 2rem;">
                                                         {!! Form::hidden('is_present', 0) !!}
                                                         {!! Form::checkbox('is_present', 1, isset($experience) ? $experience->is_present : false, [
-                                                            'class' => 'form-check-input',
-                                                            'id' => 'is_present',
+                                                            'class' => 'form-check-input is_present_job'
                                                         ]) !!}
-                                                        <label class="form-check-label" for="is_present">
+                                                        <label class="form-check-label">
                                                             Present Job
                                                         </label>
                                                     </div>
@@ -393,6 +384,7 @@
                                     </button>
                                 </div>
                             </div>
+                        </div>
                     </form>
                     <div class="container">
                         <div class="modal fade" id="exampleModalCenter">
@@ -433,6 +425,15 @@
     <script type="text/javascript">
         var i = 0;
 
+        function isPresent(key) {
+            if($(`#is_present_${key}`).is(':checked')){
+                $(`#end_${key}`).addClass("d-none");
+                $(`#end_${key}`).val("");
+            } else {
+    $(`#end_${key}`).removeClass("d-none");
+}
+         }
+
         function toggleEndDateVisibility(checkbox) {
             var index = checkbox.attr('id').split('_')[2];
             var endDateField = $('#end_' + index);
@@ -442,6 +443,15 @@
                 endDateField.show();
             }
         }
+
+        $(document).on('click', '.is_present_job', function () {
+            if($(this).is(':checked')){
+                $(this).parent().prev().find(".end_date").addClass("d-none")
+                $(this).parent().prev().find(".end_date").val("")
+            } else {
+                $(this).parent().prev().find(".end_date").removeClass("d-none")
+}
+         })
         toggleEndDateVisibility($('#is_present_0'));
         $('#is_present_0').change(function() {
             toggleEndDateVisibility($(this));
@@ -556,7 +566,7 @@
                         $(this).slideUp(deleteElement);
                     }
                 },
-                isFirstItemUndeletable: true
+                isFirstItemUndeletable: false
             });
         });
     </script>

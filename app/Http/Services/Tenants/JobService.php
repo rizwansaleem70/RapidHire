@@ -338,11 +338,12 @@ class JobService implements JobContract
 
     public function profile($user_id)
     {
-        $model = $this->modelUser->whereId($user_id)->first();
+        $model = $this->modelUser->find($user_id);
+
         if (empty($model)) {
             throw new CustomException('User Not Found!');
         }
-        return $model->with(['country', 'state', 'city', 'experience', 'applicant', 'education'])->first();
+        return $this->modelUser->whereId($user_id)->with(['country', 'state', 'city', 'experience', 'applicant', 'education'])->first();
     }
 
     public function profileUpdate($data, $user_id)
