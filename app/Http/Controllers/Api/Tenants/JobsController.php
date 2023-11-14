@@ -70,6 +70,19 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
+    public function show(string $id)
+    {
+        try {
+            $job = $this->job->show($id);
+            $job = new Job($job);
+            return $this->successResponse( "Job Found Successfully", $job);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            helper::logMessage("job show", 'id ='.$id, $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
 
     /**
      * Display the specified resource.
