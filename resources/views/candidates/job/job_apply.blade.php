@@ -66,7 +66,6 @@
                             <div class="custom-file-upload" id="drop-area" style="padding: 5%;">
                                 <div class="button-container" style="text-align: center;">
                                     <span id="file-name-display"></span>
-                                    <!-- Display uploaded file name here -->
                                     <input type="hidden" name="job_id" value="{{ @$data['job']->id }}">
 
                                     <h6><strong>UPLOAD COVER LETTER</strong></h6>
@@ -208,8 +207,6 @@
                                 @endif
                                 <div class="row repeater">
                                     <h6><strong>Experience</strong></h6>
-                                    <button data-repeater-create type="button" class="btn btn-primary"><i
-                                            class="fas fa-plus"></i></button>
                                     <div data-repeater-list="experience">
                                         @if (count($data['user']->experience) > 0)
                                             @foreach ($data['user']->experience as $key => $experience)
@@ -339,6 +336,11 @@
                                                 </div>
                                             </div>
                                         @endif
+                                    </div>
+                                    <div class="col-sm-11"></div>
+                                    <div class="col-sm-1">
+                                        <button data-repeater-create type="button" class="btn btn-primary"
+                                            style="margin-left: 8px;"><i class="fas fa-plus"></i></button>
                                     </div>
                                     {{-- <div class="form-group col-md-3">
                                     <label for="title" class="file-label">Organization Name </label>
