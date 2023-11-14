@@ -86,7 +86,7 @@ class JobService implements JobContract
                     ->orWhereBetween('max_salary', [$filter->min_salary, $filter->max_salary]);
             });
         $totalJobs = $query->count();
-        $jobs = $query->with( 'country','state','city','favorite')->select(
+        $jobs = $query->with('country', 'state', 'city', 'favorite')->select(
             '*',
             DB::raw('DATEDIFF(expiry_date, now()) AS remaining_days')
         )->paginate(10);
@@ -107,7 +107,7 @@ class JobService implements JobContract
         $companyEmail = settings()->group('configuration')->get('company_contract_email');
         $company_title_about = settings()->group('configuration')->get('company_title_about');
         $socialMedia = $this->modelSocialMedia->orderBy('priority')->get();
-        $job = $this->modelJob->with('country','state','city')->where('slug', $slug)->first();
+        $job = $this->modelJob->with('country', 'state', 'city')->where('slug', $slug)->first();
         $related_jobs = $this->modelJob
             ->where('department_id', $job->department_id)
             ->where('id', '<>', $job->id)
@@ -131,12 +131,12 @@ class JobService implements JobContract
 
     public function jobApply($slug)
     {
-        $countries = $this->modelCountry->pluck('name','id');
-        $user = $this->modelUser->with(['country','state','city','experience'])->find(Auth::user()->id);
+        $countries = $this->modelCountry->pluck('name', 'id');
+        $user = $this->modelUser->with(['country', 'state', 'city', 'experience'])->find(Auth::user()->id);
         $logo = settings()->group('logo')->get('logo');
-        $job = $this->modelJob->with(['country','state','city','jobQuestion.questionBank' => function($query){
+        $job = $this->modelJob->with(['country', 'state', 'city', 'jobQuestion.questionBank' => function ($query) {
             return $query;
-        },'jobQualification.requirement'=> function($query){
+        }, 'jobQualification.requirement' => function ($query) {
             return $query;
         },])->where('slug', $slug)->first();
         return [
@@ -155,7 +155,7 @@ class JobService implements JobContract
     private function prepareData($modelApplicant, $data, $new_record = false)
     {
         $skill = json_decode($data['skills']);
-        $valuesArray = array_map(function($item) {
+        $valuesArray = array_map(function ($item) {
             return $item->value;
         }, $skill);
         $commaSeparatedValuesSkill = implode(',', $valuesArray);
@@ -170,7 +170,7 @@ class JobService implements JobContract
         $modelApplicant->resume_path = $this->upload($data['resume_path']);
         $modelApplicant->cover_letter_path = $this->upload($data['cover_letter_path']);
         $modelApplicant->save();
-        foreach ($data['data'] as $value) {
+        foreach ($data['experience'] as $value) {
             $modelJobExperience = new $this->modelJobExperience;
             $modelJobExperience->user_id = $user_id;
             $modelJobExperience->job_id = $data['job_id'];
@@ -181,18 +181,18 @@ class JobService implements JobContract
             $modelJobExperience->is_present = isset($data['is_present']);
             $modelJobExperience->save();
         }
-        if ($data['question']){
-           foreach ($data['question'] as $question){
-               $modelApplicantQuestionAnswer = new $this->modelApplicantQuestionAnswer;
-               $modelApplicantQuestionAnswer->applicant_id = $modelApplicant->id;
-               $modelApplicantQuestionAnswer->job_id = $data['job_id'];
-               $modelApplicantQuestionAnswer->question_bank_id = $question['id'];
-               $modelApplicantQuestionAnswer->answer = $question['answer'];
-               $modelApplicantQuestionAnswer->save();
-           }
+        if ($data['question']) {
+            foreach ($data['question'] as $question) {
+                $modelApplicantQuestionAnswer = new $this->modelApplicantQuestionAnswer;
+                $modelApplicantQuestionAnswer->applicant_id = $modelApplicant->id;
+                $modelApplicantQuestionAnswer->job_id = $data['job_id'];
+                $modelApplicantQuestionAnswer->question_bank_id = $question['id'];
+                $modelApplicantQuestionAnswer->answer = $question['answer'];
+                $modelApplicantQuestionAnswer->save();
+            }
         }
-        if ($data['requirement']){
-            foreach ($data['requirement'] as $requirement){
+        if ($data['requirement']) {
+            foreach ($data['requirement'] as $requirement) {
                 $modelApplicantRequirementAnswer = new $this->modelApplicantRequirementAnswer;
                 $modelApplicantRequirementAnswer->applicant_id = $modelApplicant->id;
                 $modelApplicantRequirementAnswer->job_id = $data['job_id'];

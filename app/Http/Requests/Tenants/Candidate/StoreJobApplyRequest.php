@@ -28,15 +28,15 @@ class StoreJobApplyRequest extends FormRequest
             'source_detail' => 'required',
             'question.*.answer' => 'required',
             'requirement.*.answer' => 'required',
-            'data.*.organization_name' => 'nullable',
-            'data.*.position_title' => 'nullable',
-            'data.*.start_date' => 'nullable',
-            'data.*.end_date' => 'nullable',
-            'data.*.is_present' => 'nullable',
+            'experience.*.organization_name' => 'nullable',
+            'experience.*.position_title' => 'nullable',
+            'experience.*.start_date' => 'nullable',
+            'experience.*.end_date' => 'nullable',
+            'experience.*.is_present' => 'nullable',
         ];
     }
 
-    public function prepareRequest():array
+    public function prepareRequest(): array
     {
         $request = $this;
         return [
@@ -47,7 +47,7 @@ class StoreJobApplyRequest extends FormRequest
             'source_detail' => $request['source_detail'],
             'question' => $request['question'],
             'requirement' => $request['requirement'],
-            'data' => $request['data']
+            'experience' => $request['experience']
         ];
     }
 }
