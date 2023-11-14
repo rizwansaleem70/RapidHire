@@ -35,7 +35,8 @@ class Job extends JsonResource
             'salary_deliver' => $this->salary_deliver,
             'cover_image' => $this->cover_image ? asset($this->cover_image):"",
             'job_hiring_manager' => $this->jobHiringManager ? new JobHiringManagerResourceCollection($this->jobHiringManager) : "",
-            'job_question_bank' => $this->jobQuestionBank ? new QuestionBankResourceCollection($this->jobQuestionBank) : "",
+            'job_question_bank' => $this->jobQuestionBank ? new JobQuestionBankResourceCollection($this->jobQuestionBank) : "",
+            'requirement' => $this->requirement ? new JobRequirementResourceCollection($this->requirement) : "",
         ];
     }
 }
