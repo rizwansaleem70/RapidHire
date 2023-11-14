@@ -24,10 +24,8 @@ class ImageUploadsController extends Controller
         try {
             DB::beginTransaction();
             $imageUpload = $this->ImageUpload->store($request->prepareRequest());
-//            $imageUpload = new ImageUploadResource($imageUpload);
-            $image = $imageUpload;
             DB::commit();
-            return $this->successResponse("Image Upload Successfully", $imageUpload);
+            return $this->successResponse("File Upload Successfully", $imageUpload);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
