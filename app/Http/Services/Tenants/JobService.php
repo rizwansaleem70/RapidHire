@@ -95,7 +95,7 @@ class JobService implements JobContract
         if (empty($model)) {
             throw new CustomException('Job Record Not Found!');
         }
-        return $this->model->with(['jobHiringManager','jobQuestionBank','requirement'])->find($id);
+        return $this->model->with(['jobHiringManager','jobQuestionBank'])->find($id);
     }
     public function ATS_Score($data, $job_id)
     {
