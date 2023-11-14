@@ -79,19 +79,19 @@ class AuthService implements AuthContract
         return $model;
     }
 
-    public function changePassword($input)
+    public function changePassword($input,$user_id)
     {
-        $model = $this->model->find(Auth::user()->id);
+        $model = $this->model->find($user_id);
         if (!($this->model)->checkPassword($input['old_password'], $model->password))
             throw new CustomException("Invalid Credentials");
         return $this->prepareData($model, $input, false);
     }
-    public function deleteProfile($input)
+    public function deleteProfile($input,$user_id)
     {
-        $model = $this->model->find(Auth::user()->id);
+        $model = $this->model->find($user_id);
         if (!($this->model)->checkPassword($input['password'], $model->password))
             throw new CustomException("Password Does Not Match");
-        return $this->model->destroy(Auth::user()->id);
+        return $this->model->destroy($user_id);
     }
     public function favoriteJob()
     {

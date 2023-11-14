@@ -10,8 +10,8 @@ interface AuthContract
     public function register($input);
     public function login($input);
     public function forgot($input);
-    public function changePassword($input);
-    public function deleteProfile($input);
+    public function changePassword($input,$user_id);
+    public function deleteProfile($input,$user_id);
     public function favoriteJob();
     public function dashboardAuthenticate($id);
 }
