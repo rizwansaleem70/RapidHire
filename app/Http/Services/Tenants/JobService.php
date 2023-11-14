@@ -379,8 +379,23 @@ class JobService implements JobContract
         if (isset($data['is_active']) && $data['is_active']) {
             $model->is_active = $data['is_active'];
         }
-        if (isset($data['dob']) && $data['dob']) {
-            $model->dob = $data['dob'];
+        if (isset($data['facebook']) && $data['facebook']) {
+            $model->facebook = $data['facebook'];
+        }
+        if (isset($data['linkedin']) && $data['linkedin']) {
+            $model->linkedin = $data['linkedin'];
+        }
+        if (isset($data['twitter']) && $data['twitter']) {
+            $model->twitter = $data['twitter'];
+        }
+        if (isset($data['instagram']) && $data['instagram']) {
+            $model->instagram = $data['instagram'];
+        }
+        if (isset($data['pinterest']) && $data['pinterest']) {
+            $model->pinterest = $data['pinterest'];
+        }
+        if (isset($data['youtube']) && $data['youtube']) {
+            $model->youtube = $data['youtube'];
         }
         if (isset($data['bio']) && $data['bio']) {
             $model->bio = $data['bio'];
