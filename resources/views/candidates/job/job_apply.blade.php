@@ -56,19 +56,11 @@
                                     {{--                                            </button> --}}
                                     {{--                                        </a> --}}
 
-                                    <p id="selectedFileName" style="margin-top: 2rem;">No file choosen </p>
+                                    <p id="selectedFileName" style="margin-top: 2rem;">No file chosen </p>
                                 </div>
                             </div>
                             <span id="file-name-display"></span> <!-- Display uploaded file name here -->
                             <input type="hidden" name="job_id" value="{{ @$data['job']->id }}">
-
-                            <h6><strong>UPLOAD COVER LETTER</strong></h6>
-                            <div class="custom-file-upload" id="drop-area" style="padding: 5%;">
-                                <div class="button-container" style="text-align: center;">
-                                    <span id="file-name-display"></span>
-                                    <!-- Display uploaded file name here -->
-                                    <input type="hidden" name="job_id" value="{{ @$data['job']->id }}">
-
                                     <h6><strong>UPLOAD COVER LETTER</strong></h6>
                                     <div class="custom-file-upload" id="drop-area" style="padding: 5%;">
                                         <label for="file-upload" class="file-label">Select only pdf
@@ -81,9 +73,6 @@
                                         <p id="selectedFileName2" style="margin-top: 2rem;">No file chosen
                                         </p>
                                     </div>
-                                    <p id="selectedFileName2" style="margin-top: 2rem;">No file chosen</p>
-                                </div>
-                            </div>
                             <div class="col-lg-12">
                                 <label for="first_name" class="file-label">First Name </label>
                                 <div class="form-group">
@@ -391,6 +380,7 @@
                                     </button>
                                 </div>
                             </div>
+                        </div>
                     </form>
                     <div class="container">
                         <div class="modal fade" id="exampleModalCenter">
