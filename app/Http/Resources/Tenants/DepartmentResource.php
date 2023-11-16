@@ -5,7 +5,7 @@ namespace App\Http\Resources\Tenants;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class JobQuestionBankResource extends JsonResource
+class DepartmentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +16,7 @@ class JobQuestionBankResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'input_type' => $this->input_type,
-            'question' => $this->question,
+            'name' => $this->name,
         ];
     }
 }

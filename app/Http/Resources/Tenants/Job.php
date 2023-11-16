@@ -17,10 +17,10 @@ class Job extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'country_id' => $this->country_id,
-            'state_id' => $this->state_id,
-            'city_id' => $this->city_id,
-            'department_id' => $this->department_id,
+//            'country_id' => $this->country_id,
+//            'state_id' => $this->state_id,
+//            'city_id' => $this->city_id,
+//            'department_id' => $this->department_id,
             'slug' => $this->slug,
             'job_description' => $this->job_description,
             'type' => $this->type,
@@ -34,9 +34,13 @@ class Job extends JsonResource
             'status' => $this->status,
             'salary_deliver' => $this->salary_deliver,
             'cover_image' => $this->cover_image ? asset($this->cover_image):"",
-            'job_hiring_manager' => $this->jobHiringManager ? new JobHiringManagerResourceCollection($this->jobHiringManager) : "",
-            'job_question_bank' => $this->jobQuestionBank ? new JobQuestionBankResourceCollection($this->jobQuestionBank) : "",
-            'requirement' => $this->requirement ? new JobRequirementResourceCollection($this->requirement) : "",
+            'job_hiring_manager' => isset($this->jobHiringManager) ? new JobHiringManagerResourceCollection($this->jobHiringManager) : "",
+            'job_question_bank' => isset($this->jobQuestionBank) ? new JobQuestionBankResourceCollection($this->jobQuestionBank) : "",
+            'requirement' => isset($this->requirement) ? new RequirementResourceCollection($this->requirement) : "",
+            'country' => isset($this->country) ? new CountryResource($this->country) : "",
+            'state' => isset($this->state) ? new StateResource($this->state) : "",
+            'city' => isset($this->city) ? new CountryResource($this->city) : "",
+            'department' => isset($this->department) ? new DepartmentResource($this->department) : "",
         ];
     }
 }
