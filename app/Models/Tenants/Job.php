@@ -71,6 +71,10 @@ class Job extends Model
     {
         return $this->hasOne(FavoriteJob::class, 'job_id', 'id');
     }
+    public function department(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Department::class, 'department_id', 'id');
+    }
 
     public function applicants(): \Illuminate\Database\Eloquent\Relations\hasMany
     {
