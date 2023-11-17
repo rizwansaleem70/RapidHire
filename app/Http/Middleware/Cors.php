@@ -16,7 +16,6 @@ class Cors
     public function handle($request, Closure $next)
     {
         return $next($request)
-            ->header('Access-Control-Allow-Origin', 'https://rapidhire-tenant.netlify.app/#/')
-            ->header('Access-Control-Allow-Origin', 'https://rapidhire-candidate.netlify.app/#/');
+            ->header('Access-Control-Allow-Origin', ['https://rapidhire-tenant.netlify.app/#/','https://rapidhire-candidate.netlify.app/#/']);
     }
 }
