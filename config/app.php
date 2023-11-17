@@ -61,7 +61,7 @@ return [
     'asset_url' => env('ASSET_URL'),
 
     'domain' => env('APP_DOMAIN', 'localhost'),
-    'candidate_authentication_dashboard' => env('CANDIDATE_AUTHENTICATE_DASHBOARD', 'http://localhost:5173/#/sign-in'),
+    'candidate_authentication_dashboard' => env('CANDIDATE_AUTHENTICATE_DASHBOARD', 'https://rapidhire-candidate.netlify.app/#/sign-in/'),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
