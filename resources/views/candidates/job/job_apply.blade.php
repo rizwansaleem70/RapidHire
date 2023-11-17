@@ -386,30 +386,30 @@
                             </div>
                         </div>
                     </form>
-                    <div class="container">
-                        <div class="modal fade" id="exampleModalCenter">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-body">
-                                        <div class="thank-you-pop">
-                                            <img src="{{ asset('app-assets/candidates/images/used/verified.gif') }}"
-                                                alt="">
-                                            <h4>Your job application has been successfully submitted</h4>
-                                            <p class="lead">Our team will review your application, and if your
-                                                qualifications match our requirements, we will be in touch for the
-                                                next
-                                                steps in the hiring process.</p>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn" data-bs-dismiss="modal"
-                                            style="background-color: #0c3438;color:white ;">Close
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+{{--                    <div class="container">--}}
+{{--                        <div class="modal fade" id="exampleModalCenter">--}}
+{{--                            <div class="modal-dialog modal-dialog-centered" role="document">--}}
+{{--                                <div class="modal-content">--}}
+{{--                                    <div class="modal-body">--}}
+{{--                                        <div class="thank-you-pop">--}}
+{{--                                            <img src="{{ asset('app-assets/candidates/images/used/verified.gif') }}"--}}
+{{--                                                alt="">--}}
+{{--                                            <h4>Your job application has been successfully submitted</h4>--}}
+{{--                                            <p class="lead">Our team will review your application, and if your--}}
+{{--                                                qualifications match our requirements, we will be in touch for the--}}
+{{--                                                next--}}
+{{--                                                steps in the hiring process.</p>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="modal-footer">--}}
+{{--                                        <button type="button" class="btn" data-bs-dismiss="modal"--}}
+{{--                                            style="background-color: #0c3438;color:white ;">Close--}}
+{{--                                        </button>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                 </div>
             </div>
         </section>
