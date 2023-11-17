@@ -42,6 +42,7 @@ class JobsController extends Controller
     }
     public function jobApply($slug)
     {
+        ini_set('memory_limit', '-1');
         try {
             $data = $this->job->jobApply($slug);
             return view('candidates.job.job_apply', compact('data'));
