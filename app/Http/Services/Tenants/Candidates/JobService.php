@@ -141,6 +141,10 @@ class JobService implements JobContract
 
     public function jobApply($slug)
     {
+        $job = $this->modelJob->where('slug', $slug)->first();
+        if (!$job) {
+            throw new CustomException("Job Record Not Found!");
+        }
         $countries = $this->modelCountry->pluck('name', 'id');
         $states = $this->modelState->pluck('name', 'id');
         $cities = $this->modelCity->pluck('name', 'id');
