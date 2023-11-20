@@ -13,13 +13,14 @@
                                         <label class="title">Search Job</label>
                                         <div class="group-input search-ip">
                                             <button><i class="icon-search"></i></button>
-                                            <input type="text" name="name" placeholder="Job title, key words or company">
+                                            <input type="text" class="form-control" name="name" placeholder="Job title, key words or company">
                                         </div>
                                     </div>
                                     <div class="group-form">
                                         <label class="title">Country</label>
                                         <div class="group-input has-icon">
-                                            <select id="country-id" name="country_id">
+{{--                                            <i class="icon-map-pin"></i>--}}
+                                            <select id="country-id" class="form-control" required name="country_id">
                                                 <option value="">Select Country</option>
                                                 @foreach($data['country'] as $key => $value)
                                                     <option value="{{$key}}">{{$value}}</option>
@@ -30,7 +31,7 @@
                                     <div class="group-form">
                                         <label class="title">State</label>
                                         <div class="group-input has-icon">
-                                            <select id="state-id" name="state_id">
+                                            <select id="state-id" class="form-control" required name="state_id">
                                             </select>
                                         </div>
                                     </div>
@@ -38,14 +39,14 @@
 
                                         <label class="title">City</label>
                                         <div class="group-input has-icon">
-                                            <select id="city-id" name="city_id">
+                                            <select id="city-id" class="form-control" required name="city_id">
                                             </select>
                                         </div>
                                     </div>
                                     <div class="group-form">
                                         <label class="title">On-site/Remote</label>
                                         <div class="group-input">
-                                            <select name="job_type">
+                                            <select class="form-control" name="job_type">
                                                 <option value="">Select Type</option>
                                                 <option value="onSite">On-site</option>
                                                 <option value="remote">Remote</option>
@@ -56,7 +57,7 @@
                                     <div class="group-form">
                                         <label class="title">Job Types</label>
                                         <div class="group-input">
-                                            <select name="type">
+                                            <select class="form-control" name="type">
                                                 <option value="">Job Type</option>
                                                 <option value="contract">Contract</option>
                                                 <option value="full-time">Full Time</option>
@@ -73,11 +74,11 @@
                                                 <div class="d-flex justify-content-between">
                                                     <div class="group-input search-ip">
                                                         <button type="button"><i class="icon-dollar"></i></button>
-                                                        <input type="number" name="min_salary" placeholder="Min">
+                                                        <input type="number" class="form-control" name="min_salary" placeholder="Min">
                                                     </div>
                                                     <div class="group-input search-ip">
                                                         <button type="button"><i class="icon-dollar"></i></button>
-                                                        <input type="number" name="max_salary" placeholder="Max">
+                                                        <input type="number" class="form-control" name="max_salary" placeholder="Max">
                                                     </div>
                                                 </div>
                                             </div>
@@ -144,7 +145,7 @@
                                             <option>1 Per Page</option>
                                             <option>10 Per Page</option>
                                         </select>
-                                        
+
                                         <select>
                                             <option>Sort by (Defaut)</option>
                                             <option>New</option>
@@ -301,57 +302,6 @@
 @endsection
 @push('js')
 {{-- <script src="{{asset('app-assets/candidates/javascript/jquery.nice-select.min.js')}}"></script> --}}
-<script>
-    $(document).ready(function () {
-        $('#country-id').on('change', function () {
-            var idCountry = this.value;
-            $("#state-id").html('');
-            $.ajax({
-
-                url: 'get-all-state-from-country',
-                method: "GET",
-                data: {
-                    country_id: idCountry,
-                    _token: '{{csrf_token()}}'
-                },
-                dataType: 'json',
-                success: function (result) {
-                    $('#state-id').html(result.data);
-                    $.each(result.data, function (key, value) {
-                        $("#state-id").append('<option value="' + value.id + '">' + value.name + '</option>');
-                    });
-                    $('#city-id').html('<option value="">Select City</option>');
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.error("Error fetching states:", textStatus, errorThrown);
-                }
-            });
-        });
-        $('#state-id').on('change', function () {
-            var idState = this.value;
-            $("#city-id").html('');
-            $.ajax({
-                url: 'get-all-city-from-state',
-                method: "GET",
-                data: {
-                    state_id: idState,
-                    _token: '{{csrf_token()}}'
-                },
-                dataType: 'json',
-                success: function (res) {
-                    $('#city-id').html('<option value="">Select City</option>');
-                    $.each(res.data, function (key, value) {
-                        $("#city-id").append('<option value="' + value
-                            .id + '">' + value.name + '</option>');
-                    });
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.error("Error fetching states:", textStatus, errorThrown);
-                }
-            });
-        });
-    });
-</script>
 <script>
     function favorite(id) {
         var icon = document.getElementById('heart_' + id);

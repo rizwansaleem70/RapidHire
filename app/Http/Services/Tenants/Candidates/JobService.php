@@ -141,14 +141,20 @@ class JobService implements JobContract
 
     public function jobApply($slug)
     {
+        DB::enableQueryLog();
         $job = $this->modelJob->where('slug', $slug)->first();
         if (!$job) {
             throw new CustomException("Job Record Not Found!");
         }
+        $user = Auth::user();
         $countries = $this->modelCountry->pluck('name', 'id');
-        $states = $this->modelState->pluck('name', 'id');
-        $cities = $this->modelCity->pluck('name', 'id');
-        $user = $this->modelUser->with(['country', 'state', 'city', 'experience'])->find(Auth::user()->id);
+        $states = $this->modelState->when($user->country_id, function ($q, $country_id) {
+        return $q->where('country_id', $country_id);
+            })->get(['id','name']);
+        $cities = $this->modelCity->when($user->state_id, function ($q, $state_id) {
+            return $q->where('state_id', $state_id);
+        })->get(['id','name']);
+        $user = $this->modelUser->with(['country:id,name', 'state:id,name', 'city:id,name', 'experience'])->find(Auth::user()->id);
         $logo = settings()->group('logo')->get('logo');
         $job = $this->modelJob->with(['country', 'state', 'city', 'jobQuestion.questionBank' => function ($query) {
             return $query;

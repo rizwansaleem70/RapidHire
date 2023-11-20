@@ -122,6 +122,69 @@
             });
         }, 3000);
     </script>
+    <script>
+        $(document).ready(function() {
+            $('#country-id').on('change', function() {
+                var idCountry = this.value;
+                $("#state-id").html('');
+                $.ajax({
+
+                    url: `{{ route('get-all-state-from-country') }}`,
+                    method: "GET",
+                    data: {
+                        country_id: idCountry,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    dataType: 'json',
+                    success: function(result) {
+                        $('#state-id').html(result.data);
+                        // $.each(result.data, function (key, value) {
+                        //     $("#state-id.nice-select").append('<option value="' + value.id + '">' + value.name + '</option>');
+                        // });
+                        $('#city-id').html('<option value="">Select City</option>');
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error("Error fetching states:", textStatus, errorThrown);
+                    }
+                });
+            });
+            $('#state-id').on('change', function() {
+                var idState = this.value;
+                $("#city-id").html('');
+                $.ajax({
+                    url: `{{ route('get-all-city-from-state') }}`,
+                    method: "GET",
+                    data: {
+                        state_id: idState,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    dataType: 'json',
+                    success: function(result) {
+                        $('#city-id').html(result.data);
+                        // $('#city-id').html('<option value="">Select City</option>');
+                        // $.each(res.data, function (key, value) {
+                        //     $("#city-id").append('<option value="' + value
+                        //         .id + '">' + value.name + '</option>');
+                        // });
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error("Error fetching states:", textStatus, errorThrown);
+                    }
+                });
+            });
+
+            $('.repeater').repeater({
+                initEmpty: false,
+                // (Optional)
+                hide: function(deleteElement) {
+                    if (confirm('Are you sure you want to delete this element?')) {
+                        $(this).slideUp(deleteElement);
+                    }
+                },
+                isFirstItemUndeletable: false
+            });
+        });
+    </script>
     @stack('js')
 </body>
 

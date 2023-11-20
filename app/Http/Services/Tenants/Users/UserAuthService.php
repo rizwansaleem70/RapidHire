@@ -56,8 +56,8 @@ class UserAuthService implements UserAuthContract
             $model->password = $input['password'];
         }
 
-        $model->country_id = 39;
-        // $model->state_id = 
+//        $model->country_id = 39;
+        // $model->state_id =
         $model->save();
         return $model;
     }
