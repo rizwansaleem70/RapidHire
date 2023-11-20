@@ -138,8 +138,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="gender" class="file-label">Gender *</label>
-                                    <input type="text" class="form-control" required value="{{ $data['user']->gender }}"
-                                        id="gender" aria-describedby="gender" placeholder="Gender *">
+                                    <select id="gender" class="form-control" required name="gender">
+                                        <option {{ 'male' == $data['user']->gender ? 'selected' : '' }} class="form-control" value="male"> Male </option>
+                                        <option {{ 'female' == $data['user']->gender ? 'selected' : '' }} class="form-control" value="female"> Female </option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="skills" class="file-label">Skills </label>
@@ -417,6 +419,8 @@
     <script src="{{ asset('app-assets/candidates/javascript/jquery-repeater.js') }}"></script>
     <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
+        var input = document.getElementById('skills');
+        new Tagify(input)
         var i = 0;
 
         function isPresent(key) {
@@ -497,8 +501,5 @@
         $(document).on('click', '.remove-input-field', function() {
             $(this).parents('.del-class').remove();
         });
-        var input = document.getElementById('skills');
-
-        new Tagify(input)
     </script>
 @endpush

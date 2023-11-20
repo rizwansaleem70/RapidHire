@@ -67,7 +67,7 @@
                                 superbly orca and far hence one.
 
                             </p>
-                            <a href="#" class="tf-button style-1">Read more</a>
+{{--                            <a href="#" class="tf-button style-1">Read more</a>--}}
                         </div>
                     </div>
                 </div>
@@ -138,7 +138,7 @@
 
             <div class="tf-container">
                 <div class="title-iconbox style-3 stc">
-                    <h4>How it work?</h4>
+                    <h4>How it works?</h4>
                     <p>Pellentesque quis lectus sagittis, gravida erat id, placerat tellus.</p>
                 </div>
                 <div class="row">
@@ -826,105 +826,105 @@
         <!--End testimonials -->
 
         <!-- wd-partner -->
-        <section>
-            <div class="wd-partner style-1">
-                <div class="tf-container">
-                    <h1 class="title-partner">
-                        Used by 10.000+ companies around the world
-                    </h1>
-                    <div class="swiper partner-type-7">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <a class="logo-partner" href="#">
-                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-1.png')}}"
-                                         alt="images/partners/page-logo-1">
-                                </a>
-                            </div>
-                            <div class="swiper-slide">
-                                <a href="#" class="logo-partner">
-                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-2.png')}}"
-                                         alt="images/partners/page-logo-2">
-                                </a>
-                            </div>
-                            <div class="swiper-slide">
-                                <a href="#" class="logo-partner">
-                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-3.png')}}"
-                                         alt="images/partners/page-logo-3">
-                                </a>
-                            </div>
-                            <div class="swiper-slide">
-                                <a href="#" class="logo-partner">
-                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-4.png')}}"
-                                         alt="images/partners/page-logo-4">
-                                </a>
-                            </div>
-                            <div class="swiper-slide">
-                                <a href="#" class="logo-partner">
-                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-5.png')}}"
-                                         alt="images/partners/page-logo-5">
-                                </a>
-                            </div>
-                            <div class="swiper-slide">
-                                <a href="#" class="logo-partner">
-                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-6.png')}}"
-                                         alt="images/partners/page-logo-6">
-                                </a>
-                            </div>
-                            <div class="swiper-slide">
-                                <a href="#" class="logo-partner">
-                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-7.png')}}"
-                                         alt="images/partners/page-logo-7">
-                                </a>
-                            </div>
-                            <div class="swiper-slide">
-                                <a class="logo-partner" href="#">
-                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-1.png')}}"
-                                         alt="images/partners/page-logo-1">
-                                </a>
-                            </div>
-                            <div class="swiper-slide">
-                                <a href="#" class="logo-partner">
-                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-2.png')}}"
-                                         alt="images/partners/page-logo-2">
-                                </a>
-                            </div>
-                            <div class="swiper-slide">
-                                <a href="#" class="logo-partner">
-                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-3.png')}}"
-                                         alt="images/partners/page-logo-3">
-                                </a>
-                            </div>
-                            <div class="swiper-slide">
-                                <a href="#" class="logo-partner">
-                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-4.png')}}"
-                                         alt="images/partners/page-logo-4">
-                                </a>
-                            </div>
-                            <div class="swiper-slide">
-                                <a href="#" class="logo-partner">
-                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-5.png')}}"
-                                         alt="images/partners/page-logo-5">
-                                </a>
-                            </div>
-                            <div class="swiper-slide">
-                                <a href="#" class="logo-partner">
-                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-6.png')}}"
-                                         alt="images/partners/page-logo-6">
-                                </a>
-                            </div>
-                            <div class="swiper-slide">
-                                <a href="#" class="logo-partner">
-                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-7.png')}}"
-                                         alt="images/partners/page-logo-7">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="swiper-pagination tes-bullet"></div>
+{{--        <section>--}}
+{{--            <div class="wd-partner style-1">--}}
+{{--                <div class="tf-container">--}}
+{{--                    <h1 class="title-partner">--}}
+{{--                        Used by 10.000+ companies around the world--}}
+{{--                    </h1>--}}
+{{--                    <div class="swiper partner-type-7">--}}
+{{--                        <div class="swiper-wrapper">--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <a class="logo-partner" href="#">--}}
+{{--                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-1.png')}}"--}}
+{{--                                         alt="images/partners/page-logo-1">--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <a href="#" class="logo-partner">--}}
+{{--                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-2.png')}}"--}}
+{{--                                         alt="images/partners/page-logo-2">--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <a href="#" class="logo-partner">--}}
+{{--                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-3.png')}}"--}}
+{{--                                         alt="images/partners/page-logo-3">--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <a href="#" class="logo-partner">--}}
+{{--                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-4.png')}}"--}}
+{{--                                         alt="images/partners/page-logo-4">--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <a href="#" class="logo-partner">--}}
+{{--                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-5.png')}}"--}}
+{{--                                         alt="images/partners/page-logo-5">--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <a href="#" class="logo-partner">--}}
+{{--                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-6.png')}}"--}}
+{{--                                         alt="images/partners/page-logo-6">--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <a href="#" class="logo-partner">--}}
+{{--                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-7.png')}}"--}}
+{{--                                         alt="images/partners/page-logo-7">--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <a class="logo-partner" href="#">--}}
+{{--                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-1.png')}}"--}}
+{{--                                         alt="images/partners/page-logo-1">--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <a href="#" class="logo-partner">--}}
+{{--                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-2.png')}}"--}}
+{{--                                         alt="images/partners/page-logo-2">--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <a href="#" class="logo-partner">--}}
+{{--                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-3.png')}}"--}}
+{{--                                         alt="images/partners/page-logo-3">--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <a href="#" class="logo-partner">--}}
+{{--                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-4.png')}}"--}}
+{{--                                         alt="images/partners/page-logo-4">--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <a href="#" class="logo-partner">--}}
+{{--                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-5.png')}}"--}}
+{{--                                         alt="images/partners/page-logo-5">--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <a href="#" class="logo-partner">--}}
+{{--                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-6.png')}}"--}}
+{{--                                         alt="images/partners/page-logo-6">--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <a href="#" class="logo-partner">--}}
+{{--                                    <img src="{{asset('app-assets/candidates/images/partners/page-logo-7.png')}}"--}}
+{{--                                         alt="images/partners/page-logo-7">--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="swiper-pagination tes-bullet"></div>--}}
 
-                    </div>
-                </div>
-            </div>
-        </section>
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </section>--}}
         <!--End wd-partner -->
     </div>
     <section class="wd-banner-CTA">
@@ -935,8 +935,8 @@
                         <h3>Job Opportunities Are Always Open</h3>
                         <p>Aenean porta, eros lacus congue lorem, sit amet mollis magna velit ac erat.</p>
                         <div class="group-btn">
-                            <button class="tf-btn">Search Job</button>
-                            <button class="tf-btn">Find Candidates</button>
+                            <a href="{{route('candidate.job.list')}}" class="tf-btn">Search Job</a>
+{{--                            <button class="tf-btn">Find Candidates</button>--}}
                         </div>
                     </div>
                 </div>

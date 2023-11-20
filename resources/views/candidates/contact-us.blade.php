@@ -88,19 +88,19 @@
                 </div>
             </div>
         </section>
-        <section>
-            <div class="tf-container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="banner-contact-v1">
-                            <h6>recruiting?</h6>
-                            <p>Advertise your jobs to milions of monthly users and search 15.3 milions cvs in our
-                                database.</p>
-                            <a href="#" class="btn">Start Recruiting now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+{{--        <section>--}}
+{{--            <div class="tf-container">--}}
+{{--                <div class="row">--}}
+{{--                    <div class="col-lg-12">--}}
+{{--                        <div class="banner-contact-v1">--}}
+{{--                            <h6>recruiting?</h6>--}}
+{{--                            <p>Advertise your jobs to milions of monthly users and search 15.3 milions cvs in our--}}
+{{--                                database.</p>--}}
+{{--                            <a href="#" class="btn">Start Recruiting now</a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </section>--}}
     </div>
 @endsection

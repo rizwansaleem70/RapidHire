@@ -41,7 +41,7 @@
                                         <span class="number counter-number" data-speed="2000"
                                               data-to="480">480</span><span>+</span>
                                     </h6>
-                                    <div class="des">Happpy Candidates</div>
+                                    <div class="des">Happy Candidates</div>
                                 </div>
                             </div>
                         </div>

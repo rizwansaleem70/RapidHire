@@ -46,8 +46,12 @@
                                 For Candidates
                             </h6>
                             <ul class="navigation-menu-footer">
-                                <li> <a href="https://rapid-hire-employee-dashboard.netlify.app/">User Dashboard</a> </li>
+                                @auth
+                                    <li> <a href="{{"https://rapidhire-candidate.netlify.app/#/sign-in/".encrypt(auth()->user()->id)}}">User Dashboard</a> </li>
 
+                                @else
+                                    <li><a href="{{route('candidate.login')}}">User Dashboard</a></li>
+                                @endauth
                             </ul>
                         </div>
                     </div>

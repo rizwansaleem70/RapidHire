@@ -37,46 +37,19 @@
                                         <a href="{{route('tenant-user-contact-us')}}">Contact Us</a>
 
                                     </li>
-
                                 </ul>
                             </nav>
                         </div>
                     </div>
                     <div class="header-ct-right">
-                        {{-- User Signed In --}}
                         @auth
                         <div class="header-ct-right" style="margin-right: 11rem;">
-
                             <div class="header-customize-item account">
-
                               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpFreAtrOzdfbsrEHLCtHyBDY4x80z6RBeVA&usqp=CAU" alt="" style="width: 50px;">
                             <div class="sub-account">
                               <div class="sub-account-item" data-endpoint="{{config('app.candidate_authentication_dashboard')}}">
                                 <a href="{{"https://rapidhire-candidate.netlify.app/#/sign-in/".encrypt(auth()->user()->id)}}"><span class="icon-dashboard"></span>Dashboard</a>
                               </div>
-{{--                              <div class="sub-account-item">--}}
-{{--                                <a href="https://rapid-hire-employee-dashboard.netlify.app/createprofile"><span class="icon-profile"></span> Profile</a>--}}
-{{--                              </div>--}}
-
-{{--                              <div class="sub-account-item">--}}
-{{--                                <a href="https://rapid-hire-employee-dashboard.netlify.app/candidates-my-appliedl"><span class="icon-my-apply"></span> My Applied</a>--}}
-{{--                              </div>--}}
-{{--                              <div class="sub-account-item">--}}
-{{--                                <a href="https://rapid-hire-employee-dashboard.netlify.app/save-jobs"><span class="icon-work"></span> Saved Jobs</a>--}}
-{{--                              </div>--}}
-
-{{--                              <div class="sub-account-item">--}}
-{{--                                <a href="https://rapid-hire-employee-dashboard.netlify.app/candidates-messages"><span class="icon-chat"></span> Messages</a>--}}
-{{--                              </div>--}}
-
-
-{{--                              <div class="sub-account-item">--}}
-{{--                                <a href="https://rapid-hire-employee-dashboard.netlify.app/candidates-change-passwords"><span class="icon-change-passwords"></span> Change--}}
-{{--                                  Passwords</a>--}}
-{{--                              </div>--}}
-{{--                              <div class="sub-account-item">--}}
-{{--                                <a href="https://rapid-hire-employee-dashboard.netlify.app/candidates-delete-profile"><span class="icon-trash"></span> Delete Profile</a>--}}
-{{--                              </div>--}}
                               <div class="sub-account-item">
                                 <form method="POST" action="{{ route('tenant-user-logout') }}">
                                     @csrf
@@ -86,8 +59,6 @@
                             </div>
                           </div>
                         </div>
-
-                        {{-- User Not Signed In --}}
                         @else
                         <div class="header-customize-item button">
                             <a href="{{route('candidate.login')}}">Sign In / Sign Up</a>
