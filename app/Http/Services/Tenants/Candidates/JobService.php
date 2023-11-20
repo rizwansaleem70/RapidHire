@@ -62,7 +62,7 @@ class JobService implements JobContract
 
     public function listing($filter)
     {
-        $query = $this->modelJob->query()->latest();
+        $query = $this->modelJob->query()->where('status', 'published')->where('expiry_date', '>=',date('Y-m-d'))->latest();
         $query->when($filter->name, function ($q, $name) {
             return $q->like('name', $name);
         })
@@ -96,7 +96,7 @@ class JobService implements JobContract
             });
         // dd($query->toSql());
         $totalJobs = $query->count();
-        $jobs = $query->with('country', 'state', 'city', 'favorite')->select(
+        $jobs = $query->with('country:id,name', 'state:id,name', 'city:id,name', 'favorite')->select(
             '*',
             DB::raw('DATEDIFF(expiry_date, now()) AS remaining_days')
         )->paginate(10);
@@ -118,6 +118,10 @@ class JobService implements JobContract
         $company_title_about = settings()->group('configuration')->get('company_title_about');
         $socialMedia = $this->modelSocialMedia->orderBy('priority')->get();
         $job = $this->modelJob->with('country', 'state', 'city')->where('slug', $slug)->first();
+        if (!$job) {
+            throw new CustomException("Job Record Not Found!");
+        }
+        $job->update(['views'=>$job['views']+1]);
         $related_jobs = $this->modelJob
             ->where('department_id', $job->department_id)
             ->where('id', '<>', $job->id)

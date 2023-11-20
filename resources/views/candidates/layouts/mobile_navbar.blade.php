@@ -35,33 +35,12 @@
             </div>
         </div>
         <div class="header-ct-right">
-            @auth
-                <div class="header-ct-right" style="margin-right: 11rem;">
-                    <div class="header-customize-item account">
-                        <img
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpFreAtrOzdfbsrEHLCtHyBDY4x80z6RBeVA&usqp=CAU"
-                            alt="" style="width: 50px;">
-                        <div class="sub-account">
-                            <div class="sub-account-item"
-                                 data-endpoint="{{config('app.candidate_authentication_dashboard')}}">
-                                <a href="{{"https://rapidhire-candidate.netlify.app/#/sign-in/".encrypt(auth()->user()->id)}}"><span
-                                        class="icon-dashboard"></span>Dashboard</a>
-                            </div>
-                            <div class="sub-account-item">
-                                <form method="POST" action="{{ route('tenant-user-logout') }}">
-                                    @csrf
-                                    <a href="{{ route('tenant-user-logout') }}"><span
-                                            class="fas fa-sign-out-alt"></span> Logout</a>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @else
+
+            @guest
                 <div class="header-customize-item button">
                     <a href="{{route('candidate.login')}}">Sign In / Sign Up</a>
                 </div>
-            @endauth
+            @endguest
         </div>
 
         <div class="mobile-footer">
