@@ -47,7 +47,7 @@
                                 <label for="file-upload" class="file-label">Select only pdf file </label>
                                 <div class="button-container" style="text-align: center;">
                                     <button id="add-files" class="upload-button" type="button">
-                                        <input type="file" class="form-control" name="resume_path">
+                                        <input type="file" required class="form-control" name="resume_path">
                                     </button>
                                     {{--                                        <a href="https://www.linkedin.com/"> --}}
                                     {{--                                            <button id="linkedin-button" class="linkedin-button" type="button"><img --}}
@@ -67,45 +67,44 @@
                                     file</label>
                                 <div class="button-container" style="text-align: center;">
                                     <button id="add-letter" class="upload-button" type="button">
-                                        <input type="file" class="form-control" name="cover_letter_path">
+                                        <input type="file" required class="form-control" name="cover_letter_path">
                                     </button>
                                 </div>
                                 <p id="selectedFileName2" style="margin-top: 2rem;">No file chosen
                                 </p>
                             </div>
                             <div class="col-lg-12">
-                                <label for="first_name" class="file-label">First Name </label>
+                                <label for="first_name" class="file-label">First Name *</label>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="first_name"
-                                        value="{{ $data['user']->first_name }}" placeholder="First Name *">
+                                        value="{{ $data['user']->first_name }}" required placeholder="First Name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="last_name" class="file-label">Last Name </label>
+                                    <label for="last_name" class="file-label">Last Name *</label>
                                     <input type="text" class="form-control" value="{{ $data['user']->last_name }}"
-                                        id="last_name" aria-describedby="name" placeholder="Last Name *">
+                                        id="last_name" aria-describedby="name" required placeholder="Last Name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="email" class="file-label">Email </label>
+                                    <label for="email" class="file-label">Email *</label>
                                     <input type="email" class="form-control" id="email"
-                                        value="{{ $data['user']->email }}" aria-describedby="email" placeholder="Email *">
+                                        value="{{ $data['user']->email }}" required aria-describedby="email" placeholder="Email">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="phone" class="file-label">Phone </label>
+                                    <label for="phone" class="file-label">Phone *</label>
                                     <input type="tel" class="form-control" id="phone"
-                                        value="{{ $data['user']->phone }}" aria-describedby="phone" placeholder="Phone *">
+                                        value="{{ $data['user']->phone }}" required aria-describedby="phone" placeholder="Phone">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="address" class="file-label">Address </label>
+                                    <label for="address" class="file-label">Address *</label>
                                     <input type="text" class="form-control" value="{{ $data['user']->address }}"
-                                        id="address" aria-describedby="address" placeholder="Address *">
+                                        id="address" aria-describedby="address" required placeholder="Address">
                                 </div>
-
                                 <div class="form-group">
-                                    <label for="country-id" class="file-label">Country </label>
-                                    <select id="country-id" class="form-control" name="country_id">
-                                        <option value=""> Select Country</option>
+                                    <label for="country-id" class="file-label">Country *</label>
+                                    <select id="country-id" class="form-control" required name="country_id">
+                                        <option > Select Country</option>
                                         @foreach ($data['countries'] as $key => $country)
                                             <option {{ $key == $data['user']->country_id ? 'selected' : '' }}
                                                 class="form-control" value="{{ $key }}">
@@ -114,37 +113,32 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="state-id" class="file-label">State </label>
-                                    <select id="state-id" class="form-control" name="state_id">
+                                    <label for="state-id" class="file-label">State *</label>
+                                    <select id="state-id" class="form-control" required name="state_id">
                                         @if ($data['user']->state_id)
-                                            @foreach ($data['states'] as $key => $state)
+                                            @foreach ($data['states'] as $state)
                                                 <option {{ $key == $data['user']->state_id ? 'selected' : '' }}
-                                                    class="form-control" value="{{ $key }}">
-                                                    {{ $state }}</option>
+                                                    class="form-control" value="{{ $state->id }}">
+                                                    {{ $state->name }}</option>
                                             @endforeach
                                         @endif
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="city-id" class="file-label">City </label>
-                                    <select id="city-id" class="form-control" name="city_id">
+                                    <label for="city-id" class="file-label">City *</label>
+                                    <select id="city-id" class="form-control" required name="city_id">
                                         @if ($data['user']->city_id)
-{{--                                            @foreach (\App\Models\Tenants\City::cursor() as $key => $city)--}}
-{{--                                                <option {{ $key == $data['user']->city_id ? 'selected' : '' }}--}}
-{{--                                                    class="form-control" value="{{ $key }}">--}}
-{{--                                                    {{ $city }}</option>--}}
-{{--                                            @endforeach--}}
                                             @foreach ($data['cities'] as $key => $city)
                                                 <option {{ $key == $data['user']->city_id ? 'selected' : '' }}
-                                                    class="form-control" value="{{ $key }}">
-                                                    {{ $city }}</option>
+                                                    class="form-control" value="{{ $city->id }}">
+                                                    {{ $city->name }}</option>
                                             @endforeach
                                         @endif
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="gender" class="file-label">Gender </label>
-                                    <input type="text" class="form-control" value="{{ $data['user']->gender }}"
+                                    <label for="gender" class="file-label">Gender *</label>
+                                    <input type="text" class="form-control" required value="{{ $data['user']->gender }}"
                                         id="gender" aria-describedby="gender" placeholder="Gender *">
                                 </div>
                                 <div class="form-group">
@@ -155,7 +149,7 @@
                                 </div>
 
                                 @if ($data['job']->jobQuestion)
-                                    <h6><strong>Job Requirements</strong></h6>
+                                    <h6><strong>Job Requirements *</strong></h6>
                                     @foreach ($data['job']->jobQuestion as $key => $question)
                                         @if ($question->questionBank)
                                             <div class="row">
@@ -167,7 +161,7 @@
                                                     <input type="hidden" class="form-control"
                                                         name="question[{{ $key }}][id]"
                                                         value="{{ $question->questionBank->id }}">
-                                                    <input type="text" class="form-control"
+                                                    <input type="text" required class="form-control"
                                                         name="question[{{ $key }}][answer]" value="">
                                                 </div>
                                             </div>
@@ -175,7 +169,7 @@
                                     @endforeach
                                 @endif
                                 @if ($data['job']->jobQualification)
-                                    <h6><strong>Job Qualifications</strong></h6>
+                                    <h6><strong>Job Qualifications * </strong></h6>
                                     @foreach ($data['job']->jobQualification as $key => $qualification)
                                         @if ($qualification->requirement)
                                             <div class="row">
@@ -187,7 +181,7 @@
                                                     <input type="hidden" class="form-control"
                                                         name="requirement[{{ $key }}][id]"
                                                         value="{{ $qualification->requirement->id }}">
-                                                    <input type="text" class="form-control"
+                                                    <input type="text" required class="form-control"
                                                         name="requirement[{{ $key }}][answer]" value="">
                                                 </div>
                                             </div>
@@ -195,7 +189,7 @@
                                     @endforeach
                                 @endif
                                 <div class="row repeater">
-                                    <h6><strong>Experience</strong></h6>
+                                    <h6><strong>Experience </strong></h6>
                                     <div data-repeater-list="experience">
                                         @if (count($data['user']->experience) > 0)
                                             @foreach ($data['user']->experience as $key => $experience)
@@ -503,71 +497,8 @@
         $(document).on('click', '.remove-input-field', function() {
             $(this).parents('.del-class').remove();
         });
-        var input = document.querySelector('input[name=skills]');
+        var input = document.getElementById('skills');
 
         new Tagify(input)
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('#country-id').on('change', function() {
-                var idCountry = this.value;
-                $("#state-id").html('');
-                $.ajax({
-
-                    url: `{{ route('get-all-state-from-country') }}`,
-                    method: "GET",
-                    data: {
-                        country_id: idCountry,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    dataType: 'json',
-                    success: function(result) {
-                        $('#state-id').html(result.data);
-                        // $.each(result.data, function (key, value) {
-                        //     $("#state-id.nice-select").append('<option value="' + value.id + '">' + value.name + '</option>');
-                        // });
-                        $('#city-id').html('<option value="">Select City</option>');
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error("Error fetching states:", textStatus, errorThrown);
-                    }
-                });
-            });
-            $('#state-id').on('change', function() {
-                var idState = this.value;
-                $("#city-id").html('');
-                $.ajax({
-                    url: `{{ route('get-all-city-from-state') }}`,
-                    method: "GET",
-                    data: {
-                        state_id: idState,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    dataType: 'json',
-                    success: function(result) {
-                        $('#city-id').html(result.data);
-                        // $('#city-id').html('<option value="">Select City</option>');
-                        // $.each(res.data, function (key, value) {
-                        //     $("#city-id").append('<option value="' + value
-                        //         .id + '">' + value.name + '</option>');
-                        // });
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error("Error fetching states:", textStatus, errorThrown);
-                    }
-                });
-            });
-
-            $('.repeater').repeater({
-                initEmpty: false,
-                // (Optional)
-                hide: function(deleteElement) {
-                    if (confirm('Are you sure you want to delete this element?')) {
-                        $(this).slideUp(deleteElement);
-                    }
-                },
-                isFirstItemUndeletable: false
-            });
-        });
     </script>
 @endpush
