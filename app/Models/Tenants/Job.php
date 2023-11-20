@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 class Job extends Model
 {
     use HasFactory, SoftDeletes, General;
+    protected $fillable = ['views'];
     protected static function boot()
     {
         parent::boot();
