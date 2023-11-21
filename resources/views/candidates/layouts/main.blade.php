@@ -46,8 +46,8 @@
     <!-- Responsive -->
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/candidates/stylesheets/responsive.css') }}"/>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-          integrity="sha384-....">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
@@ -113,11 +113,11 @@
 
 
 <script>
-    window.setTimeout(function () {
-        $(".flash").fadeTo(500, 0).slideUp(500, function () {
-            $(this).remove();
-        });
-    }, 3000);
+    // window.setTimeout(function () {
+    //     $(".flash").fadeTo(500, 0).slideUp(500, function () {
+    //         $(this).remove();
+    //     });
+    // }, 3000);
 </script>
 <script>
     $(document).ready(function () {

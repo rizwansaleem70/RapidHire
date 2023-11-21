@@ -1,49 +1,49 @@
-/* 
+/*
   * widget menu link
-  * widget blog 1 
-  * blog-pagination 
+  * widget blog 1
+  * blog-pagination
   * blog
-  * widget-side-bar 
-  * widget box-latest 
+  * widget-side-bar
+  * widget box-latest
   * HOME PAGE
   * widget review job
-  * widget get app 
-  * widget counter 
+  * widget get app
+  * widget counter
   * widget testimonials
   * widget location
-  * slider 
+  * slider
   * CV item
-  * banner rating 
+  * banner rating
   * sidebar popup
   * popup
   * haft map
-  * list radio 
-  * single job 
-  * accordion 
-  * term 
-  * contact 
+  * list radio
+  * single job
+  * accordion
+  * term
+  * contact
   * pricing
   * shop
   * animation
   * widget features job
-  * widget category job 
+  * widget category job
   * widget Employer
-  * wd-employer style-2  
+  * wd-employer style-2
   * wd-employer style3
   * widget-icon-box
   * widget-partner
   * widget-thumb-career
-  * widget-thumb-career style-2 
-  * wd-form-rating-page 
-  * wd-form-rating 
+  * widget-thumb-career style-2
+  * wd-form-rating-page
+  * wd-form-rating
   * wd-job-author
   * wd-author-page-title
   * jobs tab
-  * PAGE 
+  * PAGE
   * Check out
   * MAP
-  * TF section spacing 
-  * Inner page section spacing 
+  * TF section spacing
+  * Inner page section spacing
   */
 
 @import url(dashboard.css);
@@ -5423,10 +5423,10 @@
 }
 
 .wd-form-login button {
- 
+
   background: #6be8a3;
   border-radius: 4px;
-  
+
   text-align: center;
   color: #fff;
   border-color: #6be8a3;
@@ -10430,7 +10430,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .footer {
-  padding-top: 61px;
+  padding-top: 21px;
 }
 
 .footer .top-footer {

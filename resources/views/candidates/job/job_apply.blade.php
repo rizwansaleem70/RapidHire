@@ -77,29 +77,29 @@
                                 <label for="first_name" class="file-label">First Name *</label>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="first_name"
-                                        value="{{ $data['user']->first_name }}" required placeholder="First Name">
+                                        value="{{ old('first_name',$data['user']->first_name) }}" required placeholder="First Name">
                                 </div>
                                 <div class="form-group">
                                     <label for="last_name" class="file-label">Last Name *</label>
-                                    <input type="text" class="form-control" value="{{ $data['user']->last_name }}"
-                                        id="last_name" aria-describedby="name" required placeholder="Last Name">
+                                    <input type="text" class="form-control" value="{{ old('last_name',$data['user']->last_name) }}"
+                                        id="last_name" aria-describedby="name" name="last_name" required placeholder="Last Name">
                                 </div>
                                 <div class="form-group">
                                     <label for="email" class="file-label">Email *</label>
                                     <input type="email" class="form-control" id="email"
-                                        value="{{ $data['user']->email }}" required aria-describedby="email" placeholder="Email">
+                                        value="{{ old('email',$data['user']->email) }}" name="email" required aria-describedby="email" placeholder="Email">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="phone" class="file-label">Phone *</label>
-                                    <input type="tel" class="form-control" id="phone"
-                                        value="{{ $data['user']->phone }}" required aria-describedby="phone" placeholder="Phone">
+                                    <input type="tel" class="form-control" id="phone" name="phone"
+                                        value="{{ old('phone',$data['user']->phone )}}" required aria-describedby="phone" placeholder="Phone">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="address" class="file-label">Address *</label>
-                                    <input type="text" class="form-control" value="{{ $data['user']->address }}"
-                                        id="address" aria-describedby="address" required placeholder="Address">
+                                    <input type="text" class="form-control" value="{{ old('address',$data['user']->address) }}"
+                                        id="address" aria-describedby="address" name="address" required placeholder="Address">
                                 </div>
                                 <div class="form-group">
                                     <label for="country-id" class="file-label">Country *</label>

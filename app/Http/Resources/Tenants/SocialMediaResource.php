@@ -19,7 +19,6 @@ class SocialMediaResource extends JsonResource
             'name' => $this->name,
             'icon' => $this->icon,
             'url' => $this->url,
-            'priority' => $this->priority,
         ];
     }
 }

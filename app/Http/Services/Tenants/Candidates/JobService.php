@@ -62,7 +62,7 @@ class JobService implements JobContract
 
     public function listing($filter)
     {
-        $query = $this->modelJob->query()->where('status', 'published')->where('expiry_date', '>=',date('Y-m-d'))->latest();
+        $query = $this->modelJob->query()->where('status', 'published')->where('expiry_date', '>',date('Y-m-d'))->latest();
         $query->when($filter->name, function ($q, $name) {
             return $q->like('name', $name);
         })
@@ -116,7 +116,7 @@ class JobService implements JobContract
         $website = settings()->group('organization')->get('website');
         $companyEmail = settings()->group('configuration')->get('company_contract_email');
         $company_title_about = settings()->group('configuration')->get('company_title_about');
-        $socialMedia = $this->modelSocialMedia->orderBy('priority')->get();
+        $socialMedia = $this->modelSocialMedia->get();
         $job = $this->modelJob->with('country', 'state', 'city')->where('slug', $slug)->first();
         if (!$job) {
             throw new CustomException("Job Record Not Found!");
