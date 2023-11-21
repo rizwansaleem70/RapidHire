@@ -26,9 +26,9 @@ class HomeService implements HomeContract
     public function index()
     {
         $departments = $this->modelDepartment->withCount(['job' => function ($query) {
-                        $query->where('status', 'published')->where('expiry_date', '>=',date('Y-m-d'));
+                        $query->where('status', 'published')->where('expiry_date', '>',date('Y-m-d'));
                     }])->get();
-        $jobs = $this->modelJob->where('status', 'published')->where('expiry_date', '>=',date('Y-m-d'))->orderBy('views', 'desc')->limit(6)->get();
+        $jobs = $this->modelJob->where('status', 'published')->where('expiry_date', '>',date('Y-m-d'))->orderBy('views', 'desc')->limit(6)->get();
         return [
             'departments' => $departments,
             'jobs' => $jobs,

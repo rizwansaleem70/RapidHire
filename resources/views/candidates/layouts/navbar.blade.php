@@ -34,8 +34,7 @@
 
                                     </li>
                                     <li class="menu-item">
-                                        <a href="{{route('tenant-user-contact-us')}}">Contact Us</a>
-
+                                        <a href="{{route('candidate.contact-us')}}">Contact Us</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -45,7 +44,7 @@
                         @auth
                         <div class="header-ct-right" style="margin-right: 11rem;">
                             <div class="header-customize-item account">
-                              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpFreAtrOzdfbsrEHLCtHyBDY4x80z6RBeVA&usqp=CAU" alt="" style="width: 50px;">
+                              <img src="{{auth()->user() && auth()->user()->avatar ? asset(auth()->user()->avatar): asset('user.png')}}" alt="" style="width: 50px;">
                             <div class="sub-account">
                               <div class="sub-account-item" data-endpoint="{{config('app.candidate_authentication_dashboard')}}">
                                 <a href="{{"https://rapidhire-candidate.netlify.app/#/sign-in/".encrypt(auth()->user()->id)}}"><span class="icon-dashboard"></span>Dashboard</a>

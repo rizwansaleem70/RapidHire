@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\Tenants\SettingsController;
 use App\Http\Controllers\Api\Tenants\SocialMediasController;
 use App\Http\Controllers\Api\Tenants\TestsController;
 use App\Http\Controllers\Api\Tenants\TestServicesController;
+use App\Http\Controllers\Tenants\Candidate\ContactUsController;
 use App\Http\Controllers\Tenants\Candidate\HomeController as CandidateHomeController;
 use App\Http\Controllers\Tenants\Candidate\JobsController as CandidateJobsController;
 use Illuminate\Support\Facades\Route;
@@ -52,7 +53,7 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
         Route::get('job-apply/{slug}', [CandidateJobsController::class, 'jobApply'])->name('candidate.job.apply');
         Route::post('job-apply', [CandidateJobsController::class, 'jobApplyStore'])->name('candidate.job.apply.save');
     });
-    Route::view('user-contact-us', 'candidates/contact-us')->name('tenant-user-contact-us');
+    Route::get('contact-us', [ContactUsController::class,'contact_us'])->name('candidate.contact-us');
     Route::view('user-apply', 'candidates/apply')->name('tenant-user-apply');
 
     // Tenant Candidate User Auth Routes

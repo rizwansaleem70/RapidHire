@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Contracts\AuthContract;
+use App\Contracts\Tenants\Candidates\ContactUContract;
 use App\Http\Services\AuthService;
 use App\Contracts\Tenants\JobContract;
 use App\Contracts\Tenants\TestContract;
+use App\Http\Services\Tenants\Candidates\ContactUService;
 use Illuminate\Support\ServiceProvider;
 use App\Contracts\Tenants\MemberContract;
 use App\Http\Services\Tenants\JobService;
@@ -167,6 +169,12 @@ class TenantServiceProvider extends ServiceProvider
             InterviewContract::class,
             function ($app) {
                 return $app->make(InterviewService::class);
+            }
+        );
+        $this->app->bind(
+            ContactUContract::class,
+            function ($app) {
+                return $app->make(ContactUService::class);
             }
         );
     }

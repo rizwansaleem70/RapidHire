@@ -56,10 +56,10 @@ class User extends Authenticatable
         'password' => 'hashed',
         'dob' => 'date'
     ];
-    public function getAvatarAttribute($value): string
-    {
-        return asset($value);
-    }
+//    public function getAvatarAttribute($value): string
+//    {
+//        return asset($value);
+//    }
     public static function checkPassword($current_password, $hash_password)
     {
         return Hash::check($current_password, $hash_password);

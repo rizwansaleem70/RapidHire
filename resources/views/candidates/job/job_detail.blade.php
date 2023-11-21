@@ -71,14 +71,8 @@
                                         <span>Social Profiles:</span>
                                         <ul class="list-social d-flex aln-center mt-3">
                                             @foreach($data['socialMedia'] as $value)
-                                                <li><a href="{{$value->url}}"><img class="rounded-circle" src="{{$value->icon}}"></a></li>
+                                                <li><a href="{{$value->url}}" target="_blank"><i class="{{$value->icon}}"></i></a></li>
                                             @endforeach
-{{--                                            <li><a href="#"><i class="icon-facebook"></i></a></li>--}}
-{{--                                            <li><a href="#"><i class="icon-linkedin2"></i></a></li>--}}
-{{--                                            <li><a href="#"><i class="icon-twitter"></i></a></li>--}}
-{{--                                            <li><a href="#"><i class="icon-pinterest"></i></a></li>--}}
-{{--                                            <li><a href="#"><i class="icon-instagram1"></i></a></li>--}}
-{{--                                            <li><a href="#"><i class="icon-youtube"></i></a></li>--}}
                                         </ul>
                                     </div>
                                     <a href="#" class="frag-btn">
@@ -170,7 +164,7 @@
                             <span>Socials:</span>
                             <ul class="list-social d-flex aln-center mt-3">
                                 @foreach($data['socialMedia'] as $value)
-                                    <li><a href="{{$value->url}}"><img class="rounded-circle" src="{{$value->icon}}"></a></li>
+                                    <li><a href="{{$value->url}}" target="_blank"><i class="{{$value->icon}}"></i></a></li>
                                 @endforeach
                             </ul>
                         </div>

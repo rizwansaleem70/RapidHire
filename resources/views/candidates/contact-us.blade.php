@@ -56,12 +56,15 @@
                                     </div>
                                 </div>
                                 <ul class="list-social d-flex aln-center">
-                                    <li><a href="#"><i class="icon-facebook"></i></a></li>
-                                    <li><a href="#"><i class="icon-linkedin2"></i></a></li>
-                                    <li><a href="#"><i class="icon-twitter"></i></a></li>
-                                    <li><a href="#"><i class="icon-pinterest"></i></a></li>
-                                    <li><a href="#"><i class="icon-instagram1"></i></a></li>
-                                    <li><a href="#"><i class="icon-youtube"></i></a></li>
+                                    @foreach($data as $value)
+                                        <li><a href="{{$value->url}}" target="_blank"><i class="{{$value->icon}}"></i></a></li>
+                                    @endforeach
+{{--                                    <li><a href="#"><i class="icon-facebook"></i></a></li>--}}
+{{--                                    <li><a href="#"><i class="icon-linkedin2"></i></a></li>--}}
+{{--                                    <li><a href="#"><i class="fa-brands fa-x-twitter"></i></a></li>--}}
+{{--                                    <li><a href="#"><i class="icon-pinterest"></i></a></li>--}}
+{{--                                    <li><a href="#"><i class="icon-instagram1"></i></a></li>--}}
+{{--                                    <li><a href="#"><i class="icon-youtube"></i></a></li>--}}
                                 </ul>
                             </div>
                             <div class="form-candidate">

@@ -34,7 +34,7 @@
                                 <a href="{{route('candidate.job.list')}}">Jobs</a>
                             </li>
                             <li class="menu-item">
-                                <a href="{{route('tenant-user-contact-us')}}">Contact Us</a>
+                                <a href="{{route('candidate.contact-us')}}">Contact Us</a>
                             </li>
                         </ul>
                     </nav>
