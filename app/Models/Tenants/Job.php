@@ -90,4 +90,8 @@ class Job extends Model
     {
         return $this->hasMany(JobQuestion::class,'job_id');
     }
+    public function jobRequirement(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(JobRequirement::class,'job_id');
+    }
 }

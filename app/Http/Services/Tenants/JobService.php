@@ -8,6 +8,8 @@ use App\Models\JobHiringManager;
 use App\Models\Tenants\Applicant;
 use App\Models\Tenants\ApplicantQuestionAnswer;
 use App\Models\Tenants\ApplicantRequirementAnswer;
+use App\Models\Tenants\City;
+use App\Models\Tenants\Country;
 use App\Models\Tenants\Department;
 use App\Models\Tenants\Education;
 use App\Models\Tenants\Experience;
@@ -17,6 +19,9 @@ use App\Models\Tenants\JobATSScoreParameter;
 use App\Models\Tenants\JobQualification;
 use App\Models\Tenants\JobQuestion;
 use App\Models\Tenants\JobRequirement;
+use App\Models\Tenants\QuestionBank;
+use App\Models\Tenants\Requirement;
+use App\Models\Tenants\State;
 use App\Models\User;
 use App\Traits\ImageUpload;
 use Carbon\Carbon;
@@ -31,26 +36,21 @@ class JobService implements JobContract
     use ImageUpload;
 
     public Job $model;
-
+    public Country $modelCountry;
+    public State $modelState;
+    public City $modelCity;
     protected User $modelUser;
-
     private JobHiringManager $jobHiringManagerModel;
-
     private JobQuestion $jobQuestionModel;
-
     private Department $departmentModel;
-
+    private Requirement $modelRequirement;
+    private QuestionBank $modelQuestionBank;
     protected Applicant $modelApplicant;
-
     protected Experience $modelExperience;
     protected Education $modelEducation;
-
     protected JobATSScore $modelJobATSScore;
-
     protected JobATSScoreParameter $modelJobATSScoreParameter;
-
     private JobQualification $modelJobQualification;
-
     private JobRequirement $modelJobRequirement;
     private ApplicantRequirementAnswer $modelApplicantRequirementAnswer;
     private ApplicantQuestionAnswer $modelApplicantQuestionAnswer;
@@ -59,7 +59,12 @@ class JobService implements JobContract
     {
         $this->modelUser = new User();
         $this->model = new Job();
+        $this->modelCountry = new Country();
+        $this->modelState = new State();
+        $this->modelCity = new City();
+        $this->modelQuestionBank = new QuestionBank();
         $this->departmentModel = new Department();
+        $this->modelRequirement = new Requirement();
         $this->jobQuestionModel = new JobQuestion();
         $this->jobHiringManagerModel = new JobHiringManager();
         $this->modelApplicant = new Applicant();
@@ -95,7 +100,24 @@ class JobService implements JobContract
         if (empty($model)) {
             throw new CustomException('Job Record Not Found!');
         }
-        return $this->model->with(['jobHiringManager','jobQuestionBank','requirement','department','country','state','city'])->find($id);
+        $job = $this->model->where('id',$id)->with(['jobHiringManager:id,first_name,last_name','jobQuestionBank:id,input_type,question','jobRequirement.requirement:id,name,input_type,option','department:id,name','country:id,name','state:id,name','city:id,name'])->first();
+        $hiringManagers = $this->modelUser->get(['id','first_name','last_name']);
+        $departments = $this->departmentModel->get(['id','name']);
+        $requirements = $this->modelRequirement->get(['id','name','input_type','option']);
+        $questionBanks = $this->modelQuestionBank->where('department_id',$job->department_id)->get(['id','input_type','question']);
+        $countries = $this->modelCountry->get(['id','name']);
+        $states = $this->modelState->where('country_id',$job->country_id)->get(['id','name']);
+        $cities = $this->modelCity->where('state_id',$job->state_id)->get(['id','name']);
+        return [
+            'job' => $job,
+            'hiringManagers' => $hiringManagers,
+            'departments' => $departments,
+            'requirements' => $requirements,
+            'questionBanks' => $questionBanks,
+            'countries' => $countries,
+            'states' => $states,
+            'cities' => $cities,
+        ];
     }
     public function ATS_Score($data, $job_id)
     {

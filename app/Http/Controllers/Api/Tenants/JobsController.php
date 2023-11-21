@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Tenants;
 
 use App\Helpers\Helper;
+use App\Http\Resources\Tenants\JobEditResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\CustomException;
@@ -74,7 +75,7 @@ class JobsController extends Controller
     {
         try {
             $job = $this->job->show($id);
-            $job = new Job($job);
+            $job = new JobEditResource($job);
             return $this->successResponse( "Job Found Successfully", $job);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
