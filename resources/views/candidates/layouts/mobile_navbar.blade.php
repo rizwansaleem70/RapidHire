@@ -12,6 +12,13 @@
             </div>
             <a class="title-button-group"><i class="icon-close"></i></a>
         </div>
+        <div class="header-ct-right">
+            @guest
+                <div class="header-customize-item d-flex justify-content-center mt-2">
+                    <a class="btn btn-light" href="{{route('candidate.login')}}">Sign In / Sign Up</a>
+                </div>
+            @endguest
+        </div>
         <div class="content-tab">
             <div class="header-ct-center menu-moblie">
                 <div class="nav-wrap">
@@ -34,15 +41,6 @@
                 </div>
             </div>
         </div>
-        <div class="header-ct-right">
-
-            @guest
-                <div class="header-customize-item button">
-                    <a href="{{route('candidate.login')}}">Sign In / Sign Up</a>
-                </div>
-            @endguest
-        </div>
-
         <div class="mobile-footer">
             <div class="wd-social d-flex aln-center">
                 <ul class="list-social d-flex aln-center">

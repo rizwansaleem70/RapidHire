@@ -8,7 +8,6 @@
                             <img src="{{asset('app-assets/candidates/images/used/devjeco.png')}}" alt="images">
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -17,13 +16,10 @@
                 <div class="row" style="margin-top: -4rem;">
                     <div class="col-lg-4 col-md-6">
                         <div class="footer-cl-1">
-
                             <p>A product crafted by HR professionals,
                                 exclusively for HR professionals.
                                 It eliminates time-consuming tasks,
                                 adapting to your unique requirements.</p>
-
-
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-6 col-6">
@@ -53,18 +49,9 @@
                                     <li><a href="{{route('candidate.login')}}">User Dashboard</a></li>
                                 @endauth
                             </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-2 col-md-4 col-6">
-                        <div class="wd-social d-flex aln-center">
-
                             <ul class="list-social d-flex aln-center">
-
                                 <li><a href="#"><i class="icon-linkedin2"></i></a></li>
                                 <li><a href="#"><i class="icon-twitter"></i></a></li>
-
-
                             </ul>
                         </div>
                     </div>

@@ -4,6 +4,7 @@ namespace App\Http\Services\Tenants;
 
 use App\Contracts\Tenants\JobContract;
 use App\Exceptions\CustomException;
+use App\Helpers\Constant;
 use App\Models\JobHiringManager;
 use App\Models\Tenants\Applicant;
 use App\Models\Tenants\ApplicantQuestionAnswer;
@@ -101,7 +102,9 @@ class JobService implements JobContract
             throw new CustomException('Job Record Not Found!');
         }
         $job = $this->model->where('id',$id)->with(['jobHiringManager:id,first_name,last_name','jobQuestionBank:id,input_type,question','jobRequirement.requirement:id,name,input_type,option','department:id,name','country:id,name','state:id,name','city:id,name'])->first();
-        $hiringManagers = $this->modelUser->get(['id','first_name','last_name']);
+        $hiringManagers =  $this->modelUser->whereHas('roles', function ($query) {
+            $query->whereIn('id', [Constant::ROLE_INTERVIEWER, Constant::ROLE_RECRUITER]);
+        })->latest()->get(['id','first_name','last_name']);
         $departments = $this->departmentModel->get(['id','name']);
         $requirements = $this->modelRequirement->get(['id','name','input_type','option']);
         $questionBanks = $this->modelQuestionBank->where('department_id',$job->department_id)->get(['id','input_type','question']);
