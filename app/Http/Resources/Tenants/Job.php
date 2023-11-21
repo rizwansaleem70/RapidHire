@@ -17,10 +17,10 @@ class Job extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-//            'country_id' => $this->country_id,
-//            'state_id' => $this->state_id,
-//            'city_id' => $this->city_id,
-//            'department_id' => $this->department_id,
+            'country_id' => $this->country_id,
+            'state_id' => $this->state_id,
+            'city_id' => $this->city_id,
+            'department_id' => $this->department_id,
             'slug' => $this->slug,
             'job_description' => $this->job_description,
             'type' => $this->type,
@@ -39,7 +39,7 @@ class Job extends JsonResource
             'requirement' => isset($this->requirement) ? new RequirementResourceCollection($this->requirement) : "",
             'country' => isset($this->country) ? new CountryResource($this->country) : "",
             'state' => isset($this->state) ? new StateResource($this->state) : "",
-            'city' => isset($this->city) ? new CountryResource($this->city) : "",
+            'city' => isset($this->city) ? new CityResource($this->city) : "",
             'department' => isset($this->department) ? new DepartmentResource($this->department) : "",
         ];
     }
