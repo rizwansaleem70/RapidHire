@@ -62,7 +62,7 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
     Route::get('login', [UserAuthController::class, 'loginPage'])->name('candidate.login');
     Route::post('user-login', [UserAuthController::class, 'login'])->name('tenant-user-login');
 
-    Route::get('user-logout', [UserAuthController::class, 'logout'])->name('tenant-user-logout');
+    Route::get('logout', [UserAuthController::class, 'logout'])->name('tenant-user-logout');
 
     Route::get('user-reset-password', [UserAuthController::class, 'resetPasswordPage'])->name('tenant-user-reset-password');
     Route::post('user-reset-password', [UserAuthController::class, 'resetPassword'])->name('tenant-user-reset-password');
