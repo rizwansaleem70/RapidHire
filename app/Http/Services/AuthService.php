@@ -108,7 +108,8 @@ class AuthService implements AuthContract
 
     public function logout($id)
     {
-        $user = $this->model->whereId(Crypt::decrypt($id))->first();
+        $user = $this->model->whereId($id)->first();
+        dd($user);
         if (empty($user)) {
             throw new CustomException('Candidate Not Found!');
         }
