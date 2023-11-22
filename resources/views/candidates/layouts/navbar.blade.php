@@ -51,9 +51,9 @@
 {{--                                <a href="{{"https://rapidhire-candidate.netlify.app/#/sign-in/".encrypt(auth()->user()->id)}}"><span class="icon-dashboard"></span>Dashboard</a>--}}
                               </div>
                               <div class="sub-account-item">
-                                <form method="POST" action="{{ route('tenant-user-logout') }}">
+                                <form method="POST" action="{{ route('candidate.logout') }}">
                                     @csrf
-                                    <a href="{{ route('tenant-user-logout') }}"><span class="fas fa-sign-out-alt"></span> Logout</a>
+                                    <a href="{{ route('candidate.logout') }}"><span class="fas fa-sign-out-alt"></span> Logout</a>
                                 </form>
                               </div>
                             </div>

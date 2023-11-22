@@ -62,6 +62,7 @@ return [
 
     'domain' => env('APP_DOMAIN', 'localhost'),
     'candidate_authentication_dashboard' => env('CANDIDATE_AUTHENTICATE_DASHBOARD', 'https://rapidhire-candidate.netlify.app/#/sign-in/'),
+    'candidate_dashboard_logout' => env('CANDIDATE_DASHBOARD_LOGOUT', route('candidate.logout')),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
