@@ -105,4 +105,13 @@ class AuthService implements AuthContract
         }
         return $user;
     }
+
+    public function logout($id)
+    {
+        $user = $this->model->whereId(Crypt::decrypt($id))->first();
+        if (empty($user)) {
+            throw new CustomException('Candidate Not Found!');
+        }
+        return $user->tokens()->delete();
+    }
 }

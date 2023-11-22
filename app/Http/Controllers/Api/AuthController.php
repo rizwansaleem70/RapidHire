@@ -94,10 +94,10 @@ class AuthController extends Controller
             return $this->failedResponse("Something went wrong!");
         }
     }
-    public function logout()
+    public function logout(Request $request)
     {
         try {
-            auth()->user()->tokens()->delete();
+            $this->logout($request->id);
             return $this->okResponse("User Logout Successfully");
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
