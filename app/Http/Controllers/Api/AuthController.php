@@ -98,7 +98,8 @@ class AuthController extends Controller
     {
         try {
             auth()->user()->tokens()->delete();
-            return $this->okResponse("User Logout Successfully");
+            return redirect()->route('tenant-user-logout')->with('success', 'You have Successfully Logout');
+//            return $this->okResponse("User Logout Successfully");
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
