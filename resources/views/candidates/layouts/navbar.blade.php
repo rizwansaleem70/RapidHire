@@ -25,7 +25,7 @@
 
                                     </li>
                                     <li class="menu-item ">
-                                        <a href="{{route('tenant-user-about')}}">About </a>
+                                        <a href="{{route('candidate.user-about')}}">About </a>
 
                                     </li>
 
@@ -47,7 +47,8 @@
                               <img src="{{auth()->user() && auth()->user()->avatar ? asset(auth()->user()->avatar): asset('user.png')}}" alt="" style="width: 50px;">
                             <div class="sub-account">
                               <div class="sub-account-item" data-endpoint="{{config('app.candidate_authentication_dashboard')}}">
-                                <a href="{{"https://rapidhire-candidate.netlify.app/#/sign-in/".encrypt(auth()->user()->id)}}"><span class="icon-dashboard"></span>Dashboard</a>
+                                <a href="{{config('app.candidate_authentication_dashboard').encrypt(auth()->user()->id)}}"><span class="icon-dashboard"></span>Dashboard</a>
+{{--                                <a href="{{"https://rapidhire-candidate.netlify.app/#/sign-in/".encrypt(auth()->user()->id)}}"><span class="icon-dashboard"></span>Dashboard</a>--}}
                               </div>
                               <div class="sub-account-item">
                                 <form method="POST" action="{{ route('tenant-user-logout') }}">

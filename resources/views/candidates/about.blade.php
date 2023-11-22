@@ -152,7 +152,7 @@
                                 </div>
                                 <div class="box-content">
                                     <h6 class="box-title">
-                                        <a href="blog-detail.html">Free resume assessments</a>
+                                        <a href="#">Free resume assessments</a>
                                     </h6>
                                     <p>Aenean porta, eros lacus congue lorem, sit amet mollis magna velit ac erat Morbi
                                         accumsan purus nec
@@ -171,7 +171,7 @@
                                 </div>
                                 <div class="box-content">
                                     <h6 class="box-title">
-                                        <a href="blog-detail.html">Job fit scoring</a>
+                                        <a href="#">Job fit scoring</a>
                                     </h6>
                                     <p>Aenean porta, eros lacus congue lorem, sit amet mollis magna velit ac erat Morbi
                                         accumsan purus nec
@@ -190,7 +190,7 @@
                                 </div>
                                 <div class="box-content ">
                                     <h6 class="box-title">
-                                        <a href="blog-detail.html">Help every step of the way</a>
+                                        <a href="#">Help every step of the way</a>
                                     </h6>
                                     <p>Aenean porta, eros lacus congue lorem, sit amet mollis magna velit ac erat Morbi
                                         accumsan purus nec
