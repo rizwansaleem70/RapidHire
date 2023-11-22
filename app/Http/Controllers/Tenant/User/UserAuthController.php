@@ -69,6 +69,7 @@ class UserAuthController extends Controller
 
     public function logout()
     {
+        auth()->user()->tokens()->delete();
         Auth::logout();
         session()->flash('success', 'You have Successfully Logout');
         return redirect()->route('tenant-user-home');
