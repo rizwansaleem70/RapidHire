@@ -28,7 +28,7 @@
                                 <a href="{{route('tenant-user-home')}}">Home </a>
                             </li>
                             <li class="menu-item ">
-                                <a href="{{route('tenant-user-about')}}">About </a>
+                                <a href="{{route('candidate.user-about')}}">About </a>
                             </li>
                             <li class="menu-item ">
                                 <a href="{{route('candidate.job.list')}}">Jobs</a>
