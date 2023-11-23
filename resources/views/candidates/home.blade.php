@@ -83,12 +83,15 @@
                             @if (count($home['departments']) > 0)
                                 @foreach($home['departments'] as $department)
                                     <div class="job-category-box">
+                                        <a href="{{ route('candidate.job.list') }}?department_id={{ $department->id }}" style="color: #000000 !important;">
                                         <div class="job-category-header">
-                                            <span class="d-block fs-5 fw-bold">{{$department->name}}</span>
+                                            <p class="d-block fs-5 fw-bold">{{$department->name}}</p>
                                         </div>
                                         <p>{{$department->job_count}} Jobs available</p>
-                                        <a href="{{ route('candidate.job.list') }}?department_id={{ $department->id }}" class="btn-category-job">Explore Jobs <span
-                                                class="icon-keyboard_arrow_right"></span></a>
+                                        <div class="btn-category-job">Explore Jobs <span
+                                                class="icon-keyboard_arrow_right"></span>
+                                        </div>
+                                        </a>
                                     </div>
                                 @endforeach
                             @else
