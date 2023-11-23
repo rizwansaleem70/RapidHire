@@ -31,7 +31,7 @@ class UserAuthController extends Controller
             if($user == true){
                 DB::commit();
                 session()->flash('success', 'You have Successfully Registered');
-                return redirect()->route('tenant-user-home');
+                return redirect()->route('candidate.home');
             }
             else{
                 DB::rollBack();
@@ -55,7 +55,7 @@ class UserAuthController extends Controller
             $user=$this->user->login($request->prepareData());
             if($user == true){
                 session()->flash('success', 'You have Successfully Login');
-                return redirect()->route('tenant-user-home');
+                return redirect()->route('candidate.home');
                 return view('candidates.home');
             }
             else{
@@ -72,7 +72,7 @@ class UserAuthController extends Controller
         auth()->user()->tokens()->delete();
         Auth::logout();
         session()->flash('success', 'You have Successfully Logout');
-        return redirect()->route('tenant-user-home');
+        return redirect()->route('candidate.home');
     }
 
     public function resetPasswordPage()

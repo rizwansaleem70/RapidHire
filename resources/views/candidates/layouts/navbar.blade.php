@@ -6,21 +6,20 @@
                 <div class="sticky-area-wrap">
                     <div class="header-ct-left">
                         <div id="logo" class="logo">
-                            <a href="{{route('tenant-user-home')}}">
+                            <a href="{{route('candidate.home')}}">
                                 <img class="site-logo"
-                                     src="{{asset('app-assets/candidates/images/used/devjeco-logo1 1.png')}}"
+                                     src="{{settings()->group('logo')->get("logo") ? asset(settings()->group('logo')->get("logo")):asset('rapidhire.png')}}"
                                      alt="Image">
 
                             </a>
                         </div>
-
                     </div>
                     <div class="header-ct-center">
                         <div class="nav-wrap">
                             <nav id="main-nav" class="main-nav">
                                 <ul id="menu-primary-menu" class="menu">
                                     <li class="menu-item">
-                                        <a href="{{route('tenant-user-home')}}">Home </a>
+                                        <a href="{{route('candidate.home')}}">Home </a>
 
 
                                     </li>

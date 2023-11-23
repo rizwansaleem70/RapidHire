@@ -44,10 +44,10 @@
                             {{--                                        </a> --}}
                             <h6><strong>UPLOAD RESUME</strong></h6>
                             <div class="custom-file-upload" id="drop-area" style="padding: 5%;">
-                                <label for="file-upload" class="file-label">Select only pdf file </label>
+                                <label for="file-upload" class="file-label">Select only pdf file (Size Max = 2MB)</label>
                                 <div class="button-container" style="text-align: center;">
                                     <button id="add-files" class="upload-button" type="button">
-                                        <input type="file" required class="form-control" name="resume_path">
+                                        <input type="file" required class="form-control" value="{{old('resume_path')}}" accept=".pdf" name="resume_path">
                                     </button>
                                     {{--                                        <a href="https://www.linkedin.com/"> --}}
                                     {{--                                            <button id="linkedin-button" class="linkedin-button" type="button"><img --}}
@@ -64,10 +64,10 @@
                             <h6><strong>UPLOAD COVER LETTER</strong></h6>
                             <div class="custom-file-upload" id="drop-area" style="padding: 5%;">
                                 <label for="file-upload" class="file-label">Select only pdf
-                                    file</label>
+                                    file (Size Max = 2MB)</label>
                                 <div class="button-container" style="text-align: center;">
                                     <button id="add-letter" class="upload-button" type="button">
-                                        <input type="file" required class="form-control" name="cover_letter_path">
+                                        <input type="file" required class="form-control" value="{{old('cover_letter_path')}}" accept=".pdf" name="cover_letter_path">
                                     </button>
                                 </div>
                                 <p id="selectedFileName2" style="margin-top: 2rem;">No file chosen
@@ -145,7 +145,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="skills" class="file-label">Skills </label>
-                                    <input type="text" class="form-control" id="skills" name="skills"
+                                    <input type="text" class="w-100" id="skills" name="skills"
                                         aria-describedby="skills" value="{{ old('skills', $data['user']->skills) }}"
                                         placeholder="Skills *">
                                 </div>

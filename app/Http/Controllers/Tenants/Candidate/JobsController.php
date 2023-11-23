@@ -56,8 +56,7 @@ class JobsController extends Controller
             DB::beginTransaction();
             $this->job->jobApplyStore($request->prepareRequest());
             DB::commit();
-            return redirect()->back()->with('success', 'You have Successfully Apply on this Job');
-            //            return view('candidates.job.job_apply',compact('data'));
+            return redirect()->route('candidate.home')->with('success', 'You have Successfully Apply on this Job');
         } catch (CustomException | \Exception $th) {
             return redirect()->back()->with('message', $th->getMessage());
         }

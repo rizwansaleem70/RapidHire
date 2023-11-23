@@ -34,7 +34,7 @@ use Illuminate\Support\Facades\Route;
 // Route::post('Create-User', [App\Http\Controllers\TenantUserController::class, 'store'])->name('user.store');
 
 // /*View Routes*/
-// Route::view('user-home', 'candidates/home')->name('tenant-user-home');
+// Route::view('user-home', 'candidates/home')->name('candidate.home');
 
 // Route::view('user-about', 'candidates/about')->name('tenant-user-about');
 
