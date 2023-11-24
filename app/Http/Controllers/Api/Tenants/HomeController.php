@@ -24,9 +24,9 @@ class HomeController extends Controller
         $this->home = $home;
     }
 
-    public function getCandidateDashboardStats(){
+    public function getCandidateDashboardStats($user_id){
         try {
-            $data = $this->home->getCandidateDashboardStats();
+            $data = $this->home->getCandidateDashboardStats($user_id);
             $data = new CandidateDashboardResource($data);
             return $this->successResponse("ok", $data);
         } catch (CustomException $th) {
