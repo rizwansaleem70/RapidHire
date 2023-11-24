@@ -79,7 +79,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
 
     Route::group(['middleware' => ['auth:sanctum', 'cors']], function () {
         Route::get('dashboard', [HomeController::class, 'getDashboardStats']);
-        Route::get('candidate-dashboard', [HomeController::class, 'getCandidateDashboardStats']);
+        Route::get('candidate-dashboard/{user_id}', [HomeController::class, 'getCandidateDashboardStats']);
         Route::get('get-all-country', [HomeController::class, 'getAllCountry']);
         Route::get('get-all-state-from-country', [HomeController::class, 'getAllState']);
         Route::get('get-all-city-from-state', [HomeController::class, 'getAllCity']);

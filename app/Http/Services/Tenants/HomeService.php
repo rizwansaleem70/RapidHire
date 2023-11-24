@@ -55,10 +55,10 @@ class HomeService implements HomeContract
             })->latest()->get();
     }
 
-    public function getCandidateDashboardStats()
+    public function getCandidateDashboardStats($user_id)
     {
-        $totalAppliedJobs = $this->modelApplicant->whereUserId(Auth::user()->id)->count();
-        $totalSaveJobs = $this->modelFavoriteJob->whereUserId(Auth::user()->id)->count();
+        $totalAppliedJobs = $this->modelApplicant->whereUserId($user_id)->count();
+        $totalSaveJobs = $this->modelFavoriteJob->whereUserId($user_id)->count();
         return [
             'totalSaveJobs' => $totalSaveJobs,
             'totalAppliedJobs' => $totalAppliedJobs,
