@@ -62,7 +62,7 @@ class JobService implements JobContract
 
     public function listing($filter)
     {
-        $query = $this->modelJob->query()->where('status', 'published')->where('expiry_date', '>',date('Y-m-d'))->latest();
+        $query = $this->modelJob->query()->where('status', 'published')->where('expiry_date', '>=',date('Y-m-d'))->latest();
         $query->when($filter->name, function ($q, $name) {
             return $q->like('name', $name);
         })
@@ -96,12 +96,16 @@ class JobService implements JobContract
             });
         // dd($query->toSql());
         $totalJobs = $query->count();
-        $jobs = $query->with('country:id,name', 'state:id,name', 'city:id,name', 'favorite')->select(
+        $jobs = $query->with('country:id,name', 'state:id,name', 'city:id,name')->select(
             '*',
             DB::raw('DATEDIFF(expiry_date, now()) AS remaining_days')
         )->paginate(10);
         $country = $this->modelCountry->pluck('name', 'id');
         $logo = settings()->group('logo')->get('logo');
+        $jobs = $jobs->transform(function ($q){
+           return $q->fav = "new";
+        });
+        dd($jobs);
         return [
             'jobs' => $jobs,
             'totalJobs' => $totalJobs,

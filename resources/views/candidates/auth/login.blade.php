@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 wd-form-login " style="float:right">
-                    <div class="container card" style="padding: 4%;background-color: fbfcfc;">
+                    <div class="container card" style="padding: 4%;background-color: #fbfcfc;">
                         <strong><h6 style="text-align: initial; margin-top: 2%;">Sign in</h6></strong>
                         <div class="sign-up" style="text-align: initial;"><strong>New User?</strong><a
                                     href="{{route('tenant-user-signup')}}" style="color: #0A66C2;">Create an Account</a>
@@ -118,7 +118,7 @@
                             </div>
                         @endif
 
-                        <form action="{{route('tenant-user-login')}}" style="margin-top: 5%;" method="POST">
+                        <form action="{{route('tenant-user-login')}}" style="margin-top: 2%;" method="POST">
                             @csrf
                             <div class="ip">
 
