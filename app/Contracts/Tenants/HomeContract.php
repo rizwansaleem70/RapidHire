@@ -7,6 +7,7 @@ namespace App\Contracts\Tenants;
 */
 interface HomeContract
 {
+    public function getCandidateDashboardStats();
     public function getAllCountry();
     public function getAllState($request);
     public function getAllCity($request);
