@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Tenants;
 
 use App\Helpers\Helper;
 use App\Helpers\Constant;
+use App\Http\Resources\CandidateDashboardResource;
 use App\Models\Tenants\Job;
 use App\Models\Notification;
 use Illuminate\Http\Request;
@@ -23,7 +24,18 @@ class HomeController extends Controller
         $this->home = $home;
     }
 
-
+    public function getCandidateDashboardStats(){
+        try {
+            $data = $this->home->getCandidateDashboardStats();
+            $data = new CandidateDashboardResource($data);
+            return $this->successResponse("ok", $data);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage("home getCandidateDashboardStats", 'getCandidateDashboardStats', $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
     public function getDashboardStats()
     {
         $jobs = Job::count();
