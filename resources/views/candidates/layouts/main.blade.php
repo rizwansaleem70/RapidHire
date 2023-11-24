@@ -60,6 +60,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/custom.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.min.css" rel="stylesheet">
     @stack('css')
 </head>
 
@@ -80,14 +81,16 @@
     @endif
 
     @if (session('success'))
-        <div class="alert alert-success flash">
+        <div class="alert alert-success alert-dismissible fade show flash" role="alert">
             {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
     @if (session('message'))
-        <div class="alert alert-danger flash">
+        <div class="alert alert-danger alert-dismissible fade show flash" role="alert">
             {{ session('message') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 </div>
@@ -110,7 +113,16 @@
 <script src="{{ asset('app-assets/candidates/javascript/plugin.min.js') }}"></script>
 <script src="{{ asset('app-assets/candidates/javascript/jquery.cookie.js') }}"></script>
 <script src="{{ asset('app-assets/candidates/javascript/main.js') }}"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.all.min.js"></script>
+<script type="text/javascript">
+    function favoriteButton() {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Please login First",
+        });
+    }
+</script>
 
 <script>
     // window.setTimeout(function () {

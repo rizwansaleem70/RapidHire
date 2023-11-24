@@ -187,7 +187,6 @@ class JobService implements JobContract
             return $item->value;
         }, $skill);
         $commaSeparatedValuesSkill = implode(',', $valuesArray);
-
         $user_id = Auth::user()->id;
         $modelApplicant->user_id = $user_id;
         $modelApplicant->job_id = $data['job_id'];
@@ -199,15 +198,17 @@ class JobService implements JobContract
         $modelApplicant->cover_letter_path = $this->upload($data['cover_letter_path']);
         $modelApplicant->save();
         foreach ($data['experience'] as $value) {
-            $modelJobExperience = new $this->modelJobExperience;
-            $modelJobExperience->user_id = $user_id;
-            $modelJobExperience->job_id = $data['job_id'];
-            $modelJobExperience->organization_name = $value['organization_name'];
-            $modelJobExperience->position_title = $value['position_title'];
-            $modelJobExperience->start_date = $value['start_date'];
-            $modelJobExperience->end_date = $value['end_date'];
-            $modelJobExperience->is_present = isset($data['is_present']);
-            $modelJobExperience->save();
+            if ($value['organization_name'] && $value['position_title'] && $value['start_date']){
+                $modelJobExperience = new $this->modelJobExperience;
+                $modelJobExperience->user_id = $user_id;
+                $modelJobExperience->job_id = $data['job_id'];
+                $modelJobExperience->organization_name = $value['organization_name'];
+                $modelJobExperience->position_title = $value['position_title'];
+                $modelJobExperience->start_date = $value['start_date'];
+                $modelJobExperience->end_date = $value['end_date'];
+                $modelJobExperience->is_present = isset($data['is_present']);
+                $modelJobExperience->save();
+            }
         }
         if ($data['question']) {
             foreach ($data['question'] as $question) {

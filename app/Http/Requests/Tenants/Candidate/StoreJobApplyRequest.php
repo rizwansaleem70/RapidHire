@@ -25,7 +25,7 @@ class StoreJobApplyRequest extends FormRequest
             'resume_path' => 'required|max:2048',
             'cover_letter_path' => 'nullable|max:2048',
             'skills' => 'required',
-            'source_detail' => 'required',
+            'source_detail' => 'nullable',
             'question.*.answer' => 'required',
             'requirement.*.answer' => 'required',
             'experience.*.organization_name' => 'nullable',

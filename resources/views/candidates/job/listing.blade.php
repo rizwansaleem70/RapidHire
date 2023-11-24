@@ -180,7 +180,7 @@
                                                             </li>
                                                         </ul>
                                                         <span class="icon-heart" id="heart_{{$job->id}}"
-                                                            @if($job->favorite && Auth::check())
+                                                            @if(Auth::check())
                                                                 onclick="favorite({{$job->id}})"
                                                                         style="color: red"
                                                             @else
@@ -347,10 +347,5 @@
             },
         });
     }
-
-    function favoriteButton() {
-        alert("Please Login first to Favorite Job");
-    }
-
 </script>
 @endpush
