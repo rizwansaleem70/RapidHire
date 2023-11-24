@@ -31,7 +31,18 @@
                         <div class="content-right">
                             <div class="top">
                                 <a href="#" class="share"><i class="icon-share2"></i></a>
-                                <a href="#" class="wishlist"><i class="icon-heart"></i></a>
+                                <a href="#" class="wishlist">
+                                    <i class="icon-heart"
+                                                                id="heart_{{$data['job']->id}}"
+                                                                @if(Auth::check())
+                                                                    onclick="favorite({{$data['job']->id}})"
+                                                                @if($data['job']->is_favorite)
+                                                                    style="color: red"
+                                                                @endif
+                                                                @else
+                                                                    onclick="favoriteButton()"
+                                        @endif
+                                    ></i></a>
                                 <a href="{{route('candidate.job.apply',$data['job']->slug)}}" class="btn btn-popup"><i
                                         class="icon-send"></i>Apply Now</a>
                             </div>

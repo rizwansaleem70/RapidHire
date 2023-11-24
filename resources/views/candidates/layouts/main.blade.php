@@ -114,6 +114,52 @@
 <script src="{{ asset('app-assets/candidates/javascript/jquery.cookie.js') }}"></script>
 <script src="{{ asset('app-assets/candidates/javascript/main.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.all.min.js"></script>
+<script>
+    function favorite(id) {
+        var icon = document.getElementById('heart_' + id);
+        if (icon.style.color === "red") {
+            dislike(id);
+        }
+        else {
+            like(id);
+        }
+    }
+
+    function like(id) {
+        var icon = document.getElementById('heart_' + id);
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('user-like-job') }}',
+            data: {
+                _token: "{{ csrf_token() }}",
+                job_id: id,
+                is_active: 1,
+            },
+            success: function(response) {
+                if (icon) {
+                    icon.style.color = "red";
+                }
+            },
+        });
+    }
+
+    function dislike(id) {
+        var icon = document.getElementById('heart_' + id);
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('user-dislike-job') }}',
+            data: {
+                _token: "{{ csrf_token() }}",
+                job_id: id,
+            },
+            success: function(response) {
+                if (icon) {
+                    icon.removeAttribute('style');
+                }
+            },
+        });
+    }
+</script>
 <script type="text/javascript">
     function favoriteButton() {
         Swal.fire({
@@ -122,16 +168,6 @@
             text: "Please login First",
         });
     }
-</script>
-
-<script>
-    // window.setTimeout(function () {
-    //     $(".flash").fadeTo(500, 0).slideUp(500, function () {
-    //         $(this).remove();
-    //     });
-    // }, 3000);
-</script>
-<script>
     $(document).ready(function () {
         $('#country-id').on('change', function () {
             var idCountry = this.value;

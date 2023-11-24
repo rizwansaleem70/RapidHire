@@ -7,6 +7,7 @@ use App\Exceptions\CustomException;
 use App\Models\Tenants\Applicant;
 use App\Models\Tenants\ApplicantQuestionAnswer;
 use App\Models\Tenants\ApplicantRequirementAnswer;
+use App\Models\Tenants\Candidate\FavoriteJob;
 use App\Models\Tenants\City;
 use App\Models\Tenants\Country;
 use App\Models\Tenants\Department;
@@ -42,10 +43,12 @@ class JobService implements JobContract
     private ApplicantRequirementAnswer $modelApplicantRequirementAnswer;
     private State $modelState;
     private City $modelCity;
+    public FavoriteJob $modelFavoriteJob;
 
     public function __construct()
     {
         $this->modelUser = new User();
+        $this->modelFavoriteJob = new FavoriteJob();
         $this->modelJob = new Job();
         $this->modelCountry = new Country();
         $this->modelState = new State();
@@ -95,17 +98,24 @@ class JobService implements JobContract
                     ->orWhereBetween('max_salary', [$filter->min_salary, $filter->max_salary]);
             });
         // dd($query->toSql());
-        $totalJobs = $query->count();
-        $jobs = $query->with('country:id,name', 'state:id,name', 'city:id,name')->select(
-            '*',
-            DB::raw('DATEDIFF(expiry_date, now()) AS remaining_days')
-        )->paginate(10);
         $country = $this->modelCountry->pluck('name', 'id');
         $logo = settings()->group('logo')->get('logo');
-        $jobs = $jobs->transform(function ($q){
-           return $q->fav = "new";
+        $totalJobs = $query->count();
+        $jobs = $query->with('country:id,name', 'state:id,name', 'city:id,name')->paginate(10);
+        $jobs->transform(function ($job) {
+            $job->remaining_days = now()->diffInDays($job->expiry_date, false);
+            return $job;
         });
-        dd($jobs);
+        if (Auth::check()) {
+            $favoriteJobIds = $this->modelFavoriteJob
+                ->whereUserId(Auth::id())
+                ->pluck('job_id');
+
+            $jobs->transform(function ($job) use ($favoriteJobIds) {
+                $job->is_favorite = $favoriteJobIds->contains($job->id);
+                return $job;
+            });
+        }
         return [
             'jobs' => $jobs,
             'totalJobs' => $totalJobs,
@@ -132,8 +142,14 @@ class JobService implements JobContract
             ->select('*', DB::raw('DATEDIFF(expiry_date, now()) AS remaining_days'))
             ->latest()->get();
         $remaining_days = Carbon::today()->diffInDays(Carbon::parse($job->expiry_date));
-        if (!$job) {
-            throw new CustomException("Job Record Not Found!");
+        if (Auth::check()) {
+            $isFavorite = $this->modelFavoriteJob
+                ->whereUserId(Auth::id())
+                ->whereJobId($job->id)
+                ->exists();
+
+            // Add the favorite flag to the job object
+            $job->is_favorite = $isFavorite;
         }
         return [
             'job' => $job,

@@ -176,12 +176,13 @@
                                                         <span class="icon-heart" id="heart_{{$job->id}}"
                                                             @if(Auth::check())
                                                                 onclick="favorite({{$job->id}})"
-                                                                        style="color: red"
+                                                                @if($job->is_favorite)
+                                                                  style="color: red"
+                                                                @endif
                                                             @else
                                                                 onclick="favoriteButton()"
                                                             @endif
                                                             >
-
                                                         </span>
                                                         <div class="button-container">
                                                             <a href="{{route('candidate.job.detail',$job->slug)}}">
@@ -291,55 +292,4 @@
             </div>
         </div>
     </section>
-
-
 @endsection
-@push('js')
-{{-- <script src="{{asset('app-assets/candidates/javascript/jquery.nice-select.min.js')}}"></script> --}}
-<script>
-    function favorite(id) {
-        var icon = document.getElementById('heart_' + id);
-        if (icon.style.color === "red") {
-            dislike(id);
-        }
-        else {
-            like(id);
-        }
-    }
-
-    function like(id) {
-        var icon = document.getElementById('heart_' + id);
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('user-like-job') }}',
-            data: {
-                _token: "{{ csrf_token() }}",
-                job_id: id,
-                is_active: 1,
-            },
-            success: function(response) {
-                if (icon) {
-                    icon.style.color = "red";
-                }
-            },
-        });
-    }
-
-    function dislike(id) {
-        var icon = document.getElementById('heart_' + id);
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('user-dislike-job') }}',
-            data: {
-                _token: "{{ csrf_token() }}",
-                job_id: id,
-            },
-            success: function(response) {
-                if (icon) {
-                    icon.removeAttribute('style');
-                }
-            },
-        });
-    }
-</script>
-@endpush
