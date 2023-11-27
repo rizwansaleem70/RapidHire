@@ -141,6 +141,8 @@
                                     <select id="gender" class="form-control" required name="gender">
                                         <option {{ 'male' == $data['user']->gender ? 'selected' : '' }} class="form-control" value="male"> Male </option>
                                         <option {{ 'female' == $data['user']->gender ? 'selected' : '' }} class="form-control" value="female"> Female </option>
+                                        <option {{ 'non-binary' == $data['user']->gender ? 'selected' : '' }} class="form-control" value="non-binary"> Non Binary </option>
+                                        <option {{ 'other' == $data['user']->gender ? 'selected' : '' }} class="form-control" value="other"> Other </option>
                                     </select>
                                 </div>
                                 <div class="form-group">

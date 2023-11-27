@@ -3,12 +3,15 @@
 namespace App\Http\Services\Tenants;
 
 use App\Contracts\Tenants\HomeContract;
+use App\Helpers\Constant;
+use App\Models\Notification;
 use App\Models\Tenants\Applicant;
 use App\Models\Tenants\Candidate\FavoriteJob;
 use App\Models\Tenants\City;
 use App\Models\Tenants\Country;
 use App\Models\Tenants\Job;
 use App\Models\Tenants\State;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -20,6 +23,7 @@ class HomeService implements HomeContract
     public State $modelState;
     public City $modelCity;
     public Job $modelJob;
+    public User $modelUser;
     public Applicant $modelApplicant;
     public FavoriteJob $modelFavoriteJob;
 
@@ -30,6 +34,7 @@ class HomeService implements HomeContract
         $this->modelCity = new City();
         $this->modelJob = new Job();
         $this->modelApplicant = new Applicant();
+        $this->modelUser = new User();
         $this->modelFavoriteJob = new FavoriteJob();
     }
 
@@ -62,6 +67,28 @@ class HomeService implements HomeContract
         return [
             'totalSaveJobs' => $totalSaveJobs,
             'totalAppliedJobs' => $totalAppliedJobs,
+            ];
+    }
+
+    public function getDashboardStats()
+    {
+        $totalJobs = $this->modelJob->count();
+        $activeTotalJobs = $this->modelJob->where('status', 'published')->where('expiry_date', '>=',date('Y-m-d'))->count();
+        $totalApplicant = $this->modelApplicant->count();
+        $totalHired = $this->modelApplicant->where('status', 'hired')->count();
+        $totalRejected = $this->modelApplicant->where('status', 'rejected')->count();
+        $totalMember = $this->modelUser->whereHas('roles', function ($query) {
+            $query->whereIn('id', [Constant::ROLE_INTERVIEWER, Constant::ROLE_RECRUITER]);
+        })->count();
+        $notifications = Notification::all(['id', 'message']);
+            return [
+                'totalJobs' => $totalJobs,
+                'activeTotalJobs' => $activeTotalJobs,
+                'totalApplicant' => $totalApplicant,
+                'totalHired' => $totalHired,
+                'totalRejected' => $totalRejected,
+                'totalMember' => $totalMember,
+                'notifications' => $notifications,
             ];
     }
 }

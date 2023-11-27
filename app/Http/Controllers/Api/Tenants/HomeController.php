@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Tenants;
 use App\Helpers\Helper;
 use App\Helpers\Constant;
 use App\Http\Resources\CandidateDashboardResource;
+use App\Http\Resources\Tenants\DashboardResource;
 use App\Models\Tenants\Job;
 use App\Models\Notification;
 use Illuminate\Http\Request;
@@ -38,20 +39,16 @@ class HomeController extends Controller
     }
     public function getDashboardStats()
     {
-        $jobs = Job::count();
-        $hired = Applicant::where('status', 'hired')->count();
-        $rejected = Applicant::where('status', 'rejected')->count();
-        $positions = Job::sum('total_position');
-
-        $notifications = Notification::select('id', 'message')->get();
-
-        return $this->successResponse('OK', [
-            'jobs' => $jobs,
-            'hired' => $hired,
-            'rejected' => $rejected,
-            'positions' => $positions,
-            'notifications' => $notifications
-        ]);
+        try {
+            $data = $this->home->getDashboardStats();
+            $data = new DashboardResource($data);
+            return $this->successResponse("ok", $data);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage("getDashboardStats", 'getDashboardStats', $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
     }
 
     /**
