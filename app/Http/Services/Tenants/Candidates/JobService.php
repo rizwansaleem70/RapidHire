@@ -103,7 +103,7 @@ class JobService implements JobContract
         $totalJobs = $query->count();
         $jobs = $query->with('country:id,name', 'state:id,name', 'city:id,name')->paginate(10);
         $jobs->transform(function ($job) {
-            $job->remaining_days = now()->diffInDays($job->expiry_date, false);
+            $job->remaining_days = today()->diffInDays($job->expiry_date, false);
             return $job;
         });
         if (Auth::check()) {
@@ -139,7 +139,7 @@ class JobService implements JobContract
         $related_jobs = $this->modelJob
             ->where('department_id', $job->department_id)
             ->where('id', '<>', $job->id)
-//            ->select('*', DB::raw('DATEDIFF(expiry_date, now()) AS remaining_days'))
+            ->select('*', DB::raw('DATEDIFF(expiry_date, now()) AS remaining_days'))
             ->latest()->get();
         $remaining_days = Carbon::today()->diffInDays(Carbon::parse($job->expiry_date));
         if (Auth::check()) {
@@ -180,11 +180,7 @@ class JobService implements JobContract
         })->get(['id','name']);
         $user = $this->modelUser->with(['country:id,name', 'state:id,name', 'city:id,name', 'experience'])->find(Auth::user()->id);
         $logo = settings()->group('logo')->get('logo');
-        $job = $this->modelJob->with(['country', 'state', 'city', 'jobQuestion.questionBank' => function ($query) {
-            return $query;
-        }, 'jobQualification.requirement' => function ($query) {
-            return $query;
-        },])->where('slug', $slug)->first();
+        $job = $this->modelJob->with(['country', 'state', 'city', 'jobQuestion.questionBank','jobQualification.requirement'])->where('slug', $slug)->first();
         return [
             'countries' => $countries,
             'states' => $states,

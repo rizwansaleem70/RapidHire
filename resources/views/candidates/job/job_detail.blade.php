@@ -11,9 +11,9 @@
                 <div class="col-lg-12">
                     <div class="wd-job-author2">
                         <div class="content-left">
-                            <div class="thumb">
-                                <img src="{{asset($data['logo'])}}" alt="logo">
-                            </div>
+{{--                            <div class="thumb">--}}
+{{--                                <img src="{{settings()->group('logo')->get("logo") ? asset(settings()->group('logo')->get("logo")):asset('rapidhire.png')}}" alt="logo">--}}
+{{--                            </div>--}}
                             <div class="content">
                                 <h6><a href="#">{{$data['job']->name}} <span class="icon-bolt"></span></a></h6>
                                 <ul class="job-info">
@@ -103,10 +103,10 @@
                                         <div class="features-job mg-bt-2">
                                             <div class="job-archive-header">
                                                 <div class="inner-box">
-                                                    <div class="logo-company">
-                                                        <img src="{{asset($data['logo'])}}"
-                                                             alt=" Logo"/>
-                                                    </div>
+{{--                                                    <div class="logo-company">--}}
+{{--                                                        <img src="{{settings()->group('logo')->get("logo") ? asset(settings()->group('logo')->get("logo")):asset('rapidhire.png')}}"--}}
+{{--                                                             alt=" Logo"/>--}}
+{{--                                                    </div>--}}
                                                     <div class="box-content">
                                                         <h3>
                                                             <a href="{{route('candidate.job.detail',$value->slug)}}">{{$value->name}}</a>

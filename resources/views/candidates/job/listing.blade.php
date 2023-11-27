@@ -73,11 +73,11 @@
                                                 <label class="Salary">Salary:</label>
                                                 <div class="d-flex justify-content-between">
                                                     <div class="group-input search-ip">
-                                                        <button type="button"><i class="icon-dollar"></i></button>
+{{--                                                        <button type="button"><i class="icon-dollar"></i></button>--}}
                                                         <input type="number" class="form-control" name="min_salary" placeholder="Min">
                                                     </div>
                                                     <div class="group-input search-ip">
-                                                        <button type="button"><i class="icon-dollar"></i></button>
+{{--                                                        <button type="button"><i class="icon-dollar"></i></button>--}}
                                                         <input type="number" class="form-control" name="max_salary" placeholder="Max">
                                                     </div>
                                                 </div>
@@ -154,10 +154,10 @@
                                         <div class="features-job cl2">
                                             <div class="job-archive-header">
                                                 <div class="inner-box">
-                                                    <div class="logo-company">
-                                                        <img src="{{ asset('images/devjeco-logo.png')}}"
-                                                             alt="Logo">
-                                                    </div>
+{{--                                                    <div class="logo-company">--}}
+{{--                                                        <img src="{{settings()->group('logo')->get("logo") ? asset(settings()->group('logo')->get("logo")):asset('rapidhire.png')}}"--}}
+{{--                                                             alt="Logo">--}}
+{{--                                                    </div>--}}
                                                     <div class="box-content">
                                                         <h3>
                                                             <a href="{{route('candidate.job.detail',$job->slug)}}">{{$job->name}}</a>
@@ -184,13 +184,11 @@
                                                             @endif
                                                             >
                                                         </span>
-                                                        <div class="button-container">
-                                                            <a href="{{route('candidate.job.detail',$job->slug)}}">
-                                                                <button>Apply</button>
-                                                            </a>
-                                                        </div>
-
-
+                                                    </div>
+                                                    <div class="button-container mt-5">
+                                                        <a href="{{route('candidate.job.detail',$job->slug)}}">
+                                                            <button>Apply</button>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
