@@ -36,7 +36,6 @@ class SettingService implements SettingContract
             "company_title_about" => $this->model->group(Constant::CONFIGURATION)->get("company_title_about"),
             "job_description_about" => $this->model->group(Constant::CONFIGURATION)->get("job_description_about"),
             "currency" => $this->model->group(Constant::CONFIGURATION)->get("currency"),
-            "currency_symbol" => $this->model->group(Constant::CONFIGURATION)->get("currency_symbol"),
             "title" => $this->model->group(Constant::CORE_VALUE)->get("title"),
             "icon" => $this->model->group(Constant::CORE_VALUE)->get("icon") ? asset($this->model->group(Constant::CORE_VALUE)->get("icon")) : "",
             "description" => $this->model->group(Constant::CORE_VALUE)->get("description"),
@@ -79,7 +78,6 @@ class SettingService implements SettingContract
                      'company_title_about' => $data['company_title_about'],
                      'job_description_about' => $data['job_description_about'],
                      'currency' => $data['currency'],
-                     'currency_symbol' => $data['currency_symbol'],
                  ]);
                 break;
             case ('core-value'):

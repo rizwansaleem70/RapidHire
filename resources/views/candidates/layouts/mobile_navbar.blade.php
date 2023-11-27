@@ -6,7 +6,7 @@
             <div id="logo" class="logo">
                 <a href="{{route('candidate.home')}}">
                     <img class="site-logo"
-                         src="{{asset('app-assets/candidates/images/used/rapidhire.png')}}"
+                         src="{{settings()->group('logo')->get("logo") ? asset(settings()->group('logo')->get("logo")):asset('rapidhire.png')}}"
                          alt="Image">
                 </a>
             </div>
