@@ -184,13 +184,11 @@
                                                             @endif
                                                             >
                                                         </span>
-                                                        <div class="button-container">
-                                                            <a href="{{route('candidate.job.detail',$job->slug)}}">
-                                                                <button>Apply</button>
-                                                            </a>
-                                                        </div>
-
-
+                                                    </div>
+                                                    <div class="button-container mt-5">
+                                                        <a href="{{route('candidate.job.detail',$job->slug)}}">
+                                                            <button>Apply</button>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>

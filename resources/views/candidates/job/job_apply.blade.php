@@ -213,9 +213,19 @@
                                                                 </div>
                                                             @endforeach
                                                             @break
-                                                        @default
+                                                        @case('number')
+                                                            <input type="number" min="0" id="gender" required class="form-control"
+                                                                   name="requirement[{{ $key }}][answer]" value="">
+                                                            @break
+                                                        @case('textarea')
+                                                            <label>
+                                                                <textarea cols="100" name="requirement[{{ $key }}][answer]"></textarea>
+                                                            </label>
+                                                            @break
+                                                        @case('text')
                                                             <input type="text" id="gender" required class="form-control"
                                                                    name="requirement[{{ $key }}][answer]" value="">
+                                                            @break
                                                     @endswitch
                                                 </div>
                                             </div>
@@ -262,7 +272,7 @@
                                                         </div>
 
                                                         <div class="form-group col-md-2">
-                                                            <label for="end_{{ $key }}" class="file-label">End
+                                                            <label for="end_{{ $key }}" class="file-label end_date">End
                                                                 Date</label>
                                                             {!! Form::date(
                                                                 'experience[' . $key . '][end_date]',
@@ -330,7 +340,7 @@
                                                     </div>
 
                                                     <div class="form-group col-md-2">
-                                                        <label for="end" class="file-label">End
+                                                        <label for="end" class="file-label end_date" >End
                                                             Date</label>
                                                         {!! Form::date('end_date', null, [
                                                             'class' => 'form-control end_date',
@@ -460,8 +470,8 @@
                 $(`#end_${key}`).addClass("d-none");
                 $(`#end_${key}`).val("");
             } else {
-    $(`#end_${key}`).removeClass("d-none");
-}
+                $(`#end_${key}`).removeClass("d-none");
+            }
          }
 
         function toggleEndDateVisibility(checkbox) {
