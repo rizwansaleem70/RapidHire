@@ -80,7 +80,7 @@ class HomeService implements HomeContract
         $totalMember = $this->modelUser->whereHas('roles', function ($query) {
             $query->whereIn('id', [Constant::ROLE_INTERVIEWER, Constant::ROLE_RECRUITER]);
         })->count();
-        $notifications = Notification::all(['id', 'message']);
+        $notifications = Notification::latest()->limit(10)->get(['id', 'message','created_at']);
             return [
                 'totalJobs' => $totalJobs,
                 'activeTotalJobs' => $activeTotalJobs,
