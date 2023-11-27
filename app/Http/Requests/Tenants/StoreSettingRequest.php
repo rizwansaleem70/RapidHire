@@ -51,7 +51,6 @@ class StoreSettingRequest extends FormRequest
                     'company_title_about' => 'required',
                     'job_description_about' => 'required',
                     'currency' => 'required',
-                    'currency_symbol' => 'required',
                 ];
                 break;
             case ('core-value'):
@@ -98,7 +97,6 @@ class StoreSettingRequest extends FormRequest
                     'company_title_about' => $request['company_title_about'],
                     'job_description_about' => $request['job_description_about'],
                     'currency' => $request['currency'],
-                    'currency_symbol' => $request['currency_symbol'],
                 ];
                 break;
             case ('core-value'):

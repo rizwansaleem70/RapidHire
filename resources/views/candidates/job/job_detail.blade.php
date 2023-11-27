@@ -51,8 +51,9 @@
                                 <div class="gr-rating">
                                     <p class="days">{{$data['remaining_days']}} days left to apply</p>
                                 </div>
-                                <div class="price">
-                                    <span class="icon-dollar"></span>
+                                <div class="price d-flex gap-1">
+{{--                                    <span class="icon-dollar"></span>--}}
+                                    <span class="rounded-pill border px-1"><strong>{{settings()->group('configuration')->get("currency") ?? 'USD'}} </strong></span>
                                     <p class="mt-3">{{$data['job']->min_salary}} - {{$data['job']->max_salary}} <span class="year">/ {{$data['job']->salary_deliver}}</span></p>
 
                                 </div>
@@ -134,7 +135,8 @@
                                                 </div>
                                                 <div class="job-footer-right">
                                                     <div class="price">
-                                                        <span class="icon-dolar1"></span>
+{{--                                                        <span class="icon-dolar1"></span>--}}
+                                                        <span class="rounded-pill border px-1">{{settings()->group('configuration')->get("currency_symbol") ?? '$'}} </span>
                                                         <p class="mt-3">{{$value->min_salary}} - {{$value->max_salary}} <span class="year">/ {{$value->salary_deliver}}</span></p>
                                                     </div>
                                                     <p class="days">{{$value->remaining_days}} days left to apply</p>

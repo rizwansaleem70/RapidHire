@@ -139,7 +139,7 @@ class JobService implements JobContract
         $related_jobs = $this->modelJob
             ->where('department_id', $job->department_id)
             ->where('id', '<>', $job->id)
-            ->select('*', DB::raw('DATEDIFF(expiry_date, now()) AS remaining_days'))
+//            ->select('*', DB::raw('DATEDIFF(expiry_date, now()) AS remaining_days'))
             ->latest()->get();
         $remaining_days = Carbon::today()->diffInDays(Carbon::parse($job->expiry_date));
         if (Auth::check()) {
