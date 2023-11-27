@@ -11,10 +11,10 @@
                     <div class="col-lg-12">
                         <div class="wd-job-author2">
                             <div class="content-left">
-                                <div class="thumb">
-                                    <img src="{{ asset($data['logo']) }}" alt="logo">
-                                    {{-- <img src="{{ asset('tenancy/assets/images/devjeco-logo.png') }}" alt="logo"> --}}
-                                </div>
+{{--                                <div class="thumb">--}}
+{{--                                    <img src="{{settings()->group('logo')->get("logo") ? asset(settings()->group('logo')->get("logo")):asset('rapidhire.png')}}" alt="logo">--}}
+{{--                                     <img src="{{ asset('tenancy/assets/images/devjeco-logo.png') }}" alt="logo"> --}}
+{{--                                </div>--}}
 
                                 <div class="content">
                                     <h6>
@@ -151,15 +151,14 @@
                                         aria-describedby="skills" value="{{ old('skills', $data['user']->skills) }}"
                                         placeholder="Skills *">
                                 </div>
-
-                                @if ($data['job']->jobQuestion)
-                                    <h6><strong>Job Requirements *</strong></h6>
+                                @if (count($data['job']->jobQuestion)>0)
+                                    <h6><strong>Additional Questions *</strong></h6>
                                     @foreach ($data['job']->jobQuestion as $key => $question)
                                         @if ($question->questionBank)
                                             <div class="row">
                                                 <div class="form-group col-md-4 mt-2 d-flex justify-content-center">
                                                     <label for="file-upload"
-                                                        class="file-label">{{ $question->questionBank->question }}</label>
+                                                        class="file-label">{{ ucfirst($question->questionBank->question) }}</label>
                                                 </div>
                                                 <div class="form-group col-md-8">
                                                     <input type="hidden" class="form-control"
@@ -172,21 +171,52 @@
                                         @endif
                                     @endforeach
                                 @endif
-                                @if ($data['job']->jobQualification)
-                                    <h6><strong>Job Qualifications * </strong></h6>
+                                @if (count($data['job']->jobQualification)>0)
+                                    <h6><strong>Requirements * </strong></h6>
                                     @foreach ($data['job']->jobQualification as $key => $qualification)
                                         @if ($qualification->requirement)
                                             <div class="row">
                                                 <div class="form-group col-md-4 mt-2 d-flex justify-content-center">
-                                                    <label for="file-upload"
-                                                        class="file-label">{{ $qualification->requirement->name }}</label>
+                                                    <label for="gender"
+                                                        class="file-label">{{ ucfirst($qualification->requirement->name) }}</label>
                                                 </div>
                                                 <div class="form-group col-md-8">
                                                     <input type="hidden" class="form-control"
                                                         name="requirement[{{ $key }}][id]"
                                                         value="{{ $qualification->requirement->id }}">
-                                                    <input type="text" required class="form-control"
-                                                        name="requirement[{{ $key }}][answer]" value="">
+                                                    @switch($qualification->requirement->input_type)
+                                                        @case('select')
+                                                            <select id="gender" class="form-control" required name="requirement[{{ $key }}][answer]">
+                                                                <option class="form-control" value=""> Select </option>
+                                                                @foreach(explode(",",$qualification->requirement->option) as $value)
+                                                                    <option class="form-control" value="{{$value}}"> {{$value}} </option>
+                                                                @endforeach
+                                                            </select>
+                                                            @break
+                                                        @case('checkbox')
+                                                            @foreach(explode(",",$qualification->requirement->option) as $value)
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="requirement[{{ $key }}][answer][]" value="{{$value}}" id="flexCheckDefault">
+                                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                                        {{ucfirst($value)}}
+                                                                    </label>
+                                                                </div>
+                                                            @endforeach
+                                                            @break
+                                                        @case('radiobox')
+                                                            @foreach(explode(",",$qualification->requirement->option) as $value)
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" value="{{$value}}" name="requirement[{{ $key }}][answer]" id="flexRadioDefault1">
+                                                                    <label class="form-check-label" for="flexRadioDefault1">
+                                                                        {{ucfirst($value)}}
+                                                                    </label>
+                                                                </div>
+                                                            @endforeach
+                                                            @break
+                                                        @default
+                                                            <input type="text" id="gender" required class="form-control"
+                                                                   name="requirement[{{ $key }}][answer]" value="">
+                                                    @endswitch
                                                 </div>
                                             </div>
                                         @endif
