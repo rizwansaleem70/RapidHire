@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Tenants;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,9 +17,8 @@ class NotificationResource extends JsonResource
     {
         return [
             'id' => $this->id,
-//            'user_id' => $this->user_id,
-//            'title' => $this->title,
             'message' => $this->message,
+            'created_at' => Carbon::parse($this->created_at)->format('D, d M Y H:i:s')
         ];
     }
 }
