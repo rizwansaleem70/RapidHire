@@ -27,6 +27,7 @@ class StoreSettingRequest extends FormRequest
             case ('logo'):
                 $request = [
                     'logo' => 'required',
+                    'dashboard_logo' => 'required',
                 ];
                 break;
             case ('color-scheme'):
@@ -71,6 +72,7 @@ class StoreSettingRequest extends FormRequest
             case ('logo'):
                 $prepareRequest = [
                     'logo' => $request['logo'],
+                    'dashboard_logo' => $request['dashboard_logo'],
                 ];
                 break;
             case ('color-scheme'):

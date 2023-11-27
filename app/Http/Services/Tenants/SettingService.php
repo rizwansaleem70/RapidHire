@@ -23,7 +23,8 @@ class SettingService implements SettingContract
     public function index()
     {
         $settings = [
-            "logo" => asset($this->model->group(Constant::LOGO)->get("logo")),
+            "logo" => $this->model->group(Constant::LOGO)->get("logo") ? asset($this->model->group(Constant::LOGO)->get("logo")) : "",
+            "dashboard_logo" => $this->model->group(Constant::LOGO)->get("dashboard_logo") ? asset($this->model->group(Constant::LOGO)->get("dashboard_logo")):"",
             "primary_color" => $this->model->group(Constant::COLOR_SCHEME)->get("primary"),
             "secondary_color" => $this->model->group(Constant::COLOR_SCHEME)->get("secondary"),
             "name" => $this->model->group(Constant::ORGANIZATION)->get("name"),
@@ -47,7 +48,10 @@ class SettingService implements SettingContract
     {
         switch ($type) {
             case ('logo'):
-                 $model = $model->group('logo')->set('logo', $data['logo']);
+                 $model = $model->group('logo')->set([
+                     'logo' => $data['logo'],
+                     'dashboard_logo' => $data['dashboard_logo']
+                 ]);
                 break;
             case ('color-scheme'):
                  $model = $model->group('color-scheme')->set([
