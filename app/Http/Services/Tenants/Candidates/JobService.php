@@ -180,7 +180,7 @@ class JobService implements JobContract
         })->get(['id','name']);
         $user = $this->modelUser->with(['country:id,name', 'state:id,name', 'city:id,name', 'experience'])->find(Auth::user()->id);
         $logo = settings()->group('logo')->get('logo');
-        $job = $this->modelJob->with(['country', 'state', 'city', 'jobQuestion.questionBank','jobQualification.requirement'])->where('slug', $slug)->first();
+        $job = $this->modelJob->with(['country', 'state', 'city', 'jobQuestion.questionBank','jobQualification.requirement','jobRequirement'])->where('slug', $slug)->first();
         return [
             'countries' => $countries,
             'states' => $states,
@@ -209,6 +209,14 @@ class JobService implements JobContract
         $modelApplicant->status = 'applied';
         $modelApplicant->skills = $commaSeparatedValuesSkill;
         $modelApplicant->source_detail = $data['source_detail'];
+        $modelApplicant->first_name = $data['first_name'];
+        $modelApplicant->last_name = $data['last_name'];
+        $modelApplicant->phone = $data['phone'];
+        $modelApplicant->address = $data['address'];
+        $modelApplicant->gender = $data['gender'];
+        $modelApplicant->country_id = $data['country_id'];
+        $modelApplicant->state_id = $data['state_id'];
+        $modelApplicant->city_id = $data['city_id'];
         $modelApplicant->applied_date = date('Y-m-d');
         $modelApplicant->job_resume_path = $this->upload($data['resume_path']);
         $modelApplicant->cover_letter_path = $this->upload($data['cover_letter_path']);
@@ -241,10 +249,14 @@ class JobService implements JobContract
                 if (isset($requirement['answer_type']) && $requirement['answer_type'] == 'checkbox'){
                     $requirement['answer'] = implode(',', $requirement['answer']);
                 }
+                if (isset($requirement['answer_type']) && $requirement['answer_type'] == 'file'){
+                    $requirement['answer'] = $this->upload($requirement['answer']);
+                }
                 $modelApplicantRequirementAnswer = new $this->modelApplicantRequirementAnswer;
                 $modelApplicantRequirementAnswer->applicant_id = $modelApplicant->id;
                 $modelApplicantRequirementAnswer->job_id = $data['job_id'];
                 $modelApplicantRequirementAnswer->requirement_id = $requirement['id'];
+                $modelApplicantRequirementAnswer->job_requirement_id = $requirement['job_requirement_id'];
                 $modelApplicantRequirementAnswer->answer = $requirement['answer'];
                 $modelApplicantRequirementAnswer->save();
             }

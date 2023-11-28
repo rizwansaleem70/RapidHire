@@ -22,6 +22,14 @@ class StoreJobApplyRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'gender' => 'required',
+            'country_id' => 'required|exists:countries,id',
+            'state_id' => 'required|exists:states,id',
+            'city_id' => 'required|exists:cities,id',
             'resume_path' => 'required|max:2048',
             'cover_letter_path' => 'nullable|max:2048',
             'skills' => 'required',
@@ -42,6 +50,14 @@ class StoreJobApplyRequest extends FormRequest
     {
         $request = $this;
         return [
+            'first_name' => $request['first_name'],
+            'last_name' => $request['last_name'],
+            'phone' => $request['phone'],
+            'address' => $request['address'],
+            'gender' => $request['gender'],
+            'country_id' => $request['country_id'],
+            'state_id' => $request['state_id'],
+            'city_id' => $request['city_id'],
             'resume_path' => $request['resume_path'],
             'job_id' => $request['job_id'],
             'cover_letter_path' => $request['cover_letter_path'],
