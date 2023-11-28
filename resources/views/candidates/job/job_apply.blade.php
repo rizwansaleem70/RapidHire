@@ -76,7 +76,7 @@
                             <div class="col-lg-12">
                                 <label for="first_name" class="file-label">First Name *</label>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="first_name"
+                                    <input type="text" class="form-control" id="first_name" name="first_name"
                                         value="{{ old('first_name',$data['user']->first_name) }}" required placeholder="First Name">
                                 </div>
                                 <div class="form-group">
@@ -118,7 +118,7 @@
                                         <option > Select State</option>
                                         @if ($data['user']->state_id)
                                             @foreach ($data['states'] as $state)
-                                                <option {{ $key == $data['user']->state_id ? 'selected' : '' }}
+                                                <option {{ $state->id == $data['user']->state_id ? 'selected' : '' }}
                                                     class="form-control" value="{{ $state->id }}">
                                                     {{ $state->name }}</option>
                                             @endforeach
@@ -130,8 +130,8 @@
                                     <select id="city-id" class="form-control" required name="city_id">
                                         <option > Select City</option>
                                         @if ($data['user']->city_id)
-                                            @foreach ($data['cities'] as $key => $city)
-                                                <option {{ $key == $data['user']->city_id ? 'selected' : '' }}
+                                            @foreach ($data['cities'] as $city)
+                                                <option {{ $city->id == $data['user']->city_id ? 'selected' : '' }}
                                                     class="form-control" value="{{ $city->id }}">
                                                     {{ $city->name }}</option>
                                             @endforeach
@@ -157,12 +157,12 @@
                                     <h6><strong>Additional Questions *</strong></h6>
                                     @foreach ($data['job']->jobQuestion as $key => $question)
                                         @if ($question->questionBank)
-                                            <div class="row">
-                                                <div class="form-group col-md-4 mt-2 d-flex justify-content-center">
+                                            <div class="row border border-1 m-1">
+                                                <div class="form-group col-md-4 mt-3 d-flex justify-content-center">
                                                     <label for="file-upload"
                                                         class="file-label">{{ ucfirst($question->questionBank->question) }}</label>
                                                 </div>
-                                                <div class="form-group col-md-8">
+                                                <div class="form-group col-md-8 mt-3">
                                                     <input type="hidden" class="form-control"
                                                         name="question[{{ $key }}][id]"
                                                         value="{{ $question->questionBank->id }}">
@@ -177,15 +177,18 @@
                                     <h6><strong>Requirements * </strong></h6>
                                     @foreach ($data['job']->jobQualification as $key => $qualification)
                                         @if ($qualification->requirement)
-                                            <div class="row">
-                                                <div class="form-group col-md-4 mt-2 d-flex justify-content-center">
+                                            <div class="row border border-1 m-1">
+                                                <div class="form-group col-md-4 mt-3 ">
                                                     <label for="gender"
                                                         class="file-label">{{ ucfirst($qualification->requirement->name) }}</label>
                                                 </div>
-                                                <div class="form-group col-md-8">
+                                                <div class="form-group col-md-8 mt-3">
                                                     <input type="hidden" class="form-control"
                                                         name="requirement[{{ $key }}][id]"
-                                                        value="{{ $qualification->requirement->id }}">
+                                                        value="{{ $qualification->requirement_id }}">
+                                                    <input type="hidden" class="form-control"
+                                                        name="requirement[{{ $key }}][job_requirement_id]"
+                                                        value="{{ $qualification->id }}">
                                                     @switch($qualification->requirement->input_type)
                                                         @case('select')
                                                             <select id="gender" class="form-control" required name="requirement[{{ $key }}][answer]">
@@ -229,13 +232,18 @@
                                                             <input type="text" id="gender" required class="form-control"
                                                                    name="requirement[{{ $key }}][answer]" value="{{old("requirement[$key][answer]")}}">
                                                             @break
+                                                        @case('file')
+                                                            <input type="file" id="gender" required class="form-control"
+                                                                   name="requirement[{{ $key }}][answer]" accept=".pdf" value="{{old("requirement[$key][answer]")}}">
+                                                            <input type="hidden" name="requirement[{{ $key }}][answer_type]" value="file" >
+                                                            @break
                                                     @endswitch
                                                 </div>
                                             </div>
                                         @endif
                                     @endforeach
                                 @endif
-                                <div class="row repeater">
+                                <div class="row repeater mt-3">
                                     <h6><strong>Experience </strong></h6>
                                     <div data-repeater-list="experience">
                                         @if (count($data['user']->experience) > 0)

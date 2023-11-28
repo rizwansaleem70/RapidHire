@@ -36,6 +36,7 @@ class StoreATS_ScoreRequest extends FormRequest
         return [
             'attribute' => $request['attribute'],
             'weight' => $request['weight'],
+            'job_requirement_id' => $request['job_requirement_id'],
             'data' => $request['data'],
         ];
     }

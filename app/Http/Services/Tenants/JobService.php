@@ -315,6 +315,7 @@ class JobService implements JobContract
         if (isset($data['weight']) && $data['weight']) {
             $modelJobATSScore->weight = $data['weight'];
         }
+        $modelJobATSScore->job_requirement_id = $data['job_requirement_id'];
         $modelJobATSScore->save();
         foreach ($data['data'] as $value) {
             $modelJobATSScoreParameter = new $this->modelJobATSScoreParameter;
