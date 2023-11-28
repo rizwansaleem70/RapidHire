@@ -115,6 +115,7 @@
                                 <div class="form-group">
                                     <label for="state-id" class="file-label">State *</label>
                                     <select id="state-id" class="form-control" required name="state_id">
+                                        <option > Select State</option>
                                         @if ($data['user']->state_id)
                                             @foreach ($data['states'] as $state)
                                                 <option {{ $key == $data['user']->state_id ? 'selected' : '' }}
@@ -127,6 +128,7 @@
                                 <div class="form-group">
                                     <label for="city-id" class="file-label">City *</label>
                                     <select id="city-id" class="form-control" required name="city_id">
+                                        <option > Select City</option>
                                         @if ($data['user']->city_id)
                                             @foreach ($data['cities'] as $key => $city)
                                                 <option {{ $key == $data['user']->city_id ? 'selected' : '' }}
@@ -165,7 +167,7 @@
                                                         name="question[{{ $key }}][id]"
                                                         value="{{ $question->questionBank->id }}">
                                                     <input type="text" required class="form-control"
-                                                        name="question[{{ $key }}][answer]" value="">
+                                                        name="question[{{ $key }}][answer]" value="{{old("question[$key][answer]")}}">
                                                 </div>
                                             </div>
                                         @endif
@@ -201,6 +203,7 @@
                                                                         {{ucfirst($value)}}
                                                                     </label>
                                                                 </div>
+                                                                <input type="hidden" name="requirement[{{ $key }}][answer_type]" value="checkbox" >
                                                             @endforeach
                                                             @break
                                                         @case('radiobox')
@@ -215,7 +218,7 @@
                                                             @break
                                                         @case('number')
                                                             <input type="number" min="0" id="gender" required class="form-control"
-                                                                   name="requirement[{{ $key }}][answer]" value="">
+                                                                   name="requirement[{{ $key }}][answer]" value="{{old("requirement[$key][answer]")}}">
                                                             @break
                                                         @case('textarea')
                                                             <label>
@@ -224,7 +227,7 @@
                                                             @break
                                                         @case('text')
                                                             <input type="text" id="gender" required class="form-control"
-                                                                   name="requirement[{{ $key }}][answer]" value="">
+                                                                   name="requirement[{{ $key }}][answer]" value="{{old("requirement[$key][answer]")}}">
                                                             @break
                                                     @endswitch
                                                 </div>

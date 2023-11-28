@@ -238,6 +238,9 @@ class JobService implements JobContract
         }
         if ($data['requirement']) {
             foreach ($data['requirement'] as $requirement) {
+                if (isset($requirement['answer_type']) && $requirement['answer_type'] == 'checkbox'){
+                    $requirement['answer'] = implode(',', $requirement['answer']);
+                }
                 $modelApplicantRequirementAnswer = new $this->modelApplicantRequirementAnswer;
                 $modelApplicantRequirementAnswer->applicant_id = $modelApplicant->id;
                 $modelApplicantRequirementAnswer->job_id = $data['job_id'];

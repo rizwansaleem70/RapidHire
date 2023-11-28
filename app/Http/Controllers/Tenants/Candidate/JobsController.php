@@ -52,7 +52,6 @@ class JobsController extends Controller
     }
     public function jobApplyStore(StoreJobApplyRequest $request)
     {
-        dd($request->all());
         try {
             DB::beginTransaction();
             $this->job->jobApplyStore($request->prepareRequest());
