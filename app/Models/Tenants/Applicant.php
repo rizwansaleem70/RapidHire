@@ -28,4 +28,7 @@ class Applicant extends Model
     {
         return $this->belongsTo(City::class, 'city_id', 'id');
     }
+    public function jobExperience(){
+        return $this->hasMany(JobExperience::class,'user_id');
+    }
 }

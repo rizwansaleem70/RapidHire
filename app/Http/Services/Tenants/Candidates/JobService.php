@@ -224,7 +224,7 @@ class JobService implements JobContract
         foreach ($data['experience'] as $value) {
             if ($value['organization_name'] && $value['position_title'] && $value['start_date']){
                 $modelJobExperience = new $this->modelJobExperience;
-                $modelJobExperience->user_id = $user_id;
+                $modelJobExperience->applicant_id = $modelApplicant->id;
                 $modelJobExperience->job_id = $data['job_id'];
                 $modelJobExperience->organization_name = $value['organization_name'];
                 $modelJobExperience->position_title = $value['position_title'];
