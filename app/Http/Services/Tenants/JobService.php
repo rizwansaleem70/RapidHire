@@ -101,16 +101,16 @@ class JobService implements JobContract
         if (empty($model)) {
             throw new CustomException('Job Record Not Found!');
         }
-        $job = $this->model->where('id',$id)->with(['jobHiringManager:id,first_name,last_name','jobQuestionBank:id,input_type,question','jobRequirement.requirement:id,name,input_type,option','department:id,name','country:id,name','state:id,name','city:id,name'])->first();
+        $job = $this->model->where('id', $id)->with(['jobHiringManager:id,first_name,last_name', 'jobQuestionBank:id,input_type,question', 'jobRequirement.requirement:id,name,input_type,option', 'department:id,name', 'country:id,name', 'state:id,name', 'city:id,name'])->first();
         $hiringManagers =  $this->modelUser->whereHas('roles', function ($query) {
             $query->whereIn('id', [Constant::ROLE_INTERVIEWER, Constant::ROLE_RECRUITER]);
-        })->latest()->get(['id','first_name','last_name']);
-        $departments = $this->departmentModel->get(['id','name']);
-        $requirements = $this->modelRequirement->get(['id','name','input_type','option']);
-        $questionBanks = $this->modelQuestionBank->where('department_id',$job->department_id)->get(['id','input_type','question']);
-        $countries = $this->modelCountry->get(['id','name']);
-        $states = $this->modelState->where('country_id',$job->country_id)->get(['id','name']);
-        $cities = $this->modelCity->where('state_id',$job->state_id)->get(['id','name']);
+        })->latest()->get(['id', 'first_name', 'last_name']);
+        $departments = $this->departmentModel->get(['id', 'name']);
+        $requirements = $this->modelRequirement->get(['id', 'name', 'input_type', 'option']);
+        $questionBanks = $this->modelQuestionBank->where('department_id', $job->department_id)->get(['id', 'input_type', 'question']);
+        $countries = $this->modelCountry->get(['id', 'name']);
+        $states = $this->modelState->where('country_id', $job->country_id)->get(['id', 'name']);
+        $cities = $this->modelCity->where('state_id', $job->state_id)->get(['id', 'name']);
         return [
             'job' => $job,
             'hiringManagers' => $hiringManagers,
@@ -248,6 +248,23 @@ class JobService implements JobContract
         return $job->requirement;
     }
 
+    public function atsFields($job_id)
+    {
+        $job_qualifications = JobQualification::where('job_id', $job_id)
+            ->where('input_type', 'select')
+            ->pluck('requirement_id')->toArray();
+
+        $job = $this->model->with(['requirement' => function ($query) use ($job_qualifications) {
+            $query->whereIn('requirement_id', $job_qualifications);
+        }])->find($job_id);
+
+        if (empty($job)) {
+            throw new CustomException('Job Not Found!');
+        }
+
+        return $job->requirement;
+    }
+
     public function getApplicantJobs($data)
     {
         $query = $this->model->query()->latest();
@@ -307,6 +324,9 @@ class JobService implements JobContract
 
     private function prepareATSScoreData($modelJobATSScore, $job_id, $data, bool $true)
     {
+        \Log::info("ATS Data");
+        \Log::debug($data);
+        return;
         $modelJobATSScore->job_id = $job_id;
 
         if (isset($data['attribute']) && $data['attribute']) {

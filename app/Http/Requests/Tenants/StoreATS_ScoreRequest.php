@@ -26,11 +26,12 @@ class StoreATS_ScoreRequest extends FormRequest
             'attribute' => 'required|string',
             'weight' => 'required',
             'data.*.parameter' => 'required',
+            'data.*.attribute' => 'required',
             'data.*.value' => 'required',
         ];
     }
 
-    public function prepareRequest():array
+    public function prepareRequest(): array
     {
         $request = $this;
         return [

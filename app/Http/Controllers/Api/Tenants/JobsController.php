@@ -44,11 +44,11 @@ class JobsController extends Controller
         try {
             $job = $this->job->index();
             $job = new JobCollection($job);
-            return $this->successResponse("Successfully", $job);
+            return $this->successResponse('Successfully', $job);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("job index", 'none', $th->getMessage());
+            Helper::logMessage('job index', 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -63,24 +63,25 @@ class JobsController extends Controller
             $job = $this->job->store($request->prepareRequest());
             $job = new Job($job);
             DB::commit();
-            return $this->successResponse("Job Added Successfully", $job);
+            return $this->successResponse('Job Added Successfully', $job);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("job index", $request->input(), $th->getMessage());
+            Helper::logMessage('job index', $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
+
     public function show(string $id)
     {
         try {
             $job = $this->job->show($id);
             $job = new JobEditResource($job);
-            return $this->successResponse( "Job Found Successfully", $job);
+            return $this->successResponse('Job Found Successfully', $job);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            helper::logMessage("job show", 'id ='.$id, $th->getMessage());
+            helper::logMessage('job show', 'id =' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -93,11 +94,11 @@ class JobsController extends Controller
         try {
             $job = $this->job->questionList($request);
             $job = new DepartmentCollection($job);
-            return $this->successResponse("Department Records Found Successfully", $job);
+            return $this->successResponse('Department Records Found Successfully', $job);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("job show", $request->input(), $th->getMessage());
+            Helper::logMessage('job show', $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -107,11 +108,11 @@ class JobsController extends Controller
             DB::beginTransaction();
             $this->job->job_qualification($request->all(), $job_id);
             DB::commit();
-            return $this->okResponse("Job Qualification Records Save Successfully");
+            return $this->okResponse('Job Qualification Records Save Successfully');
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("job_qualification",  $request->all(), $th->getMessage());
+            Helper::logMessage('job_qualification', $request->all(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -119,11 +120,11 @@ class JobsController extends Controller
     {
         try {
             $data = $this->job->get_country_against_job($job_id);
-            return $this->successResponse("Jobs Country Found Successfully", $data);
+            return $this->successResponse('Jobs Country Found Successfully', $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("getJobApplicants", 'none', $th->getMessage());
+            Helper::logMessage('getJobApplicants', 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -138,11 +139,11 @@ class JobsController extends Controller
             $job = $this->job->update($request->prepareRequest(), $id);
             $job = new Job($job);
             DB::commit();
-            return $this->successResponse("Job Updated Successfully", $job);
+            return $this->successResponse('Job Updated Successfully', $job);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("job update (id = )" . $id, $request->input(), $th->getMessage());
+            Helper::logMessage('job update (id = )' . $id, $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -156,11 +157,11 @@ class JobsController extends Controller
             DB::beginTransaction();
             $this->job->delete($id);
             DB::commit();
-            return $this->okResponse("Job Deleted Successfully");
+            return $this->okResponse('Job Deleted Successfully');
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("job destroy", 'id = ' . $id, $th->getMessage());
+            Helper::logMessage('job destroy', 'id = ' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -170,11 +171,11 @@ class JobsController extends Controller
         try {
             $requirements = $this->job->requirements($id);
             $requirements = new RequirementResourceCollection($requirements);
-            return $this->successResponse("Success", $requirements);
+            return $this->successResponse('Success', $requirements);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("job requirements", 'id = ' . $id, $th->getMessage());
+            Helper::logMessage('job requirements', 'id = ' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -183,11 +184,11 @@ class JobsController extends Controller
         try {
             $data = $this->job->getApplicantJobs($request);
             $data = new ApplicantJobResourceCollection($data);
-            return $this->successResponse("Jobs Listing", $data);
+            return $this->successResponse('Jobs Listing', $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("getJobs Listing", 'none', $th->getMessage());
+            Helper::logMessage('getJobs Listing', 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -197,11 +198,11 @@ class JobsController extends Controller
         try {
             $data = $this->job->getJobApplicant($request->all(), $job_id);
             $data = new JobApplicantResourceCollection($data['applicants'], $data);
-            return $this->successResponse("Jobs Applicant Listing", $data);
+            return $this->successResponse('Jobs Applicant Listing', $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("getJobApplicants", 'none', $th->getMessage());
+            Helper::logMessage('getJobApplicants', 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -211,11 +212,11 @@ class JobsController extends Controller
             $user_id = Auth::id();
             $data = $this->job->candidateAppliedJobs($user_id);
             $data = new CandidateAppliedJobsResourceCollection($data);
-            return $this->successResponse("Applied Jobs Listing", $data);
+            return $this->successResponse('Applied Jobs Listing', $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("getJobApplicants", 'none', $th->getMessage());
+            Helper::logMessage('getJobApplicants', 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -223,11 +224,11 @@ class JobsController extends Controller
     {
         try {
             $data = $this->job->jobApplicantProfileStatus($request, $applicant_id, $job_id);
-            return $this->successResponse("Status Update Successfully", $data);
+            return $this->successResponse('Status Update Successfully', $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("getJobApplicants", 'none', $th->getMessage());
+            Helper::logMessage('getJobApplicants', 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -236,11 +237,11 @@ class JobsController extends Controller
         try {
             $data = $this->job->jobApplicantQuestionAnswer($applicant_id, $job_id);
             $data = new AnswerResourceCollection($data);
-            return $this->successResponse("Record Found Successfully", $data);
+            return $this->successResponse('Record Found Successfully', $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("getJobApplicants", 'none', $th->getMessage());
+            Helper::logMessage('getJobApplicants', 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -249,11 +250,11 @@ class JobsController extends Controller
         try {
             $data = $this->job->jobApplicantProfileHeader($applicant_id);
             $data = new ProfileHeaderResource($data);
-            return $this->successResponse("Jobs Applicant Listing", $data);
+            return $this->successResponse('Jobs Applicant Listing', $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("jobApplicantProfileHeader", 'none', $th->getMessage());
+            Helper::logMessage('jobApplicantProfileHeader', 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -262,11 +263,11 @@ class JobsController extends Controller
         try {
             $data = $this->job->profile($user_id);
             $data = new ProfileResource($data);
-            return $this->successResponse("Applicant Profile", $data);
+            return $this->successResponse('Applicant Profile', $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("jobApplicantProfile", 'none', $th->getMessage());
+            Helper::logMessage('jobApplicantProfile', 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -277,11 +278,23 @@ class JobsController extends Controller
             $data = $this->job->profileUpdate($request->all(), $user_id);
             DB::commit();
             $data = new ProfileResource($data);
-            return $this->successResponse("Profile Update", $data);
+            return $this->successResponse('Profile Update', $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("jobApplicantProfile", 'none', $th->getMessage());
+            Helper::logMessage('jobApplicantProfile', 'none', $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+    public function getJobQualificationsForAts($job_id)
+    {
+        try {
+            $fields = $this->job->atsFields($job_id);
+            return $this->successResponse('Ats Fields', $fields);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage('ATS_Score', 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -292,30 +305,35 @@ class JobsController extends Controller
             $this->job->ATS_Score($request, $job_id);
             //            $data = new ATS_ScoreResource($data);
             DB::commit();
-            return $this->okResponse("Jobs ATS Score Save Successfully");
+            return $this->okResponse('Jobs ATS Score Save Successfully');
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("ATS_Score", 'none', $th->getMessage());
+            Helper::logMessage('ATS_Score', 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
 
     public function getJobQualifications(Request $request, $job_id, $applicant_id)
     {
-        $qualification_answers = ApplicantRequirementAnswer::with(['requirement'])->where('job_id', $job_id)->where('applicant_id', $applicant_id)->get();
+        $qualification_answers = ApplicantRequirementAnswer::with(['requirement'])
+            ->where('job_id', $job_id)
+            ->where('applicant_id', $applicant_id)
+            ->get();
 
         $data = [];
         foreach ($qualification_answers as $answer) {
-            $criteria = JobQualification::where('job_id', $job_id)->where('requirement_id', $answer->requirement_id)->first();
+            $criteria = JobQualification::where('job_id', $job_id)
+                ->where('requirement_id', $answer->requirement_id)
+                ->first();
             $data[] = [
                 'question' => $answer->requirement->name,
                 'answer' => $answer->answer,
                 'criteria_value' => optional($criteria)->value,
-                'criteria_operator' => optional($criteria)->operator
+                'criteria_operator' => optional($criteria)->operator,
             ];
         }
 
-        return $this->successResponse("OK", $data);
+        return $this->successResponse('OK', $data);
     }
 }

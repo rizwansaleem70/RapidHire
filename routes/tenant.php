@@ -53,7 +53,7 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
         Route::get('job-apply/{slug}', [CandidateJobsController::class, 'jobApply'])->name('candidate.job.apply');
         Route::post('job-apply', [CandidateJobsController::class, 'jobApplyStore'])->name('candidate.job.apply.save');
     });
-    Route::get('contact-us', [ContactUsController::class,'contact_us'])->name('candidate.contact-us');
+    Route::get('contact-us', [ContactUsController::class, 'contact_us'])->name('candidate.contact-us');
     Route::view('user-apply', 'candidates/apply')->name('tenant-user-apply');
 
     // Tenant Candidate User Auth Routes
@@ -107,6 +107,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::post('settings/{type}', [SettingsController::class, 'store']);
         Route::apiResources(['interview-feedback' => InterviewFeedbacksController::class]);
         Route::post('image-upload', [ImageUploadsController::class, 'store']);
+        Route::get('job/{id}/qualifications', [JobsController::class, 'getJobQualificationsForAts']);
         Route::get('job/{id}/requirements', [JobsController::class, 'requirements']);
         Route::get('applicants', [JobsController::class, 'getJobs']);
         Route::get('applicants/{job_id}', [JobsController::class, 'getJobApplicants']);
