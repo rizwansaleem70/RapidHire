@@ -16,4 +16,16 @@ class Applicant extends Model
     public function job(){
         return $this->belongsTo(Job::class,'job_id');
     }
+    public function country(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Country::class, 'country_id', 'id');
+    }
+    public function state(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(State::class, 'state_id', 'id');
+    }
+    public function city(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(City::class, 'city_id', 'id');
+    }
 }
