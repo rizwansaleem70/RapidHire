@@ -309,7 +309,7 @@ class JobService implements JobContract
     }
     public function candidateAppliedJobs($user_id)
     {
-        return $this->modelApplicant->where('user_id', $user_id)->with(['job'])->get();
+        return $this->modelApplicant->where('user_id', $user_id)->with(['job:id,name,slug'])->get(['id','user_id','job_id','applied_date','skills','status']);
     }
 
     public function jobApplicantProfileHeader($applicant_id)
