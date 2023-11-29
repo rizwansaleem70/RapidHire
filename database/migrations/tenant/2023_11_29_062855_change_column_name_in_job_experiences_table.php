@@ -14,8 +14,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('job_experiences', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->renameColumn('user_id','applicant_id');
+//            $table->dropForeign(['user_id']);
+//            $table->renameColumn('user_id','applicant_id');
             $table->foreign('applicant_id')->references('id')->on('applicants')->onUpdate('cascade');
         });
     }
