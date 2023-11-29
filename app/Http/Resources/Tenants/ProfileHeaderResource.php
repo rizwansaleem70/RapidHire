@@ -18,24 +18,26 @@ class ProfileHeaderResource extends JsonResource
         return [
             'application_id' => $this->id ?? "",
             'user_id' => $this->user_id ?? "",
-            'job_id' => $this->job_id ?? "",
+            'first_name' => $this->first_name ?? "",
+            'last_name' =>  $this->last_name ?? "",
+            'email' => $this->user->email ?? "",
+            'dob' => $this->user->dob ? Carbon::parse($this->user->dob)->format('Y-m-d') : "",
+            'bio' => $this->user->bio ?? "",
+            'avatar' => $this->user->avatar ? asset($this->user->avatar) : "",
+            'phone' =>  $this->phone ?? "",
+            'address' =>  $this->address ?? "",
+            'gender' =>  $this->gender ?? "",
             'status' => $this->status ?? "",
             'skills' => $this->skills ?? "",
             'source_detail' => $this->source_detail ?? "",
             'applied_date' => $this->applied_date ?? "",
-            'name' => $this->user->first_name." ".$this->user->last_name ?? " ",
-            'email' => $this->user->email,
-            'address' => $this->user->address ?? "",
             'ATS_source' => 0,
-            'BPO_experience' => 0,
-            'hiring_chance' => 0,
-            'avatar' => isset($this->user) ? asset($this->user->avatar) : "",
-            'country' => $this->user->country->name ?? "",
-            'state' => $this->user->state->name ?? "",
-            'city' => $this->user->city->name ?? "",
-            'resume' => isset($this->resume_path) ? asset($this->resume_path):"",
+            'country' => $this->country->name ?? "",
+            'state' => $this->state->name ?? "",
+            'city' => $this->city->name ?? "",
+            'resume' => isset($this->job_resume_path) ? asset($this->job_resume_path):"",
             'cover_letter' => isset($this->cover_letter_path) ? asset($this->cover_letter_path): "",
-            'experience' => isset($this->user->experience) ? new ExperienceResourceCollection($this->user->experience) : ""
+            'experience' => isset($this->jobExperience) ? new ExperienceResourceCollection($this->jobExperience) : ""
         ];
     }
 }
