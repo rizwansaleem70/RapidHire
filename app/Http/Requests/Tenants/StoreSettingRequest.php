@@ -26,8 +26,8 @@ class StoreSettingRequest extends FormRequest
         switch ($type) {
             case ('logo'):
                 $request = [
-                    'logo' => 'required',
-                    'dashboard_logo' => 'required',
+                    'logo' => 'nullable',
+                    'dashboard_logo' => 'nullable',
                 ];
                 break;
             case ('color-scheme'):
