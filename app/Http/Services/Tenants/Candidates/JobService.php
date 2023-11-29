@@ -203,43 +203,55 @@ class JobService implements JobContract
 
     private function calculateAtsScore($data)
     {
-        $score = 0;
-        $job = $this->modelJob->find($data['job_id']);
+        try {
 
-        if ($data['state_id'] == $job->state_id) {
-            $state = State::find($data['state_id']);
-            if (!$state)
-                throw new CustomException("State not found!");
-            $ats_state = $this->atsScoreModel->whereJobId($data['job_id'])->whereAttribute('states')->first();
-            if ($ats_state) {
-                $parameter = $ats_state->JobATSScoreParameter()->where('parameter', $state->name)->first();
-                if ($parameter) {
-                    $calc_score = $this->calculateAtsScoreWithParam($parameter->value, $ats_state->weight);
+            $score = 0;
+            $job = $this->modelJob->find($data['job_id']);
 
-                    $score += $calc_score;
+            if ($data['country_id'] == $job->country_id) {
+                $state = State::find($data['state_id']);
+                if (!$state)
+                    throw new CustomException("State not found!");
+                $ats_state = $this->atsScoreModel->whereJobId($data['job_id'])->whereAttribute('states')->first();
+                if ($ats_state) {
+                    $parameter = $ats_state->JobATSScoreParameter()->where('parameter', $state->name)->first();
+                    if ($parameter) {
+                        $calc_score = $this->calculateAtsScoreWithParam($parameter->value, $ats_state->weight);
+
+                        $score += $calc_score;
+                    }
                 }
             }
-        }
 
-        // DB::enableQueryLog();
-        foreach ($data['requirement'] as $job_requirement) {
 
-            $job_qualification = JobQualification::whereJobIdAndRequirementId($data['job_id'], $job_requirement['id'])->first();
-            if (!$job_qualification) continue;
+            \Log::debug("State value " . $score);
 
-            $ats_state = $this->atsScoreModel->whereJobId($data['job_id'])->whereJobQualificationId($job_qualification->id)->first();
-            if ($ats_state) {
-                $parameter = $ats_state->JobATSScoreParameter()->where('parameter', $job_requirement['answer'])->first();
-                if ($parameter) {
-                    $calc_score = $this->calculateAtsScoreWithParam($parameter->value, $ats_state->weight);
+            // DB::enableQueryLog();
+            foreach ($data['requirement'] as $job_requirement) {
 
-                    \Log::debug("Score = " . $calc_score);
-                    $score += $calc_score;
+                $job_qualification = JobQualification::whereJobIdAndRequirementId($data['job_id'], $job_requirement['id'])->first();
+                if (!$job_qualification) continue;
+
+
+                $ats_state = $this->atsScoreModel->whereJobId($data['job_id'])->whereJobQualificationId($job_qualification->id)->first();
+                if ($ats_state) {
+                    $parameter = $ats_state->JobATSScoreParameter()->where('parameter', $job_requirement['answer'])->first();
+                    if ($parameter) {
+                        $calc_score = $this->calculateAtsScoreWithParam($parameter->value, $ats_state->weight);
+
+                        \Log::debug("Score = " . $calc_score);
+                        $score += $calc_score;
+                    }
                 }
             }
-        }
 
-        return $score;
+            return $score;
+
+            //code...
+        } catch (\Throwable $th) {
+            throw $th;
+            \Log::debug("ATS Algo Failed " . $th->getMessage());
+        }
     }
 
 
@@ -251,72 +263,83 @@ class JobService implements JobContract
 
     private function prepareData($modelApplicant, $data, $new_record = false)
     {
-        //Calculate Ats Score 
-        $ats = $this->calculateAtsScore($data);
-        $skill = json_decode($data['skills']);
-        $valuesArray = array_map(function ($item) {
-            return $item->value;
-        }, $skill);
-        $commaSeparatedValuesSkill = implode(',', $valuesArray);
-        $user_id = Auth::user()->id;
-        $modelApplicant->user_id = $user_id;
-        $modelApplicant->job_id = $data['job_id'];
-        $modelApplicant->status = 'applied';
-        $modelApplicant->ats = $ats;
-        $modelApplicant->skills = $commaSeparatedValuesSkill;
-        $modelApplicant->source_detail = $data['source_detail'];
-        $modelApplicant->first_name = $data['first_name'];
-        $modelApplicant->last_name = $data['last_name'];
-        $modelApplicant->phone = $data['phone'];
-        $modelApplicant->address = $data['address'];
-        $modelApplicant->gender = $data['gender'];
-        $modelApplicant->country_id = $data['country_id'];
-        $modelApplicant->state_id = $data['state_id'];
-        $modelApplicant->city_id = $data['city_id'];
-        $modelApplicant->applied_date = date('Y-m-d');
-        $modelApplicant->job_resume_path = $this->upload($data['resume_path']);
-        $modelApplicant->cover_letter_path = $this->upload($data['cover_letter_path']);
-        $modelApplicant->save();
-        foreach ($data['experience'] as $value) {
-            if ($value['organization_name'] && $value['position_title'] && $value['start_date']) {
-                $modelJobExperience = new $this->modelJobExperience;
-                $modelJobExperience->applicant_id = $modelApplicant->id;
-                $modelJobExperience->job_id = $data['job_id'];
-                $modelJobExperience->organization_name = $value['organization_name'];
-                $modelJobExperience->position_title = $value['position_title'];
-                $modelJobExperience->start_date = $value['start_date'];
-                $modelJobExperience->end_date = $value['end_date'];
-                $modelJobExperience->is_present = $value["is_present"] == 0 ? 0 : 1;
-                $modelJobExperience->save();
-            }
-        }
-        if ($data['question']) {
-            foreach ($data['question'] as $question) {
-                $modelApplicantQuestionAnswer = new $this->modelApplicantQuestionAnswer;
-                $modelApplicantQuestionAnswer->applicant_id = $modelApplicant->id;
-                $modelApplicantQuestionAnswer->job_id = $data['job_id'];
-                $modelApplicantQuestionAnswer->question_bank_id = $question['id'];
-                $modelApplicantQuestionAnswer->answer = $question['answer'];
-                $modelApplicantQuestionAnswer->save();
-            }
-        }
-        if ($data['requirement']) {
-            foreach ($data['requirement'] as $requirement) {
-                if (isset($requirement['answer_type']) && $requirement['answer_type'] == 'checkbox') {
-                    $requirement['answer'] = implode(',', $requirement['answer']);
+        try {
+
+            //Calculate Ats Score 
+            $ats = $this->calculateAtsScore($data);
+
+            $skill = json_decode($data['skills']);
+            $valuesArray = array_map(function ($item) {
+                return $item->value;
+            }, $skill);
+            $commaSeparatedValuesSkill = implode(',', $valuesArray);
+            $user_id = Auth::user()->id;
+            $modelApplicant->user_id = $user_id;
+            $modelApplicant->job_id = $data['job_id'];
+            $modelApplicant->status = 'applied';
+            $modelApplicant->ats = $ats;
+            $modelApplicant->skills = $commaSeparatedValuesSkill;
+            $modelApplicant->source_detail = $data['source_detail'];
+            $modelApplicant->first_name = $data['first_name'];
+            $modelApplicant->last_name = $data['last_name'];
+            $modelApplicant->phone = $data['phone'];
+            $modelApplicant->address = $data['address'];
+            $modelApplicant->gender = $data['gender'];
+            $modelApplicant->country_id = $data['country_id'];
+            $modelApplicant->state_id = $data['state_id'];
+            $modelApplicant->city_id = $data['city_id'];
+            $modelApplicant->applied_date = date('Y-m-d');
+            $modelApplicant->job_resume_path = $this->upload($data['resume_path']);
+            $modelApplicant->cover_letter_path = $this->upload($data['cover_letter_path']);
+            $modelApplicant->save();
+
+            if (isset($data['experience']) && count($data['experience']) > 0) {
+                foreach ($data['experience'] as $value) {
+                    if ($value['organization_name'] && $value['position_title'] && $value['start_date']) {
+                        $modelJobExperience = new $this->modelJobExperience;
+                        $modelJobExperience->applicant_id = $modelApplicant->id;
+                        $modelJobExperience->job_id = $data['job_id'];
+                        $modelJobExperience->organization_name = $value['organization_name'];
+                        $modelJobExperience->position_title = $value['position_title'];
+                        $modelJobExperience->start_date = $value['start_date'];
+                        $modelJobExperience->end_date = $value['end_date'];
+                        $modelJobExperience->is_present = $value["is_present"] == 0 ? 0 : 1;
+                        $modelJobExperience->save();
+                    }
                 }
-                if (isset($requirement['answer_type']) && $requirement['answer_type'] == 'file') {
-                    $requirement['answer'] = $this->upload($requirement['answer']);
-                }
-                $modelApplicantRequirementAnswer = new $this->modelApplicantRequirementAnswer;
-                $modelApplicantRequirementAnswer->applicant_id = $modelApplicant->id;
-                $modelApplicantRequirementAnswer->job_id = $data['job_id'];
-                $modelApplicantRequirementAnswer->requirement_id = $requirement['id'];
-                $modelApplicantRequirementAnswer->job_requirement_id = $requirement['job_requirement_id'];
-                $modelApplicantRequirementAnswer->answer = $requirement['answer'];
-                $modelApplicantRequirementAnswer->save();
             }
+
+            if ($data['question'] && count($data['question']) > 0) {
+                foreach ($data['question'] as $question) {
+                    $modelApplicantQuestionAnswer = new $this->modelApplicantQuestionAnswer;
+                    $modelApplicantQuestionAnswer->applicant_id = $modelApplicant->id;
+                    $modelApplicantQuestionAnswer->job_id = $data['job_id'];
+                    $modelApplicantQuestionAnswer->question_bank_id = $question['id'];
+                    $modelApplicantQuestionAnswer->answer = $question['answer'];
+                    $modelApplicantQuestionAnswer->save();
+                }
+            }
+
+            if ($data['requirement'] && count(['requirement']) > 0) {
+                foreach ($data['requirement'] as $requirement) {
+                    if (isset($requirement['answer_type']) && $requirement['answer_type'] == 'checkbox') {
+                        $requirement['answer'] = implode(',', $requirement['answer']);
+                    }
+                    if (isset($requirement['answer_type']) && $requirement['answer_type'] == 'file') {
+                        $requirement['answer'] = $this->upload($requirement['answer']);
+                    }
+                    $modelApplicantRequirementAnswer = new $this->modelApplicantRequirementAnswer;
+                    $modelApplicantRequirementAnswer->applicant_id = $modelApplicant->id;
+                    $modelApplicantRequirementAnswer->job_id = $data['job_id'];
+                    $modelApplicantRequirementAnswer->requirement_id = $requirement['id'];
+                    $modelApplicantRequirementAnswer->job_requirement_id = $requirement['job_requirement_id'];
+                    $modelApplicantRequirementAnswer->answer = $requirement['answer'];
+                    $modelApplicantRequirementAnswer->save();
+                }
+            }
+            return $modelApplicant;
+        } catch (\Throwable $th) {
+            throw $th;
         }
-        return $modelApplicant;
     }
 }
