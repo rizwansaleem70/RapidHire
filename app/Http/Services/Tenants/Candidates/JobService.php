@@ -2,27 +2,29 @@
 
 namespace App\Http\Services\Tenants\Candidates;
 
-use App\Contracts\Tenants\Candidates\JobContract;
-use App\Exceptions\CustomException;
-use App\Models\Tenants\Applicant;
-use App\Models\Tenants\ApplicantQuestionAnswer;
-use App\Models\Tenants\ApplicantRequirementAnswer;
-use App\Models\Tenants\Candidate\FavoriteJob;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Tenants\Job;
+use App\Traits\ImageUpload;
 use App\Models\Tenants\City;
+use App\Models\Tenants\State;
 use App\Models\Tenants\Country;
+use App\Models\Tenants\Setting;
+use App\Models\Tenants\Location;
+use App\Models\Tenants\Applicant;
 use App\Models\Tenants\Department;
 use App\Models\Tenants\Experience;
-use App\Models\Tenants\Job;
-use App\Models\Tenants\JobExperience;
-use App\Models\Tenants\Location;
-use App\Models\Tenants\Setting;
-use App\Models\Tenants\SocialMedia;
-use App\Models\Tenants\State;
-use App\Models\User;
-use App\Traits\ImageUpload;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Exceptions\CustomException;
+use App\Models\Tenants\JobATSScore;
+use App\Models\Tenants\SocialMedia;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Tenants\JobExperience;
+use App\Models\Tenants\JobQualification;
+use App\Models\Tenants\Candidate\FavoriteJob;
+use App\Models\Tenants\ApplicantQuestionAnswer;
+use App\Contracts\Tenants\Candidates\JobContract;
+use App\Models\Tenants\ApplicantRequirementAnswer;
 
 /**
  * @var JobService
@@ -30,6 +32,7 @@ use Illuminate\Support\Facades\DB;
 class JobService implements JobContract
 {
     use ImageUpload;
+    protected JobATSScore $atsScoreModel;
     protected Job $modelJob;
     protected Country $modelCountry;
     protected Setting $modelSetting;
@@ -48,6 +51,7 @@ class JobService implements JobContract
     public function __construct()
     {
         $this->modelUser = new User();
+        $this->atsScoreModel = new JobATSScore();
         $this->modelFavoriteJob = new FavoriteJob();
         $this->modelJob = new Job();
         $this->modelCountry = new Country();
@@ -65,7 +69,7 @@ class JobService implements JobContract
 
     public function listing($filter)
     {
-        $query = $this->modelJob->query()->where('status', 'published')->where('expiry_date', '>=',date('Y-m-d'))->latest();
+        $query = $this->modelJob->query()->where('status', 'published')->where('expiry_date', '>=', date('Y-m-d'))->latest();
         $query->when($filter->name, function ($q, $name) {
             return $q->like('name', $name);
         })
@@ -135,7 +139,7 @@ class JobService implements JobContract
         if (!$job) {
             throw new CustomException("Job Record Not Found!");
         }
-        $job->update(['views'=>$job['views']+1]);
+        $job->update(['views' => $job['views'] + 1]);
         $related_jobs = $this->modelJob
             ->where('department_id', $job->department_id)
             ->where('id', '<>', $job->id)
@@ -173,14 +177,14 @@ class JobService implements JobContract
         $user = Auth::user();
         $countries = $this->modelCountry->pluck('name', 'id');
         $states = $this->modelState->when($user->country_id, function ($q, $country_id) {
-        return $q->where('country_id', $country_id);
-            })->get(['id','name']);
+            return $q->where('country_id', $country_id);
+        })->get(['id', 'name']);
         $cities = $this->modelCity->when($user->state_id, function ($q, $state_id) {
             return $q->where('state_id', $state_id);
-        })->get(['id','name']);
+        })->get(['id', 'name']);
         $user = $this->modelUser->with(['country:id,name', 'state:id,name', 'city:id,name', 'experience'])->find(Auth::user()->id);
         $logo = settings()->group('logo')->get('logo');
-        $job = $this->modelJob->with(['country', 'state', 'city', 'jobQuestion.questionBank','jobQualification.requirement','jobRequirement'])->where('slug', $slug)->first();
+        $job = $this->modelJob->with(['country', 'state', 'city', 'jobQuestion.questionBank', 'jobQualification.requirement', 'jobRequirement'])->where('slug', $slug)->first();
         return [
             'countries' => $countries,
             'states' => $states,
@@ -196,8 +200,59 @@ class JobService implements JobContract
         $modelApplicant = new $this->modelApplicant;
         return $this->prepareData($modelApplicant, $data, true);
     }
+
+    private function calculateAtsScore($data)
+    {
+        $score = 0;
+        $job = $this->modelJob->find($data['job_id']);
+
+        if ($data['state_id'] == $job->state_id) {
+            $state = State::find($data['state_id']);
+            if (!$state)
+                throw new CustomException("State not found!");
+            $ats_state = $this->atsScoreModel->whereJobId($data['job_id'])->whereAttribute('states')->first();
+            if ($ats_state) {
+                $parameter = $ats_state->JobATSScoreParameter()->where('parameter', $state->name)->first();
+                if ($parameter) {
+                    $calc_score = $this->calculateAtsScoreWithParam($parameter->value, $ats_state->weight);
+
+                    $score += $calc_score;
+                }
+            }
+        }
+
+        // DB::enableQueryLog();
+        foreach ($data['requirement'] as $job_requirement) {
+
+            $job_qualification = JobQualification::whereJobIdAndRequirementId($data['job_id'], $job_requirement['id'])->first();
+            if (!$job_qualification) continue;
+
+            $ats_state = $this->atsScoreModel->whereJobId($data['job_id'])->whereJobQualificationId($job_qualification->id)->first();
+            if ($ats_state) {
+                $parameter = $ats_state->JobATSScoreParameter()->where('parameter', $job_requirement['answer'])->first();
+                if ($parameter) {
+                    $calc_score = $this->calculateAtsScoreWithParam($parameter->value, $ats_state->weight);
+
+                    \Log::debug("Score = " . $calc_score);
+                    $score += $calc_score;
+                }
+            }
+        }
+
+        return $score;
+    }
+
+
+
+    private function calculateAtsScoreWithParam($value, $weighage)
+    {
+        return (($value / 4) * ($weighage / 100)) * 100;
+    }
+
     private function prepareData($modelApplicant, $data, $new_record = false)
     {
+        //Calculate Ats Score 
+        $ats = $this->calculateAtsScore($data);
         $skill = json_decode($data['skills']);
         $valuesArray = array_map(function ($item) {
             return $item->value;
@@ -207,6 +262,7 @@ class JobService implements JobContract
         $modelApplicant->user_id = $user_id;
         $modelApplicant->job_id = $data['job_id'];
         $modelApplicant->status = 'applied';
+        $modelApplicant->ats = $ats;
         $modelApplicant->skills = $commaSeparatedValuesSkill;
         $modelApplicant->source_detail = $data['source_detail'];
         $modelApplicant->first_name = $data['first_name'];
@@ -222,7 +278,7 @@ class JobService implements JobContract
         $modelApplicant->cover_letter_path = $this->upload($data['cover_letter_path']);
         $modelApplicant->save();
         foreach ($data['experience'] as $value) {
-            if ($value['organization_name'] && $value['position_title'] && $value['start_date']){
+            if ($value['organization_name'] && $value['position_title'] && $value['start_date']) {
                 $modelJobExperience = new $this->modelJobExperience;
                 $modelJobExperience->applicant_id = $modelApplicant->id;
                 $modelJobExperience->job_id = $data['job_id'];
@@ -246,10 +302,10 @@ class JobService implements JobContract
         }
         if ($data['requirement']) {
             foreach ($data['requirement'] as $requirement) {
-                if (isset($requirement['answer_type']) && $requirement['answer_type'] == 'checkbox'){
+                if (isset($requirement['answer_type']) && $requirement['answer_type'] == 'checkbox') {
                     $requirement['answer'] = implode(',', $requirement['answer']);
                 }
-                if (isset($requirement['answer_type']) && $requirement['answer_type'] == 'file'){
+                if (isset($requirement['answer_type']) && $requirement['answer_type'] == 'file') {
                     $requirement['answer'] = $this->upload($requirement['answer']);
                 }
                 $modelApplicantRequirementAnswer = new $this->modelApplicantRequirementAnswer;

@@ -303,7 +303,6 @@ class JobsController extends Controller
         try {
             DB::beginTransaction();
             $this->job->ATS_Score($request, $job_id);
-            //            $data = new ATS_ScoreResource($data);
             DB::commit();
             return $this->okResponse('Jobs ATS Score Save Successfully');
         } catch (CustomException $th) {
