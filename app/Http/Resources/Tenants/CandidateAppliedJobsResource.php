@@ -22,7 +22,8 @@ class CandidateAppliedJobsResource extends JsonResource
             'name' => $this->job->name,
             'applied_date' => Carbon::parse($this->applied_date)->format('d-F-Y'),
             'skill' => $this->skills,
-            'status' => $this->status
+            'status' => $this->status,
+            'url' => route('candidate.job.apply',$this->job->slug)
         ];
     }
 }
