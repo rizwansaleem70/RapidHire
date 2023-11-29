@@ -20,7 +20,7 @@
                                         <label class="title">Country</label>
                                         <div class="group-input has-icon">
 {{--                                            <i class="icon-map-pin"></i>--}}
-                                            <select id="country-id" class="form-control" required name="country_id">
+                                            <select id="country-id" class="form-control" name="country_id">
                                                 <option value="">Select Country</option>
                                                 @foreach($data['country'] as $key => $value)
                                                     <option value="{{$key}}">{{$value}}</option>
@@ -31,7 +31,7 @@
                                     <div class="group-form">
                                         <label class="title">State</label>
                                         <div class="group-input has-icon">
-                                            <select id="state-id" class="form-control" required name="state_id">
+                                            <select id="state-id" class="form-control" name="state_id">
                                             </select>
                                         </div>
                                     </div>
@@ -39,7 +39,7 @@
 
                                         <label class="title">City</label>
                                         <div class="group-input has-icon">
-                                            <select id="city-id" class="form-control" required name="city_id">
+                                            <select id="city-id" class="form-control" name="city_id">
                                             </select>
                                         </div>
                                     </div>
