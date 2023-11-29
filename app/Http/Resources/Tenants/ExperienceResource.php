@@ -17,11 +17,11 @@ class ExperienceResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
+            'applicant_id' => $this->applicant_id,
             'position_title' => $this->position_title,
+            'organization_name' => $this->organization_name,
             'start_date' => Carbon::parse($this->start_date)->format('Y-m-d'),
             'end_date' => Carbon::parse($this->end_date)->format('Y-m-d'),
-            'organization_name' => $this->organization_name,
             'is_present' => $this->is_present,
         ];
     }
