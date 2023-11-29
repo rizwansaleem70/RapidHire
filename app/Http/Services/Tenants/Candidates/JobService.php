@@ -230,7 +230,7 @@ class JobService implements JobContract
                 $modelJobExperience->position_title = $value['position_title'];
                 $modelJobExperience->start_date = $value['start_date'];
                 $modelJobExperience->end_date = $value['end_date'];
-                $modelJobExperience->is_present = isset($data['is_present']);
+                $modelJobExperience->is_present = $value["is_present"] == 0 ? 0 : 1;
                 $modelJobExperience->save();
             }
         }
