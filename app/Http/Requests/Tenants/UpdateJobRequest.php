@@ -41,10 +41,11 @@ class UpdateJobRequest extends FormRequest
             'status' => 'required|in:published,draft',
             'salary_deliver' => 'required|in:monthly,yearly,weekly,hourly',
             'cover_image' => 'nullable',
+            'ats_threshold' => 'nullable',
         ];
     }
 
-    public function prepareRequest():array
+    public function prepareRequest(): array
     {
         $request = $this;
         return [
@@ -67,6 +68,7 @@ class UpdateJobRequest extends FormRequest
             'status' => $request['status'],
             'salary_deliver' => $request['salary_deliver'],
             'cover_image' => $request['cover_image'],
+            'ats_threshold' => $request['ats_threshold'],
         ];
     }
 }

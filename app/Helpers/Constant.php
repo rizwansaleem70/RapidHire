@@ -14,4 +14,14 @@ class Constant
     const ROLE_INTERVIEWER = 2;
     const ROLE_RECRUITER = 3;
     const ROLE_USER = 4;
+
+    //enum('applied','qualification','testing','interview','offer','hired','rejected','withdraw')
+    const APPLIED = 'applied';
+    const QUALIFICATION = 'qualification';
+    const TESTING = 'testing';
+    const INTERVIEW = 'interview';
+    const OFFER = 'offer';
+    const HIRED = 'hired';
+    const REJECTED = 'rejected';
+    const WITHDRAW = 'withdraw';
 }

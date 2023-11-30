@@ -4,6 +4,7 @@ namespace App\Http\Services\Tenants\Candidates;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Helpers\Constant;
 use App\Models\Tenants\Job;
 use App\Traits\ImageUpload;
 use App\Models\Tenants\City;
@@ -206,6 +207,7 @@ class JobService implements JobContract
         try {
 
             $score = 0;
+            $meet_criteria = true;
             $job = $this->modelJob->find($data['job_id']);
 
             if ($data['country_id'] == $job->country_id) {
@@ -232,20 +234,29 @@ class JobService implements JobContract
                 $job_qualification = JobQualification::whereJobIdAndRequirementId($data['job_id'], $job_requirement['id'])->first();
                 if (!$job_qualification) continue;
 
+                //Check The qualification criteria
+                if (!strtolower($job_qualification->value) . $job_qualification->operator . strtolower($job_requirement['answer']))
+                    $meet_criteria = false;
 
-                $ats_state = $this->atsScoreModel->whereJobId($data['job_id'])->whereJobQualificationId($job_qualification->id)->first();
-                if ($ats_state) {
-                    $parameter = $ats_state->JobATSScoreParameter()->where('parameter', $job_requirement['answer'])->first();
-                    if ($parameter) {
-                        $calc_score = $this->calculateAtsScoreWithParam($parameter->value, $ats_state->weight);
 
-                        \Log::debug("Score = " . $calc_score);
-                        $score += $calc_score;
+                if ($meet_criteria) {
+                    $ats_state = $this->atsScoreModel->whereJobId($data['job_id'])->whereJobQualificationId($job_qualification->id)->first();
+                    if ($ats_state) {
+                        $parameter = $ats_state->JobATSScoreParameter()->where('parameter', $job_requirement['answer'])->first();
+                        if ($parameter) {
+                            $calc_score = $this->calculateAtsScoreWithParam($parameter->value, $ats_state->weight);
+
+                            \Log::debug("Score = " . $calc_score);
+                            $score += $calc_score;
+                        }
                     }
                 }
             }
 
-            return $score;
+            return [
+                'ats' => $meet_criteria ? $score : 0,
+                'meet_criteria' => $meet_criteria
+            ];
 
             //code...
         } catch (\Throwable $th) {
@@ -265,19 +276,31 @@ class JobService implements JobContract
     {
         try {
 
-            //Calculate Ats Score 
-            $ats = $this->calculateAtsScore($data);
+            //Does candidate meet the qualification criteria?
+            $qualification = $this->calculateAtsScore($data);
+
+            $job = $this->modelJob->find($data['job_id']);
+
+            $status = Constant::APPLIED;
+            if ($qualification['meet_criteria'] == true && $qualification['ats'] >= $job->ats_threshold)
+                $status = Constant::QUALIFICATION;
+            elseif ($qualification['meet_criteria'] == true && $qualification['ats'] == 0)
+                $status = Constant::APPLIED;
+            elseif ($qualification['meet_criteria'] == false)
+                $status = Constant::REJECTED;
+
 
             $skill = json_decode($data['skills']);
             $valuesArray = array_map(function ($item) {
                 return $item->value;
             }, $skill);
+
             $commaSeparatedValuesSkill = implode(',', $valuesArray);
             $user_id = Auth::user()->id;
             $modelApplicant->user_id = $user_id;
-            $modelApplicant->job_id = $data['job_id'];
-            $modelApplicant->status = 'applied';
-            $modelApplicant->ats = $ats;
+            $modelApplicant->job_id = $job->id;
+            $modelApplicant->status = $status;
+            $modelApplicant->ats = $qualification['ats'];
             $modelApplicant->skills = $commaSeparatedValuesSkill;
             $modelApplicant->source_detail = $data['source_detail'];
             $modelApplicant->first_name = $data['first_name'];
