@@ -79,10 +79,10 @@ class JobService implements JobContract
             ->when($filter->country_id, function ($q, $country_id) {
                 return $q->where('country_id', $country_id);
             })
-            ->when($filter->state_id && $filter->state_id != 'Select', function ($q, $state_id) {
+            ->when($filter->state_id , function ($q, $state_id) {
                 return $q->where('state_id', $state_id);
             })
-            ->when($filter->city_id && $filter->city_id != 'Select', function ($q, $city_id) {
+            ->when($filter->city_id , function ($q, $city_id) {
                 return $q->where('city_id', $city_id);
             })
             ->when($filter->job_type, function ($q, $job_type) {
