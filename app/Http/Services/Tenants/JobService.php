@@ -2,32 +2,33 @@
 
 namespace App\Http\Services\Tenants;
 
-use App\Contracts\Tenants\JobContract;
-use App\Exceptions\CustomException;
+use Carbon\Carbon;
+use App\Models\User;
 use App\Helpers\Constant;
+use App\Models\Tenants\Job;
+use App\Traits\ImageUpload;
+use Illuminate\Support\Str;
+use App\Models\Tenants\City;
+use App\Models\Tenants\State;
+use App\Models\Tenants\Country;
 use App\Models\JobHiringManager;
 use App\Models\Tenants\Applicant;
+use App\Models\Tenants\Education;
+use App\Models\Tenants\Department;
+use App\Models\Tenants\Experience;
+use Illuminate\Support\Facades\DB;
+use App\Exceptions\CustomException;
+use App\Models\Tenants\JobATSScore;
+use App\Models\Tenants\JobQuestion;
+use App\Models\Tenants\Requirement;
+use App\Models\Tenants\QuestionBank;
+use Illuminate\Support\Facades\Auth;
+use App\Contracts\Tenants\JobContract;
+use App\Models\Tenants\JobRequirement;
+use App\Models\Tenants\JobQualification;
+use App\Models\Tenants\JobATSScoreParameter;
 use App\Models\Tenants\ApplicantQuestionAnswer;
 use App\Models\Tenants\ApplicantRequirementAnswer;
-use App\Models\Tenants\City;
-use App\Models\Tenants\Country;
-use App\Models\Tenants\Department;
-use App\Models\Tenants\Education;
-use App\Models\Tenants\Experience;
-use App\Models\Tenants\Job;
-use App\Models\Tenants\JobATSScore;
-use App\Models\Tenants\JobATSScoreParameter;
-use App\Models\Tenants\JobQualification;
-use App\Models\Tenants\JobQuestion;
-use App\Models\Tenants\JobRequirement;
-use App\Models\Tenants\QuestionBank;
-use App\Models\Tenants\Requirement;
-use App\Models\Tenants\State;
-use App\Models\User;
-use App\Traits\ImageUpload;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 /**
  * @var JobService
@@ -101,16 +102,16 @@ class JobService implements JobContract
         if (empty($model)) {
             throw new CustomException('Job Record Not Found!');
         }
-        $job = $this->model->where('id',$id)->with(['jobHiringManager:id,first_name,last_name','jobQuestionBank:id,input_type,question','jobRequirement.requirement:id,name,input_type,option','department:id,name','country:id,name','state:id,name','city:id,name'])->first();
+        $job = $this->model->where('id', $id)->with(['jobHiringManager:id,first_name,last_name', 'jobQuestionBank:id,input_type,question', 'jobRequirement.requirement:id,name,input_type,option', 'department:id,name', 'country:id,name', 'state:id,name', 'city:id,name'])->first();
         $hiringManagers =  $this->modelUser->whereHas('roles', function ($query) {
             $query->whereIn('id', [Constant::ROLE_INTERVIEWER, Constant::ROLE_RECRUITER]);
-        })->latest()->get(['id','first_name','last_name']);
-        $departments = $this->departmentModel->get(['id','name']);
-        $requirements = $this->modelRequirement->get(['id','name','input_type','option']);
-        $questionBanks = $this->modelQuestionBank->where('department_id',$job->department_id)->get(['id','input_type','question']);
-        $countries = $this->modelCountry->get(['id','name']);
-        $states = $this->modelState->where('country_id',$job->country_id)->get(['id','name']);
-        $cities = $this->modelCity->where('state_id',$job->state_id)->get(['id','name']);
+        })->latest()->get(['id', 'first_name', 'last_name']);
+        $departments = $this->departmentModel->get(['id', 'name']);
+        $requirements = $this->modelRequirement->get(['id', 'name', 'input_type', 'option']);
+        $questionBanks = $this->modelQuestionBank->where('department_id', $job->department_id)->get(['id', 'input_type', 'question']);
+        $countries = $this->modelCountry->get(['id', 'name']);
+        $states = $this->modelState->where('country_id', $job->country_id)->get(['id', 'name']);
+        $cities = $this->modelCity->where('state_id', $job->state_id)->get(['id', 'name']);
         return [
             'job' => $job,
             'hiringManagers' => $hiringManagers,
@@ -124,9 +125,8 @@ class JobService implements JobContract
     }
     public function ATS_Score($data, $job_id)
     {
-        $modelJobATSScore = new $this->modelJobATSScore;
 
-        return $this->prepareATSScoreData($modelJobATSScore, $job_id, $data, true);
+        return $this->prepareATSScoreData($job_id, $data, true);
     }
 
     public function job_qualification($data, $job_id)
@@ -248,6 +248,27 @@ class JobService implements JobContract
         return $job->requirement;
     }
 
+    public function atsFields($job_id)
+    {
+        $job = $this->model->with(['jobQualification'])->find($job_id);
+
+        if (empty($job)) {
+            throw new CustomException('Job Not Found!');
+        }
+
+        $fields = [];
+        foreach ($job->jobQualification as $job_qualification) {
+            $fields[] = [
+                'id' => $job_qualification->id,
+                'name' => $job_qualification->name,
+                'input_type' => $job_qualification->input_type,
+                'option' => $job_qualification->option
+            ];
+        }
+
+        return $fields;
+    }
+
     public function getApplicantJobs($data)
     {
         $query = $this->model->query()->latest();
@@ -308,28 +329,33 @@ class JobService implements JobContract
                 'country:id,name,currency',
                 'state:id,name',
                 'city:id,name',
-                ])->first(['id','user_id','country_id','state_id','city_id','first_name','last_name','phone','address','gender','status','skills','applied_date','source_detail','job_resume_path','cover_letter_path']);
+            ])->first(['id', 'user_id', 'country_id', 'state_id', 'city_id', 'ats', 'first_name', 'last_name', 'phone', 'address', 'gender', 'status', 'skills', 'applied_date', 'source_detail', 'job_resume_path', 'cover_letter_path']);
     }
 
 
-    private function prepareATSScoreData($modelJobATSScore, $job_id, $data, bool $true)
+    private function prepareATSScoreData($job_id, $data, bool $true)
     {
-        $modelJobATSScore->job_id = $job_id;
+        $scores = $this->modelJobATSScore->where('job_id', $job_id)->pluck('id')->toArray();
+        JobATSScoreParameter::whereIn('job_ATS_score_id', $scores)->delete();
+        $this->modelJobATSScore->where('job_id', $job_id)->delete();
 
-        if (isset($data['attribute']) && $data['attribute']) {
-            $modelJobATSScore->attribute = $data['attribute'];
-        }
-        if (isset($data['weight']) && $data['weight']) {
-            $modelJobATSScore->weight = $data['weight'];
-        }
-        $modelJobATSScore->job_requirement_id = $data['job_requirement_id'];
-        $modelJobATSScore->save();
-        foreach ($data['data'] as $value) {
-            $modelJobATSScoreParameter = new $this->modelJobATSScoreParameter;
-            $modelJobATSScoreParameter->parameter = $value['parameter'];
-            $modelJobATSScoreParameter->value = $value['value'];
-            $modelJobATSScoreParameter->job_ATS_score_id = $modelJobATSScore->id;
-            $modelJobATSScoreParameter->save();
+
+        foreach ($data['ats'] as $ats) {
+            $modelJobATSScore = new $this->modelJobATSScore;
+            $modelJobATSScore->job_qualification_id = is_string($ats['attribute']) ? null : $ats['attribute'];
+            $modelJobATSScore->attribute = $ats['attribute'];
+            $modelJobATSScore->weight = $ats['weight'];
+            $modelJobATSScore->job_id = $job_id;
+            $modelJobATSScore->save();
+
+            foreach ($ats['data'] as $value) {
+                if ($value['parameter'] == null) continue;
+                $modelJobATSScoreParameter = new $this->modelJobATSScoreParameter;
+                $modelJobATSScoreParameter->parameter = $value['parameter'];
+                $modelJobATSScoreParameter->value = $value['value'];
+                $modelJobATSScoreParameter->job_ATS_score_id = $modelJobATSScore->id;
+                $modelJobATSScoreParameter->save();
+            }
         }
 
         return true;

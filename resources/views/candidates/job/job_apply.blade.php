@@ -173,33 +173,33 @@
                                         @endif
                                     @endforeach
                                 @endif
-                                @if (count($data['job']->jobQualification)>0)
+                                @if (count($data['job']->jobRequirement)>0)
                                     <h6><strong>Requirements * </strong></h6>
-                                    @foreach ($data['job']->jobQualification as $key => $qualification)
-                                        @if ($qualification->requirement)
+                                    @foreach ($data['job']->jobRequirement as $key => $job_requirement)
+                                        @if ($job_requirement->requirement)
                                             <div class="row border border-1 m-1">
                                                 <div class="form-group col-md-4 mt-3 ">
                                                     <label for="gender"
-                                                        class="file-label">{{ ucfirst($qualification->requirement->name) }}</label>
+                                                        class="file-label">{{ ucfirst($job_requirement->requirement->name) }}</label>
                                                 </div>
                                                 <div class="form-group col-md-8 mt-3">
                                                     <input type="hidden" class="form-control"
                                                         name="requirement[{{ $key }}][id]"
-                                                        value="{{ $qualification->requirement_id }}">
+                                                        value="{{ $job_requirement->requirement_id }}">
                                                     <input type="hidden" class="form-control"
                                                         name="requirement[{{ $key }}][job_requirement_id]"
-                                                        value="{{ $qualification->id }}">
-                                                    @switch($qualification->requirement->input_type)
+                                                        value="{{ $job_requirement->id }}">
+                                                    @switch($job_requirement->requirement->input_type)
                                                         @case('select')
                                                             <select id="gender" class="form-control" required name="requirement[{{ $key }}][answer]">
                                                                 <option class="form-control" value=""> Select </option>
-                                                                @foreach(explode(",",$qualification->requirement->option) as $value)
+                                                                @foreach(explode(",",$job_requirement->requirement->option) as $value)
                                                                     <option class="form-control" value="{{$value}}"> {{$value}} </option>
                                                                 @endforeach
                                                             </select>
                                                             @break
                                                         @case('checkbox')
-                                                            @foreach(explode(",",$qualification->requirement->option) as $value)
+                                                            @foreach(explode(",",$job_requirement->requirement->option) as $value)
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" name="requirement[{{ $key }}][answer][]" value="{{$value}}" id="flexCheckDefault">
                                                                     <label class="form-check-label" for="flexCheckDefault">
@@ -210,7 +210,7 @@
                                                             @endforeach
                                                             @break
                                                         @case('radiobox')
-                                                            @foreach(explode(",",$qualification->requirement->option) as $value)
+                                                            @foreach(explode(",",$job_requirement->requirement->option) as $value)
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" value="{{$value}}" name="requirement[{{ $key }}][answer]" id="flexRadioDefault1">
                                                                     <label class="form-check-label" for="flexRadioDefault1">

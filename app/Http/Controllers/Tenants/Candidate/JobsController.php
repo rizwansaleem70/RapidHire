@@ -58,7 +58,7 @@ class JobsController extends Controller
             DB::commit();
             return redirect()->route('candidate.home')->with('success', 'You have Successfully Apply on this Job');
         } catch (CustomException | \Exception $th) {
-            return redirect()->back()->with('message', $th->getMessage());
+            return redirect()->back()->withInput()->with('message', $th->getMessage());
         }
     }
 

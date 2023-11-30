@@ -30,10 +30,10 @@ class Job extends Model
         $id = self::max('id') + 1;
         return $count ? "{$slug}-{$id}" : $slug;
     }
-//    public function getImageAttribute($value)
-//    {
-//        return url(Storage::url($value));
-//    }
+    //    public function getImageAttribute($value)
+    //    {
+    //        return url(Storage::url($value));
+    //    }
 
     public function jobQuestionBank(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
@@ -84,14 +84,14 @@ class Job extends Model
 
     public function jobQualification(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(JobRequirement::class,'job_id');
+        return $this->hasMany(JobQualification::class, 'job_id');
     }
     public function jobQuestion(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(JobQuestion::class,'job_id');
+        return $this->hasMany(JobQuestion::class, 'job_id');
     }
     public function jobRequirement(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(JobRequirement::class,'job_id');
+        return $this->hasMany(JobRequirement::class, 'job_id');
     }
 }

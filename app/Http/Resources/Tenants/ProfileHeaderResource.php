@@ -31,12 +31,12 @@ class ProfileHeaderResource extends JsonResource
             'skills' => $this->skills ?? "",
             'source_detail' => $this->source_detail ?? "",
             'applied_date' => $this->applied_date ?? "",
-            'ATS_source' => 0,
+            'ATS_source' => $this->ats ?? 0,
             'country' => $this->country->name ?? "",
             'state' => $this->state->name ?? "",
             'city' => $this->city->name ?? "",
-            'resume' => isset($this->job_resume_path) ? asset($this->job_resume_path):"",
-            'cover_letter' => isset($this->cover_letter_path) ? asset($this->cover_letter_path): "",
+            'resume' => isset($this->job_resume_path) ? asset($this->job_resume_path) : "",
+            'cover_letter' => isset($this->cover_letter_path) ? asset($this->cover_letter_path) : "",
             'experience' => isset($this->jobExperience) ? new ExperienceResourceCollection($this->jobExperience) : ""
         ];
     }
