@@ -105,7 +105,7 @@
         <!--End Job-category -->
 
         <!-- WD-JOB -->
-        <section class="job-category-section-three" style="background-color: #fff9f9;">
+        <section class="job-category-section-three">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
