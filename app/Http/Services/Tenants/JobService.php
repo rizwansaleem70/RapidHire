@@ -329,7 +329,7 @@ class JobService implements JobContract
                 'country:id,name,currency',
                 'state:id,name',
                 'city:id,name',
-            ])->first(['id', 'user_id', 'country_id', 'state_id', 'city_id', 'ats', 'first_name', 'last_name', 'phone', 'address', 'gender', 'status', 'skills', 'applied_date', 'source_detail', 'job_resume_path', 'cover_letter_path']);
+            ])->first(['id', 'user_id','job_id', 'country_id', 'state_id', 'city_id', 'ats', 'first_name', 'last_name', 'phone', 'address', 'gender', 'status', 'skills', 'applied_date', 'source_detail', 'job_resume_path', 'cover_letter_path']);
     }
 
 
