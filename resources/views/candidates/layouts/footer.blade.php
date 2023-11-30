@@ -56,6 +56,18 @@
                             </ul>
                         </div>
                     </div>
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <div class="footer-cl-3">
+                            <h3 class="ft-title text-white fs-4">
+                                Policy
+                            </h3>
+                            <ul class="">
+                                <li><a href="#" style="color: #fff;">Terms Of Services</a> </li>
+                                <li class="pt-1"><a href="#" style="color: #fff;">Privacy Policy</a> </li>
+                                <li class="pt-1"><a href="#" style="color: #fff;">Cookie Policy</a> </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -69,10 +81,8 @@
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6">
-                        <ul class="menu-bottom d-flex aln-center" >
-                            <li><a href="#" style="color: #fff;">Terms Of Services</a> </li>
-                            <li><a href="#" style="color: #fff;">Privacy Policy</a> </li>
-                            <li><a href="#" style="color: #fff;">Cookie Policy</a> </li>
+                        <ul  >
+
                         </ul>
                     </div>
                 </div>
