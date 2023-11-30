@@ -13,7 +13,7 @@
                                         <label class="title">Search Job</label>
                                         <div class="group-input search-ip">
                                             <button><i class="icon-search"></i></button>
-                                            <input type="text" class="form-control" name="name" placeholder="Job title, key words or company">
+                                            <input type="text" class="form-control" name="name" value="{{ request()->input('name') }}" placeholder="Job title, key words or company">
                                         </div>
                                     </div>
                                     <div class="group-form">
