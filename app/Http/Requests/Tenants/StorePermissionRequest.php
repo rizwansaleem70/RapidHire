@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Requests;
-
-use Illuminate\Foundation\Http\FormRequest;
+namespace App\Http\Requests\Tenants;
+use App\Abstracts\FormRequest;
 
 class StorePermissionRequest extends FormRequest
 {
@@ -11,7 +10,7 @@ class StorePermissionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +21,14 @@ class StorePermissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required',
+        ];
+    }
+    public function prepareRequest(): array
+    {
+        $request = $this;
+        return [
+            'name' => $request['name'],
         ];
     }
 }
