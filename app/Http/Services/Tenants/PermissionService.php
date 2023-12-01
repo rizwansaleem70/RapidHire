@@ -3,67 +3,70 @@
 namespace App\Http\Services\Tenants;
 
 use App\Contracts\Tenants\PermissionContract;
+use App\Exceptions\CustomException;
+use App\Models\Tenants\Permission;
+use App\Models\Tenants\Role;
+use App\Models\Tenants\RoleHasPermission;
 
 /**
 * @var PermissionService
 */
 class PermissionService implements PermissionContract
 {
+    protected Permission $permissionModel;
     protected Role $roleModel;
 
     public function __construct(){
+        $this->permissionModel = new Permission();
         $this->roleModel = new Role();
+
     }
 
     public function index()
     {
-        return $this->roleModel->latest()->get();
+        return $this->permissionModel->latest()->get();
     }
 
     public function store($request)
     {
-        return $this->prepareData($this->roleModel,$request, true);
+        $model = $this->roleModel->findorfail($request['role_id']);
+        return $this->prepareData($model,$request, true);
     }
 
     public function show($id)
     {
-        $model = $this->roleModel->find($id);
+        $model = $this->roleModel->findorfail($id);
         if (empty($model)) {
-            throw new CustomException("Role Not Found!");
+            throw new CustomException("Role and Permission Not Found!");
         }
-        return $model;
+        return [
+            'role' => $model->name,
+            'permission' => $model->permissions()->get(),
+        ];
+
     }
 
     public function update($request, $id)
     {
-        $model = $this->roleModel->find($id);
+        $model = $this->roleModel->findorfail($id);
         if (empty($model)) {
-            throw new CustomException("Role Not Found!");
+            throw new CustomException("Role and Permission Not Found!");
         }
-        if (in_array($model->id, [Constant::SUPER_ADMIN_ID, Constant::ADMIN_ID, Constant::TENANT_ID, Constant::SUB_ADMIN_ID])) {
-            throw new CustomException("This role is not Editable.");
-        }
-        return $this->prepareData($model, $request, false);
+        return $this->prepareData($model, $request, true);
     }
 
     public function destroy($id)
     {
-        $model = $this->roleModel->find($id);
+        $model = $this->roleModel->findorfail($id);
         if (empty($model)) {
-            throw new CustomException("Role Not Found!");
+            throw new CustomException("Role and Permission Not Found!");
         }
-        if (in_array($model->id, [Constant::SUPER_ADMIN_ID, Constant::ADMIN_ID, Constant::TENANT_ID, Constant::SUB_ADMIN_ID])) {
-            throw new CustomException("This Role is not Delete Able.");
-        }
-        $model->delete();
+        $model->syncPermissions();
         return true;
     }
     private function prepareData( $model,$data, $new_record = false)
     {
-        if (isset($data['name']) && $data['name']) {
-            $model->name = $data['name'];
-        }
-        $model->save();
+        $model->syncPermissions($data['permission_id']);
         return $model;
     }
 }

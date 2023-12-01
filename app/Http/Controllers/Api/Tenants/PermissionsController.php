@@ -6,10 +6,11 @@ use App\Contracts\Tenants\PermissionContract;
 use App\Exceptions\CustomException;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorePermissionRequest;
-use App\Http\Requests\UpdatePermissionRequest;
+use App\Http\Requests\Tenants\StorePermissionRequest;
+use App\Http\Requests\Tenants\UpdatePermissionRequest;
 use App\Http\Resources\Tenants\PermissionResource;
 use App\Http\Resources\Tenants\PermissionResourceCollection;
+use App\Http\Resources\Tenants\RoleHasPermissionResourceCollection;
 use Illuminate\Support\Facades\DB;
 
 class PermissionsController extends Controller
@@ -44,11 +45,9 @@ class PermissionsController extends Controller
     {
         try {
             DB::beginTransaction();
-            $data = $this->permission->store($request->prepareRequest());
-            if ($data)
-                $data = new PermissionResourceCollection($this->permission->index());
+            $this->permission->store($request->prepareRequest());
             DB::commit();
-            return $this->successResponse("Permission Added Successfully", $data);
+            return $this->okResponse("Permission Assign Successfully");
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
@@ -64,7 +63,7 @@ class PermissionsController extends Controller
     {
         try {
             $data = $this->permission->show($id);
-            $data = new PermissionResource($data);
+            $data = new RoleHasPermissionResourceCollection($data['permission'], $data);
             return $this->successResponse("Permission Found Successfully", $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
@@ -82,10 +81,8 @@ class PermissionsController extends Controller
         try {
             DB::beginTransaction();
             $data = $this->permission->update($request->prepareRequest(),$id);
-            if ($data)
-                $data = new PermissionResourceCollection($this->permission->index());
             DB::commit();
-            return $this->successResponse("Permission Update Successfully", $data);
+            return $this->okResponse("Permission assign Successfully", $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {

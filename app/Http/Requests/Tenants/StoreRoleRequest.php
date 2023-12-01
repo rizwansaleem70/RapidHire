@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests\Tenants;
 
-use Illuminate\Foundation\Http\FormRequest;
+
+use App\Abstracts\FormRequest;
 
 class StoreRoleRequest extends FormRequest
 {

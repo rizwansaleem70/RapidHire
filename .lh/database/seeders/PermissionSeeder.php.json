@@ -1,0 +1,34 @@
+{
+    "sourceFile": "database/seeders/PermissionSeeder.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1701413769167,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1701413862769,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n <?php\n \n namespace Database\\Seeders;\n \n+use App\\Models\\Tenants\\Permission;\n use Illuminate\\Database\\Console\\Seeds\\WithoutModelEvents;\n use Illuminate\\Database\\Seeder;\n \n class PermissionSeeder extends Seeder\n"
+                },
+                {
+                    "date": 1701413907951,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,36 +22,6 @@\n                 Permission::create(['name' => $mobule.'.'.$value]);\n             }\n \n         }\n-\n-        foreach ($roles as $key => $role) {\n-            $temRole = Role::create(['name' => $role]);\n-\n-            if($role == \"admin\"){\n-                foreach ($modules as $key => $value) {\n-                    foreach ($actions as $key => $actionValue) {\n-                        $temRole->givePermissionTo($value.'.'.$actionValue);\n-                    }\n-                }\n-            }else if($role == \"doctor\"){\n-                foreach ($modules as $key => $value) {\n-                    $temRole->givePermissionTo($value.'.create');\n-                    $temRole->givePermissionTo($value.'.view');\n-                    $temRole->givePermissionTo($value.'.update');\n-                }\n-            }else if($role == \"staff\"){\n-                foreach ($modules as $key => $value) {\n-                    $temRole->givePermissionTo($value.'.create');\n-                    $temRole->givePermissionTo($value.'.view');\n-                    $temRole->givePermissionTo($value.'.update');\n-                }\n-            }else if($role == \"patient\"){\n-                foreach ($modules as $key => $value) {\n-                    $temRole->givePermissionTo($value.'.view');\n-                    $temRole->givePermissionTo($value.'.update');\n-                }\n-            }\n-        }\n-\n     }\n }\n"
+                },
+                {
+                    "date": 1701414156715,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,10 +12,9 @@\n      * Run the database seeds.\n      */\n     public function run(): void\n     {\n-        $roles = ['super_admin','admin','doctor','patient','staff'];\n-        $modules = [\"patient\",\"doctor\",'staff'];\n+        $modules = [\"jobs\",\"applicants\",'message','schedules','members','settings','faqs','invoices'];\n         $actions = [\"*\",\"view\",\"update\",\"create\",\"delete\"];\n \n         foreach ($modules as $mobule) {\n             foreach ($actions as $key => $value) {\n"
+                },
+                {
+                    "date": 1701414175291,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,11 +16,10 @@\n         $modules = [\"jobs\",\"applicants\",'message','schedules','members','settings','faqs','invoices'];\n         $actions = [\"*\",\"view\",\"update\",\"create\",\"delete\"];\n \n         foreach ($modules as $mobule) {\n-            foreach ($actions as $key => $value) {\n+            foreach ($actions as $value) {\n                 Permission::create(['name' => $mobule.'.'.$value]);\n             }\n-\n         }\n     }\n }\n"
+                }
+            ],
+            "date": 1701413769167,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace Database\\Seeders;\n\nuse Illuminate\\Database\\Console\\Seeds\\WithoutModelEvents;\nuse Illuminate\\Database\\Seeder;\n\nclass PermissionSeeder extends Seeder\n{\n    /**\n     * Run the database seeds.\n     */\n    public function run(): void\n    {\n        $roles = ['super_admin','admin','doctor','patient','staff'];\n        $modules = [\"patient\",\"doctor\",'staff'];\n        $actions = [\"*\",\"view\",\"update\",\"create\",\"delete\"];\n\n        foreach ($modules as $mobule) {\n            foreach ($actions as $key => $value) {\n                Permission::create(['name' => $mobule.'.'.$value]);\n            }\n\n        }\n\n        foreach ($roles as $key => $role) {\n            $temRole = Role::create(['name' => $role]);\n\n            if($role == \"admin\"){\n                foreach ($modules as $key => $value) {\n                    foreach ($actions as $key => $actionValue) {\n                        $temRole->givePermissionTo($value.'.'.$actionValue);\n                    }\n                }\n            }else if($role == \"doctor\"){\n                foreach ($modules as $key => $value) {\n                    $temRole->givePermissionTo($value.'.create');\n                    $temRole->givePermissionTo($value.'.view');\n                    $temRole->givePermissionTo($value.'.update');\n                }\n            }else if($role == \"staff\"){\n                foreach ($modules as $key => $value) {\n                    $temRole->givePermissionTo($value.'.create');\n                    $temRole->givePermissionTo($value.'.view');\n                    $temRole->givePermissionTo($value.'.update');\n                }\n            }else if($role == \"patient\"){\n                foreach ($modules as $key => $value) {\n                    $temRole->givePermissionTo($value.'.view');\n                    $temRole->givePermissionTo($value.'.update');\n                }\n            }\n        }\n\n    }\n}\n"
+        }
+    ]
+}

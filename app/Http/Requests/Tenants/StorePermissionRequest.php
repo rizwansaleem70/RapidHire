@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Requests;
-
-use Illuminate\Foundation\Http\FormRequest;
+namespace App\Http\Requests\Tenants;
+use App\Abstracts\FormRequest;
 
 class StorePermissionRequest extends FormRequest
 {
@@ -11,7 +10,7 @@ class StorePermissionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +21,16 @@ class StorePermissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'role_id' => 'required|exists:roles,id',
+            'permission_id.*' => 'required|exists:permissions,id',
+        ];
+    }
+    public function prepareRequest(): array
+    {
+        $request = $this;
+        return [
+            'role_id' => $request['role_id'],
+            'permission_id' => $request['permission_id'],
         ];
     }
 }

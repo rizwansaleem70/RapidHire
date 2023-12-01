@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Http\Requests\Tenants;
-
-use Illuminate\Foundation\Http\FormRequest;
+use App\Abstracts\FormRequest;
 
 class UpdateRoleRequest extends FormRequest
 {
