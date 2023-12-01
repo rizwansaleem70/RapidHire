@@ -24,4 +24,9 @@ class Constant
     const HIRED = 'hired';
     const REJECTED = 'rejected';
     const WITHDRAW = 'withdraw';
+
+    const SLOT_AVAILABLE = 'AVAILABLE';
+    const SLOT_BOOKED = 'BOOKED';
+    const SLOT_CANCELLED = 'CANCELLED';
+    const SLOT_PENDING = 'PENDING';
 }

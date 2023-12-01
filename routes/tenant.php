@@ -2,30 +2,31 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\Tenants\CategoriesController;
-use App\Http\Controllers\Api\Tenants\DepartmentsController;
+use App\Contracts\Tenants\TimeSlotsController;
 use App\Http\Controllers\Api\Tenants\HomeController;
-use App\Http\Controllers\Api\Tenants\ImageUploadsController;
-use App\Http\Controllers\Api\Tenants\InterviewFeedbacksController;
-use App\Http\Controllers\Api\Tenants\InterviewsController;
 use App\Http\Controllers\Api\Tenants\JobsController;
-use App\Http\Controllers\Api\Tenants\JobShortlistingController;
-use App\Http\Controllers\Api\Tenants\LocationsController;
-use App\Http\Controllers\Api\Tenants\MemberController;
-use App\Http\Controllers\Api\Tenants\QuestionBanksController;
-use App\Http\Controllers\Api\Tenants\RequirementsController;
-use App\Http\Controllers\Api\Tenants\SettingsController;
-use App\Http\Controllers\Api\Tenants\SocialMediasController;
 use App\Http\Controllers\Api\Tenants\TestsController;
+use App\Http\Controllers\Api\Tenants\MemberController;
+use App\Http\Controllers\Api\Tenants\SettingsController;
+use App\Http\Controllers\Tenant\User\UserAuthController;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use App\Http\Controllers\Api\Tenants\LocationsController;
+use App\Http\Controllers\Api\Tenants\CategoriesController;
+use App\Http\Controllers\Api\Tenants\InterviewsController;
+use App\Http\Controllers\Api\Tenants\DepartmentsController;
+use App\Http\Controllers\Api\Tenants\ImageUploadsController;
+use App\Http\Controllers\Api\Tenants\RequirementsController;
+use App\Http\Controllers\Api\Tenants\SocialMediasController;
 use App\Http\Controllers\Api\Tenants\TestServicesController;
+use App\Http\Controllers\Api\Tenants\QuestionBanksController;
+use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
+use App\Http\Controllers\Api\Tenants\JobShortlistingController;
 use App\Http\Controllers\Tenants\Candidate\ContactUsController;
+use App\Http\Controllers\Api\Tenants\InterviewFeedbacksController;
 use App\Http\Controllers\Tenants\Candidate\HomeController as CandidateHomeController;
 use App\Http\Controllers\Tenants\Candidate\JobsController as CandidateJobsController;
-use Illuminate\Support\Facades\Route;
-use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
-use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
-use App\Http\Controllers\Tenant\User\UserAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,6 +100,8 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['requirement' => RequirementsController::class]);
         Route::apiResources(['social-media' => SocialMediasController::class]);
         Route::apiResources(['members' => MemberController::class]);
+        Route::get('time_slots/interviewer', [TimeSlotsController::class, 'getSlots']);
+        Route::apiResources(['time_slots' => TimeSlotsController::class]);
         Route::apiResources(['question-bank' => QuestionBanksController::class]);
         Route::apiResources(['test-service' => TestServicesController::class]);
         Route::apiResources(['test' => TestsController::class]);

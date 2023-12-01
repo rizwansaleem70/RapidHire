@@ -12,4 +12,9 @@ class Helper
         Log::debug($input);
         Log::info("Exception: = " . $exception);
     }
+
+    public static function timeFormat($time)
+    {
+        return date('H:i', strtotime($time));
+    }
 }
