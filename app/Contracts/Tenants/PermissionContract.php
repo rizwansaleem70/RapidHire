@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Contracts;
+namespace App\Contracts\Tenants;
 
 /**
-* @var RoleContract
+* @var PermissionContract
 */
-interface RoleContract
+interface PermissionContract
 {
     public function index();
     public function store($request);

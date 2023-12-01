@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers\Api\Tenants;
 
-use App\Contracts\Tenants\RoleContract;
+use App\Contracts\Tenants\PermissionContract;
 use App\Exceptions\CustomException;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Tenants\StoreRoleRequest;
-use App\Http\Requests\Tenants\UpdateRoleRequest;
-use App\Http\Resources\Tenants\RoleResource;
-use App\Http\Resources\Tenants\RoleResourceCollection;
+use App\Http\Requests\StorePermissionRequest;
+use App\Http\Requests\UpdatePermissionRequest;
+use App\Http\Resources\Tenants\PermissionResource;
+use App\Http\Resources\Tenants\PermissionResourceCollection;
 use Illuminate\Support\Facades\DB;
 
-class RoleController extends Controller
+class PermissionsController extends Controller
 {
-    public RoleContract $role;
-    public function __construct(RoleContract $role)
+
+    public PermissionContract $permission;
+    public function __construct(PermissionContract $permission)
     {
-        $this->role = $role;
+        $this->permission = $permission;
     }
     /**
      * Display a listing of the resource.
@@ -25,13 +26,13 @@ class RoleController extends Controller
     public function index()
     {
         try {
-            $data = $this->role->index();
-            $data = new RoleResourceCollection($data);
+            $data = $this->permission->index();
+            $data = new PermissionResourceCollection($data);
             return $this->successResponse("Successfully", $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("role index", 'none', $th->getMessage());
+            Helper::logMessage("permission index", 'none', $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -39,19 +40,19 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRoleRequest $request)
+    public function store(StorePermissionRequest $request)
     {
         try {
             DB::beginTransaction();
-            $data = $this->role->store($request->prepareRequest());
+            $data = $this->permission->store($request->prepareRequest());
             if ($data)
-                $data = new RoleResourceCollection($this->role->index());
+                $data = new PermissionResourceCollection($this->permission->index());
             DB::commit();
-            return $this->successResponse("Role Added Successfully", $data);
+            return $this->successResponse("Permission Added Successfully", $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("role store", $request->input(), $th->getMessage());
+            Helper::logMessage("permission store", $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -62,13 +63,13 @@ class RoleController extends Controller
     public function show(string $id)
     {
         try {
-            $data = $this->role->show($id);
-            $data = new RoleResource($data);
-            return $this->successResponse("Role Found Successfully", $data);
+            $data = $this->permission->show($id);
+            $data = new PermissionResource($data);
+            return $this->successResponse("Permission Found Successfully", $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("role show", 'id =' . $id, $th->getMessage());
+            Helper::logMessage("permission show", 'id =' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -76,19 +77,19 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRoleRequest $request, string $id)
+    public function update(UpdatePermissionRequest $request, string $id)
     {
         try {
             DB::beginTransaction();
-            $data = $this->role->update($request->prepareRequest(),$id);
+            $data = $this->permission->update($request->prepareRequest(),$id);
             if ($data)
-                $data = new RoleResourceCollection($this->role->index());
+                $data = new PermissionResourceCollection($this->permission->index());
             DB::commit();
-            return $this->successResponse("Role Update Successfully", $data);
+            return $this->successResponse("Permission Update Successfully", $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("role store", $request->input(), $th->getMessage());
+            Helper::logMessage("permission store", $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
@@ -100,13 +101,13 @@ class RoleController extends Controller
     {
         try {
             DB::beginTransaction();
-            $this->role->destroy($id);
+            $this->permission->destroy($id);
             DB::commit();
-            return $this->okResponse("Role Deleted Successfully");
+            return $this->okResponse("Permission Deleted Successfully");
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("role destroy", 'id = ' . $id, $th->getMessage());
+            Helper::logMessage("permission destroy", 'id = ' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }

@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\Tenants\JobsController;
 use App\Http\Controllers\Api\Tenants\JobShortlistingController;
 use App\Http\Controllers\Api\Tenants\LocationsController;
 use App\Http\Controllers\Api\Tenants\MemberController;
+use App\Http\Controllers\Api\Tenants\PermissionsController;
 use App\Http\Controllers\Api\Tenants\QuestionBanksController;
 use App\Http\Controllers\Api\Tenants\RequirementsController;
 use App\Http\Controllers\Api\Tenants\RoleController;
@@ -97,6 +98,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::get('get-country-against-job/{id}', [JobsController::class, 'get_country_against_job']);
         Route::post('ATS-score/{job_id}', [JobsController::class, 'ATS_Score']);
         Route::apiResources(['role' => RoleController::class]);
+        Route::apiResources(['permission' => PermissionsController::class]);
         Route::apiResources(['department' => DepartmentsController::class]);
         Route::apiResources(['requirement' => RequirementsController::class]);
         Route::apiResources(['social-media' => SocialMediasController::class]);

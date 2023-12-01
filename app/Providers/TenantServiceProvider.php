@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Contracts\AuthContract;
-use App\Contracts\RoleContract;
 use App\Contracts\Tenants\Candidates\ContactUContract;
 use App\Contracts\Tenants\Candidates\HomeContract;
 use App\Contracts\Tenants\Candidates\JobContract as CandidateJobContract;
@@ -16,8 +15,10 @@ use App\Contracts\Tenants\JobContract;
 use App\Contracts\Tenants\JobShortlistingContract;
 use App\Contracts\Tenants\LocationContract;
 use App\Contracts\Tenants\MemberContract;
+use App\Contracts\Tenants\PermissionContract;
 use App\Contracts\Tenants\QuestionBankContract;
 use App\Contracts\Tenants\RequirementContract;
+use App\Contracts\Tenants\RoleContract;
 use App\Contracts\Tenants\SettingContract;
 use App\Contracts\Tenants\SocialMediaContract;
 use App\Contracts\Tenants\TestContract;
@@ -36,6 +37,7 @@ use App\Http\Services\Tenants\JobService;
 use App\Http\Services\Tenants\JobShortlistingService;
 use App\Http\Services\Tenants\LocationService;
 use App\Http\Services\Tenants\MemberService;
+use App\Http\Services\Tenants\PermissionService;
 use App\Http\Services\Tenants\QuestionBankService;
 use App\Http\Services\Tenants\RequirementService;
 use App\Http\Services\Tenants\RoleService;
@@ -183,6 +185,12 @@ class TenantServiceProvider extends ServiceProvider
             RoleContract::class,
             function ($app) {
                 return $app->make(RoleService::class);
+            }
+        );
+        $this->app->bind(
+            PermissionContract::class,
+            function ($app) {
+                return $app->make(PermissionService::class);
             }
         );
     }

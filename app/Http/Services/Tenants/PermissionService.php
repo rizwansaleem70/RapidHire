@@ -2,15 +2,12 @@
 
 namespace App\Http\Services\Tenants;
 
-use App\Contracts\Tenants\RoleContract;
-use App\Exceptions\CustomException;
-use App\Helpers\Constant;
-use App\Models\Tenants\Role;
+use App\Contracts\Tenants\PermissionContract;
 
 /**
-* @var RoleService
+* @var PermissionService
 */
-class RoleService implements RoleContract
+class PermissionService implements PermissionContract
 {
     protected Role $roleModel;
 
