@@ -21,14 +21,14 @@ class UpdatePermissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'permission_id.*' => 'required|exists:permissions,id',
         ];
     }
     public function prepareRequest(): array
     {
         $request = $this;
         return [
-            'name' => $request['name'],
+            'permission_id' => $request['permission_id'],
         ];
     }
 }

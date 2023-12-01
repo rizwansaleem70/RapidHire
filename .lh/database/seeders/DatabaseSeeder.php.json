@@ -1,0 +1,34 @@
+{
+    "sourceFile": "database/seeders/DatabaseSeeder.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1701414212574,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1701414293145,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,8 +29,9 @@\n         // $this->call(CitiesTableChunkThreeSeeder::class);\n         // $this->call(CitiesTableChunkFourSeeder::class);\n         // $this->call(CitiesTableChunkFiveSeeder::class);\n         // $this->call(TestServicesSeeder::class);\n+        $this->call(PermissionSeeder::class);\n \n \n         // $this->call(RoleTableSeeder::class);\n         // $this->call(DictionaryTableSeeder::class);\n"
+                },
+                {
+                    "date": 1701414397780,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,9 @@\n use Database\\Seeders\\tenant\\CitiesTableChunkFourSeeder;\n use Database\\Seeders\\tenant\\CitiesTableChunkFiveSeeder;\n use Database\\Seeders\\tenant\\RoleTableSeeder;\n use Database\\Seeders\\tenant\\TestServicesSeeder;\n+use Database\\Seeders\\tenant\\PermissionSeeder;\n \n class DatabaseSeeder extends Seeder\n {\n     /**\n"
+                },
+                {
+                    "date": 1701423783307,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,10 +29,10 @@\n         // $this->call(CitiesTableChunkTwoSeeder::class);\n         // $this->call(CitiesTableChunkThreeSeeder::class);\n         // $this->call(CitiesTableChunkFourSeeder::class);\n         // $this->call(CitiesTableChunkFiveSeeder::class);\n-        // $this->call(TestServicesSeeder::class);\n-        $this->call(PermissionSeeder::class);\n+        $this->call(TestServicesSeeder::class);\n+        // $this->call(PermissionSeeder::class);\n \n \n         // $this->call(RoleTableSeeder::class);\n         // $this->call(DictionaryTableSeeder::class);\n"
+                },
+                {
+                    "date": 1701423862741,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n         // $this->call(CitiesTableChunkThreeSeeder::class);\n         // $this->call(CitiesTableChunkFourSeeder::class);\n         // $this->call(CitiesTableChunkFiveSeeder::class);\n         $this->call(TestServicesSeeder::class);\n-        // $this->call(PermissionSeeder::class);\n+        $this->call(PermissionSeeder::class);\n \n \n         // $this->call(RoleTableSeeder::class);\n         // $this->call(DictionaryTableSeeder::class);\n"
+                }
+            ],
+            "date": 1701414212573,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace Database\\Seeders;\n\n// use Illuminate\\Database\\Console\\Seeds\\WithoutModelEvents;\nuse Illuminate\\Database\\Seeder;\nuse Database\\Seeders\\tenant\\CountriesTableSeeder;\nuse Database\\Seeders\\tenant\\StatesTableSeeder;\nuse Database\\Seeders\\tenant\\CitiesTableChunkOneSeeder;\nuse Database\\Seeders\\tenant\\CitiesTableChunkTwoSeeder;\nuse Database\\Seeders\\tenant\\CitiesTableChunkThreeSeeder;\nuse Database\\Seeders\\tenant\\CitiesTableChunkFourSeeder;\nuse Database\\Seeders\\tenant\\CitiesTableChunkFiveSeeder;\nuse Database\\Seeders\\tenant\\RoleTableSeeder;\nuse Database\\Seeders\\tenant\\TestServicesSeeder;\n\nclass DatabaseSeeder extends Seeder\n{\n    /**\n     * Seed the application's database.\n     */\n    public function run(): void\n    {\n        // $this->call(RoleTableSeeder::class);\n        // $this->call(CountriesTableSeeder::class);\n        // $this->call(StatesTableSeeder::class);\n        // $this->call(CitiesTableChunkOneSeeder::class);\n        // $this->call(CitiesTableChunkTwoSeeder::class);\n        // $this->call(CitiesTableChunkThreeSeeder::class);\n        // $this->call(CitiesTableChunkFourSeeder::class);\n        // $this->call(CitiesTableChunkFiveSeeder::class);\n        // $this->call(TestServicesSeeder::class);\n\n\n        // $this->call(RoleTableSeeder::class);\n        // $this->call(DictionaryTableSeeder::class);\n        // \\App\\Models\\User::factory(10)->create();\n\n        // \\App\\Models\\User::factory()->create([\n        //     'name' => 'Test User',\n        //     'email' => 'test@example.com',\n        // ]);\n    }\n}\n"
+        }
+    ]
+}

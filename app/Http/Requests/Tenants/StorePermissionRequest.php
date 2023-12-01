@@ -21,14 +21,16 @@ class StorePermissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'role_id' => 'required|exists:roles,id',
+            'permission_id.*' => 'required|exists:permissions,id',
         ];
     }
     public function prepareRequest(): array
     {
         $request = $this;
         return [
-            'name' => $request['name'],
+            'role_id' => $request['role_id'],
+            'permission_id' => $request['permission_id'],
         ];
     }
 }
