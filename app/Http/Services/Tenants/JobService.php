@@ -82,7 +82,7 @@ class JobService implements JobContract
 
     public function index()
     {
-        return $this->model->orderBy('ats', 'ASC')->paginate(10);
+        return $this->model->latest()->paginate(10);
     }
 
     public function questionList($query)
