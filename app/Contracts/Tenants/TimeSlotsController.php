@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Contracts\Tenants\InterviewContract;
+use App\Http\Services\Tenants\InterviewService;
+use App\Http\Requests\Tenants\InterviewScheduleRequest;
+use App\Http\Controllers\Api\Tenants\InterviewsController;
 use App\Http\Resources\Tenants\ApplicantSlotsResourceCollection;
 
 class TimeSlotsController extends Controller
@@ -128,7 +132,6 @@ class TimeSlotsController extends Controller
     public function getTrainerSlots(Request $request)
     {
         $validator = Validator::make($request->input(), [
-            'interviewer_id' => 'required|exists:users,id',
             'date' => 'required|date|date_format:Y-m-d'
         ]);
 
@@ -136,10 +139,12 @@ class TimeSlotsController extends Controller
             return $this->failedResponse($validator->errors()->first());
         }
 
-        $slots = TimeSlot::with(['applicantSlots:id,slot_id,user_id'])->where('user_id', $request->interviewer_id)
+        // DB::enableQueryLog();
+        $slots = TimeSlot::with(['applicantSlots:id,time_slot_id,user_id'])
             ->where('status', Constant::SLOT_AVAILABLE)
             ->where('date', $request->date)
             ->get();
+        // return DB::getRawQueryLog();
 
         $slots = new ApplicantSlotsResourceCollection($slots);
 
@@ -174,6 +179,54 @@ class TimeSlotsController extends Controller
 
         if ($validator->fails()) {
             return $this->failedResponse($validator->errors()->first());
+        }
+
+        $time_slot = TimeSlot::find($request->time_slot_id);
+        if ($time_slot->status == Constant::SLOT_AVAILABLE) {
+            $time_slot->delete();
+            return $this->okResponse("Time slot removed successfully");
+        }
+
+        return $this->failedResponse("This time slot status isn't available. So, cannot remove it.");
+    }
+
+    public function bookSchedule(Request $request)
+    {
+        $validator = Validator::make($request->input(), [
+            'applicant_id' => 'required|exists:applicants,id',
+            'time_slot_id' => 'required|exists:time_slots,id'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->failedResponse($validator->errors()->first());
+        }
+
+        try {
+            $time_slot = TimeSlot::find($request->time_slot_id);
+
+            if ($time_slot->status != Constant::SLOT_AVAILABLE)
+                return $this->failedResponse("This slot is not available");
+
+            // $interview = new InterviewsController(new InterviewService());
+            $interview = new InterviewService();
+
+            if ($interview->checkForTimeSlot($request->time_slot_id)) {
+                $data = [
+                    'interviewer_id' => $time_slot->user_id,
+                    'interview_date' => $time_slot->date,
+                    'applicant_id' => $request->applicant_id,
+                    'start_time' => $time_slot->start_time,
+                    'end_time' => $time_slot->end_time,
+                ];
+
+                $interview->setInterview($data);
+                $time_slot->status = Constant::SLOT_BOOKED;
+                $time_slot->save();
+
+                return $this->okResponse("Interview scheduled successfully");
+            }
+        } catch (\Throwable $th) {
+            return $this->failedResponse($th->getMessage());
         }
     }
 }

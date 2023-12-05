@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
- use App\Helpers\Constant;
- use Illuminate\Support\Facades\Gate;
+use App\Models\User;
+use App\Helpers\Constant;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -25,5 +26,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::before(function ($user, $ability) {
             return $user->hasRole(Constant::SUPER_ADMIN) || $user->hasRole(Constant::ROLE_ADMIN) ? true : null;
         });
+
+        // Gate::define('viewPulse', function (User $user) {
+        //     return $user->hasRole(Constant::SUPER_ADMIN) || $user->hasRole(Constant::ROLE_ADMIN) ? true : null;
+        // });
     }
 }

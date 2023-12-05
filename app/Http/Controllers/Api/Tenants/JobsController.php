@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\Tenants;
 
 use App\Helpers\Helper;
-use App\Http\Resources\Tenants\JobEditResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\CustomException;
@@ -11,10 +10,14 @@ use App\Http\Resources\Tenants\Job;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Contracts\Tenants\JobContract;
+use App\Models\Tenants\JobQualification;
 use App\Http\Resources\Tenants\JobCollection;
 use App\Http\Requests\Tenants\StoreJobRequest;
 use App\Http\Requests\Tenants\UpdateJobRequest;
+use App\Http\Resources\Tenants\JobEditResource;
+use App\Http\Resources\Tenants\JobShowResource;
 use App\Http\Resources\Tenants\ProfileResource;
+use App\Models\Tenants\ApplicantRequirementAnswer;
 use App\Http\Requests\Tenants\StoreATS_ScoreRequest;
 use App\Http\Resources\Tenants\DepartmentCollection;
 use App\Http\Resources\Tenants\ProfileHeaderResource;
@@ -25,8 +28,7 @@ use App\Http\Resources\Tenants\ApplicantJobResourceCollection;
 use App\Http\Resources\Tenants\JobApplicantResourceCollection;
 use App\Http\Requests\Tenants\Candidate\UpdateApplicantProfileRequest;
 use App\Http\Resources\Tenants\CandidateAppliedJobsResourceCollection;
-use App\Models\Tenants\ApplicantRequirementAnswer;
-use App\Models\Tenants\JobQualification;
+use App\Models\Tenants\CandidateInterviews;
 
 class JobsController extends Controller
 {
@@ -78,6 +80,27 @@ class JobsController extends Controller
             $job = $this->job->show($id);
             $job = new JobEditResource($job);
             return $this->successResponse('Job Found Successfully', $job);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            helper::logMessage('job show', 'id =' . $id, $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+
+
+    public function showJobDetail(string $id)
+    {
+        try {
+            $job = $this->job->showJobDetail($id);
+            $job = new JobShowResource($job);
+
+            $scheduled_interviews = CandidateInterviews::with(['interviewer:id,first_name,last_name'])->where('applicant_id', $id)->get();
+
+            return $this->successResponse('Job Fetched Successfully', [
+                'job' => $job,
+                'interviews' => $scheduled_interviews
+            ]);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
@@ -290,7 +313,7 @@ class JobsController extends Controller
     public function getJobQualificationsForAts($job_id)
     {
         try {
-            $fields = $this->job->atsFields($job_id);
+            $fields = $this->job->atsFields($job_id, false);
             return $this->successResponse('Ats Fields', $fields);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());

@@ -96,6 +96,17 @@ class JobService implements JobContract
 
         return $this->prepareData($model, $data, true);
     }
+
+
+    public function showJobDetail($id)
+    {
+        $model = $this->modelApplicant->with(['job:id,name'])->find($id);
+        if (empty($model)) {
+            throw new CustomException('Applicant Record Not Found!');
+        }
+        return $model;
+    }
+
     public function show($id)
     {
         $model = $this->model->find($id);

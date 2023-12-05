@@ -105,7 +105,9 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['requirement' => RequirementsController::class]);
         Route::apiResources(['social-media' => SocialMediasController::class]);
         Route::apiResources(['members' => MemberController::class]);
+        Route::get('time_slots/get_slots_by_date', [TimeSlotsController::class, 'getTrainerSlots']);
         Route::get('time_slots/interviewer', [TimeSlotsController::class, 'getSlots']);
+        Route::post('time_slots/booking', [TimeSlotsController::class, 'bookSchedule']);
         Route::apiResources(['time_slots' => TimeSlotsController::class]);
         Route::apiResources(['question-bank' => QuestionBanksController::class]);
         Route::apiResources(['test-service' => TestServicesController::class]);
@@ -117,6 +119,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::post('image-upload', [ImageUploadsController::class, 'store']);
         Route::get('job/{id}/qualifications', [JobsController::class, 'getJobQualificationsForAts']);
         Route::get('job/{id}/requirements', [JobsController::class, 'requirements']);
+        Route::get('applicants/{applicant_id}', [JobsController::class, 'showJobDetail']);
         Route::get('applicants', [JobsController::class, 'getJobs']);
         Route::get('applicants/{job_id}', [JobsController::class, 'getJobApplicants']);
         Route::get('job-applicant-profile-header/{applicant_id}', [JobsController::class, 'jobApplicantProfileHeader']);

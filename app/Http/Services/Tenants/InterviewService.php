@@ -6,6 +6,7 @@ use App\Contracts\Tenants\InterviewContract;
 use App\Models\Tenants\CandidateInterviews;
 use App\Exceptions\CustomException;
 use App\Models\Notification;
+use App\Models\TimeSlot;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -14,9 +15,11 @@ use Illuminate\Support\Facades\Auth;
 class InterviewService implements InterviewContract
 {
     public CandidateInterviews $model;
+    public TimeSlot $modelTimeSlot;
     public function __construct()
     {
         $this->model = new CandidateInterviews();
+        $this->modelTimeSlot = new TimeSlot();
     }
 
     public function setInterview($data)
@@ -66,6 +69,15 @@ class InterviewService implements InterviewContract
             throw new CustomException('Applicant Not Found!');
         }
         return $this->model->where('applicant_id', $applicant_id)->latest()->get();
+    }
+
+    public function checkForTimeSlot($time_slot_id)
+    {
+        $model = $this->model->where('time_slot_id', $time_slot_id)->count();
+        if ($model > 0) {
+            throw new CustomException('This slot is already reserved with some other candidate');
+        }
+        return true;
     }
 
     public function removeInterview($id)

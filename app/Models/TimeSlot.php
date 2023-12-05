@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ApplicantInterviewSchedule;
+use App\Models\Tenants\CandidateInterviews;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -31,6 +32,6 @@ class TimeSlot extends Model
 
     public function applicantSlots(): BelongsTo
     {
-        return $this->belongsTo(ApplicantInterviewSchedule::class, 'user_id');
+        return $this->belongsTo(CandidateInterviews::class, 'applicant_id');
     }
 }
