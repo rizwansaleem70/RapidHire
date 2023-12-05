@@ -32,7 +32,7 @@ class SocialMediaService implements SocialMediaContract
     public function show($id)
     {
         $model = $this->model->find($id);
-        return empty($model) ? throw new CustomException("Social Media Not Found!") : $model;
+        return empty($model) ?? throw new CustomException("Social Media Not Found!");
     }
 
     /**
@@ -41,8 +41,7 @@ class SocialMediaService implements SocialMediaContract
     public function store($data)
     {
         $new_data = [];
-        foreach ($data as $value)
-        {
+        foreach ($data as $value) {
             $new_data[] = [
                 'name' => $value['url'],
                 'icon' => $value['icon'],

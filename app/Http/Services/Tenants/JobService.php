@@ -250,7 +250,9 @@ class JobService implements JobContract
 
     public function atsFields($job_id)
     {
-        $job = $this->model->with(['jobQualification'])->find($job_id);
+        $job = $this->model->with(['jobQualification' => function ($query) {
+            $query->whereNotIn('input_type', ['text', 'textarea', 'file']);
+        }])->find($job_id);
 
         if (empty($job)) {
             throw new CustomException('Job Not Found!');
@@ -266,6 +268,61 @@ class JobService implements JobContract
             ];
         }
 
+        return $fields;
+    }
+
+    public function getAtsScore($job_id)
+    {
+        $job_qualifications = $this->atsFields($job_id);
+        $fields = [];
+        $ats = $this->modelJobATSScore->with(['JobATSScoreParameter'])
+            ->whereJobId($job_id)
+            ->where('attribute', 'states')
+            ->first();
+
+        $job = $this->model->select('country_id')->findorfail($job_id);
+
+        $states = State::where('country_id', $job->country_id)->select('id', 'name')->get();
+
+
+        $fields[] = [
+            'id' => null,
+            'name' => 'states',
+            'input_type' => 'select',
+            'option' => $states,
+            'selected_weight' => $ats->weight,
+            'parameters' => $ats->JobATSScoreParameter->map(function ($parameter) {
+                return [
+                    'id' => $parameter->id,
+                    'parameter' => $parameter->parameter,
+                    'value' => $parameter->value
+                ];
+            })
+        ];
+
+        foreach ($job_qualifications as $job_qualification) {
+
+
+            $ats = $this->modelJobATSScore->with(['JobATSScoreParameter'])
+                ->whereJobId($job_id)
+                ->where('job_qualification_id', $job_qualification['id'])
+                ->first();
+
+            $fields[] = [
+                'id' => $job_qualification['id'],
+                'name' => $job_qualification['name'],
+                'input_type' => $job_qualification['input_type'],
+                'option' => $job_qualification['option'],
+                'selected_weight' => $ats->weight,
+                'parameters' => $ats->JobATSScoreParameter->map(function ($parameter) {
+                    return [
+                        'id' => $parameter->id,
+                        'parameter' => $parameter->parameter,
+                        'value' => $parameter->value
+                    ];
+                })
+            ];
+        }
         return $fields;
     }
 
@@ -290,7 +347,11 @@ class JobService implements JobContract
 
         $applicants = (clone $baseQuery)->when(isset($filter['status']), function ($q) use ($filter) {
             return $q->where('status', $filter['status']);
-        })->with('user.experience')->paginate(10);
+        })
+            ->with('user.experience')
+            ->orderBy('ats', 'ASC')
+            ->paginate(10);
+
         $totalApplied = (clone $baseQuery)->where('status', 'applied')->count();
         $totalQualification = (clone $baseQuery)->where('status', 'qualification')->count();
         $totalTesting = (clone $baseQuery)->where('status', 'testing')->count();
@@ -313,7 +374,7 @@ class JobService implements JobContract
     }
     public function candidateAppliedJobs($user_id)
     {
-        return $this->modelApplicant->where('user_id', $user_id)->with(['job:id,name,slug'])->get(['id','user_id','job_id','applied_date','skills','status']);
+        return $this->modelApplicant->where('user_id', $user_id)->with(['job:id,name,slug'])->get(['id', 'user_id', 'job_id', 'applied_date', 'skills', 'status']);
     }
 
     public function jobApplicantProfileHeader($applicant_id)
@@ -329,7 +390,7 @@ class JobService implements JobContract
                 'country:id,name,currency',
                 'state:id,name',
                 'city:id,name',
-            ])->first(['id', 'user_id','job_id', 'country_id', 'state_id', 'city_id', 'ats', 'first_name', 'last_name', 'phone', 'address', 'gender', 'status', 'skills', 'applied_date', 'source_detail', 'job_resume_path', 'cover_letter_path']);
+            ])->first(['id', 'user_id', 'job_id', 'country_id', 'state_id', 'city_id', 'ats', 'first_name', 'last_name', 'phone', 'address', 'gender', 'status', 'skills', 'applied_date', 'source_detail', 'job_resume_path', 'cover_letter_path']);
     }
 
 

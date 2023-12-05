@@ -286,6 +286,7 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
+
     public function getJobQualificationsForAts($job_id)
     {
         try {
@@ -298,6 +299,7 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
+
     public function ATS_Score(StoreATS_ScoreRequest $request, $job_id): \Illuminate\Http\JsonResponse
     {
         try {
@@ -305,6 +307,22 @@ class JobsController extends Controller
             $this->job->ATS_Score($request, $job_id);
             DB::commit();
             return $this->okResponse('Jobs ATS Score Save Successfully');
+        } catch (CustomException $th) {
+            DB::rollBack();
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Helper::logMessage('ATS_Score', 'none', $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+
+    public function getAtsScore(Request $request, $job_id)
+    {
+        try {
+            $ats = $this->job->getAtsScore($job_id);
+
+            return $this->successResponse('Job ATS Score', $ats);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {

@@ -7,8 +7,8 @@ use App\Exceptions\CustomException;
 use App\Models\Tenants\Requirement;
 
 /**
-* @var RequirementService
-*/
+ * @var RequirementService
+ */
 class RequirementService implements RequirementContract
 {
     public Requirement $model;
@@ -28,7 +28,7 @@ class RequirementService implements RequirementContract
     public function show($id)
     {
         $model = $this->model->find($id);
-        return empty($model) ? throw new CustomException("Requirement Not Found!") : $model;
+        return empty($model) ?? throw new CustomException("Requirement Not Found!");
     }
 
     /**
@@ -63,10 +63,9 @@ class RequirementService implements RequirementContract
     }
     private function prepareData($model, $data, $new_record = false)
     {
-        if ($new_record){
+        if ($new_record) {
             $model->insert($data);
-        }
-        else{
+        } else {
             if (isset($data['name']) && $data['name']) {
                 $model->name = $data['name'];
             }

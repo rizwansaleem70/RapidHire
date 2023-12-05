@@ -2,6 +2,7 @@
 
 namespace App\Contracts\Tenants;
 
+use Carbon\Carbon;
 use App\Models\TimeSlot;
 use Carbon\CarbonPeriod;
 use App\Helpers\Constant;
@@ -21,8 +22,17 @@ class TimeSlotsController extends Controller
 
         $slots = [];
         $user_id = $request->interviewer_id;
+
         $dates = TimeSlot::where('user_id', $user_id)
             ->groupBy('date')
+            ->when($request->from_date, function ($query) {
+                $query->whereBetween('date', [request()->input('start_date'), request()->input('end_date')]);
+            })
+            ->when(!$request->from_date, function ($query) {
+                $carbon_start = Carbon::now()->startOfWeek()->format('Y-m-d');
+                $carbon_end = Carbon::now()->endOfWeek()->format('Y-m-d');
+                $query->whereBetween('date', [$carbon_start, $carbon_end]);
+            })
             ->orderBy('date', 'ASC')
             ->pluck('date');
 
@@ -88,6 +98,8 @@ class TimeSlotsController extends Controller
         $office_start_time = "10:00";
         $office_end_time = "19:00";
 
+        // $from_date = Carbon::now()->startOfWeek()->format('Y-m-d');
+        // $to_date = Carbon::now()->endOfWeek()->format('Y-m-d');
         $from_date = $request->from_date;
         $to_date = $request->to_date;
 
@@ -126,7 +138,8 @@ class TimeSlotsController extends Controller
 
         $slots = TimeSlot::with(['applicantSlots:id,slot_id,user_id'])->where('user_id', $request->interviewer_id)
             ->where('status', Constant::SLOT_AVAILABLE)
-            ->where('date', $request->date)->get();
+            ->where('date', $request->date)
+            ->get();
 
         $slots = new ApplicantSlotsResourceCollection($slots);
 
@@ -151,5 +164,16 @@ class TimeSlotsController extends Controller
         }
 
         return $this->successResponse("Success", $slots);
+    }
+
+    public function removeTimeSlot(Request $request)
+    {
+        $validator = Validator::make($request->input(), [
+            'time_slot_id' => 'required|exists:time_slots,id'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->failedResponse($validator->errors()->first());
+        }
     }
 }

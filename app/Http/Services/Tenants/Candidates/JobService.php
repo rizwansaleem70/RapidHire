@@ -80,10 +80,10 @@ class JobService implements JobContract
             ->when($filter->country_id, function ($q, $country_id) {
                 return $q->where('country_id', $country_id);
             })
-            ->when($filter->state_id , function ($q, $state_id) {
+            ->when($filter->state_id, function ($q, $state_id) {
                 return $q->where('state_id', $state_id);
             })
-            ->when($filter->city_id , function ($q, $city_id) {
+            ->when($filter->city_id, function ($q, $city_id) {
                 return $q->where('city_id', $city_id);
             })
             ->when($filter->job_type, function ($q, $job_type) {
@@ -235,14 +235,14 @@ class JobService implements JobContract
                 if (!$job_qualification) continue;
 
                 //Check The qualification criteria
-                if(is_array($job_requirement['answer'])) continue;
+                if (is_array($job_requirement['answer'])) continue;
 
 
-                $value = "'".strtolower($job_qualification->value)."'";
-                $answer = "'".strtolower($job_requirement['answer'])."'";
+                $value = "'" . strtolower($job_qualification->value) . "'";
+                $answer = "'" . strtolower($job_requirement['answer']) . "'";
 
 
-                if (   !($value . $job_qualification->operator . $answer ))
+                if (!($value . $job_qualification->operator . $answer))
                     $meet_criteria = false;
 
 

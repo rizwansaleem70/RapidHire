@@ -27,4 +27,5 @@ interface JobContract
     public function jobApplicantProfileHeader($applicant_id);
     public function profile($user_id);
     public function profileUpdate($data, $user_id);
+    public function getAtsScore($job_id);
 }
