@@ -229,13 +229,20 @@ class JobService implements JobContract
             \Log::debug("State value " . $score);
 
             // DB::enableQueryLog();
-            foreach ($data['requirement'] as $job_requirement) {
+            foreach ($data['requirement'] as $key => $job_requirement) {
 
                 $job_qualification = JobQualification::whereJobIdAndRequirementId($data['job_id'], $job_requirement['id'])->first();
                 if (!$job_qualification) continue;
 
                 //Check The qualification criteria
-                if (!strtolower($job_qualification->value) . $job_qualification->operator . strtolower($job_requirement['answer']))
+                if(is_array($job_requirement['answer'])) continue;
+
+
+                $value = "'".strtolower($job_qualification->value)."'";
+                $answer = "'".strtolower($job_requirement['answer'])."'";
+
+
+                if (   !($value . $job_qualification->operator . $answer ))
                     $meet_criteria = false;
 
 
@@ -284,7 +291,7 @@ class JobService implements JobContract
             $status = Constant::APPLIED;
             if ($qualification['meet_criteria'] == true && $qualification['ats'] >= $job->ats_threshold)
                 $status = Constant::QUALIFICATION;
-            elseif ($qualification['meet_criteria'] == true && $qualification['ats'] == 0)
+            elseif ($qualification['meet_criteria'] == true && $qualification['ats'] >= 0)
                 $status = Constant::APPLIED;
             elseif ($qualification['meet_criteria'] == false)
                 $status = Constant::REJECTED;
