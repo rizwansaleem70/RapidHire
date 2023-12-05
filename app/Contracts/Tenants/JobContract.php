@@ -15,7 +15,7 @@ interface JobContract
     public function delete($id);
     public function get_country_against_job($id);
     public function requirements($job_id);
-    public function atsFields($job_id);
+    public function atsFields($job_id, $for_edit);
     public function getApplicantJobs($data);
     public function job_qualification($data, $job_id);
     // public function getJobQualifications($job_id);

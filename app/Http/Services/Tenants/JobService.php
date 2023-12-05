@@ -248,7 +248,33 @@ class JobService implements JobContract
         return $job->requirement;
     }
 
-    public function atsFields($job_id)
+    public function atsFields($job_id, $forEdit = false)
+    {
+        $job = $this->model->with(['jobQualification' => function ($query) {
+            $query->whereNotIn('input_type', ['text', 'textarea', 'file']);
+        }])->find($job_id);
+
+        if (empty($job)) {
+            throw new CustomException('Job Not Found!');
+        }
+
+        $fields = [];
+        foreach ($job->jobQualification as $job_qualification) {
+            $fields[] = [
+                'id' => $job_qualification->id,
+                'name' => $job_qualification->name,
+                'input_type' => $job_qualification->input_type,
+                'option' => $job_qualification->option,
+                'value' => $job_qualification->value,
+                'is_required' => $job_qualification->is_required
+            ];
+        }
+
+        return $fields;
+    }
+
+
+    public function jobAtsFie($job_id, $forEdit = false)
     {
         $job = $this->model->with(['jobQualification' => function ($query) {
             $query->whereNotIn('input_type', ['text', 'textarea', 'file']);
