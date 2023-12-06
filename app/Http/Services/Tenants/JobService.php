@@ -349,7 +349,7 @@ class JobService implements JobContract
                 'id' => $job_qualification['id'],
                 'name' => $job_qualification['name'],
                 'input_type' => $job_qualification['input_type'],
-                'option' => $job_qualification['option'],
+                'option' => explode(",", $job_qualification['option']),
                 'selected_weight' => $ats->weight,
                 'parameters' => $ats->JobATSScoreParameter->map(function ($parameter) {
                     return [
