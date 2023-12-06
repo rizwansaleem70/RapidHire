@@ -345,11 +345,19 @@ class JobService implements JobContract
                 ->where('job_qualification_id', $job_qualification['id'])
                 ->first();
 
+            $options = explode(",", $job_qualification['option']);
+            $options_data = [];
+            foreach ($options as $option) {
+                $options_data[] = [
+                    'name' => $option
+                ];
+            }
+
             $fields[] = [
                 'id' => $job_qualification['id'],
                 'name' => $job_qualification['name'],
                 'input_type' => $job_qualification['input_type'],
-                'option' => explode(",", $job_qualification['option']),
+                'option' => $options_data,
                 'selected_weight' => $ats->weight,
                 'parameters' => $ats->JobATSScoreParameter->map(function ($parameter) {
                     return [
