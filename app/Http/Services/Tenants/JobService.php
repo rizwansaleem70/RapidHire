@@ -345,6 +345,8 @@ class JobService implements JobContract
                 ->where('job_qualification_id', $job_qualification['id'])
                 ->first();
 
+            if(!$ats) continue;
+
             $options = explode(",", $job_qualification['option']);
             $options_data = [];
             foreach ($options as $option) {
@@ -455,7 +457,6 @@ class JobService implements JobContract
             $modelJobATSScore->save();
 
             foreach ($ats['data'] as $value) {
-                if ($value['parameter'] == null) continue;
                 $modelJobATSScoreParameter = new $this->modelJobATSScoreParameter;
                 $modelJobATSScoreParameter->parameter = $value['parameter'];
                 $modelJobATSScoreParameter->value = $value['value'];
