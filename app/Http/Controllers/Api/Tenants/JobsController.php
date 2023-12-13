@@ -27,6 +27,7 @@ use App\Http\Resources\Tenants\RequirementResourceCollection;
 use App\Http\Resources\Tenants\ApplicantJobResourceCollection;
 use App\Http\Resources\Tenants\JobApplicantResourceCollection;
 use App\Http\Requests\Tenants\Candidate\UpdateApplicantProfileRequest;
+use App\Http\Requests\Tenants\JobStatusRequest;
 use App\Http\Resources\Tenants\CandidateAppliedJobsResourceCollection;
 use App\Models\Tenants\CandidateInterviews;
 
@@ -375,5 +376,21 @@ class JobsController extends Controller
         }
 
         return $this->successResponse('OK', $data);
+    }
+
+    public function jobStatus(JobStatusRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+            $job = $this->job->jobStatus($request->prepareRequest());
+            if ($job) {
+                DB::commit();
+                return $this->successResponse("Status updated successfully!");
+            }
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Helper::logMessage('job/status', $request->all(), $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
     }
 }

@@ -29,4 +29,5 @@ interface JobContract
     public function profileUpdate($data, $user_id);
     public function getAtsScore($job_id);
     public function showJobDetail($job_id);
+    public function jobStatus($data);
 }

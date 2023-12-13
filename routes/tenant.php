@@ -137,5 +137,6 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::get('get_candidate_interviews/{applicant_id}', [InterviewsController::class, 'index']);
         Route::delete('schedule_interview/{id}', [InterviewsController::class, 'destroy']);
         Route::get('documents', [JobsController::class, 'getApplicantDocuments']);
+        Route::post('job/status', [JobsController::class, 'jobStatus']);
     });
 });

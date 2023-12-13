@@ -345,7 +345,7 @@ class JobService implements JobContract
                 ->where('job_qualification_id', $job_qualification['id'])
                 ->first();
 
-            if(!$ats) continue;
+            if (!$ats) continue;
 
             $options = explode(",", $job_qualification['option']);
             $options_data = [];
@@ -616,5 +616,13 @@ class JobService implements JobContract
             $modelExperience->save();
         }
         return $model;
+    }
+
+    public function jobStatus($data)
+    {
+        $job = $this->model->find($data['job_id']);
+        $job->status = $data['status'];
+        $job->save();
+        return $job;
     }
 }
