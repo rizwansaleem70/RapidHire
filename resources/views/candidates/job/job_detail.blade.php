@@ -77,7 +77,7 @@
                         <div class="content-tab">
                             <div class="inner-content">
                                 <h5>Full Job Description</h5>
-                                {{$data['job']->job_description}}
+                                {!!$data['job']->job_description!!}
                                 <div class="post-navigation d-flex aln-center mt-3">
                                     <div class="wd-social d-flex aln-center">
                                         <span>Social Profiles:</span>
