@@ -12,6 +12,7 @@ use App\Http\Requests\Tenants\UpdateDepartmentRequest;
 use App\Http\Resources\Tenants\CandidateInterviewResourceCollection;
 use App\Http\Resources\Tenants\Department;
 use App\Http\Resources\Tenants\DepartmentCollection;
+use App\Http\Resources\Tenants\ScheduleInterviewResourceCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -75,6 +76,18 @@ class InterviewsController extends Controller
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
             Helper::logMessage("interview destroy", 'id = ' . $id, $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+
+    public function scheduleInterview()
+    {
+        try {
+            $interviews = $this->interview->scheduleInterview();
+            $interviews = new ScheduleInterviewResourceCollection($interviews);
+            return $this->successResponse("Success", $interviews);
+        } catch (\Throwable $th) {
+            Helper::logMessage("schedule_interview", "None", $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
