@@ -63,7 +63,7 @@ class MemberService implements MemberContract
         if (empty($model)) {
             throw new CustomException("Record Not Found!");
         }
-        return $model->with('roles')->whereHas('roles', function ($query) {
+        return $this->model->where('id',$id)->with('roles')->whereHas('roles', function ($query) {
             $query->whereIn('id', [Constant::ROLE_INTERVIEWER, Constant::ROLE_RECRUITER]);
         })->first(['id', 'first_name', 'last_name', 'email', 'status', 'created_at']);
     }
