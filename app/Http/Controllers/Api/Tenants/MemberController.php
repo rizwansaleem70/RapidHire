@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Tenants;
 
 use App\Http\Requests\Tenants\UpdateMemberRequest;
 use App\Http\Resources\Tenants\MemberResource;
+use App\Http\Resources\Tenants\MemberResourceCollection;
 use App\Models\User;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
@@ -27,10 +28,16 @@ class MemberController extends Controller
     {
         try {
             $members = $this->member->index($request->role);
+            $members = new MemberResourceCollection($members);
             return $this->successResponse("Success", $members);
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
+            } catch (CustomException $th) {
+                DB::rollBack();
+                return $this->failedResponse($th->getMessage());
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                Helper::logMessage("member/store", $request->input(), $th->getMessage());
+                return $this->failedResponse('something went wrong!');
+            }
     }
 
     /**
@@ -77,7 +84,7 @@ class MemberController extends Controller
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
-            Helper::logMessage("Member show", 'id =' . $id, $th->getMessage());
+            Helper::logMessage("Member update", 'id =' . $id, $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }
