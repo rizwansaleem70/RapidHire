@@ -50,6 +50,18 @@ class MemberController extends Controller
             return $this->failedResponse('something went wrong!');
         }
     }
+    public function show(string $id)
+    {
+        try {
+            $data = $this->member->show($id);
+            return $this->successResponse("Member Found Successfully", $data);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage("Member show", 'id =' . $id, $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
 
     /**
      * Update the specified resource in storage.

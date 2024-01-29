@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\Tenants;
 
+use App\Exceptions\CustomException;
 use App\Models\User;
 use App\Helpers\Constant;
 use App\Contracts\Tenants\MemberContract;
@@ -70,5 +71,15 @@ class MemberService implements MemberContract
 
     public function delete($id)
     {
+    }
+    public function show($id)
+    {
+        $model = $this->model->find($id);
+        if (empty($model)) {
+            throw new CustomException("Record Not Found!");
+        }
+        return $this->model->whereHas('roles', function ($query) {
+            $query->whereIn('id', [Constant::ROLE_INTERVIEWER, Constant::ROLE_RECRUITER]);
+        })->select('id', 'first_name', 'last_name', 'email', 'status', 'created_at')->latest()->get();
     }
 }
