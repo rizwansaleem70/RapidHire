@@ -181,17 +181,6 @@
                                 @endforeach
                             </ul>
                         </div>
-                        <div class="form-job-single">
-                            <h6>Contact Us</h6>
-                            <form action="post">
-                                <input type="text" placeholder="Subject">
-                                <input type="text" placeholder="Name">
-                                <input type="email" placeholder="Email">
-                                <textarea placeholder="Message..."></textarea>
-                                <button>Send Message</button>
-                            </form>
-
-                        </div>
                     </div>
                 </div>
             </div>
