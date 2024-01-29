@@ -79,6 +79,7 @@ class JobsController extends Controller
     {
         try {
             $job = $this->job->show($id);
+            dd($job);
             $job = new JobEditResource($job);
             return $this->successResponse('Job Found Successfully', $job);
         } catch (CustomException $th) {
