@@ -9,6 +9,7 @@ interface MemberContract
 {
     public function index($role = null);
     public function store($input);
-    public function update($input, $id);
+    public function show($id);
+    public function update($request, $id);
     public function delete($id);
 }
