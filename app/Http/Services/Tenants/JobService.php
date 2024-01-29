@@ -238,6 +238,9 @@ class JobService implements JobContract
         if (isset($data['salary_deliver']) && $data['salary_deliver']) {
             $model->salary_deliver = $data['salary_deliver'];
         }
+        if (isset($data['ats_threshold']) && $data['ats_threshold']) {
+            $model->ats_threshold = $data['ats_threshold'];
+        }
         if (isset($data['cover_image']) && $data['cover_image']) {
             $model->cover_image = $data['cover_image'];
         }
