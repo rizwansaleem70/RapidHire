@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\Tenants;
 
+use App\Http\Requests\Tenants\UpdateMemberRequest;
+use App\Http\Resources\Tenants\MemberResource;
 use App\Models\User;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
@@ -54,6 +56,7 @@ class MemberController extends Controller
     {
         try {
             $data = $this->member->show($id);
+            $data = new MemberResource($data);
             return $this->successResponse("Member Found Successfully", $data);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
@@ -66,9 +69,17 @@ class MemberController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateMemberRequest $request, $id)
     {
-        //
+        try {
+            $this->member->update($request->prepareData(),$id);
+            return $this->okResponse("Member Updated Successfully");
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage("Member show", 'id =' . $id, $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
     }
 
     /**
