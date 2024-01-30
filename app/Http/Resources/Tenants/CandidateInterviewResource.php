@@ -21,6 +21,12 @@ class CandidateInterviewResource extends JsonResource
             'start_time' => $this->start_time,
             'end_time' => $this->end_time,
             'interviewer_link' => $this->interviewer_link,
+            'language' => $this->language,
+            'speaking' => $this->speaking,
+            'behavior' => $this->behavior,
+            'listening' => $this->listening,
+            'interviewer_feedback' => $this->interviewer_feedback,
+            'feedback_date' => $this->feedback_date
         ];
     }
 }
