@@ -2,9 +2,10 @@
 
 namespace Database\Seeders\tenant;
 
-use App\Models\Tenants\Permission;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Tenants\Permission;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class PermissionSeeder extends Seeder
 {
@@ -13,13 +14,15 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $modules = ["jobs","applicants",'message','schedules','members','settings','faqs','invoices'];
-        $actions = ["*","view","update","create","delete"];
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        $modules = ["jobs", "applicants", 'message', 'schedules', 'members', 'settings', 'faqs', 'invoices'];
+        $actions = ["*", "view", "update", "create", "delete"];
 
-        foreach ($modules as $mobule) {
+        foreach ($modules as $module) {
             foreach ($actions as $value) {
-                Permission::create(['name' => $mobule.'.'.$value]);
+                Permission::create(['name' => $module . '.' . $value]);
             }
         }
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
