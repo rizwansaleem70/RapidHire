@@ -82,7 +82,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::get('dashboard-authenticate', [AuthController::class, 'dashboardAuthenticate']);
 
-    Route::group(['middleware' => ['auth', 'verified', 'cors']], function () {
+    Route::group(['middleware' => ['auth:sanctum','verified', 'cors']], function () {
         Route::get('dashboard', [HomeController::class, 'getDashboardStats']);
         Route::get('candidate-dashboard/{user_id}', [HomeController::class, 'getCandidateDashboardStats']);
         Route::get('get-all-country', [HomeController::class, 'getAllCountry']);
