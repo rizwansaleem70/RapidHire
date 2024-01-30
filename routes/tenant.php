@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Contracts\Tenants\TimeSlotsController;
@@ -46,6 +47,8 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
     //    Route::get('/',function (){
     //        return 'tenant application'.tenant('id');
     //    });
+    Auth::routes(['verify' => true]);
+
     Route::get('/', [CandidateHomeController::class, 'home'])->name('candidate.home');
     Route::view('about', 'candidates/about')->name('candidate.user-about');
     Route::get('get-all-state-from-country', [HomeController::class, 'getAllStateCandidate'])->name('get-all-state-from-country');
@@ -60,15 +63,15 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
     Route::view('user-apply', 'candidates/apply')->name('tenant-user-apply');
 
     // Tenant Candidate User Auth Routes
-    Route::get('user-signup', [UserAuthController::class, 'signup'])->name('tenant-user-signup');
-    Route::post('user-signup', [UserAuthController::class, 'register'])->name('register-user');
-    Route::get('login', [UserAuthController::class, 'loginPage'])->name('candidate.login');
-    Route::post('user-login', [UserAuthController::class, 'login'])->name('tenant-user-login');
+//    Route::get('user-signup', [UserAuthController::class, 'signup'])->name('tenant-user-signup');
+//    Route::post('user-signup', [UserAuthController::class, 'register'])->name('register-user');
+//    Route::get('login', [UserAuthController::class, 'loginPage'])->name('candidate.login');
+//    Route::post('user-login', [UserAuthController::class, 'login'])->name('tenant-user-login');
+//
+//    Route::get('logout', [UserAuthController::class, 'logout'])->name('candidate.logout');
 
-    Route::get('logout', [UserAuthController::class, 'logout'])->name('candidate.logout');
-
-    Route::get('user-reset-password', [UserAuthController::class, 'resetPasswordPage'])->name('tenant-user-reset-password');
-    Route::post('user-reset-password', [UserAuthController::class, 'resetPassword'])->name('user-reset-password');
+//    Route::get('user-reset-password', [UserAuthController::class, 'resetPasswordPage'])->name('tenant-user-reset-password');
+//    Route::post('user-reset-password', [UserAuthController::class, 'resetPassword'])->name('user-reset-password');
 
     Route::post('like-job', [CandidateJobsController::class, 'like'])->name('user-like-job');
     Route::post('dislike-job', [CandidateJobsController::class, 'dislike'])->name('user-dislike-job');
@@ -79,7 +82,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::get('dashboard-authenticate', [AuthController::class, 'dashboardAuthenticate']);
 
-    Route::group(['middleware' => ['auth:sanctum', 'cors']], function () {
+    Route::group(['middleware' => ['auth', 'verified', 'cors']], function () {
         Route::get('dashboard', [HomeController::class, 'getDashboardStats']);
         Route::get('candidate-dashboard/{user_id}', [HomeController::class, 'getCandidateDashboardStats']);
         Route::get('get-all-country', [HomeController::class, 'getAllCountry']);

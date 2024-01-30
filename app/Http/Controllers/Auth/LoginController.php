@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -19,21 +21,16 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    use AuthenticatesUsers {
+        logout as performLogout;
+    }
 
     /**
      * Where to redirect candidates after login.
      *
      * @var string
      */
-    protected function redirectTo()
-    {
-        if (\Auth::user()->hasRole('SuperAdmin')) {
-            return route('SuperAdmin');
-        } else {
-            return route('home');
-        }
-    }
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -43,5 +40,19 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+    protected function authenticated(Request $request, $user)
+    {
+        if ($user->email_verified_at != null){
+            return redirect()->route('candidate.home')->with('success', 'Logged in Successfully');
+        }else{
+            Auth::logout();
+            return redirect()->route('candidate.home')->with('message', 'Please verify first.A fresh verification link has been sent to your email address.');
+        }
+    }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        return redirect()->route('candidate.home')->with('success','Logged out Successfully');
     }
 }
