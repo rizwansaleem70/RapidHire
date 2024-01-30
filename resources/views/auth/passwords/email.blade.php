@@ -1,47 +1,135 @@
-@extends('layouts.app')
+@include('candidates.auth.layouts.header')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+<style>
+    @media screen and (min-width: 1200px) {
+        .social-buttons-container {
+            align-items: center;
+        }
+    }
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+    .card {
+        background-color: #fbfcfc !important;
+        border-radius: 20px;
+        border-color: black;
+    }
+
+    .social-buttons-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .social-buttons-list {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .social-buttons-list li {
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .wd-form-login button {
+        background: #6be8a3;
+        border-radius: 10px !important;
+        text-align: center;
+        color: #fff;
+        padding: 16px 10px !important;
+        width: 100% !important;
+        border-color: #6be8a3;
+        text-transform: capitalize;
+        font-weight: 700;
+        font-size: 16px;
+    }
+
+    .wd-form-login button {
+        background: black;
+    }
+
+    .wd-form-login button:hover {
+        background: black;
+    }
+</style>
+<body>
+<a id="scroll-top"></a>
+
+<!-- preloade -->
+
+<!-- /preload -->
+
+
+<!-- Boxed -->
+<div class="boxed">
+    <!-- HEADER -->
+
+    <!-- END HEADER -->
+
+
+    <section class="account-section" style="background-image: url(./app-assets/users/images/used/Signin.png);
+  background-size: cover; /* Adjust the background size property */
+  background-repeat: no-repeat; /* Prevent the background image from repeating */
+  width: 100%;
+  height: 100vh;">
+        <div class="tf-container">
+
+
+            <div class="col-lg-6 wd-form-login ">
+                <div class="container card" style="padding: 5%;background-color: fbfcfc;">
+                    <strong><h6 style=" margin-top: 2%;">Reset Password</h6></strong>
+                    <p style=" margin-top: 2%;">Enter email for verification code</p>
+
+                    @if($errors->any())
+                        @foreach($errors->all() as $error)
+                            <div class="alert alert-danger">
+                                {{$error}}
+                            </div>
+                        @endforeach
+                    @endif
+
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{session('success')}}
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('password.email') }}">
+                    @if(session('error'))
+                        <div class="alert alert-danger">
+                            {{session('error')}}
+                        </div>
+                    @endif
+                    @if(Session::get('success'))
+                        <div class="alert alert-success">
+                            {{session::get('success 123')}}
+                        </div>
+                    @endif
+                    @if(session('message'))
+                        <div class="alert alert-success">
+                            {{session('message')}}
+                        </div>
+                    @endif
+
+                    <form action="{{route('password.email')}}" style="margin-top: 10%;" method="POST">
                         @csrf
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                        <div class="ip">
+                            <strong><label>Email</label></strong>
+                            <input type="text" name="email" placeholder="Your email " style="border-radius: 20px;">
                         </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
+
+                        <button type="submit" style="margin-top: 5%;">Send</button>
+
+
+                        <div class="sign-up">Don't have an account?<a href="{{route('register')}}">Sign Up</a>
                         </div>
                     </form>
                 </div>
             </div>
+
         </div>
-    </div>
-</div>
-@endsection
+    </section>
+
+
+</div><!-- /.boxed -->
+
+@include('candidates.auth.layouts.footer')

@@ -15,7 +15,7 @@
         <div class="header-ct-right">
             @guest
                 <div class="header-customize-item d-flex justify-content-center mt-2">
-                    <a class="btn btn-light" href="{{route('candidate.login')}}">Sign In / Sign Up</a>
+                    <a class="btn btn-light" href="{{route('login')}}">Sign In / Sign Up</a>
                 </div>
             @endguest
         </div>
