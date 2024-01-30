@@ -20,14 +20,13 @@ class RoleTableSeeder extends Seeder
         Role::create(['id' => '2', 'name' => 'Admin']);
         Role::create(['id' => '3', 'name' => 'Tenant']);
         Role::create(['id' => '4', 'name' => 'SubAdmin']);
-        Role::create(['id' => '5', 'name' => 'Interviewer']);
-        Role::create(['id' => '6', 'name' => 'Recruiter']);
-        $admin1 = User::create([
+        $admin1 = User::firstOrCreate([
+            'email' => 'admin@rapidhire.com',
+        ], [
             'name' => 'Super Admin',
             'email' => 'admin@rapidhire.com',
             'password' => '12345678',
         ]);
-
         $admin1->assignRole('SuperAdmin');
 
         $module1 = Module::create([
