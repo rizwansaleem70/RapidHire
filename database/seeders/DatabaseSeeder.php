@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call(RoleTableSeeder::class);
+         $this->call(RoleTableSeeder::class);
         // $this->call(CountriesTableSeeder::class);
         // $this->call(StatesTableSeeder::class);
         // $this->call(CitiesTableChunkOneSeeder::class);
@@ -30,8 +30,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(CitiesTableChunkThreeSeeder::class);
         // $this->call(CitiesTableChunkFourSeeder::class);
         // $this->call(CitiesTableChunkFiveSeeder::class);
-        $this->call(TestServicesSeeder::class);
-        $this->call(PermissionSeeder::class);
+//        $this->call(TestServicesSeeder::class);
+//        $this->call(PermissionSeeder::class);
 
 
         // $this->call(RoleTableSeeder::class);
