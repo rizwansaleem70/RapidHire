@@ -17,13 +17,13 @@ class ImageUploadsController extends Controller
 
     public function __construct(ImageUploadContract $imageUpload)
     {
-        $this->ImageUpload = $imageUpload;
+        $this->imageUpload = $imageUpload;
     }
     public function store(StoreImageUploadRequest $request)
     {
         try {
             DB::beginTransaction();
-            $imageUpload = $this->ImageUpload->store($request->prepareRequest());
+            $imageUpload = $this->imageUpload->store($request->prepareRequest());
             DB::commit();
             return $this->successResponse("File Upload Successfully", $imageUpload);
         } catch (CustomException $th) {

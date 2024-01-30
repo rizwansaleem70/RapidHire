@@ -11,12 +11,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Contracts\Tenants\JobContract;
 use App\Models\Tenants\JobQualification;
+use App\Models\Tenants\CandidateInterviews;
 use App\Http\Resources\Tenants\JobCollection;
 use App\Http\Requests\Tenants\StoreJobRequest;
+use App\Http\Requests\Tenants\JobStatusRequest;
 use App\Http\Requests\Tenants\UpdateJobRequest;
 use App\Http\Resources\Tenants\JobEditResource;
 use App\Http\Resources\Tenants\JobShowResource;
 use App\Http\Resources\Tenants\ProfileResource;
+use App\Http\Requests\Tenants\SendJobOfferRequest;
 use App\Models\Tenants\ApplicantRequirementAnswer;
 use App\Http\Requests\Tenants\StoreATS_ScoreRequest;
 use App\Http\Resources\Tenants\DepartmentCollection;
@@ -27,9 +30,7 @@ use App\Http\Resources\Tenants\RequirementResourceCollection;
 use App\Http\Resources\Tenants\ApplicantJobResourceCollection;
 use App\Http\Resources\Tenants\JobApplicantResourceCollection;
 use App\Http\Requests\Tenants\Candidate\UpdateApplicantProfileRequest;
-use App\Http\Requests\Tenants\JobStatusRequest;
 use App\Http\Resources\Tenants\CandidateAppliedJobsResourceCollection;
-use App\Models\Tenants\CandidateInterviews;
 
 class JobsController extends Controller
 {
@@ -74,6 +75,7 @@ class JobsController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
+
 
     public function show(string $id)
     {

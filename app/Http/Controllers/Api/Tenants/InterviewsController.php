@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Api\Tenants;
 
-use App\Contracts\Tenants\InterviewContract;
-use App\Exceptions\CustomException;
 use App\Helpers\Helper;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Tenants\InterviewScheduleRequest;
-use App\Http\Requests\Tenants\StoreDepartmentRequest;
-use App\Http\Requests\Tenants\UpdateDepartmentRequest;
-use App\Http\Resources\Tenants\CandidateInterviewResourceCollection;
-use App\Http\Resources\Tenants\Department;
-use App\Http\Resources\Tenants\DepartmentCollection;
-use App\Http\Resources\Tenants\ScheduleInterviewResourceCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Exceptions\CustomException;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Tenants\Department;
+use App\Contracts\Tenants\InterviewContract;
+use App\Http\Requests\Tenants\SendJobOfferRequest;
+use App\Http\Resources\Tenants\DepartmentCollection;
+use App\Http\Requests\Tenants\StoreDepartmentRequest;
+use App\Http\Requests\Tenants\UpdateDepartmentRequest;
+use App\Http\Requests\Tenants\InterviewScheduleRequest;
+use App\Http\Resources\Tenants\ScheduleInterviewResourceCollection;
+use App\Http\Resources\Tenants\CandidateInterviewResourceCollection;
 
 class InterviewsController extends Controller
 {
@@ -88,6 +89,22 @@ class InterviewsController extends Controller
             return $this->successResponse("Success", $interviews);
         } catch (\Throwable $th) {
             Helper::logMessage("schedule_interview", "None", $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+
+
+    public function sendJobOffer(SendJobOfferRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+            $this->interview->sendJobOffer($request->prepareData());
+            DB::commit();
+            return $this->successResponse('Job offer sent to the candidate.');
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage('job index', $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }

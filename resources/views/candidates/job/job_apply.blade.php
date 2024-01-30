@@ -278,6 +278,7 @@
                                                             {!! Form::date('experience[' . $key . '][start_date]', $experience->start_date, [
                                                                 'class' => 'form-control',
                                                                 'id' => 'start_' . $key,
+                                                                'max' => "{{ date('Y-m-d') }}",
                                                                 'placeholder' => 'Start Date ',
                                                             ]) !!}
                                                         </div>
@@ -291,6 +292,7 @@
                                                                 [
                                                                     'class' => "form-control end_date " . ($experience->is_present ? 'd-none' : ''),
                                                                     'id' => 'end_' . $key,
+                                                                    'max' => "{{ date('Y-m-d') }}",
                                                                     'placeholder' => 'End Date ',
                                                                 ],
                                                             ) !!}

@@ -2,12 +2,15 @@
 
 namespace App\Http\Services\Tenants;
 
-use App\Contracts\Tenants\InterviewContract;
-use App\Models\Tenants\CandidateInterviews;
-use App\Exceptions\CustomException;
-use App\Models\Notification;
 use App\Models\TimeSlot;
+use App\Helpers\Constant;
+use App\Models\Notification;
+use App\Models\Tenants\Applicant;
+use App\Exceptions\CustomException;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Tenants\CandidateInterviews;
+use App\Contracts\Tenants\InterviewContract;
+use App\Notifications\SendJobOfferNotification;
 
 /**
  * @var Tenants\InterviewService
@@ -16,10 +19,12 @@ class InterviewService implements InterviewContract
 {
     public CandidateInterviews $model;
     public TimeSlot $modelTimeSlot;
+    public Applicant $applicant;
     public function __construct()
     {
         $this->model = new CandidateInterviews();
         $this->modelTimeSlot = new TimeSlot();
+        $this->applicant = new Applicant();
     }
 
     public function setInterview($data)
@@ -92,5 +97,17 @@ class InterviewService implements InterviewContract
     {
         $interviews = $this->model->with('applicant.user:id,first_name,last_name')->get();
         return $interviews;
+    }
+
+    public function sendJobOffer($data)
+    {
+        $application = $this->applicant->with(['user:id,first_name,last_name,email', 'job:id,name'])
+            ->find($data['application_id']);
+
+        $application->job_offer_contract = $data['job_offer_contract'];
+        $application->status = Constant::OFFER;
+        $application->save();
+
+        $application->user->notify(new SendJobOfferNotification($application));
     }
 }

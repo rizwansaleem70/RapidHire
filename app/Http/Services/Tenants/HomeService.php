@@ -15,8 +15,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 /**
-* @var HomeService
-*/
+ * @var HomeService
+ */
 class HomeService implements HomeContract
 {
     public Country $modelCountry;
@@ -41,15 +41,14 @@ class HomeService implements HomeContract
     public function getAllCountry()
     {
         return $this->modelCountry->latest()->get();
-
     }
 
     public function getAllState($request)
     {
         return $this->modelState
             ->when($request->country_id, function ($q, $country_id) {
-            return $q->where('country_id', $country_id);
-        })->latest()->get();
+                return $q->where('country_id', $country_id);
+            })->orderBy('name', 'ASC')->get();
     }
 
     public function getAllCity($request)
@@ -57,7 +56,7 @@ class HomeService implements HomeContract
         return $this->modelCity
             ->when($request->state_id, function ($q, $state_id) {
                 return $q->where('state_id', $state_id);
-            })->latest()->get();
+            })->orderBy('name', 'ASC')->get();
     }
 
     public function getCandidateDashboardStats($user_id)
@@ -67,28 +66,30 @@ class HomeService implements HomeContract
         return [
             'totalSaveJobs' => $totalSaveJobs,
             'totalAppliedJobs' => $totalAppliedJobs,
-            ];
+        ];
     }
 
     public function getDashboardStats()
     {
         $totalJobs = $this->modelJob->count();
-        $activeTotalJobs = $this->modelJob->where('status', 'published')->where('expiry_date', '>=',date('Y-m-d'))->count();
+        $activeTotalJobs = $this->modelJob->where('status', 'published')
+            ->where('expiry_date', '>=', date('Y-m-d'))
+            ->count();
         $totalApplicant = $this->modelApplicant->count();
         $totalHired = $this->modelApplicant->where('status', 'hired')->count();
         $totalRejected = $this->modelApplicant->where('status', 'rejected')->count();
         $totalMember = $this->modelUser->whereHas('roles', function ($query) {
             $query->whereIn('id', [Constant::ROLE_INTERVIEWER, Constant::ROLE_RECRUITER]);
         })->count();
-        $notifications = Notification::latest()->limit(10)->get(['id', 'message','created_at']);
-            return [
-                'totalJobs' => $totalJobs,
-                'activeTotalJobs' => $activeTotalJobs,
-                'totalApplicant' => $totalApplicant,
-                'totalHired' => $totalHired,
-                'totalRejected' => $totalRejected,
-                'totalMember' => $totalMember,
-                'notifications' => $notifications,
-            ];
+        $notifications = Notification::latest()->limit(10)->get(['id', 'message', 'created_at']);
+        return [
+            'totalJobs' => $totalJobs,
+            'activeTotalJobs' => $activeTotalJobs,
+            'totalApplicant' => $totalApplicant,
+            'totalHired' => $totalHired,
+            'totalRejected' => $totalRejected,
+            'totalMember' => $totalMember,
+            'notifications' => $notifications,
+        ];
     }
 }

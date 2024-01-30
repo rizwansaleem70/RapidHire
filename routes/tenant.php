@@ -77,7 +77,6 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
 Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
-    //    Route::post('forgot', [AuthController::class, 'forgot']);
     Route::get('dashboard-authenticate', [AuthController::class, 'dashboardAuthenticate']);
 
     Route::group(['middleware' => ['auth:sanctum', 'cors']], function () {
@@ -139,5 +138,6 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::get('documents', [JobsController::class, 'getApplicantDocuments']);
         Route::post('job/status', [JobsController::class, 'jobStatus']);
         Route::get('schedule_interview', [InterviewsController::class, 'scheduleInterview']);
+        Route::post('send_job_offer', [InterviewsController::class, 'sendJobOffer']);
     });
 });

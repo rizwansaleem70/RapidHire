@@ -7,8 +7,8 @@ use App\Exceptions\CustomException;
 use App\Models\Tenants\InterviewFeedback;
 
 /**
-* @var InterviewFeedbackService
-*/
+ * @var InterviewFeedbackService
+ */
 class InterviewFeedbackService implements InterviewFeedbackContract
 {
     public InterviewFeedback $model;

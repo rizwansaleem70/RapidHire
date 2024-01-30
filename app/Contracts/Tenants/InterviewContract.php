@@ -10,5 +10,6 @@ interface InterviewContract
     public function setInterview($data);
     public function getScheduledInterviews($applicant_id);
     public function removeInterview($id);
+    public function sendJobOffer($data);
     public function scheduleInterview();
 }
