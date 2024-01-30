@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Tenants\Applicant;
 use App\Models\Tenants\Candidate\FavoriteJob;
 use App\Models\Tenants\City;
@@ -12,8 +12,9 @@ use App\Models\Tenants\Experience;
 use App\Models\Tenants\Job;
 use App\Models\Tenants\JobExperience;
 use App\Models\Tenants\State;
-use App\Traits\SoftDeleteColumnValuesUpdate;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Messages\MailMessage;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
@@ -21,7 +22,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable  implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles,SoftDeletes;
 

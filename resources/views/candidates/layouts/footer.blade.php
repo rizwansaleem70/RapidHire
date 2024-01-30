@@ -46,7 +46,7 @@
                                     <li> <a href="{{"https://rapidhire-candidate.netlify.app/#/sign-in/".encrypt(auth()->user()->id)}}">User Dashboard</a> </li>
 
                                 @else
-                                    <li><a href="{{route('candidate.login')}}">User Dashboard</a></li>
+                                    <li><a href="{{route('login')}}">User Dashboard</a></li>
                                 @endauth
                             </ul>
                             <ul class="list-social d-flex aln-center">
