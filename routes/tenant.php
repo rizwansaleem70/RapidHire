@@ -68,7 +68,7 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
     Route::get('logout', [UserAuthController::class, 'logout'])->name('candidate.logout');
 
     Route::get('user-reset-password', [UserAuthController::class, 'resetPasswordPage'])->name('tenant-user-reset-password');
-    Route::post('user-reset-password', [UserAuthController::class, 'resetPassword'])->name('tenant-user-reset-password');
+    Route::post('user-reset-password', [UserAuthController::class, 'resetPassword'])->name('user-reset-password');
 
     Route::post('like-job', [CandidateJobsController::class, 'like'])->name('user-like-job');
     Route::post('dislike-job', [CandidateJobsController::class, 'dislike'])->name('user-dislike-job');
