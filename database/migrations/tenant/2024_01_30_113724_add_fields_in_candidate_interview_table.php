@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('candidate_interviews', function (Blueprint $table) {
-            $table->tinyInteger('speaking');
-            $table->tinyInteger('listening');
-            $table->tinyInteger('language');
-            $table->tinyInteger('behavior');
+            $table->tinyInteger('speaking')->default(0)->nullable();
+            $table->tinyInteger('listening')->default(0)->nullable();
+            $table->tinyInteger('language')->default(0)->nullable();
+            $table->tinyInteger('behavior')->default(0)->nullable();
             $table->text('interviewer_feedback')->nullable();
             $table->dateTime('feedback_date')->nullable();
         });
