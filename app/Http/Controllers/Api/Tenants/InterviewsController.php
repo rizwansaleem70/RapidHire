@@ -14,6 +14,7 @@ use App\Http\Resources\Tenants\DepartmentCollection;
 use App\Http\Requests\Tenants\StoreDepartmentRequest;
 use App\Http\Requests\Tenants\UpdateDepartmentRequest;
 use App\Http\Requests\Tenants\InterviewScheduleRequest;
+use App\Http\Requests\Tenants\SaveInterviewerFeedbackRequest;
 use App\Http\Resources\Tenants\ScheduleInterviewResourceCollection;
 use App\Http\Resources\Tenants\CandidateInterviewResourceCollection;
 
@@ -87,6 +88,17 @@ class InterviewsController extends Controller
             $interviews = $this->interview->scheduleInterview();
             $interviews = new ScheduleInterviewResourceCollection($interviews);
             return $this->successResponse("Success", $interviews);
+        } catch (\Throwable $th) {
+            Helper::logMessage("schedule_interview", "None", $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+
+    public function saveInterviewerFeedback(SaveInterviewerFeedbackRequest $request)
+    {
+        try {
+            $feedback = $this->interview->saveFeedback($request->prepareRequest());
+            return $this->successResponse("Feedback saved successfully.");
         } catch (\Throwable $th) {
             Helper::logMessage("schedule_interview", "None", $th->getMessage());
             return $this->failedResponse($th->getMessage());

@@ -21,7 +21,6 @@ class CandidateInterviewResource extends JsonResource
             'start_time' => $this->start_time,
             'end_time' => $this->end_time,
             'interviewer_link' => $this->interviewer_link,
-            'interviewee_link' => $this->interviewee_link
         ];
     }
 }

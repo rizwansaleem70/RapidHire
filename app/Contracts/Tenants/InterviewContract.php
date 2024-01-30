@@ -12,4 +12,5 @@ interface InterviewContract
     public function removeInterview($id);
     public function sendJobOffer($data);
     public function scheduleInterview();
+    public function saveFeedback($data);
 }

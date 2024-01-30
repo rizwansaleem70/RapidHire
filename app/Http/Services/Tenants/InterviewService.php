@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\Tenants;
 
+use Carbon\Carbon;
 use App\Models\TimeSlot;
 use App\Helpers\Constant;
 use App\Models\Notification;
@@ -109,5 +110,18 @@ class InterviewService implements InterviewContract
         $application->save();
 
         $application->user->notify(new SendJobOfferNotification($application));
+    }
+
+    public function saveFeedback($data)
+    {
+        $interview = $this->model->find($data['interview_id']);
+
+        $interview->language = $data['language'];
+        $interview->speaking = $data['speaking'];
+        $interview->listening = $data['listening'];
+        $interview->behavior = $data['behavior'];
+        $interview->interviewer_feedback = $data['interviewer_feedback'];
+        $interview->feedback_date = Carbon::now();
+        $interview->save();
     }
 }

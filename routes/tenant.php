@@ -114,7 +114,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['job-shortlisting' => JobShortlistingController::class]);
         Route::get('settings', [SettingsController::class, 'index']);
         Route::post('settings/{type}', [SettingsController::class, 'store']);
-        Route::apiResources(['interview-feedback' => InterviewFeedbacksController::class]);
+        // Route::apiResources(['interview-feedback' => InterviewFeedbacksController::class]);
         Route::post('image-upload', [ImageUploadsController::class, 'store']);
         Route::get('job/{id}/qualifications', [JobsController::class, 'getJobQualificationsForAts']);
         Route::get('job/{id}/requirements', [JobsController::class, 'requirements']);
@@ -134,6 +134,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::get('job/{id}/services-tests', [TestServicesController::class, 'getJobServiceTests']);
         Route::post('schedule_interview', [InterviewsController::class, 'store']);
         Route::get('get_candidate_interviews/{applicant_id}', [InterviewsController::class, 'index']);
+        Route::post('interview_feedback', [InterviewsController::class, 'saveInterviewerFeedback']);
         Route::delete('schedule_interview/{id}', [InterviewsController::class, 'destroy']);
         Route::get('documents', [JobsController::class, 'getApplicantDocuments']);
         Route::post('job/status', [JobsController::class, 'jobStatus']);

@@ -21,6 +21,12 @@ class ScheduleInterviewResource extends JsonResource
             "interviewee_link" => $this->interviewee_link,
             "start" => $this->interview_date . " " . $this->start_time,
             "end" => $this->interview_date . " " . $this->end_time,
+            'language' => $this->language,
+            'speaking' => $this->speaking,
+            'behavior' => $this->behavior,
+            'listening' => $this->listening,
+            'interviewer_feedback' => $this->interviewer_feedback,
+            'feedback_date' => $this->feedback_date
         ];
         // return parent::toArray($request);
     }
