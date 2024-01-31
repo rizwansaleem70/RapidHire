@@ -276,7 +276,7 @@ class JobService implements JobContract
         foreach ($job->jobQualification as $job_qualification) {
             $fields[] = [
                 'id' => $job_qualification->id,
-                'job_requirement_id' => $job_qualification->job_requirement_id,
+                'job_requirement_id' => $job_qualification->requirement_id,
                 'name' => $job_qualification->name,
                 'input_type' => $job_qualification->input_type,
                 'option' => $job_qualification->option,
