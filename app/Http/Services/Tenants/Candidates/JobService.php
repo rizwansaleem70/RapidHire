@@ -308,7 +308,7 @@ class JobService implements JobContract
 
             $status = Constant::APPLIED;
             if ($qualification['meet_criteria'] == true && $qualification['ats'] >= $job->ats_threshold)
-                $status = Constant::QUALIFICATION;
+                $status = Constant::INTERVIEW;
             elseif ($qualification['meet_criteria'] == true && $qualification['ats'] >= 0)
                 $status = Constant::APPLIED;
             elseif ($qualification['meet_criteria'] == false)
