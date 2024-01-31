@@ -11,6 +11,8 @@ use App\Exceptions\CustomException;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenants\CandidateInterviews;
 use App\Contracts\Tenants\InterviewContract;
+use App\Notifications\SendInterviewNotification;
+use App\Notifications\SendInterviewNotificationToInterviewer;
 use App\Notifications\SendJobOfferNotification;
 
 /**
@@ -37,6 +39,9 @@ class InterviewService implements InterviewContract
             'title' => 'interview',
             'message' => 'Your interview has been scheduled'
         ]);
+
+        $interview->applicant->user->notify(new SendInterviewNotification($interview));
+        $interview->interviewer->notify(new SendInterviewNotificationToInterviewer($interview));
         return $interview;
     }
 

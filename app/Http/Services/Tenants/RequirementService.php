@@ -54,10 +54,11 @@ class RequirementService implements RequirementContract
      */
     public function delete($id)
     {
-        $model = $this->model->find($id);
-        if (empty($model)) {
-            throw new CustomException("Requirement Not Found!");
+        $model = $this->model->findOrFail($id);
+        if ($model->jobRequirement()->count() > 0) {
+            throw new CustomException("Cannot remove requirement so cannot remove it.");
         }
+
         $model->delete();
         return true;
     }

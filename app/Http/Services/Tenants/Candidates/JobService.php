@@ -26,6 +26,7 @@ use App\Models\Tenants\Candidate\FavoriteJob;
 use App\Models\Tenants\ApplicantQuestionAnswer;
 use App\Contracts\Tenants\Candidates\JobContract;
 use App\Models\Tenants\ApplicantRequirementAnswer;
+use App\Notifications\JobAppliedNotification;
 
 /**
  * @var JobService
@@ -170,22 +171,38 @@ class JobService implements JobContract
 
     public function jobApply($slug)
     {
-        DB::enableQueryLog();
         $job = $this->modelJob->where('slug', $slug)->first();
         if (!$job) {
             throw new CustomException("Job Record Not Found!");
         }
         $user = Auth::user();
+
         $countries = $this->modelCountry->pluck('name', 'id');
+
         $states = $this->modelState->when($user->country_id, function ($q, $country_id) {
             return $q->where('country_id', $country_id);
         })->get(['id', 'name']);
+
         $cities = $this->modelCity->when($user->state_id, function ($q, $state_id) {
             return $q->where('state_id', $state_id);
         })->get(['id', 'name']);
-        $user = $this->modelUser->with(['country:id,name', 'state:id,name', 'city:id,name', 'experience'])->find(Auth::user()->id);
+
+        $user = $this->modelUser->with(['country:id,name', 'state:id,name', 'city:id,name', 'experience'])
+            ->find(Auth::user()->id);
+
         $logo = settings()->group('logo')->get('logo');
-        $job = $this->modelJob->with(['country', 'state', 'city', 'jobQuestion.questionBank', 'jobQualification.requirement', 'jobRequirement'])->where('slug', $slug)->first();
+
+        $job = $this->modelJob
+            ->with([
+                'country',
+                'state',
+                'city',
+                'jobQuestion.questionBank',
+                'jobQualification.requirement',
+                'jobRequirement'
+            ])
+            ->where('slug', $slug)->first();
+
         return [
             'countries' => $countries,
             'states' => $states,
@@ -199,7 +216,9 @@ class JobService implements JobContract
     public function jobApplyStore($data)
     {
         $modelApplicant = new $this->modelApplicant;
-        return $this->prepareData($modelApplicant, $data, true);
+        $application = $this->prepareData($modelApplicant, $data, true);
+
+        $application->user->notify(new JobAppliedNotification($application));
     }
 
     private function calculateAtsScore($data)
@@ -268,7 +287,6 @@ class JobService implements JobContract
             //code...
         } catch (\Throwable $th) {
             throw $th;
-            \Log::debug("ATS Algo Failed " . $th->getMessage());
         }
     }
 

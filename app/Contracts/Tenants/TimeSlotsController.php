@@ -217,11 +217,14 @@ class TimeSlotsController extends Controller
                     'applicant_id' => $request->applicant_id,
                     'start_time' => $time_slot->start_time,
                     'end_time' => $time_slot->end_time,
+                    'interviewee_link' => 'https://meet.google.com/zkm-vjtn-ntt',
+                    'interviewer_link' => 'https://meet.google.com/zkm-vjtn-ntt',
                 ];
 
                 $interview->setInterview($data);
                 $time_slot->status = Constant::SLOT_BOOKED;
                 $time_slot->save();
+
 
                 return $this->okResponse("Interview scheduled successfully");
             }
