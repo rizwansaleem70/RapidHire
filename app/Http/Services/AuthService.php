@@ -36,8 +36,7 @@ class AuthService implements AuthContract
 
     public function login($input)
     {
-        $user = $this->model->where('email', $input['email'])->first();
-
+        $user = $this->model->with('roles.permissions','permissions')->where('email', $input['email'])->first();
         if (!($this->model)->checkPassword($input['password'], $user->password))
             throw new CustomException("Invalid Credentials");
 
