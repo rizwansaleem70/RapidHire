@@ -16,10 +16,10 @@ class LoginUserResponse extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->first_name." ".$this->last_name,
+            'name' => $this->first_name . " " . $this->last_name,
             'email' => $this->email,
-            'avatar' => $this->avatar ? asset($this->avatar): "",
-            'roles' => isset($this->roles) ? new RoleResourceCollection($this->roles) :"",
+            'avatar' => $this->avatar ? asset($this->avatar) : "",
+            'role' => isset($this->roles) ? new RoleResource($this->roles()->first()) : "",
         ];
     }
 }

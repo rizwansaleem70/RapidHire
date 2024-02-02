@@ -17,7 +17,7 @@ class RoleResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'permission' => isset($this->permissions) ? new PermissionResourceCollection($this->permissions) : "",
+            'permissions' => $this->permissions()->count() > 0 ? $this->permissions()->pluck('name')->toArray() : [],
         ];
     }
 }
