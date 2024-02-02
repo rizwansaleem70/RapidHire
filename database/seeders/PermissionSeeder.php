@@ -15,7 +15,7 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        $modules = ["jobs", "applicants", 'message', 'schedules', 'members', 'settings', 'faqs', 'invoices'];
+        $modules = ["jobs", "applicants", 'message', 'schedules', 'members', 'settings', 'faqs', 'invoices', 'roles'];
         $actions = ["*", "view", "update", "create", "delete"];
 
         foreach ($modules as $module) {
