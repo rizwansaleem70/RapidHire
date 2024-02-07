@@ -245,35 +245,34 @@ class JobService implements JobContract
             }
 
 
-            \Log::debug("State value " . $score);
+            if (isset($data['requirement']) && count($data['requirement']) > 0) {
+                foreach ($data['requirement'] as $key => $job_requirement) {
 
-            // DB::enableQueryLog();
-            foreach ($data['requirement'] as $key => $job_requirement) {
+                    $job_qualification = JobQualification::whereJobIdAndRequirementId($data['job_id'], $job_requirement['id'])->first();
+                    if (!$job_qualification) continue;
 
-                $job_qualification = JobQualification::whereJobIdAndRequirementId($data['job_id'], $job_requirement['id'])->first();
-                if (!$job_qualification) continue;
-
-                //Check The qualification criteria
-                if (is_array($job_requirement['answer'])) continue;
+                    //Check The qualification criteria
+                    if (is_array($job_requirement['answer'])) continue;
 
 
-                $value = "'" . strtolower($job_qualification->value) . "'";
-                $answer = "'" . strtolower($job_requirement['answer']) . "'";
+                    $value = "'" . strtolower($job_qualification->value) . "'";
+                    $answer = "'" . strtolower($job_requirement['answer']) . "'";
 
 
-                if (!($value . $job_qualification->operator . $answer))
-                    $meet_criteria = false;
+                    if (!($value . $job_qualification->operator . $answer))
+                        $meet_criteria = false;
 
 
-                if ($meet_criteria) {
-                    $ats_state = $this->atsScoreModel->whereJobId($data['job_id'])->whereJobQualificationId($job_qualification->id)->first();
-                    if ($ats_state) {
-                        $parameter = $ats_state->JobATSScoreParameter()->where('parameter', $job_requirement['answer'])->first();
-                        if ($parameter) {
-                            $calc_score = $this->calculateAtsScoreWithParam($parameter->value, $ats_state->weight);
+                    if ($meet_criteria) {
+                        $ats_state = $this->atsScoreModel->whereJobId($data['job_id'])->whereJobQualificationId($job_qualification->id)->first();
+                        if ($ats_state) {
+                            $parameter = $ats_state->JobATSScoreParameter()->where('parameter', $job_requirement['answer'])->first();
+                            if ($parameter) {
+                                $calc_score = $this->calculateAtsScoreWithParam($parameter->value, $ats_state->weight);
 
-                            \Log::debug("Score = " . $calc_score);
-                            $score += $calc_score;
+                                \Log::debug("Score = " . $calc_score);
+                                $score += $calc_score;
+                            }
                         }
                     }
                 }
@@ -357,7 +356,7 @@ class JobService implements JobContract
                 }
             }
 
-            if ($data['question'] && count($data['question']) > 0) {
+            if (isset($data['question']) && $data['question'] && count($data['question']) > 0) {
                 foreach ($data['question'] as $question) {
                     $modelApplicantQuestionAnswer = new $this->modelApplicantQuestionAnswer;
                     $modelApplicantQuestionAnswer->applicant_id = $modelApplicant->id;
@@ -368,7 +367,7 @@ class JobService implements JobContract
                 }
             }
 
-            if ($data['requirement'] && count(['requirement']) > 0) {
+            if (isset($data['requirement']) && $data['requirement'] && count(['requirement']) > 0) {
                 foreach ($data['requirement'] as $requirement) {
                     if (isset($requirement['answer_type']) && $requirement['answer_type'] == 'checkbox') {
                         $requirement['answer'] = implode(',', $requirement['answer']);
