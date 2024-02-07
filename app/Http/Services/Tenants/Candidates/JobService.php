@@ -337,6 +337,7 @@ class JobService implements JobContract
             $modelApplicant->city_id = $data['city_id'];
             $modelApplicant->applied_date = date('Y-m-d');
             $modelApplicant->job_resume_path = $this->upload($data['resume_path']);
+            sleep(1);
             $modelApplicant->cover_letter_path = $this->upload($data['cover_letter_path']);
             $modelApplicant->save();
 
