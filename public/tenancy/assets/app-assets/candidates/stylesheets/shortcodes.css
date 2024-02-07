@@ -4573,7 +4573,7 @@
 }
 
 .wd-job-author2 {
-  padding: 40px 40px 30px 40px;
+  padding: 40px 0px 0px 0px;
   border-bottom: 1px solid #e5e5e5;
   display: flex;
   justify-content: space-between;
