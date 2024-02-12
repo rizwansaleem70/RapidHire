@@ -33,10 +33,6 @@
                                         <div class="group-input has-icon">
                                             <select id="state-id" class="form-control" name="state_id">
                                                 <option value="">Select Option</option>
-                                                    <!-- @foreach($data['states'] as $state)
-                                                        <option
-                                                            {{ request()->input('state_id') == $state->id ? 'Selected' : '' }} value="{{$state->id}}">{{$state->name}}</option>
-                                                    @endforeach -->
                                                 </select>
                                             </select>
                                         </div>
@@ -47,10 +43,6 @@
                                         <div class="group-input has-icon">
                                             <select id="city-id" class="form-control" name="city_id">
                                                 <option value="">Select Option</option>
-                                                    <!-- @foreach($data['cities'] as $city)
-                                                        <option
-                                                            {{ request()->input('city_id') == $city->id ? 'Selected' : '' }} value="{{$city->id}}">{{$city->name}}</option>
-                                                    @endforeach -->
                                                 </select>
                                             </select>
                                         </div>
