@@ -8,14 +8,12 @@
                     <div class="content wow fadeInUp">
                         <div class="heading text-white">
                             <h2 class="text-white">Find the job that fits your life</h2>
-                            <p>Resume-Library is a true performance-based job board. Enjoy custom hiring products and
-                                access to up to
-                                10,000 new resume registrations daily, with no subscriptions or user licences.</p>
+                            <p>We are an AI & ML automation agency improving bottom line and operational efficiency for our clients. We provide state of the data science services minimizing human effort. Come join the Jecos working round the clock across 3 different time zones.</p>
                         </div>
                         <div class="form-sl">
                             <div class="form-group-4" style="width: 150px;">
                                 <a href="{{ route('candidate.job.list') }}" class="btn btn-find"
-                                        style="background-color: #fff; color: black;">Find Jobs
+                                        style="background-color: #fff; color: black;">Apply Now
                                 </a>
                             </div>
                             <!-- End Job  Search Form-->

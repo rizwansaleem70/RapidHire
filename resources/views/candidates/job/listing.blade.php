@@ -23,7 +23,7 @@
                                             <select id="country-id" class="form-control" name="country_id">
                                                 <option value="">Select Country</option>
                                                 @foreach($data['country'] as $key => $value)
-                                                    <option value="{{$key}}">{{$value}}</option>
+                                                    <option {{ request()->input('country_id') == $key ? "selected" : " " }} value="{{$key}}">{{$value}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -32,6 +32,12 @@
                                         <label class="title">State</label>
                                         <div class="group-input has-icon">
                                             <select id="state-id" class="form-control" name="state_id">
+                                                <option value="">Select Option</option>
+                                                    @foreach($data['states'] as $state)
+                                                        <option
+                                                            {{ request()->input('state_id') == $state->id ? 'Selected' : '' }} value="{{$state->id}}">{{$state->name}}</option>
+                                                    @endforeach
+                                                </select>
                                             </select>
                                         </div>
                                     </div>
@@ -40,6 +46,12 @@
                                         <label class="title">City</label>
                                         <div class="group-input has-icon">
                                             <select id="city-id" class="form-control" name="city_id">
+                                                <option value="">Select Option</option>
+                                                    @foreach($data['cities'] as $city)
+                                                        <option
+                                                            {{ request()->input('city_id') == $city->id ? 'Selected' : '' }} value="{{$city->id}}">{{$city->name}}</option>
+                                                    @endforeach
+                                                </select>
                                             </select>
                                         </div>
                                     </div>
@@ -47,10 +59,10 @@
                                         <label class="title">On-site/Remote</label>
                                         <div class="group-input">
                                             <select class="form-control" name="job_type">
-                                                <option value="">Select Type</option>
-                                                <option value="onSite">On-site</option>
-                                                <option value="remote">Remote</option>
-                                                <option value="hybrid">Hybrid</option>
+                                                <option value="">Select Any</option>
+                                                <option {{ request()->input('job_type') == "onSite" ? 'selected' : "" }} value="onSite">On-site</option>
+                                                <option {{ request()->input('job_type') == "remote" ? 'selected' : "" }} value="remote">Remote</option>
+                                                <option {{ request()->input('job_type') == "hybrid" ? 'selected' : "" }} value="hybrid">Hybrid</option>
                                             </select>
                                         </div>
                                     </div>
@@ -58,11 +70,11 @@
                                         <label class="title">Job Types</label>
                                         <div class="group-input">
                                             <select class="form-control" name="type">
-                                                <option value="">Job Type</option>
-                                                <option value="contract">Contract</option>
-                                                <option value="full-time">Full Time</option>
-                                                <option value="temporary">Temporary</option>
-                                                <option value="part-time">Part Time</option>
+                                                <option value="">Select Any</option>
+                                                <option {{ request()->input('type') == "contract" ? 'selected' : "" }} value="contract">Contract</option>
+                                                <option {{ request()->input('type') == "full-time" ? 'selected' : "" }} value="full-time">Full Time</option>
+                                                <option {{ request()->input('type') == "temporary" ? 'selected' : "" }} value="temporary">Temporary</option>
+                                                <option {{ request()->input('type') == "part-time" ? 'selected' : "" }} value="part-time">Part Time</option>
                                             </select>
                                         </div>
                                     </div>
@@ -74,27 +86,17 @@
                                                 <div class="d-flex justify-content-between">
                                                     <div class="group-input search-ip">
 {{--                                                        <button type="button"><i class="icon-dollar"></i></button>--}}
-                                                        <input type="number" class="form-control" name="min_salary" placeholder="Min">
+                                                        <input type="number" class="form-control" name="min_salary" value="{{ request()->input('min_salary') }}" placeholder="Min">
                                                     </div>
                                                     <div class="group-input search-ip">
 {{--                                                        <button type="button"><i class="icon-dollar"></i></button>--}}
-                                                        <input type="number" class="form-control" name="max_salary" placeholder="Max">
+                                                        <input type="number" class="form-control" name="max_salary" value="{{ request()->input('max_salary') }}" placeholder="Max">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="group-form">
-
-                                        <div class="group-range-title">
-                                            <label>Radius: </label>
-                                            <input class="one-range" type="text" id="amount" readonly>
-                                        </div>
-
-                                        <div id="slider-range-min"></div>
-
-                                    </div>
                                     <div class="d-flex justify-content-between">
                                         <button type="submit">Find Jobs</button>
                                         <a href="{{route('candidate.job.list')}}"><button type="button">Clear</button></a>
@@ -139,13 +141,13 @@
                                         </div>
                                         <p class="nofi-job"><span>{{$data['totalJobs']}} </span> jobs recommended for you</p>
                                     </div>
-                                    <div class="group-select">
+                                    {{--  <div class="group-select">
                                         <select>
                                             <option>Sort by (Defaut)</option>
                                             <option>New</option>
                                             <option>Last</option>
                                         </select>
-                                    </div>
+                                    </div>  --}}
                                 </div>
                             </div>
                             <div class="content-tab">
