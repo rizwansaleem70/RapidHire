@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"
     /><![endif]-->
 
-    <title>Career Website | Rapid Hire</title>
+    <title>{{ ucfirst(settings()->group(App\Helpers\Constant::ORGANIZATION)->get("name")) ?? "Rapid Hire" }}</title>
 
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>

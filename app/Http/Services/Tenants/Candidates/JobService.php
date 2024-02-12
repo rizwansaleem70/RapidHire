@@ -103,8 +103,13 @@ class JobService implements JobContract
                 return $q->whereBetween('min_salary', [$filter->min_salary, $filter->max_salary])
                     ->orWhereBetween('max_salary', [$filter->min_salary, $filter->max_salary]);
             });
-        // dd($query->toSql());
         $country = $this->modelCountry->pluck('name', 'id');
+        $states = $this->modelState->when($filter->country_id, function ($q, $country_id) {
+            return $q->where('country_id', $country_id);
+        })->get(['id', 'name']);
+        $cities = $this->modelCity->when($filter->state_id, function ($q, $state_id) {
+            return $q->where('state_id', $state_id);
+        })->get(['id', 'name']);
         $logo = settings()->group('logo')->get('logo');
         $totalJobs = $query->count();
         $jobs = $query->with('country:id,name', 'state:id,name', 'city:id,name')->paginate(10);
@@ -126,6 +131,8 @@ class JobService implements JobContract
             'jobs' => $jobs,
             'totalJobs' => $totalJobs,
             'country' => $country,
+            'states' => $states,
+            'cities' => $cities,
             'logo' => $logo
         ];
     }
