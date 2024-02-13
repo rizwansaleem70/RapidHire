@@ -51,12 +51,10 @@
                         <div class="wd-review-job contentbox1 page-text stc">
                             <h3>About Us</h3>
                             <p>
-                                Far much that one rank beheld bluebird after outside ignobly allegedly more
-                                when oh arrogantly vehement irresistibly fussy penguin insect additionally wow
-                                absolutely
-                                crud meretriciously hastily dalmatian a glowered inset one echidna cassowary.
+                                Unlock the power of your data with DevJeco - where expertise meets innovation.
+We are an AI & ML automation agency improving bottom line and operational efficiency for our clients. We provide state of the data science services minimizing human effort. Come join the Jecos working round the clock across 3 different time zones
                             </p>
-                            <p>
+                            {{--  <p>
                                 Repeatedly dreamed alas opossum but dramatically despite expeditiously that jeepers
                                 loosely yikes
                                 that as or eel underneath kept and slept compactly far purred sure abidingly up above
@@ -66,7 +64,7 @@
                                 opposite far much hypnotically more therefore wasp less that hey apart well like while
                                 superbly orca and far hence one.
 
-                            </p>
+                            </p>  --}}
 {{--                            <a href="#" class="tf-button style-1">Read more</a>--}}
                         </div>
                     </div>
@@ -91,7 +89,7 @@
                                     <div class="wd-counter widget-counter">
                                         <div class="inner wrap-counter">
                                             <h2><span class="counter-number" data-speed="2000"
-                                                      data-to="25"></span><span>M+</span></h2>
+                                                      data-to="25"></span><span>10+</span></h2>
                                         </div>
                                         <p class="description">Jobs Available</p>
                                     </div>
@@ -100,27 +98,27 @@
                                     <div class="wd-counter widget-counter">
                                         <div class="inner wrap-counter">
                                             <h2><span class="counter-number" data-speed="2000"
-                                                      data-to="177"></span><span>k+</span></h2>
+                                                      data-to="177"></span><span>5K+ </span></h2>
                                         </div>
-                                        <p class="description">New Jobs This Week!</p>
+                                        <p class="description">Candidates have applied</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-6">
                                     <div class="wd-counter widget-counter">
                                         <div class="inner wrap-counter">
                                             <h2><span class="counter-number" data-speed="2000"
-                                                      data-to="298"></span><span>k+</span></h2>
+                                                      data-to="298"></span><span>20K+</span></h2>
                                         </div>
-                                        <p class="description">Companies Hiring</p>
+                                        <p class="description"> Applications Screened</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-6">
                                     <div class="wd-counter widget-counter br-none">
                                         <div class="inner wrap-counter">
-                                            <h2><span class="counter-number" data-speed="2000" data-to="5"></span><span>M+</span>
+                                            <h2><span class="counter-number" data-speed="2000" data-to="5"></span><span>50+</span>
                                             </h2>
                                         </div>
-                                        <p class="description">Candidates</p>
+                                        <p class="description"> Jecos Joined</p>
                                     </div>
                                 </div>
 
@@ -138,8 +136,7 @@
 
             <div class="tf-container">
                 <div class="title-iconbox style-3 stc">
-                    <h4>How it works?</h4>
-                    <p>Pellentesque quis lectus sagittis, gravida erat id, placerat tellus.</p>
+                    <h4>How we works</h4>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
@@ -152,15 +149,13 @@
                                 </div>
                                 <div class="box-content">
                                     <h6 class="box-title">
-                                        <a href="#">Free resume assessments</a>
+                                        <a href="#">Research</a>
                                     </h6>
-                                    <p>Aenean porta, eros lacus congue lorem, sit amet mollis magna velit ac erat Morbi
-                                        accumsan purus nec
-                                        vehicula ornare. Nam quis tincidunt nulla.</p>
-                                    <button>
+                                    <p>Upon getting notified of the business problem and the limitation of data collected, we began our due diligence. This usually entails validating data, checking for inconsistencies and bias, as well as updating our client on industry practices in data storage and collection.</p>
+                                    {{--  <button>
                                         Start Now&nbsp;
                                         <span class="icon-arrow-right2"></span>
-                                    </button>
+                                    </button>  --}}
                                 </div>
                             </div>
                             <div class="tf-iconbox style-3 cl3 stc2">
@@ -171,15 +166,13 @@
                                 </div>
                                 <div class="box-content">
                                     <h6 class="box-title">
-                                        <a href="#">Job fit scoring</a>
+                                        <a href="#">Analysis & Discovery</a>
                                     </h6>
-                                    <p>Aenean porta, eros lacus congue lorem, sit amet mollis magna velit ac erat Morbi
-                                        accumsan purus nec
-                                        vehicula ornare. Nam quis tincidunt nulla.</p>
-                                    <button>
+                                    <p>At this stage, we have access to the data granted by the client. Since we have already validated the data, we can proceed to cleaning and processing. Processing entails deciding on the best course of action as it pertains to the kind of data analysis model or machine learning algorithm that fits the data.</p>
+                                    {{--  <button>
                                         Start Now&nbsp;
                                         <span class="icon-arrow-right2"></span>
-                                    </button>
+                                    </button>  --}}
                                 </div>
                             </div>
                             <div class="tf-iconbox style-3 cl3 stc2">
@@ -190,15 +183,13 @@
                                 </div>
                                 <div class="box-content ">
                                     <h6 class="box-title">
-                                        <a href="#">Help every step of the way</a>
+                                        <a href="#">Final Report</a>
                                     </h6>
-                                    <p>Aenean porta, eros lacus congue lorem, sit amet mollis magna velit ac erat Morbi
-                                        accumsan purus nec
-                                        vehicula ornare. Nam quis tincidunt nulla.</p>
-                                    <button>
+                                    <p>Immediately following the processing and analysis stage, we verify the findings and pass on the results to our vis team. In the case of complex problems, we can use Tableau to visually represent data to support the recommendations made by our model in the last step.</p>
+                                    {{--  <button>
                                         Start Now&nbsp;
                                         <span class="icon-arrow-right2"></span>
-                                    </button>
+                                    </button>  --}}
                                 </div>
                             </div>
                         </div>
@@ -531,8 +522,8 @@
                         <div class="col-lg-12">
                             <div class="tf-title style-2">
                                 <div class="group-title">
-                                    <h1>What our clients are saying</h1>
-                                    <p>Showing companies based on reviews and recent job openings</p>
+                                    <h1>Testimonials:</h1>
+                                    {{--  <p>Showing companies based on reviews and recent job openings</p>  --}}
                                 </div>
                             </div>
                         </div>
@@ -541,13 +532,7 @@
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
                                         <div class="wd-testimonials">
-                                            <p class="description">“Jobtex is allowing us to go through a large number
-                                                of candidates with
-                                                internal limited resources. We are able to do a first screening of
-                                                candidates so much easier than
-                                                if we had to meet everyone. We can truly identify and assess a talent
-                                                pool more efficiently and
-                                                have our talent ready to start in their new role faster.”</p>
+                                            <p class="description">“My co-founder and I met with dozens of development agencies until we got to know about DevJeco & Aun Syed. After our first call with him, we immediately knew that this is the dream partnership we were looking for. Aun and his team moved quickly to build us an MVP that impressed investors and helped us raise a pre-seed funding round. Since then, we've been working closely with Aun to scale our platform and it's been smooth sailing. We are now moving towards implementing AI & ML solutions to further enhance our system. He's an amazing leader and friend - couldn't recommend his services & the peopole at DevJeco enough.”</p>
                                             <div class="author-group">
                                                 <div class="avatar">
                                                     <img
@@ -555,8 +540,8 @@
                                                         alt="images">
                                                 </div>
                                                 <div class="infor">
-                                                    <h6>Pete Jones</h6>
-                                                    <div class="position">Head of Marketing Build</div>
+                                                    <h6>Osama Siddique - Kruzee</h6>
+                                                    {{--  <div class="position">Head of Marketing Build</div>  --}}
                                                     <ul class="rating">
                                                         <li>
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="13"

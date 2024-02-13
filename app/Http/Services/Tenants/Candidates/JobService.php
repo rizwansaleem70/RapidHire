@@ -72,69 +72,78 @@ class JobService implements JobContract
     public function listing($filter)
     {
         $query = $this->modelJob->query()->where('status', 'published')->where('expiry_date', '>=', date('Y-m-d'))->latest();
-        $query->when($filter->name, function ($q, $name) {
-            return $q->like('name', $name);
-        })
-            ->when($filter->department_id, function ($q, $department_id) {
-                return $q->where('department_id', $department_id);
-            })
-            ->when($filter->country_id, function ($q, $country_id) {
-                return $q->where('country_id', $country_id);
-            })
-            ->when($filter->state_id, function ($q, $state_id) {
-                return $q->where('state_id', $state_id);
-            })
-            ->when($filter->city_id, function ($q, $city_id) {
-                return $q->where('city_id', $city_id);
-            })
-            ->when($filter->job_type, function ($q, $job_type) {
-                return $q->like('job_type', $job_type);
-            })
-            ->when($filter->type, function ($q, $type) {
-                return $q->like('type', $type);
-            })
-            ->when($filter->min_salary, function ($q, $min_salary) {
-                return $q->where('min_salary', '>=', $min_salary);
-            })
-            ->when($filter->max_salary, function ($q, $max_salary) {
-                return $q->where('max_salary', '<=', $max_salary);
-            })
-            ->when($filter->min_salary && $filter->max_salary, function ($q) use ($filter) {
-                return $q->whereBetween('min_salary', [$filter->min_salary, $filter->max_salary])
-                    ->orWhereBetween('max_salary', [$filter->min_salary, $filter->max_salary]);
-            });
-        $country = $this->modelCountry->pluck('name', 'id');
-        // $states = $this->modelState->when($filter->country_id, function ($q, $country_id) {
-        //     return $q->where('country_id', $country_id);
-        // })->get(['id', 'name']);
-        // $cities = $this->modelCity->when($filter->state_id, function ($q, $state_id) {
-        //     return $q->where('state_id', $state_id);
-        // })->get(['id', 'name']);
-        $logo = settings()->group('logo')->get('logo');
-        $totalJobs = $query->count();
-        $jobs = $query->with('country:id,name', 'state:id,name', 'city:id,name')->paginate(10);
-        $jobs->transform(function ($job) {
-            $job->remaining_days = today()->diffInDays($job->expiry_date, false);
-            return $job;
-        });
-        if (Auth::check()) {
-            $favoriteJobIds = $this->modelFavoriteJob
-                ->whereUserId(Auth::id())
-                ->pluck('job_id');
+            $query->when($filter->name, function ($q, $name) {
+                    return $q->like('name', $name);
+                })
+                ->when($filter->department_id, function ($q, $department_id) {
+                    return $q->where('department_id', $department_id);
+                })
+                ->when($filter->country_id, function ($q, $country_id) {
+                    return $q->where('country_id', $country_id);
+                })
+                ->when($filter->state_id, function ($q, $state_id) {
+                    return $q->where('state_id', $state_id);
+                })
+                ->when($filter->city_id, function ($q, $city_id) {
+                    return $q->where('city_id', $city_id);
+                })
+                ->when($filter->job_type, function ($q, $job_type) {
+                    return $q->like('job_type', $job_type);
+                })
+                ->when($filter->type, function ($q, $type) {
+                    return $q->like('type', $type);
+                })
+                ->when($filter->min_salary, function ($q, $min_salary) {
+                    return $q->where('min_salary', '>=', $min_salary);
+                })
+                ->when($filter->max_salary, function ($q, $max_salary) {
+                    return $q->where('max_salary', '<=', $max_salary);
+                })
+                ->when($filter->min_salary && $filter->max_salary, function ($q) use ($filter) {
+                    return $q->whereBetween('min_salary', [$filter->min_salary, $filter->max_salary])
+                        ->orWhereBetween('max_salary', [$filter->min_salary, $filter->max_salary]);
+                });
 
-            $jobs->transform(function ($job) use ($favoriteJobIds) {
-                $job->is_favorite = $favoriteJobIds->contains($job->id);
+            $logo = settings()->group('logo')->get('logo');
+
+            $jobs = $query->select('id','country_id','state_id','city_id','user_id','department_id','name','slug','type','job_type','min_salary','max_salary','total_position','salary_deliver','expiry_date')
+                ->with('country:id,name', 'state:id,name', 'city:id,name')
+                ->paginate(10);
+
+            $totalJobs = $jobs->total();
+
+            $country = $this->modelCountry->pluck('name', 'id');
+
+            $states = $this->modelState->when($filter->country_id, function ($q, $country_id) {
+                    return $q->where('country_id', $country_id)->get(['id','name']);
+                });
+
+            $cities = $this->modelCity->when($filter->state_id, function ($q, $state_id) {
+                    return $q->where('state_id', $state_id)->get(['id','name']);
+                });
+
+            $jobs->transform(function ($job) {
+                $job->remaining_days = today()->diffInDays($job->expiry_date, false);
                 return $job;
             });
-        }
-        return [
-            'jobs' => $jobs,
-            'totalJobs' => $totalJobs,
-            'country' => $country,
-            // 'states' => $states,
-            // 'cities' => $cities,
-            'logo' => $logo
-        ];
+            if (Auth::check()) {
+                $favoriteJobIds = $this->modelFavoriteJob
+                    ->whereUserId(Auth::id())
+                    ->pluck('job_id');
+
+                $jobs->transform(function ($job) use ($favoriteJobIds) {
+                    $job->is_favorite = $favoriteJobIds->contains($job->id);
+                    return $job;
+                });
+            }
+            return [
+                'jobs' => $jobs,
+                'totalJobs' => $totalJobs,
+                'country' => $country,
+                'states' => $states,
+                'cities' => $cities,
+                'logo' => $logo
+            ];
     }
 
     public function jobDetail($slug)

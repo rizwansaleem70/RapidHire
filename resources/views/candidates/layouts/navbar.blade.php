@@ -41,9 +41,12 @@
                     </div>
                     <div class="header-ct-right">
                         @auth
-                        <div class="header-ct-right" style="margin-right: 11rem;">
+                        <div class="header-ct-right" style="margin-right: 4rem;">
                             <div class="header-customize-item account">
                               <img src="{{auth()->user() && auth()->user()->avatar ? asset(auth()->user()->avatar): asset('user.png')}}" alt="" style="width: 50px;">
+                              @auth
+                                <span><strong> {{ auth()->user()->first_name.' '.auth()->user()->last_name }} </strong></span>
+                            @endauth
                             <div class="sub-account">
                               <div class="sub-account-item" data-endpoint="{{config('app.candidate_authentication_dashboard')}}">
                                 <a href="{{config('app.candidate_authentication_dashboard').encrypt(auth()->user()->id)}}"><span class="icon-dashboard"></span>Dashboard</a>

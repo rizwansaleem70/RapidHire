@@ -176,7 +176,8 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\TenancyServiceProvider::class,
         App\Providers\SuperAdminServiceProvider::class,
-        QCod\Settings\SettingsServiceProvider::class
+        QCod\Settings\SettingsServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -192,7 +193,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-        "Settings" => QCod\Settings\Facade::class
+        "Settings" => QCod\Settings\Facade::class,
+        'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
     ])->toArray(),
 
 ];
