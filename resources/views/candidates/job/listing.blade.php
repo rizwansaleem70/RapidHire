@@ -20,7 +20,7 @@
                                         <label class="title">Country</label>
                                         <div class="group-input has-icon">
 {{--                                            <i class="icon-map-pin"></i>--}}
-                                            <select id="country-id" class="form-control" name="country_id">
+                                            <select id="country-id" class="form-select" name="country_id">
                                                 <option value="">Select Country</option>
                                                 @foreach($data['country'] as $key => $value)
                                                     <option {{ request()->input('country_id') == $key ? "selected" : " " }} value="{{$key}}">{{$value}}</option>
@@ -28,11 +28,15 @@
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="group-form">
                                         <label class="title">State</label>
                                         <div class="group-input has-icon">
-                                            <select id="state-id" class="form-control" name="state_id">
+                                            <select id="state-id" class="form-select" name="state_id">
                                                 <option value="">Select Option</option>
+                                                    @foreach($data['states'] as $state)
+                                                        <option {{ request()->input('state_id') == $state->id ? 'Selected' : '' }} value="{{$state->id}}">{{$state->name}}</option>
+                                                    @endforeach
                                                 </select>
                                             </select>
                                         </div>
@@ -41,8 +45,11 @@
 
                                         <label class="title">City</label>
                                         <div class="group-input has-icon">
-                                            <select id="city-id" class="form-control" name="city_id">
+                                            <select id="city-id" class="form-select" name="city_id">
                                                 <option value="">Select Option</option>
+                                                    @foreach($data['cities'] as $city)
+                                                        <option {{ request()->input('city_id') == $city->id ? 'Selected' : '' }} value="{{$city->id}}">{{$city->name}}</option>
+                                                    @endforeach
                                                 </select>
                                             </select>
                                         </div>
@@ -50,7 +57,7 @@
                                     <div class="group-form">
                                         <label class="title">On-site/Remote</label>
                                         <div class="group-input">
-                                            <select class="form-control" name="job_type">
+                                            <select class="form-select" name="job_type">
                                                 <option value="">Select Any</option>
                                                 <option {{ request()->input('job_type') == "onSite" ? 'selected' : "" }} value="onSite">On-site</option>
                                                 <option {{ request()->input('job_type') == "remote" ? 'selected' : "" }} value="remote">Remote</option>
@@ -61,7 +68,7 @@
                                     <div class="group-form">
                                         <label class="title">Job Types</label>
                                         <div class="group-input">
-                                            <select class="form-control" name="type">
+                                            <select class="form-select" name="type">
                                                 <option value="">Select Any</option>
                                                 <option {{ request()->input('type') == "contract" ? 'selected' : "" }} value="contract">Contract</option>
                                                 <option {{ request()->input('type') == "full-time" ? 'selected' : "" }} value="full-time">Full Time</option>

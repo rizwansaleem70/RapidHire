@@ -3,9 +3,9 @@
         <div class="top-footer">
             <div class="tf-container">
                 <div class="row">
-                    <div class="col-lg-2 col-md-4">
-                        <div class="footer-logo">
-                            <img src="{{asset('app-assets/candidates/images/used/devjeco.png')}}" alt="images">
+                    <div class="col-lg-2 col-md-4 ">
+                        <div class="footer-logo mb-3">
+                            <img src="{{settings()->group('logo')->get("logo") ? asset(settings()->group('logo')->get("logo")):asset('rapidhire.png')}}" alt="images">
                         </div>
                     </div>
                 </div>
@@ -13,7 +13,7 @@
         </div>
         <div class="inner-footer">
             <div class="tf-container">
-                <div class="row" style="margin-top: -7rem;">
+                <div class="row" style="margin-top: -6rem;">
                     <div class="col-lg-4 col-md-6">
                         <div class="footer-cl-1 mt-5">
                             <p>A product crafted by HR professionals,

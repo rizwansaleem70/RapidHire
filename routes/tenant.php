@@ -116,6 +116,7 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::apiResources(['test' => TestsController::class]);
         Route::apiResources(['job-shortlisting' => JobShortlistingController::class]);
         Route::get('settings', [SettingsController::class, 'index']);
+        Route::post('question-assign-to-department', [SettingsController::class, 'questionAssignToDepartment']);
         Route::post('settings/{type}', [SettingsController::class, 'store']);
         // Route::apiResources(['interview-feedback' => InterviewFeedbacksController::class]);
         Route::post('image-upload', [ImageUploadsController::class, 'store']);

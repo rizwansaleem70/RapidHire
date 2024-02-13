@@ -11,7 +11,11 @@ class QuestionBank extends Model
     public function job(){
         return $this->belongsToMany(Job::class,'job_questions','question_bank_id','job_id');
     }
-    Public function department(){
-        return $this->belongsTo(Department::class);
+    public function departments()
+    {
+        return $this->belongsToMany(Department::class, 'department_questions');
     }
+    // Public function department(){
+    //     return $this->belongsTo(Department::class);
+    // }
 }

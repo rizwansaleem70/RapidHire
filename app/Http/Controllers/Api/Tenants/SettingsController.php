@@ -8,6 +8,7 @@ use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\StoreSettingRequest;
 use App\Http\Requests\Tenants\UpdateSettingRequest;
+use App\Http\Requests\Tenants\ValidationQuestionAssignToDepartmentRequest;
 use App\Http\Resources\Tenants\DepartmentCollection;
 use App\Http\Resources\Tenants\InterviewFeedbackResourceCollection;
 use App\Http\Resources\Tenants\QuestionBankResourceCollection;
@@ -75,6 +76,20 @@ class SettingsController extends Controller
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
             Helper::logMessage("setting index", $request->input(), $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+    public function questionAssignToDepartment(ValidationQuestionAssignToDepartmentRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+            $this->setting->questionAssignToDepartment($request->prepareRequest());
+            DB::commit();
+            return $this->okResponse(" Added Successfully");
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage("question_assign_to_department", $request->input(), $th->getMessage());
             return $this->failedResponse($th->getMessage());
         }
     }

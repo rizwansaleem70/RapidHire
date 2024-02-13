@@ -62,9 +62,7 @@
         <div class="tf-container">
             <div class="row">
                 <div class="col-lg-6" style="margin-top: 15rem; text-align:center;">
-                    <h4>Hiring software that empowers
-                        decision makers to automate
-                        their recruitment process</h4>
+                    <h4>Join the Jecos for a fulfilling career. We are waiting for you.</h4>
 
                     <div class="author-group">
                         <div class="avatar" style="margin-top: 1rem;">
@@ -81,7 +79,7 @@
                                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6AaMq5ZoIgqjI2s1z8U1UKeFq1EXajThx1iTQX1Y7LSxkGbsp2Fh52rHOk1j5xVAQmxs&usqp=CAU"
                                          style="width:50px ;border-radius: 50%;">
                                 </li>
-                                <p style="margin-top: 3%;margin-left: 4%;">3k+ people joined us, now it's your turn</p>
+                                <p style="margin-top: 3%;margin-left: 4%;">People from all walks of life have joined us, now it is your turn.</p>
                             </ul>
 
                         </div>

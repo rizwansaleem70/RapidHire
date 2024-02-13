@@ -99,7 +99,7 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="country-id" class="file-label">Country *</label>
-                                        <select id="country-id" class="form-control" required name="country_id">
+                                        <select id="country-id" class="form-select" required name="country_id">
                                             <option> Select Country</option>
                                             @foreach ($data['countries'] as $key => $country)
                                                 <option {{ $key == $data['user']->country_id ? 'selected' : '' }}
@@ -112,7 +112,7 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="state-id" class="file-label">State *</label>
-                                        <select id="state-id" class="form-control" required name="state_id">
+                                        <select id="state-id" class="form-select" required name="state_id">
                                             <option> Select State</option>
                                             @if ($data['user']->state_id)
                                                 @foreach ($data['states'] as $state)
@@ -127,7 +127,7 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="city-id" class="file-label">City *</label>
-                                        <select id="city-id" class="form-control" required name="city_id">
+                                        <select id="city-id" class="form-select" required name="city_id">
                                             <option> Select City</option>
                                             @if ($data['user']->city_id)
                                                 @foreach ($data['cities'] as $city)
@@ -143,7 +143,8 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="gender" class="file-label">Gender *</label>
-                                        <select id="gender" class="form-control" required name="gender">
+                                        <select id="gender" class="form-select" required name="gender">
+                                            <option value="">Select any</option>
                                             <option {{ 'male' == $data['user']->gender ? 'selected' : '' }}
                                                 class="form-control" value="male"> Male </option>
                                             <option {{ 'female' == $data['user']->gender ? 'selected' : '' }}
@@ -162,7 +163,7 @@
                                         <label for="skills" class="file-label">Skills </label>
                                         <input type="text" class="w-100" id="skills" name="skills"
                                             aria-describedby="skills" value="{{ old('skills', $data['user']->skills) }}"
-                                            placeholder="Skills *">
+                                            placeholder="Enter Your Skills *">
                                     </div>
                                 </div>
                                 @if (count($data['job']->jobQuestion) > 0)
@@ -205,7 +206,7 @@
                                                             value="{{ $job_requirement->id }}">
                                                         @switch($job_requirement->requirement->input_type)
                                                             @case('select')
-                                                                <select id="gender" class="form-control" required
+                                                                <select id="gender" class="form-select" required
                                                                     name="requirement[{{ $key }}][answer]">
                                                                     <option class="form-control" value=""> Select
                                                                     </option>
