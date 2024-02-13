@@ -8,6 +8,7 @@ use App\Traits\ImageUpload;
 use App\Exceptions\CustomException;
 use App\Contracts\Tenants\SettingContract;
 use App\Http\Resources\Tenants\LogoResource;
+use App\Models\Tenants\QuestionBank;
 use QCod\Settings\Setting\Setting;
 
 /**
@@ -16,9 +17,11 @@ use QCod\Settings\Setting\Setting;
 class SettingService implements SettingContract
 {
     public $model;
+    public $questionBankModel;
     public function __construct()
     {
         $this->model = settings();
+        $this->questionBankModel = new QuestionBank();
     }
     public function index()
     {
@@ -46,6 +49,11 @@ class SettingService implements SettingContract
     {
         $model = new $this->model;
         return $this->prepareData($model, $data, $type, true);
+    }
+    public function questionAssignToDepartment($data)
+    {
+        $model = $this->questionBankModel->find($data['question_bank_id']);
+        return $model->departments()->sync($data['department_id']);
     }
 
     private function prepareData($model, $data, $type, $new_record = false)

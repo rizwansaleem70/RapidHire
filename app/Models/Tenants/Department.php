@@ -17,7 +17,11 @@ class Department extends Model
     public function job(){
         return $this->hasMany(Job::class,'department_id');
     }
-    public function questionBank(){
-        return $this->hasMany(QuestionBank::class,'department_id');
+    public function questionBanks()
+    {
+        return $this->belongsToMany(QuestionBank::class, 'department_questions');
     }
+    // public function questionBank(){
+    //     return $this->hasMany(QuestionBank::class,'department_id');
+    // }
 }

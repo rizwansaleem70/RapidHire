@@ -9,4 +9,5 @@ interface SettingContract
 {
     public function index();
     public function store($data, $type);
+    public function questionAssignToDepartment($data);
 }
