@@ -40,7 +40,7 @@ class HomeService implements HomeContract
 
     public function getAllCountry()
     {
-        return $this->modelCountry->latest()->get();
+        return $this->modelCountry->orderBy('name', 'ASC')->get(['id','name','currency']);
     }
 
     public function getAllState($request)
@@ -48,7 +48,7 @@ class HomeService implements HomeContract
         return $this->modelState
             ->when($request->country_id, function ($q, $country_id) {
                 return $q->where('country_id', $country_id);
-            })->orderBy('name', 'ASC')->get();
+            })->orderBy('name', 'ASC')->get(['id','name']);
     }
 
     public function getAllCity($request)
@@ -56,7 +56,7 @@ class HomeService implements HomeContract
         return $this->modelCity
             ->when($request->state_id, function ($q, $state_id) {
                 return $q->where('state_id', $state_id);
-            })->orderBy('name', 'ASC')->get();
+            })->orderBy('name', 'ASC')->get('id','name');
     }
 
     public function getCandidateDashboardStats($user_id)

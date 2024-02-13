@@ -583,6 +583,9 @@ class JobService implements JobContract
         if (isset($data['salary_type']) && $data['salary_type']) {
             $model->salary_type = $data['salary_type'];
         }
+        if (isset($data['salary_currency']) && $data['salary_currency']) {
+            $model->salary_currency = $data['salary_currency'];
+        }
         if (isset($data['skills']) && $data['skills']) {
             $model->skills = $data['skills'];
         }

@@ -43,6 +43,7 @@ class ProfileResource extends JsonResource
             'bio' => $this->bio,
             'current_salary' => $this->current_salary,
             'salary_type' => $this->salary_type,
+            'salary_currency' => $this->salary_currency,
             'skills' => $this->skills,
             'introduction_video_url' => $this->introduction_video_url,
             'avatar' => $this->avatar ? asset($this->avatar) : "",
