@@ -10,6 +10,8 @@ use App\Http\Requests\Tenants\StoreDepartmentRequest;
 use App\Http\Requests\Tenants\UpdateDepartmentRequest;
 use App\Http\Resources\Tenants\Department;
 use App\Http\Resources\Tenants\DepartmentCollection;
+use App\Http\Resources\Tenants\DepartmentResource;
+use App\Http\Resources\Tenants\DepartmentResourceCollection;
 use Illuminate\Support\Facades\DB;
 
 class DepartmentsController extends Controller
@@ -27,7 +29,7 @@ class DepartmentsController extends Controller
     {
         try {
             $department = $this->department->index();
-            $department = new DepartmentCollection($department);
+            $department = new DepartmentResourceCollection($department);
             return $this->successResponse("Successfully", $department);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
@@ -46,7 +48,7 @@ class DepartmentsController extends Controller
             DB::beginTransaction();
             $department = $this->department->store($request->prepareRequest());
             if ($department)
-                $department = new DepartmentCollection($this->department->index());
+                $department = new DepartmentResourceCollection($this->department->index());
             DB::commit();
             return $this->successResponse("Department Added Successfully", $department);
         } catch (CustomException $th) {
@@ -64,7 +66,7 @@ class DepartmentsController extends Controller
     {
         try {
             $department = $this->department->show($id);
-            $department = new Department($department);
+            $department = new DepartmentResource($department);
             return $this->successResponse("Department Found Successfully", $department);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
@@ -83,7 +85,7 @@ class DepartmentsController extends Controller
             DB::beginTransaction();
             $department = $this->department->update($request->prepareRequest(), $id);
             if ($department)
-                $department = new DepartmentCollection($this->department->index());
+                $department = new DepartmentResourceCollection($this->department->index());
             DB::commit();
             return $this->successResponse("Department Updated Successfully", $department);
         } catch (CustomException $th) {
