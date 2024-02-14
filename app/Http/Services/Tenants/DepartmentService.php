@@ -19,7 +19,7 @@ class DepartmentService implements DepartmentContract
 
     public function index()
     {
-        return $this->model->latest()->get();
+        return $this->model->with('questionBanks')->latest()->get(['id','name']);
 
     }
 

@@ -68,20 +68,21 @@
                                 </ul>
                             </div>
                             <div class="form-candidate">
-                                <form method="post">
+                                <form action="{{ route('candidate.contact-us-store') }}" method="post">
+                                    @csrf
                                     <div class="group-input">
                                         <div class="ip">
-                                            <input type="text" placeholder="Your Name">
+                                            <input type="text" name="name" value="{{ old('name') }}" placeholder="Your Name">
                                         </div>
                                         <div class="ip">
-                                            <input type="text" placeholder="Subject">
+                                            <input type="text" name="subject" value="{{ old('subject') }}" placeholder="Subject">
                                         </div>
                                     </div>
                                     <div class="ip out s1">
-                                        <input type="email" placeholder="Your Email">
+                                        <input type="email" name="email" value="{{ old('email') }}" placeholder="Your Email">
                                     </div>
                                     <div class="ip out">
-                                        <textarea placeholder="Your questions..."></textarea>
+                                        <textarea name="massage" value="{{ old('massage') }}" placeholder="Your questions..."></textarea>
                                     </div>
                                     <button>send Message</button>
                                 </form>

@@ -2,8 +2,11 @@
 
 namespace App\Http\Services\Tenants\Candidates;
 
-use App\Contracts\Tenants\Candidates\ContactUContract;
 use App\Models\Tenants\SocialMedia;
+use Illuminate\Support\Facades\Mail;
+use App\Contracts\Tenants\Candidates\ContactUContract;
+use App\Mail\ContactUsCandidateMail;
+use App\Mail\ContactUsTenantMail;
 
 /**
 * @var ContactUService
@@ -22,7 +25,7 @@ class ContactUService implements ContactUContract
     }
     public function contactUsStore($request)
     {
-        return true;
-        // return $this->modelSocialMedia->get();
+        Mail::to($request['email'])->send(new ContactUsCandidateMail($request['name']));
+        Mail::to('bd@devjeco.com')->send(new ContactUsTenantMail($request));
     }
 }

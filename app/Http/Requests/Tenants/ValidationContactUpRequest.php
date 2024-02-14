@@ -2,8 +2,7 @@
 
 namespace App\Http\Requests\Tenants;
 
-use App\Abstracts\FormRequest;
-
+use Illuminate\Foundation\Http\FormRequest;
 
 class ValidationContactUpRequest extends FormRequest
 {

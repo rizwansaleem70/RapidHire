@@ -9,12 +9,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\StoreSettingRequest;
 use App\Http\Requests\Tenants\UpdateSettingRequest;
 use App\Http\Requests\Tenants\ValidationQuestionAssignToDepartmentRequest;
-use App\Http\Resources\Tenants\DepartmentCollection;
+use App\Http\Resources\Tenants\DepartmentResourceCollection;
 use App\Http\Resources\Tenants\InterviewFeedbackResourceCollection;
 use App\Http\Resources\Tenants\QuestionBankResourceCollection;
 use App\Http\Resources\Tenants\RequirementResourceCollection;
 use App\Http\Resources\Tenants\SettingResource;
-use App\Http\Resources\Tenants\SettingResourceCollection;
 use App\Http\Resources\Tenants\SocialMediaResourceCollection;
 use App\Models\Tenants\Department;
 use App\Models\Tenants\InterviewFeedback;
@@ -46,7 +45,7 @@ class SettingsController extends Controller
             $interview_feedback = InterviewFeedback::get();
             return $this->successResponse("Successfully Fetch Record", [
                 "settings" => $settings,
-                "departments" => new DepartmentCollection($departments),
+                "departments" => new DepartmentResourceCollection($departments),
                 "requirements" => new RequirementResourceCollection($requirements),
                 "question_bank" => new QuestionBankResourceCollection($question_bank),
                 "social_media" => new SocialMediaResourceCollection($social_media),
