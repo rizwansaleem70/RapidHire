@@ -39,9 +39,9 @@ class SettingsController extends Controller
     {
         try {
             $settings = $this->setting->index();
-            $departments = Department::get();
-            $requirements = Requirement::get();
-            $question_bank = QuestionBank::with('department')->get();
+            $departments = Department::get(['id','name']);
+            $requirements = Requirement::get(['id','name','input_type','option']);
+            $question_bank = QuestionBank::with('departments')->get(['id','input_type','question','is_active']);
             $social_media = SocialMedia::get();
             $interview_feedback = InterviewFeedback::get();
             return $this->successResponse("Successfully Fetch Record", [
