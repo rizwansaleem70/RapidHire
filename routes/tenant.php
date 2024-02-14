@@ -147,3 +147,6 @@ Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
         Route::post('send_job_offer', [InterviewsController::class, 'sendJobOffer']);
     });
 });
+Route::get('mail-preview', function () {
+    return (new \App\Mail\ContactUsCandidateMail());
+});
