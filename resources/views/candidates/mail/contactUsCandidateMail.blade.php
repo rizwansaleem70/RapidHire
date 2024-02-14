@@ -136,7 +136,7 @@
                             {{--  <img alt="Logo" src="{{settings()->group('logo')->get("logo") ? asset(settings()->group('logo')->get("logo")):asset('rapidhire.png')}}"
                                 style=" width: 200px;">  --}}
                             <div class="user-info">
-                                Dear {{ @$data['name'] }}
+                                Dear {{ @$name }}
                             </div>
                             <div>
                                 <p>

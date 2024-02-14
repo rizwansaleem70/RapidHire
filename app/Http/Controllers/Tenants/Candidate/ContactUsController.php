@@ -27,8 +27,8 @@ class ContactUsController extends Controller
     public function contactUsStore(ValidationContactUpRequest $request)
     {
         try {
-            $data = $this->contactUsStore($request->prepare());
-            return view('candidates.contact-us', compact('data'));
+            $this->contactUs->contactUsStore($request->prepareRequest());
+            return redirect()->route('candidate.home')->with('success','Your query has been submitted succesfully');
         } catch (CustomException | \Exception $th) {
             return redirect()->back()->with('message', $th->getMessage());
         }
