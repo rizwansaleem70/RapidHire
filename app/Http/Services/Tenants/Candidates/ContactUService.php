@@ -20,4 +20,9 @@ class ContactUService implements ContactUContract
     {
         return $this->modelSocialMedia->get();
     }
+    public function contactUsStore($request)
+    {
+        return true;
+        // return $this->modelSocialMedia->get();
+    }
 }

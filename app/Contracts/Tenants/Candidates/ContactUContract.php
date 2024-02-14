@@ -8,4 +8,5 @@ namespace App\Contracts\Tenants\Candidates;
 interface ContactUContract
 {
     public function contact_us();
+    public function contactUsStore($request);
 }

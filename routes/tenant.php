@@ -60,8 +60,9 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
         Route::post('job-apply', [CandidateJobsController::class, 'jobApplyStore'])->name('candidate.job.apply.save');
     });
     Route::get('contact-us', [ContactUsController::class, 'contact_us'])->name('candidate.contact-us');
+    Route::post('contact-us', [ContactUsController::class, 'contactUsStore'])->name('candidate.contact-us-store');
     Route::view('user-apply', 'candidates/apply')->name('tenant-user-apply');
-
+    Route::view('thank-you', 'candidates.thankyou')->name('thank-you');
     // Tenant Candidate User Auth Routes
 //    Route::get('user-signup', [UserAuthController::class, 'signup'])->name('tenant-user-signup');
 //    Route::post('user-signup', [UserAuthController::class, 'register'])->name('register-user');

@@ -24,7 +24,7 @@
                                     </div>
                                     <div class="content">
                                         <h6>Call Us</h6>
-                                        <p>123 456 7890</p>
+                                        <p>+92-341-645-8237</p>
                                     </div>
                                 </div>
                                 <div class="icon-inforr">
@@ -37,7 +37,7 @@
                                     </div>
                                     <div class="content">
                                         <h6>Email</h6>
-                                        <p>hi.avitex@gmail.com</p>
+                                        <p>bd@devjeco.com</p>
                                     </div>
                                 </div>
                                 <div class="icon-inforr">
@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="content">
                                         <h6>Address</h6>
-                                        <p>4140 Parker Rd. Allentown, New Mexico 31134</p>
+                                        <p>Kansas, US | Dubai, UAE | Lahore, Pakistan</p>
                                     </div>
                                 </div>
                                 <ul class="list-social d-flex aln-center">
