@@ -10,7 +10,6 @@ use App\Http\Requests\Tenants\StoreDepartmentRequest;
 use App\Http\Requests\Tenants\UpdateDepartmentRequest;
 use App\Http\Resources\Tenants\Department;
 use App\Http\Resources\Tenants\DepartmentCollection;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DepartmentsController extends Controller

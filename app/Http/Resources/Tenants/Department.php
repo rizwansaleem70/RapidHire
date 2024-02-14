@@ -14,10 +14,18 @@ class Department extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
+        $question = collect($this->questionBanks)->map(function ($question) {
+            $question_bank['id'] = $question['id'];
+            $question_bank['input_type'] = $question['input_type'];
+            $question_bank['question'] = $question['question'];
+            $question_bank['is_active'] = $question['is_active'];
+            return $question_bank;
+        });
         return [
             'id' => $this->id,
             'name' => $this->name,
-            // 'question' => $this->questionBank
+            'question' => $question,
         ];
     }
 }
