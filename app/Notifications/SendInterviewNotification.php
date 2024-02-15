@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Helpers\Constant;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use App\Models\Tenants\CandidateInterviews;
@@ -37,15 +38,11 @@ class SendInterviewNotification extends Notification
     {
         return (new MailMessage)
             ->subject("You have scheduled an interview time slot")
-            ->greeting("Hi " . $this->interview->applicant->first_name . ",")
-            ->line('You had applied on ' . $this->interview->applicant->job->name . " job. You have been selected for the interview")
-            ->line("You have selected the following time slot for the interview")
-            ->line("Interview Date: " . $this->interview->interview_date)
-            ->line("Interview Start Time: " . $this->interview->start_time)
-            ->line("Interview End Time: " . $this->interview->end_time)
-            ->line("Interview Link: " . $this->interview->interviewee_link)
-            ->line("Please be available on specified date and time. ")
-            ->line("Good Luck!");
+            ->greeting("Hi " . $this->interview->applicant->first_name ." ".$this->interview->applicant->last_name.",")
+            ->line("You have selected " . $this->interview->interview_date. " and ".$this->interview->start_time." or your interview.You would be interviewed by ".$this->interview->interviewer->first_name." ".$this->interview->interviewer->last_name.".")
+            ->line("You can find the interview link below, Please be advise to show up 5 minutes before the interview. In case of cancelation please inform the ".$this->interview->interviewer->first_name." ".$this->interview->interviewer->last_name." by email 1 hour before the interview, otherwise your application would be rejected.")
+            ->line("We wish you the best of luck, and hope to see you in our ranks.")
+            ->salutation(nl2br("Best Regards,<br>".(settings()->group(Constant::ORGANIZATION)->get("name")? ucfirst(settings()->group(Constant::ORGANIZATION)->get("name")) : "Rapid Hire.")));
     }
 
     /**
