@@ -40,7 +40,7 @@
                                             (Size
                                             Max
                                             = 2MB))*</label>
-                                        <input type="file" class="form-control" id="resume_path" name="resume_path"
+                                        <input type="file" class="form-control" accept=".pdf" id="resume_path" name="resume_path"
                                             required placeholder="First Name">
                                     </div>
                                 </div>

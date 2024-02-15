@@ -49,6 +49,7 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
     //    });
     Auth::routes(['verify' => true]);
 
+
     Route::get('/', [CandidateHomeController::class, 'home'])->name('candidate.home');
     Route::view('about', 'candidates/about')->name('candidate.user-about');
     Route::get('get-all-state-from-country', [HomeController::class, 'getAllStateCandidate'])->name('get-all-state-from-country');

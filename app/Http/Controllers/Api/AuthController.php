@@ -97,7 +97,10 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         try {
-            auth()->user()->tokens()->delete();
+            if (auth()->user() && auth()->user()->tokens()){
+                auth()->user()->tokens()->delete();
+            }
+            Auth::logout();
             return $this->okResponse("User Logout Successfully");
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
