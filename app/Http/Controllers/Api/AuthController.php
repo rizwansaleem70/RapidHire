@@ -96,6 +96,7 @@ class AuthController extends Controller
     }
     public function logout(Request $request)
     {
+        dd(1);
         try {
             if (auth()->user() && auth()->user()->tokens()){
                 auth()->user()->tokens()->delete();
