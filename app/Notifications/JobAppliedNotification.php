@@ -39,11 +39,15 @@ class JobAppliedNotification extends Notification
         $status = $this->application->status != Constant::QUALIFICATION ? 'Qualified' : $this->application->status;
 
         return (new MailMessage)
-            ->subject("You have applied on a " . $this->application->job->name . " job")
-            ->greeting("Hi " . $this->application->user->first_name . ", ")
-            ->line('You have successfully applied to ' . $this->application->job->name . " job.")
-            ->line("Current status of your application is " . $status)
-            ->line('Our recruitment team will look into your application');
+            ->subject("Acknowledgement of Job Application")
+            ->greeting("Hi " . $this->application->user->first_name ." ".$this->application->user->last_name.",")
+            ->line("Thank you for your recent application for the ". $this->application->job->name . "role at ".(settings()->group(Constant::ORGANIZATION)->get("name")? ucfirst(settings()->group(Constant::ORGANIZATION)->get("name")) : "Rapid Hire.").".We appreciate the time and effort you put into submitting your application.")
+            // ->line("Thank you for your recent application for the " . $this->application->job->name . " role at ".settings()->group(Constant::ORGANIZATION)->get("name") ? ucfirst(settings()->group(Constant::ORGANIZATION)->get("name")) : "Rapid Hire"." We appreciate the time and effort you put into submitting your application.")
+            ->line("Your application is now under review by our hiring team.We carefully consider each candidate and will reach out to those whose qualifications best match the requirements of the position.")
+            ->line("While we strive to respond to all applicants in a timely manner, the selection process may take some time. We kindly ask for your patience during this period.")
+            ->line("Should your qualifications and experience meet our needs, we will contact you to discuss the next steps in the hiring process. In the meantime, if you have any questions or would like to follow up on your application, feel free to reach out to us at ".(settings()->group(Constant::ORGANIZATION)->get("phone") ?? "0000000000"))
+            ->line("Once again, thank you for your interest in joining our team at ".(settings()->group(Constant::ORGANIZATION)->get("name") ? ucfirst(settings()->group(Constant::ORGANIZATION)->get("name")) : " Rapid Hire ").". We appreciate your interest and look forward to the possibility of working together.")
+            ->salutation(nl2br("Best Regards,<br>Hiring Team or Department <br>".(settings()->group(Constant::ORGANIZATION)->get("name")? ucfirst(settings()->group(Constant::ORGANIZATION)->get("name")) : "Rapid Hire.")));
     }
 
     /**

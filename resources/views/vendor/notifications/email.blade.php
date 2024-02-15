@@ -1,4 +1,8 @@
 <x-mail::message>
+    <a href="#">
+        <img alt="Logo" src="{{ asset('images/banner.jpg') }}"
+             style="margin: 0px 0px 25px 0px;">
+    </a>
 {{-- Greeting --}}
 @if (! empty($greeting))
 # {{ $greeting }}
@@ -37,7 +41,7 @@
 
 {{-- Salutation --}}
 @if (! empty($salutation))
-{{ $salutation }}
+{!! $salutation !!}
 @else
 @lang('Regards'),<br>
 {{ config('app.name') }}
