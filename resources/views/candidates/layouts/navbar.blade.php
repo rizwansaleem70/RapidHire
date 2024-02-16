@@ -49,7 +49,7 @@
                             @endauth
                             <div class="sub-account">
                               <div class="sub-account-item" data-endpoint="{{config('app.candidate_authentication_dashboard')}}">
-                                <a href="{{config('app.candidate_authentication_dashboard').encrypt(auth()->user()->id)}}"><span class="icon-dashboard"></span>Dashboard</a>
+                                <a target="_blank" href="{{config('app.candidate_authentication_dashboard').encrypt(auth()->user()->id)}}"><span class="icon-dashboard"></span>Dashboard</a>
 {{--                                <a href="{{"https://rapidhire-candidate.netlify.app/#/sign-in/".encrypt(auth()->user()->id)}}"><span class="icon-dashboard"></span>Dashboard</a>--}}
                               </div>
                               <div class="sub-account-item">
