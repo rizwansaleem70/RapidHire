@@ -62,8 +62,8 @@
                                 Policy
                             </h3>
                             <ul class="">
-                                <li><a href="#" style="color: #fff;">Terms Of Services</a> </li>
-                                <li class="pt-1"><a href="#" style="color: #fff;">Privacy Policy</a> </li>
+                                <li><a href="{{ route('candidate.terms') }}" style="color: #fff;">Terms Of Services</a> </li>
+                                <li class="pt-1"><a href="{{ route('candidate.privacy') }}" style="color: #fff;">Privacy Policy</a> </li>
                                 <li class="pt-1"><a href="#" style="color: #fff;">Cookie Policy</a> </li>
                             </ul>
                         </div>

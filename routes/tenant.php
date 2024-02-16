@@ -77,6 +77,8 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
 
     Route::post('like-job', [CandidateJobsController::class, 'like'])->name('user-like-job');
     Route::post('dislike-job', [CandidateJobsController::class, 'dislike'])->name('user-dislike-job');
+    Route::view('privacy', 'candidates.privacy_policy')->name('candidate.privacy');
+    Route::view('terms', 'candidates.terms')->name('candidate.terms');
 });
 
 Route::prefix('api')->middleware(['initialize.tenant'])->group(function () {
