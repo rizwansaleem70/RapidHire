@@ -23,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('job_a_t_s_score_parameters', function (Blueprint $table) {
-            //
+            $table->string('parameter')->change();
+            $table->string('value')->change();
         });
     }
 };
