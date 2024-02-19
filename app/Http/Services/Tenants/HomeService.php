@@ -56,7 +56,7 @@ class HomeService implements HomeContract
         return $this->modelCity
             ->when($request->state_id, function ($q, $state_id) {
                 return $q->where('state_id', $state_id);
-            })->orderBy('name', 'ASC')->get('id','name');
+            })->orderBy('name', 'ASC')->get(['id','name']);
     }
 
     public function getCandidateDashboardStats($user_id)
