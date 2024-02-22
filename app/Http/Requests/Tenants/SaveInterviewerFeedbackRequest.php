@@ -23,7 +23,7 @@ class SaveInterviewerFeedbackRequest extends FormRequest
     {
         $required_integer = 'required|integer|max:5|min:1';
         return [
-            'interview_id' => 'required|exists:users,id',
+            'interview_id' => 'required|exists:candidate_interviews,id',
             'language' => $required_integer,
             'behavior' => $required_integer,
             'speaking' => $required_integer,
