@@ -35,7 +35,7 @@ class StoreJobRequest extends FormRequest
             'type' => 'required|in:contract,full-time,temporary,part-time',
             'job_type' => 'required|in:onSite,remote,hybrid',
             'min_salary' => 'required',
-            'max_salary' => 'required|lte:min_salary',
+            'max_salary' => 'required|gte:min_salary',
             'expiry_date' => 'required|date|after:today',
             'total_position' => 'required',
             'rating' => 'nullable',
