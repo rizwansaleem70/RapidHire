@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class JobRequirement extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
+
     public function job(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Job::class,'job_id','id');
+        return $this->belongsTo(Job::class, 'job_id', 'id');
     }
     public function requirement(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Requirement::class,'requirement_id','id');
+        return $this->belongsTo(Requirement::class, 'requirement_id', 'id');
     }
 }

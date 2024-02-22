@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Tenants;
 
+use Carbon\Carbon;
 use App\Abstracts\FormRequest;
 
 class StoreJobRequest extends FormRequest
@@ -34,14 +35,15 @@ class StoreJobRequest extends FormRequest
             'type' => 'required|in:contract,full-time,temporary,part-time',
             'job_type' => 'required|in:onSite,remote,hybrid',
             'min_salary' => 'required',
-            'max_salary' => 'required',
-            'expiry_date' => 'required',
+            'max_salary' => 'required|lte:min_salary',
+            'expiry_date' => 'required|date|after:today',
             'total_position' => 'required',
             'rating' => 'nullable',
             'status' => 'required|in:published,draft',
             'salary_deliver' => 'required|in:monthly,yearly,weekly,hourly',
             'cover_image' => 'nullable',
             'ats_threshold' => 'required',
+            'currency' => 'required'
         ];
     }
 
@@ -68,6 +70,7 @@ class StoreJobRequest extends FormRequest
             'status' => $request['status'],
             'salary_deliver' => $request['salary_deliver'],
             'cover_image' => $request['cover_image'],
+            'currency' => $request['currency'],
             'ats_threshold' => $request['ats_threshold'] ?? 0,
         ];
     }

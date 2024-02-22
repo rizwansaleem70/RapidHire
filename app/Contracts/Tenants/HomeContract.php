@@ -3,8 +3,8 @@
 namespace App\Contracts\Tenants;
 
 /**
-* @var HomeContract
-*/
+ * @var HomeContract
+ */
 interface HomeContract
 {
     public function getCandidateDashboardStats($user_id);
@@ -12,4 +12,5 @@ interface HomeContract
     public function getDashboardStats();
     public function getAllState($request);
     public function getAllCity($request);
+    public function getCurrencyList();
 }

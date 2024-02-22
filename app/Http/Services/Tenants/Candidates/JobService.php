@@ -71,7 +71,9 @@ class JobService implements JobContract
 
     public function listing($filter)
     {
-        $query = $this->modelJob->query()->where('status', 'published')->where('expiry_date', '>=', date('Y-m-d'))->latest();
+        $query = $this->modelJob->query()->where('status', 'published')
+            ->where('expiry_date', '>=', date('Y-m-d'))
+            ->latest();
         $query->when($filter->name, function ($q, $name) {
             return $q->like('name', $name);
         })
@@ -231,6 +233,12 @@ class JobService implements JobContract
 
     public function jobApplyStore($data)
     {
+        //Check if user has already applied
+
+        $check = $this->modelApplicant->where('user_id', Auth::id())->find($data['job_id']);
+        if ($check)
+            throw new CustomException("You have already applied to this job");
+
         $modelApplicant = new $this->modelApplicant;
         $application = $this->prepareData($modelApplicant, $data, true);
 
@@ -266,7 +274,8 @@ class JobService implements JobContract
             if (isset($data['requirement']) && count($data['requirement']) > 0) {
                 foreach ($data['requirement'] as $key => $job_requirement) {
 
-                    $job_qualification = JobQualification::whereJobIdAndRequirementId($data['job_id'], $job_requirement['id'])->first();
+                    $job_qualification = JobQualification::whereJobIdAndRequirementId($data['job_id'], $job_requirement['id'])
+                        ->first();
                     if (!$job_qualification) continue;
 
                     //Check The qualification criteria

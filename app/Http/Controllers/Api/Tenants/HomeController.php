@@ -25,7 +25,8 @@ class HomeController extends Controller
         $this->home = $home;
     }
 
-    public function getCandidateDashboardStats($user_id){
+    public function getCandidateDashboardStats($user_id)
+    {
         try {
             $data = $this->home->getCandidateDashboardStats($user_id);
             $data = new CandidateDashboardResource($data);
@@ -67,6 +68,22 @@ class HomeController extends Controller
             return $this->failedResponse($th->getMessage());
         }
     }
+
+
+    public function getAllCurrencies(): \Illuminate\Http\JsonResponse
+    {
+        try {
+            $home = $this->home->getCurrencyList();
+            $home = new CountryResourceCollection($home);
+            return $this->successResponse("Successfully Country Fetch", $home);
+        } catch (CustomException $th) {
+            return $this->failedResponse($th->getMessage());
+        } catch (\Throwable $th) {
+            Helper::logMessage("Home index", 'getAllCountry', $th->getMessage());
+            return $this->failedResponse($th->getMessage());
+        }
+    }
+
     public function getAllState(Request $request): \Illuminate\Http\JsonResponse
     {
         try {
