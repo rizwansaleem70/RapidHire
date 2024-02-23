@@ -15,14 +15,19 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Permission::truncate();
         $modules = ["jobs", "applicants", 'message', 'schedules', 'members', 'settings', 'faqs', 'invoices', 'roles'];
         $actions = ["*", "view", "update", "create", "delete"];
 
         foreach ($modules as $module) {
             foreach ($actions as $value) {
-                Permission::create(['name' => $module . '.' . $value]);
+                Permission::create([
+                    'name' => $module . '.' . $value,
+                    'label' => $module
+                ]);
             }
         }
+
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

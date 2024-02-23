@@ -27,12 +27,12 @@ class DatabaseSeeder extends Seeder
         // $this->call(CitiesTableChunkThreeSeeder::class);
         // $this->call(CitiesTableChunkFourSeeder::class);
         // $this->call(CitiesTableChunkFiveSeeder::class);
-//        $this->call(TestServicesSeeder::class);
-        $this->call(RoleTableSeeder::class);
-//        $this->call(PermissionSeeder::class);
+        //        $this->call(TestServicesSeeder::class);
+        // $this->call(RoleTableSeeder::class);
+        $this->call(PermissionSeeder::class);
 
 
-//         $this->call(RoleTableSeeder::class);
+        //         $this->call(RoleTableSeeder::class);
         // $this->call(DictionaryTableSeeder::class);
         // \App\Models\User::factory(10)->create();
 

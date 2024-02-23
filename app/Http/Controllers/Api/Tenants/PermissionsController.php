@@ -27,9 +27,24 @@ class PermissionsController extends Controller
     public function index()
     {
         try {
-            $data = $this->permission->index();
-            $data = new PermissionResourceCollection($data);
-            return $this->successResponse("Successfully", $data);
+            $data = collect($this->permission->index());
+            $data = $data->map(function ($permission) {
+                return [
+                    "id" => $permission->id,
+                    "name" => explode(".", $permission->name)[1],
+                    "label" => $permission->label
+                ];
+            })->groupBy('label');
+
+            $permissions = [];
+            foreach ($data as $key => $d) {
+                $permissions[] = [
+                    'module' => $key,
+                    'permissions' => $d
+                ];
+            }
+
+            return $this->successResponse("Successfully", $permissions);
         } catch (CustomException $th) {
             return $this->failedResponse($th->getMessage());
         } catch (\Throwable $th) {
@@ -80,7 +95,7 @@ class PermissionsController extends Controller
     {
         try {
             DB::beginTransaction();
-            $data = $this->permission->update($request->prepareRequest(),$id);
+            $data = $this->permission->update($request->prepareRequest(), $id);
             DB::commit();
             return $this->okResponse("Permission assign Successfully", $data);
         } catch (CustomException $th) {
