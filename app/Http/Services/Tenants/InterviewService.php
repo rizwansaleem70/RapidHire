@@ -110,6 +110,7 @@ class InterviewService implements InterviewContract
         $application = $this->applicant->with(['user:id,first_name,last_name,email', 'job:id,name'])
             ->find($data['application_id']);
 
+        $application->job_offer_file = $data['job_offer_file'];
         $application->job_offer_contract = $data['job_offer_contract'];
         $application->status = Constant::OFFER;
         $application->save();

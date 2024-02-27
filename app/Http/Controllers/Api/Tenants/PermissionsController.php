@@ -35,7 +35,6 @@ class PermissionsController extends Controller
                     "label" => $permission->label
                 ];
             })->groupBy('label');
-
             $permissions = [];
             foreach ($data as $key => $d) {
                 $permissions[] = [

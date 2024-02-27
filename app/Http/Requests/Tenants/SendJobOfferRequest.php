@@ -23,7 +23,8 @@ class SendJobOfferRequest extends FormRequest
     {
         return [
             'application_id' => 'required|exists:applicants,id',
-            'job_offer_contract' => 'required|string'
+            'job_offer_contract' => 'required|string',
+            'job_offer_file' => 'required|string'
         ];
     }
 
@@ -32,7 +33,8 @@ class SendJobOfferRequest extends FormRequest
         $request = $this;
         return [
             'application_id' => $request['application_id'],
-            'job_offer_contract' => $request['job_offer_contract']
+            'job_offer_contract' => $request['job_offer_contract'],
+            'job_offer_file' => $request['job_offer_file']
         ];
     }
 }

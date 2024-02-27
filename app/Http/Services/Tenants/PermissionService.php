@@ -9,28 +9,28 @@ use App\Models\Tenants\Role;
 use App\Models\Tenants\RoleHasPermission;
 
 /**
-* @var PermissionService
-*/
+ * @var PermissionService
+ */
 class PermissionService implements PermissionContract
 {
     protected Permission $permissionModel;
     protected Role $roleModel;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->permissionModel = new Permission();
         $this->roleModel = new Role();
-
     }
 
     public function index()
     {
-        return $this->permissionModel->latest()->get();
+        return $this->permissionModel->latest()->orderBy('name', 'ASC')->get();
     }
 
     public function store($request)
     {
         $model = $this->roleModel->findorfail($request['role_id']);
-        return $this->prepareData($model,$request, true);
+        return $this->prepareData($model, $request, true);
     }
 
     public function show($id)
@@ -43,7 +43,6 @@ class PermissionService implements PermissionContract
             'role' => $model->name,
             'permission' => $model->permissions()->get(),
         ];
-
     }
 
     public function update($request, $id)
@@ -64,7 +63,7 @@ class PermissionService implements PermissionContract
         $model->syncPermissions();
         return true;
     }
-    private function prepareData( $model,$data, $new_record = false)
+    private function prepareData($model, $data, $new_record = false)
     {
         $model->syncPermissions($data['permission_id']);
         return $model;
