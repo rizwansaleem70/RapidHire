@@ -24,6 +24,7 @@ class JobEditResource extends JsonResource
             'slug' => $this['job']->slug,
             'job_description' => $this['job']->job_description,
             'type' => $this['job']->type,
+            'currency' => $this['job']->currency,
             'job_type' => $this['job']->job_type,
             'min_salary' => $this['job']->min_salary,
             'max_salary' => $this['job']->max_salary,
