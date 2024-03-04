@@ -51,7 +51,8 @@
                                     {{--                                    <span class="icon-dollar"></span> --}}
                                     <span class="rounded-pill border px-1"><strong>{{ $data['job']->currency ?? 'USD' }}
                                         </strong></span>
-                                    <p class="mt-3">{{ $data['job']->min_salary }} - {{ $data['job']->max_salary }}
+                                    <p class="mt-3">{{ number_format($data['job']->min_salary) }} -
+                                        {{ number_format($data['job']->max_salary) }}
                                         <span class="year">/ {{ $data['job']->salary_deliver }}</span>
                                     </p>
 
@@ -131,8 +132,8 @@
                                                         <span
                                                             class="rounded-pill border px-1">{{ $data['job']->currency ?? 'USD' }}
                                                         </span>
-                                                        <p class="mt-3">{{ $value->min_salary }} -
-                                                            {{ $value->max_salary }} <span class="year">/
+                                                        <p class="mt-3">{{ number_format($value->min_salary) }} -
+                                                            {{ number_format($value->max_salary) }} <span class="year">/
                                                                 {{ $value->salary_deliver }}</span></p>
                                                     </div>
                                                     <p class="days">{{ $value->remaining_days }} days left to apply</p>

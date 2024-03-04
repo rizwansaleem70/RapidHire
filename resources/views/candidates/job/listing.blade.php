@@ -220,8 +220,8 @@
                                                         <span
                                                             class="rounded-pill border px-1">{{ $job->currency ?? 'USD' }}
                                                         </span>
-                                                        <p class="mt-3"> {{ $job->min_salary }} -
-                                                            {{ $job->max_salary }} <span class="year">/
+                                                        <p class="mt-3"> {{ number_format($job->min_salary) }} -
+                                                            {{ number_format($job->max_salary) }} <span class="year">/
                                                                 {{ $job->salary_deliver }}</span></p>
                                                     </div>
                                                     <p class="days">{{ $job->remaining_days }} days left to apply</p>
@@ -285,8 +285,9 @@
                                                     <div class="job-footer-right">
                                                         <div class="price">
                                                             <span class="icon-dolar1"></span>
-                                                            <p class="mt-3">{{ $job->min_salary }} -
-                                                                {{ $job->max_salary }} <span class="year">/
+                                                            <p class="mt-3">{{ number_format($job->min_salary) }} -
+                                                                {{ number_format($job->max_salary) }} <span
+                                                                    class="year">/
                                                                     {{ $job->salary_deliver }}</span></p>
                                                         </div>
                                                         <p class="days">{{ $job->remaining_days }} days left to apply
