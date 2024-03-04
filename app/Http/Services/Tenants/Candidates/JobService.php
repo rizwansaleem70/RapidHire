@@ -246,7 +246,7 @@ class JobService implements JobContract
         $application->user->notify(new JobAppliedNotification($application));
     }
 
-    private function calculateAtsScore($data)
+    private function calculateAtsScore($application_id, $data)
     {
         try {
 
@@ -272,6 +272,7 @@ class JobService implements JobContract
             }
 
             $ats_data[] = [
+                'application_id' => $application_id,
                 'criteria' => 'state',
                 'value' => $score,
                 'weight' => $weight
@@ -315,6 +316,7 @@ class JobService implements JobContract
                                 $score += $calc_score;
 
                                 $ats_data[] = [
+                                    'application_id' => $application_id,
                                     'criteria' => $job_requirement['answer'],
                                     'value' => $calc_score,
                                     'weight' => $ats_state->weight
@@ -350,18 +352,6 @@ class JobService implements JobContract
         try {
             $job = $this->modelJob->find($data['job_id']);
 
-            //Does candidate meet the qualification criteria?
-            $qualification = $this->calculateAtsScore($data);
-
-
-            $status = Constant::APPLIED;
-            if ($qualification['meet_criteria'] == true && $qualification['ats'] >= $job->ats_threshold)
-                $status = Constant::INTERVIEW;
-            elseif ($qualification['meet_criteria'] == true && $qualification['ats'] >= 0)
-                $status = Constant::APPLIED;
-            elseif ($qualification['meet_criteria'] == false)
-                $status = Constant::REJECTED;
-
 
             $skill = json_decode($data['skills']);
             $valuesArray = array_map(function ($item) {
@@ -372,8 +362,6 @@ class JobService implements JobContract
             $user_id = Auth::user()->id;
             $modelApplicant->user_id = $user_id;
             $modelApplicant->job_id = $job->id;
-            $modelApplicant->status = $status;
-            $modelApplicant->ats = $qualification['ats'];
             $modelApplicant->skills = $commaSeparatedValuesSkill;
             $modelApplicant->source_detail = $data['source_detail'];
             $modelApplicant->first_name = $data['first_name'];
@@ -388,6 +376,22 @@ class JobService implements JobContract
             $modelApplicant->job_resume_path = $this->upload($data['resume_path']);
             sleep(1);
             $modelApplicant->cover_letter_path = $this->upload($data['cover_letter_path']);
+            $modelApplicant->save();
+
+
+            //Does candidate meet the qualification criteria?
+            $qualification = $this->calculateAtsScore($modelApplicant->id, $data);
+
+            $status = Constant::APPLIED;
+            if ($qualification['meet_criteria'] == true && $qualification['ats'] >= $job->ats_threshold)
+                $status = Constant::INTERVIEW;
+            elseif ($qualification['meet_criteria'] == true && $qualification['ats'] >= 0)
+                $status = Constant::APPLIED;
+            elseif ($qualification['meet_criteria'] == false)
+                $status = Constant::REJECTED;
+
+            $modelApplicant->status = $status;
+            $modelApplicant->ats = $qualification['ats'];
             $modelApplicant->save();
 
             if (isset($data['experience']) && count($data['experience']) > 0) {
