@@ -27,8 +27,7 @@ class ScheduleInterviewResource extends JsonResource
             'listening' => $this->listening,
             'interviewer_feedback' => $this->interviewer_feedback,
             'feedback_date' => $this->feedback_date,
-            'job_id' => $this->applicant->job_id,
-            'candidate_id' => $this->applicant->user_id
+            'application_id' => $this->applicant->id
         ];
         // return parent::toArray($request);
     }

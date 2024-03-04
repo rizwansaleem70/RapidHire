@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('application_ats_calculation', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Applicant::class, 'application_id');
+            $table->string('attribute');
             $table->string('criteria');
             $table->string('weight');
             $table->string('value');
