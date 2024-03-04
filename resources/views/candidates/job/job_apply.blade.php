@@ -40,14 +40,16 @@
                                             (Size
                                             Max
                                             = 2MB))*</label>
-                                        <input type="file" class="form-control" accept=".pdf" id="resume_path"
-                                            name="resume_path" required placeholder="First Name">
+                                        <input type="file" onchange="checkFileSize('resume_path')" class="form-control"
+                                            accept=".pdf" id="resume_path" name="resume_path" required
+                                            placeholder="First Name">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="add-letter" class="file-label">UPLOAD COVER LETTER *</label>
-                                        <input type="file" required class="form-control" accept=".pdf"
+                                        <input type="file" required onchange="checkFileSize('cover_letter_path')"
+                                            id="cover_letter_path" class="form-control" accept=".pdf"
                                             name="cover_letter_path">
                                     </div>
                                 </div>
@@ -515,6 +517,19 @@
     <script src="{{ asset('app-assets/candidates/javascript/jquery-repeater.js') }}"></script>
     <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
+        function checkFileSize(elementId) {
+            var fileInput = document.getElementById(elementId);
+            var fileSize = fileInput.files[0].size; // in bytes
+            var maxSize = 2 * 1024 * 1024; // 2MB
+
+            if (fileSize > maxSize) {
+                alert('File size exceeds the limit of 2MB.');
+                fileInput.value = '';
+                return false; // Prevent form submission
+            }
+            return true; // Allow form submission
+        }
+
         var input = document.getElementById('skills');
         new Tagify(input)
         var i = 0;
