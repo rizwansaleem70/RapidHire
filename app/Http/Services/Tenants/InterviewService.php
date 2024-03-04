@@ -122,6 +122,9 @@ class InterviewService implements InterviewContract
     {
         $interview = $this->model->find($data['interview_id']);
 
+        if (Auth::user()->id != $interview->interviewer_id)
+            throw new CustomException("You're not authorized to submit feedback.");
+
         $interview->language = $data['language'];
         $interview->speaking = $data['speaking'];
         $interview->listening = $data['listening'];

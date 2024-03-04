@@ -40,8 +40,8 @@
                                             (Size
                                             Max
                                             = 2MB))*</label>
-                                        <input type="file" class="form-control" accept=".pdf" id="resume_path" name="resume_path"
-                                            required placeholder="First Name">
+                                        <input type="file" class="form-control" accept=".pdf" id="resume_path"
+                                            name="resume_path" required placeholder="First Name">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -171,10 +171,10 @@
                                     <div class="row border border-1 m-1">
                                         @foreach ($data['job']->jobQuestion as $key => $question)
                                             @if ($question->questionBank)
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-12">
                                                     <div class="form-group col-md-4 mt-3 d-flex justify-content-center">
-                                                        <label for="file-upload"
-                                                            class="file-label">{{ ucfirst($question->questionBank->question) }}</label>
+                                                        <label for=""
+                                                            class="">{{ ucfirst($question->questionBank->question) }}</label>
                                                     </div>
                                                     <div class="form-group col-md-8 mt-3">
                                                         <input type="hidden" class="form-control"

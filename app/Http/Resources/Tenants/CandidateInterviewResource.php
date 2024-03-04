@@ -17,6 +17,7 @@ class CandidateInterviewResource extends JsonResource
         return [
             'id' => $this->id,
             'interviewer' => optional($this->interviewer)->first_name . " " . optional($this->interviewer)->last_name,
+            'interviewer_id' => $this->interviewer_id,
             'date' => $this->interview_date,
             'start_time' => $this->start_time,
             'end_time' => $this->end_time,

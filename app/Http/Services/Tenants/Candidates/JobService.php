@@ -108,7 +108,7 @@ class JobService implements JobContract
 
         $logo = settings()->group('logo')->get('logo');
 
-        $jobs = $query->select('id', 'country_id', 'state_id', 'city_id', 'user_id', 'department_id', 'name', 'slug', 'type', 'job_type', 'min_salary', 'max_salary', 'total_position', 'salary_deliver', 'expiry_date')
+        $jobs = $query->select('id', 'country_id', 'state_id', 'city_id', 'user_id', 'department_id', 'name', 'slug', 'type', 'job_type', 'min_salary', 'max_salary', 'total_position', 'salary_deliver', 'expiry_date', 'currency')
             ->with('country:id,name', 'state:id,name', 'city:id,name')
             ->paginate(10);
 

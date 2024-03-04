@@ -23,6 +23,16 @@ class Job extends Model
         });
     }
 
+    public function getMinSalaryAttribute($value)
+    {
+        return number_format($value);
+    }
+
+    public function getMaxSalaryAttribute($value)
+    {
+        return number_format($value);
+    }
+
     protected function createUniqueSlug($name)
     {
         $slug = Str::slug($name);

@@ -16,7 +16,7 @@ class ScheduleInterviewResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "title" => "Interview Scheduled with " . $this->applicant->user->first_name . " " . $this->applicant->user->last_name,
+            "title" => "Interview Scheduled with " . $this->applicant->first_name . " " . $this->applicant->last_name,
             "interviewer_link" => $this->interviewer_link,
             "interviewee_link" => $this->interviewee_link,
             "start" => $this->interview_date . " " . $this->start_time,

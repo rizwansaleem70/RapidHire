@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="price d-flex gap-1">
                                     {{--                                    <span class="icon-dollar"></span> --}}
-                                    <span class="rounded-pill border px-1"><strong>{{ settings()->group('configuration')->get('currency') ?? 'USD' }}
+                                    <span class="rounded-pill border px-1"><strong>{{ $data['job']->currency ?? 'USD' }}
                                         </strong></span>
                                     <p class="mt-3">{{ $data['job']->min_salary }} - {{ $data['job']->max_salary }}
                                         <span class="year">/ {{ $data['job']->salary_deliver }}</span>
@@ -84,6 +84,11 @@
                                 <div class="related-job">
                                     <h6>Related Jobs</h6>
                                     @foreach ($data['related_jobs'] as $value)
+                                        <?php
+                                        if ($value->remaining_days < 0) {
+                                            continue;
+                                        }
+                                        ?>
                                         <div class="features-job mg-bt-2">
                                             <div class="job-archive-header">
                                                 <div class="inner-box">
@@ -124,7 +129,7 @@
                                                     <div class="price">
                                                         {{--                                                        <span class="icon-dolar1"></span> --}}
                                                         <span
-                                                            class="rounded-pill border px-1">{{ settings()->group('configuration')->get('currency_symbol') ?? '$' }}
+                                                            class="rounded-pill border px-1">{{ $data['job']->currency ?? 'USD' }}
                                                         </span>
                                                         <p class="mt-3">{{ $value->min_salary }} -
                                                             {{ $value->max_salary }} <span class="year">/
