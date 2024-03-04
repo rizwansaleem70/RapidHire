@@ -446,7 +446,10 @@ class JobService implements JobContract
     }
     public function candidateAppliedJobs($user_id)
     {
-        return $this->modelApplicant->where('user_id', $user_id)->with(['job:id,name,slug'])->get(['id', 'user_id', 'job_id', 'applied_date', 'skills', 'status']);
+        return $this->modelApplicant
+            ->where('user_id', $user_id)
+            ->with(['job:id,name,slug'])
+            ->get(['id', 'user_id', 'job_id', 'applied_date', 'skills', 'status']);
     }
 
     public function jobApplicantProfileHeader($applicant_id)
@@ -462,7 +465,9 @@ class JobService implements JobContract
                 'country:id,name,currency',
                 'state:id,name',
                 'city:id,name',
-            ])->first(['id', 'user_id', 'job_id', 'country_id', 'state_id', 'city_id', 'ats', 'first_name', 'last_name', 'phone', 'address', 'gender', 'status', 'skills', 'applied_date', 'source_detail', 'job_resume_path', 'cover_letter_path']);
+                'atsCalculation'
+            ])
+            ->first(['id', 'user_id', 'job_id', 'country_id', 'state_id', 'city_id', 'ats', 'first_name', 'last_name', 'phone', 'address', 'gender', 'status', 'skills', 'applied_date', 'source_detail', 'job_resume_path', 'cover_letter_path']);
     }
 
 

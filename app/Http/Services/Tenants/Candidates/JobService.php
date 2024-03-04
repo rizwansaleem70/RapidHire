@@ -25,6 +25,7 @@ use App\Models\Tenants\JobQualification;
 use App\Models\Tenants\Candidate\FavoriteJob;
 use App\Models\Tenants\ApplicantQuestionAnswer;
 use App\Contracts\Tenants\Candidates\JobContract;
+use App\Models\ApplicationAtsCalculation;
 use App\Models\Tenants\ApplicantRequirementAnswer;
 use App\Notifications\JobAppliedNotification;
 
@@ -249,8 +250,10 @@ class JobService implements JobContract
     {
         try {
 
+            $ats_data = [];
             $score = 0;
             $meet_criteria = true;
+            $weight = '';
             $job = $this->modelJob->find($data['job_id']);
 
             if ($data['country_id'] == $job->country_id) {
@@ -262,11 +265,18 @@ class JobService implements JobContract
                     $parameter = $ats_state->JobATSScoreParameter()->where('parameter', $state->name)->first();
                     if ($parameter) {
                         $calc_score = $this->calculateAtsScoreWithParam($parameter->value, $ats_state->weight);
-
                         $score += $calc_score;
+                        $weight = $ats_state->weight;
                     }
                 }
             }
+
+            $ats_data[] = [
+                'criteria' => 'state',
+                'value' => $score,
+                'weight' => $weight
+            ];
+
 
             \Log::debug("State = " . $score);
 
@@ -303,11 +313,19 @@ class JobService implements JobContract
                                 $calc_score = $this->calculateAtsScoreWithParam($parameter->value, $ats_state->weight);
                                 \Log::debug($job_requirement['answer'] . " Score = " . $calc_score);
                                 $score += $calc_score;
+
+                                $ats_data[] = [
+                                    'criteria' => $job_requirement['answer'],
+                                    'value' => $calc_score,
+                                    'weight' => $ats_state->weight
+                                ];
                             }
                         }
                     }
                 }
             }
+
+            ApplicationAtsCalculation::insert($ats_data);
 
             return [
                 'ats' => $meet_criteria ? $score : 0,
@@ -330,11 +348,11 @@ class JobService implements JobContract
     private function prepareData($modelApplicant, $data, $new_record = false)
     {
         try {
+            $job = $this->modelJob->find($data['job_id']);
 
             //Does candidate meet the qualification criteria?
             $qualification = $this->calculateAtsScore($data);
 
-            $job = $this->modelJob->find($data['job_id']);
 
             $status = Constant::APPLIED;
             if ($qualification['meet_criteria'] == true && $qualification['ats'] >= $job->ats_threshold)
