@@ -253,6 +253,7 @@ class JobService implements JobContract
             $ats_data = [];
             $score = 0;
             $meet_criteria = true;
+            $state_name = '';
             $weight = '';
             $job = $this->modelJob->find($data['job_id']);
 
@@ -266,6 +267,7 @@ class JobService implements JobContract
                     if ($parameter) {
                         $calc_score = $this->calculateAtsScoreWithParam($parameter->value, $ats_state->weight);
                         $score += $calc_score;
+                        $state_name = $state->name;
                         $weight = $ats_state->weight;
                     }
                 }
@@ -273,7 +275,8 @@ class JobService implements JobContract
 
             $ats_data[] = [
                 'application_id' => $application_id,
-                'criteria' => 'state',
+                'attribute' => 'state',
+                'criteria' => $state_name,
                 'value' => $score,
                 'weight' => $weight
             ];
@@ -315,8 +318,13 @@ class JobService implements JobContract
                                 \Log::debug($job_requirement['answer'] . " Score = " . $calc_score);
                                 $score += $calc_score;
 
+                                if (is_numeric($ats_state->attribute)) {
+                                    $attribute_name = JobQualification::find($ats_state->attribute)->name;
+                                }
+
                                 $ats_data[] = [
                                     'application_id' => $application_id,
+                                    'attribute' => $attribute_name,
                                     'criteria' => $job_requirement['answer'],
                                     'value' => $calc_score,
                                     'weight' => $ats_state->weight
