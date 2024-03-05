@@ -101,8 +101,7 @@ class InterviewService implements InterviewContract
 
     public function scheduleInterview()
     {
-        $interviews = $this->model->with('applicant.user:id,first_name,last_name')->get();
-        return $interviews;
+        return $this->model->with(['applicant.user:id,first_name,last_name', 'interviewer'])->get();
     }
 
     public function sendJobOffer($data)

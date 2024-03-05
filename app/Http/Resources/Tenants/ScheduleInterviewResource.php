@@ -16,7 +16,7 @@ class ScheduleInterviewResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "title" => "Interview Scheduled with " . $this->applicant->first_name . " " . $this->applicant->last_name,
+            "title" => $this->interviewer->first_name . ' ' . $this->interviewer->last_name . " has an interview with " . $this->applicant->first_name . " " . $this->applicant->last_name,
             "interviewer_link" => $this->interviewer_link,
             "interviewee_link" => $this->interviewee_link,
             "start" => $this->interview_date . " " . $this->start_time,
@@ -29,6 +29,5 @@ class ScheduleInterviewResource extends JsonResource
             'feedback_date' => $this->feedback_date,
             'application_id' => $this->applicant->id
         ];
-        // return parent::toArray($request);
     }
 }
