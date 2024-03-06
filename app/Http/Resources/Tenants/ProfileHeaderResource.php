@@ -40,7 +40,7 @@ class ProfileHeaderResource extends JsonResource
             'cover_letter' => isset($this->cover_letter_path) ? asset($this->cover_letter_path) : "",
             'experience' => isset($this->jobExperience) ? new ExperienceResourceCollection($this->jobExperience) : "",
             'ats_calculation' => $this->atsCalculation,
-            'job_offer_contract' => $this->job_offer_contract,
+            'job_offer_contract' => $this->job_offer_contract != null ? asset($this->job_offer_contract) : "",
             'job_offer_file' => $this->job_offer_file,
         ];
     }
